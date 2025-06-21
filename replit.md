@@ -2,7 +2,17 @@
 
 ## Overview
 
-AfriPay is a comprehensive fintech platform designed for the African market, featuring a multi-role wallet system, QR code payments, and an ecosystem of integrated services. The application supports three distinct user roles (Consumer, Merchant, Agent) and provides KYC verification, transaction management, and extensible mini-app functionality.
+AfriPay is a comprehensive Pan-African fintech SuperApp designed following TOGAF enterprise architecture principles. The platform features a multi-role wallet system (Consumer/Merchant/Agent), QR code payments, micro-lending, virtual cards, and an extensible mini-app ecosystem. Built to enable lifestyle-based financial inclusion across Africa with support for multiple languages (English, French, Arabic, Swahili) and role evolution capabilities.
+
+Key Features:
+- Multi-role wallet with dynamic role switching
+- QR payment system for instant transactions  
+- Micro-loan application with automated interest calculation
+- Virtual card management for secure online payments
+- KYC verification system with document management
+- Agent network for cash-in/cash-out services
+- Merchant dashboard with business analytics
+- Mini-app ecosystem foundation for third-party services
 
 ## System Architecture
 
@@ -124,7 +134,12 @@ AfriPay is a comprehensive fintech platform designed for the African market, fea
 - Automatic wallet creation for new users
 
 ## Changelog
-- June 21, 2025. Initial setup
+- June 21, 2025: Initial setup with TOGAF-aligned architecture
+- December 23, 2024: Enhanced schema with comprehensive fintech tables (loans, merchants, agents, KYC documents, mini-apps)
+- December 23, 2024: Implemented role-specific dashboards for Merchant and Agent personas
+- December 23, 2024: Added Micro Loans application system with interest calculation
+- December 23, 2024: Integrated Virtual Card management with security features
+- December 23, 2024: Enhanced services page with functional loan and virtual card modules
 
 ## User Preferences
 

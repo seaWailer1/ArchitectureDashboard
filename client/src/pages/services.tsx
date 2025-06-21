@@ -1,11 +1,16 @@
+import { useState } from "react";
 import { Car, ShoppingBag, Zap, Smartphone, CreditCard, Building, Users, MoreHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
 import AppHeader from "@/components/layout/app-header";
 import BottomNavigation from "@/components/layout/bottom-navigation";
+import LoanApplication from "@/components/loans/loan-application";
+import VirtualCardManager from "@/components/virtual-card/virtual-card";
 
 export default function Services() {
   const { toast } = useToast();
+  const [selectedService, setSelectedService] = useState<string | null>(null);
 
   const serviceCategories = [
     {
@@ -27,17 +32,32 @@ export default function Services() {
       title: "Financial Services",
       services: [
         { id: "loans", name: "Micro Loans", icon: CreditCard, color: "bg-red-100 text-red-600", description: "Quick personal loans" },
-        { id: "savings", name: "Savings", icon: Building, color: "bg-emerald-100 text-emerald-600", description: "High-yield savings" },
+        { id: "virtual-card", name: "Virtual Cards", icon: Building, color: "bg-emerald-100 text-emerald-600", description: "Secure online payments" },
         { id: "insurance", name: "Insurance", icon: Users, color: "bg-orange-100 text-orange-600", description: "Affordable insurance" },
       ]
     }
   ];
 
   const handleServiceLaunch = (serviceId: string, serviceName: string) => {
-    toast({
-      title: "Coming Soon",
-      description: `${serviceName} service will be available soon`,
-    });
+    if (serviceId === 'loans' || serviceId === 'virtual-card') {
+      setSelectedService(serviceId);
+    } else {
+      toast({
+        title: "Coming Soon",
+        description: `${serviceName} service will be available soon`,
+      });
+    }
+  };
+
+  const renderServiceContent = () => {
+    switch (selectedService) {
+      case 'loans':
+        return <LoanApplication />;
+      case 'virtual-card':
+        return <VirtualCardManager />;
+      default:
+        return null;
+    }
   };
 
   return (
@@ -110,6 +130,19 @@ export default function Services() {
       </main>
       
       <BottomNavigation currentPage="services" />
+      
+      {/* Service Modals */}
+      <Dialog open={!!selectedService} onOpenChange={() => setSelectedService(null)}>
+        <DialogContent className="max-w-md mx-auto max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>
+              {selectedService === 'loans' ? 'Micro Loans' : 
+               selectedService === 'virtual-card' ? 'Virtual Cards' : ''}
+            </DialogTitle>
+          </DialogHeader>
+          {renderServiceContent()}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

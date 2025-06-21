@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
 import AppHeader from "@/components/layout/app-header";
@@ -9,11 +10,17 @@ import QuickActions from "@/components/wallet/quick-actions";
 import RecentTransactions from "@/components/transactions/recent-transactions";
 import MiniAppLauncher from "@/components/mini-apps/mini-app-launcher";
 import KYCStatusCard from "@/components/kyc/kyc-status-card";
-import { isUnauthorizedError } from "@/lib/authUtils";
+import MerchantDashboard from "@/components/merchant/merchant-dashboard";
+import AgentDashboard from "@/components/agent/agent-dashboard";
+import { UserProfile } from "@/types";
 
 export default function Home() {
   const { toast } = useToast();
   const { isAuthenticated, isLoading } = useAuth();
+  
+  const { data: user } = useQuery<UserProfile>({
+    queryKey: ["/api/auth/user"],
+  });
 
   // Redirect to home if not authenticated
   useEffect(() => {
@@ -43,17 +50,44 @@ export default function Home() {
     );
   }
 
+  const renderRoleSpecificContent = () => {
+    switch (user?.currentRole) {
+      case 'merchant':
+        return (
+          <div className="space-y-6">
+            <WalletSummary />
+            <MerchantDashboard />
+            <KYCStatusCard />
+          </div>
+        );
+      case 'agent':
+        return (
+          <div className="space-y-6">
+            <WalletSummary />
+            <AgentDashboard />
+            <KYCStatusCard />
+          </div>
+        );
+      default: // consumer
+        return (
+          <div className="space-y-6">
+            <WalletSummary />
+            <QuickActions />
+            <RecentTransactions />
+            <MiniAppLauncher />
+            <KYCStatusCard />
+          </div>
+        );
+    }
+  };
+
   return (
     <div className="min-h-screen bg-neutral-100">
       <AppHeader />
       <RoleSwitcher />
       
       <main className="max-w-md mx-auto px-4 pb-20">
-        <WalletSummary />
-        <QuickActions />
-        <RecentTransactions />
-        <MiniAppLauncher />
-        <KYCStatusCard />
+        {renderRoleSpecificContent()}
       </main>
       
       <BottomNavigation currentPage="home" />
