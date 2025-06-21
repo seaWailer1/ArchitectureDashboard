@@ -66,7 +66,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         description: "Wallet Top-up"
       });
 
-      const newBalance = (parseFloat(wallet.balance) + parseFloat(amount)).toFixed(2);
+      const newBalance = (parseFloat(wallet.balance || "0") + parseFloat(amount)).toFixed(2);
       const updatedWallet = await storage.updateWalletBalance(wallet.id, newBalance);
 
       res.json({ wallet: updatedWallet, transaction });
@@ -110,7 +110,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(404).json({ message: "Wallet not found" });
       }
 
-      if (parseFloat(fromWallet.balance) < parseFloat(amount)) {
+      if (parseFloat(fromWallet.balance || "0") < parseFloat(amount)) {
         return res.status(400).json({ message: "Insufficient balance" });
       }
 
@@ -124,8 +124,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       });
 
       // Update balances
-      const newFromBalance = (parseFloat(fromWallet.balance) - parseFloat(amount)).toFixed(2);
-      const newToBalance = (parseFloat(toWallet.balance) + parseFloat(amount)).toFixed(2);
+      const newFromBalance = (parseFloat(fromWallet.balance || "0") - parseFloat(amount)).toFixed(2);
+      const newToBalance = (parseFloat(toWallet.balance || "0") + parseFloat(amount)).toFixed(2);
 
       await storage.updateWalletBalance(fromWallet.id, newFromBalance);
       await storage.updateWalletBalance(toWallet.id, newToBalance);
