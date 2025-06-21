@@ -1,0 +1,147 @@
+📘 PART 1: PRODUCT SPECIFICATION — TOGAF & DPBoK Aligned
+
+SA-1000: Architecture Vision
+	•	Goal: Build a Pan-African Fintech SuperApp with miniapp extensibility, enabling lifestyle-based financial inclusion.
+	•	Stakeholders: Consumers, Agents, Merchants, Government, Local Banks, 3rd Party Developers, Regulators.
+	•	Business Motivation: Empower users to evolve from consumers to merchants; create a self-sustaining digital economic ecosystem.
+
+⸻
+
+SA-1100: Business Architecture (DPBoK + TOGAF ADM Phase B)
+
+Layer	Key Functions
+Customer Domain	Profile Management, KYC/AML Onboarding, Wallet Access, Role Evolution
+Financial Core	Wallet Services, Transaction Engine, QR Payments, Virtual Cards
+Ecosystem Layer	Mini-App SDK, Developer Portal, Sandbox, Partner Governance (AliPay-like model)
+Compliance	AML, KYC, PSD2/PAF, Tokenization, Regulatory Reporting
+Experience Layer	Personalization, UX Flow Orchestration, Cross-App Journeys, Chatbot AI Assistant
+
+
+⸻
+
+SA-1200: Information Systems Architecture (Phase C)
+
+Application Layer
+	•	Wallet Service (Core NodeJS/NestJS Microservice)
+Multi-role wallet logic with dynamic role states.
+	•	QR & Virtual Card Engine
+Tokenized, offline-capable, PCI-DSS compliant.
+	•	Mini-App Gateway (GraphQL + Kong)
+App registration, sandbox testing, permission framework.
+
+Data Architecture
+	•	PostgreSQL: Structured transactions
+	•	MongoDB: Flexible data (user metadata, app config)
+	•	Redis: Session, caching, real-time leaderboard logic
+	•	Vault: Secrets management (API keys, encryption tokens)
+	•	ComplyAdvantage: Real-time AML signals
+
+⸻
+
+SA-1300: Technology Architecture (Phase D)
+
+Category	Technology
+DevOps	Docker, Terraform, GitHub Actions
+Orchestration	Kubernetes (GKE or EKS)
+Backend	Node.js/NestJS or Go + gRPC
+API Layer	GraphQL + Kong + REST
+AI/ML	SageMaker or TensorFlow Serving
+IAM	Keycloak or AWS Cognito
+Monitoring	Prometheus + Grafana + Loki + Sentry
+Observability	Elastic Stack (ELK)
+
+
+⸻
+
+SA-1400: Opportunities & Solutions (Phase E/F)
+	•	Initial Use-Cases:
+	•	Consumer onboarding and dynamic wallet creation
+	•	Merchant evolution with QR payment enablement
+	•	Virtual card top-up and expense categorization
+	•	Agent applet for remittance and cash-out
+	•	Ecosystem Development:
+	•	Launch partner SDK
+	•	APIs for service-type templates (ride-hailing, e-commerce, utility billing)
+	•	Revenue-sharing contracts with local businesses
+
+⸻
+
+SA-1500: Implementation Roadmap (Phase G)
+
+Phase	Objective	Timeline
+MVP	Wallet + QR + Profile + Agent Mode	Month 1-3
+v1.0	Add Mini-App SDK + Governance Layer	Month 4-6
+v2.0	AI Personalization + ML Scoring + KYC	Month 6-9
+v3.0	Decentralized Identity + Smart Contracts	Month 10-12
+
+
+⸻
+
+🎨 PART 2: FRONT-END SPECIFICATION & DESIGN PRACTICE
+
+A. Design System (Based on Ant Design)
+
+Design Tokens:
+
+Token Category	Variables
+Colors	@primary-color, @error-color, @success-color
+Typography	@font-size-base, @heading-color
+Spacing & Layout	@padding-md, @margin-sm
+Component Radius	@border-radius-base
+
+Core Components (Miniapp-compatible)
+	•	Profile Card, Dynamic Wallet Tile, QR Button (Scan/Receive), Role Switcher
+	•	Merchant Dashboard, Load/Withdraw Widgets
+	•	Embedded Applet Launcher (like WeChat Mini Programs)
+	•	Biometric/KYC Progress Indicator
+	•	Multi-Language i18n Support Wrapper
+
+⸻
+
+B. Design Practice Process & Governance
+
+1. Workflow Model
+
+graph TD
+    Research --> Wireframes
+    Wireframes --> DesignTokens
+    DesignTokens --> Components
+    Components --> Prototypes
+    Prototypes --> DevHandoff
+    DevHandoff --> QA
+    QA --> Release
+
+2. Governance Model
+	•	DesignOps: Use tools like Figma Tokens plugin + Storybook + Zeplin
+	•	Design Review Cadence: Weekly sprint-based cross-functional review
+	•	Versioning: Semantic versioning for design tokens and components
+	•	Accessibility Compliance: WCAG 2.1 AA as baseline
+	•	Handoff to Dev: JSON-export via REST to sync design tokens directly
+
+⸻
+
+C. Documentation for Design System Maintenance
+	1.	Design Principles: Pan-African aesthetic, inclusive UX, low-bandwidth optimization
+	2.	Component Naming Convention: Based on role-context. E.g., MerchantStatsCard, ConsumerWalletSummary
+	3.	Atomic Design Model:
+	•	Atoms: Button, Icon, Typography
+	•	Molecules: WalletPanel, RoleSwitcher
+	•	Organisms: ProfileManager, AppletContainer
+	•	Templates: HomeDashboard, MerchantPortal
+	•	Pages: WalletOverviewPage, KYCOnboardingPage
+
+⸻
+
+📊 PART 3: KPI TRACKING ALIGNMENT
+
+Your provided KPI list will be tracked via the following modules:
+
+KPI Group	Tracked By
+Growth	Analytics API (Firebase + Segment + Metabase)
+Financial	PostgreSQL Ledger + Aggregation API
+Ecosystem	Applet Registry API + Usage Telemetry
+Engagement	UX Logs + Event Flow Heatmaps (e.g., FullStory)
+Compliance	Vault Logs + ComplyAdvantage Events
+Operational	Prometheus + Grafana Dashboards
+AI/Data	Model Serving Metrics + A/B Testing
+Strategic	Reporting Engine + Investor Dashboards
