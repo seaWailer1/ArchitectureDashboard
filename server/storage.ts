@@ -107,7 +107,7 @@ export interface IStorage {
 export class DatabaseStorage implements IStorage {
   // User operations
   async getUser(id: string): Promise<User | undefined> {
-    const [user] = await db.select().from(users).where(eq(users.id, id));
+    const [user] = await this.db.select().from(users).where(eq(users.id, id));
     return user;
   }
 
@@ -263,11 +263,11 @@ export class DatabaseStorage implements IStorage {
 
   // User preferences operations
   async getUserPreferences(userId: string): Promise<UserPreference[]> {
-    return await db.select().from(userPreferences).where(eq(userPreferences.userId, userId));
+    return await this.db.select().from(userPreferences).where(eq(userPreferences.userId, userId));
   }
 
   async upsertUserPreference(preference: InsertUserPreference): Promise<UserPreference> {
-    const [result] = await db
+    const [result] = await this.db
       .insert(userPreferences)
       .values(preference)
       .onConflictDoUpdate({
@@ -282,7 +282,7 @@ export class DatabaseStorage implements IStorage {
   }
 
   async deleteUserPreference(userId: string, category: string, key: string): Promise<void> {
-    await db
+    await this.db
       .delete(userPreferences)
       .where(
         and(
@@ -295,12 +295,12 @@ export class DatabaseStorage implements IStorage {
 
   // Security operations
   async logSecurityEvent(log: InsertSecurityLog): Promise<SecurityLog> {
-    const [result] = await db.insert(securityLogs).values(log).returning();
+    const [result] = await this.db.insert(securityLogs).values(log).returning();
     return result;
   }
 
   async getSecurityLogs(userId: string, limit: number = 50): Promise<SecurityLog[]> {
-    return await db
+    return await this.db
       .select()
       .from(securityLogs)
       .where(eq(securityLogs.userId, userId))
@@ -310,7 +310,7 @@ export class DatabaseStorage implements IStorage {
 
   // Device management
   async registerDevice(device: InsertUserDevice): Promise<UserDevice> {
-    const [result] = await db
+    const [result] = await this.db
       .insert(userDevices)
       .values(device)
       .onConflictDoUpdate({
@@ -326,7 +326,7 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getUserDevices(userId: string): Promise<UserDevice[]> {
-    return await db
+    return await this.db
       .select()
       .from(userDevices)
       .where(eq(userDevices.userId, userId))
@@ -334,7 +334,7 @@ export class DatabaseStorage implements IStorage {
   }
 
   async updateDeviceStatus(deviceId: string, isActive: boolean): Promise<UserDevice> {
-    const [result] = await db
+    const [result] = await this.db
       .update(userDevices)
       .set({ isActive })
       .where(eq(userDevices.deviceId, deviceId))
@@ -343,7 +343,7 @@ export class DatabaseStorage implements IStorage {
   }
 
   async trustDevice(deviceId: string): Promise<UserDevice> {
-    const [result] = await db
+    const [result] = await this.db
       .update(userDevices)
       .set({ isTrusted: true })
       .where(eq(userDevices.deviceId, deviceId))
@@ -353,7 +353,7 @@ export class DatabaseStorage implements IStorage {
 
   // Support system
   async createSupportTicket(ticket: InsertSupportTicket): Promise<SupportTicket> {
-    const [result] = await db.insert(supportTickets).values(ticket).returning();
+    const [result] = await this.db.insert(supportTickets).values(ticket).returning();
     return result;
   }
 
@@ -376,7 +376,7 @@ export class DatabaseStorage implements IStorage {
 
   // Account recovery
   async createRecoveryToken(recovery: InsertAccountRecovery): Promise<AccountRecovery> {
-    const [result] = await db.insert(accountRecovery).values(recovery).returning();
+    const [result] = await this.db.insert(accountRecovery).values(recovery).returning();
     return result;
   }
 
