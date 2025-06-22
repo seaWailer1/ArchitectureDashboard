@@ -13,7 +13,8 @@ import {
   AlertCircle,
   Star,
   Navigation,
-  Shield
+  Shield,
+  Car
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -289,7 +290,7 @@ export default function DeliveryService() {
   };
 
   // Calculate cost when relevant fields change
-  React.useEffect(() => {
+  useEffect(() => {
     calculateCost();
   }, [selectedDeliveryType, packageDetails.weight, packageDetails.urgent, packageDetails.fragile]);
 

@@ -15,6 +15,8 @@ import BillPayments from "@/components/services/bill-payments";
 import ShoppingMarketplace from "@/components/services/shopping-marketplace";
 import RideHailing from "@/components/services/ride-hailing";
 import DeliveryService from "@/components/services/delivery-service";
+import MerchantDashboard from "@/components/ecommerce/merchant-dashboard";
+import CustomerOrders from "@/components/ecommerce/customer-orders";
 
 export default function Services() {
   const { toast } = useToast();
@@ -31,9 +33,10 @@ export default function Services() {
     {
       title: "Shopping & Payments",
       services: [
-        { id: "shop", name: "E-commerce", icon: ShoppingBag, color: "bg-green-100 text-green-600", description: "Online shopping" },
+        { id: "shopping", name: "Shopping", icon: ShoppingBag, color: "bg-purple-100 text-purple-600", description: "Online marketplace" },
+        { id: "orders", name: "My Orders", icon: Package, color: "bg-orange-100 text-orange-600", description: "Track your orders" },
+        { id: "merchant", name: "Merchant Store", icon: Building, color: "bg-emerald-100 text-emerald-600", description: "Manage your store" },
         { id: "bills", name: "Bill Payments", icon: Zap, color: "bg-yellow-100 text-yellow-600", description: "Pay utility bills" },
-        { id: "mobile", name: "Mobile Top-up", icon: Smartphone, color: "bg-indigo-100 text-indigo-600", description: "Recharge mobile credit" },
       ]
     },
     {
@@ -50,7 +53,7 @@ export default function Services() {
   ];
 
   const handleServiceLaunch = (serviceId: string, serviceName: string) => {
-    const availableServices = ['loans', 'virtual-card', 'crypto', 'investment', 'admin', 'trading', 'bills', 'shopping', 'ride', 'delivery'];
+    const availableServices = ['loans', 'virtual-card', 'crypto', 'investment', 'admin', 'trading', 'bills', 'shopping', 'ride', 'delivery', 'merchant', 'orders'];
     if (availableServices.includes(serviceId)) {
       setSelectedService(serviceId);
     } else {
@@ -83,6 +86,10 @@ export default function Services() {
         return <RideHailing />;
       case 'delivery':
         return <DeliveryService />;
+      case 'merchant':
+        return <MerchantDashboard />;
+      case 'orders':
+        return <CustomerOrders />;
       default:
         return null;
     }
@@ -173,6 +180,8 @@ export default function Services() {
                selectedService === 'shopping' ? 'Shopping Marketplace' :
                selectedService === 'ride' ? 'Ride Hailing' :
                selectedService === 'delivery' ? 'Package Delivery' :
+               selectedService === 'merchant' ? 'Merchant Dashboard' :
+               selectedService === 'orders' ? 'My Orders' :
                selectedService === 'admin' ? 'Admin Dashboard' : ''}
             </DialogTitle>
           </DialogHeader>

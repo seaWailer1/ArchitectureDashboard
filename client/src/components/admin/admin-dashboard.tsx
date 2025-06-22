@@ -460,6 +460,20 @@ export default function AdminDashboard() {
             </Card>
           </div>
         </TabsContent>
+
+        <TabsContent value="demo" className="space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center space-x-2">
+                <Sparkles className="w-5 h-5" />
+                <span>Demo Data Management</span>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <DemoDataGenerator />
+            </CardContent>
+          </Card>
+        </TabsContent>
       </Tabs>
     </div>
   );
