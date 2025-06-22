@@ -17,6 +17,9 @@ import RideHailing from "@/components/services/ride-hailing";
 import DeliveryService from "@/components/services/delivery-service";
 import MerchantDashboard from "@/components/ecommerce/merchant-dashboard";
 import CustomerOrders from "@/components/ecommerce/customer-orders";
+import IntegratedDeliveryHub from "@/components/ecommerce/integrated-delivery-hub";
+import DriverDashboard from "@/components/ecommerce/driver-dashboard";
+import MerchantStoreManagement from "@/components/ecommerce/merchant-store-management";
 
 export default function Services() {
   const { toast } = useToast();
@@ -31,11 +34,12 @@ export default function Services() {
       ]
     },
     {
-      title: "Shopping & Payments",
+      title: "Shopping & Delivery",
       services: [
-        { id: "shopping", name: "Shopping", icon: ShoppingBag, color: "bg-purple-100 text-purple-600", description: "Online marketplace" },
+        { id: "ecommerce", name: "AfriMart", icon: ShoppingBag, color: "bg-purple-100 text-purple-600", description: "Integrated shopping & delivery" },
         { id: "orders", name: "My Orders", icon: Package, color: "bg-orange-100 text-orange-600", description: "Track your orders" },
-        { id: "merchant", name: "Merchant Store", icon: Building, color: "bg-emerald-100 text-emerald-600", description: "Manage your store" },
+        { id: "merchant-store", name: "Store Management", icon: Building, color: "bg-emerald-100 text-emerald-600", description: "Manage your store" },
+        { id: "driver", name: "Driver Hub", icon: Car, color: "bg-blue-100 text-blue-600", description: "Driver dashboard" },
         { id: "bills", name: "Bill Payments", icon: Zap, color: "bg-yellow-100 text-yellow-600", description: "Pay utility bills" },
       ]
     },
@@ -53,7 +57,7 @@ export default function Services() {
   ];
 
   const handleServiceLaunch = (serviceId: string, serviceName: string) => {
-    const availableServices = ['loans', 'virtual-card', 'crypto', 'investment', 'admin', 'trading', 'bills', 'shopping', 'ride', 'delivery', 'merchant', 'orders'];
+    const availableServices = ['loans', 'virtual-card', 'crypto', 'investment', 'admin', 'trading', 'bills', 'shopping', 'ride', 'delivery', 'merchant', 'orders', 'ecommerce', 'driver', 'merchant-store'];
     if (availableServices.includes(serviceId)) {
       setSelectedService(serviceId);
     } else {
@@ -90,6 +94,12 @@ export default function Services() {
         return <MerchantDashboard />;
       case 'orders':
         return <CustomerOrders />;
+      case 'ecommerce':
+        return <IntegratedDeliveryHub />;
+      case 'driver':
+        return <DriverDashboard />;
+      case 'merchant-store':
+        return <MerchantStoreManagement />;
       default:
         return null;
     }
@@ -182,6 +192,9 @@ export default function Services() {
                selectedService === 'delivery' ? 'Package Delivery' :
                selectedService === 'merchant' ? 'Merchant Dashboard' :
                selectedService === 'orders' ? 'My Orders' :
+               selectedService === 'ecommerce' ? 'AfriMart - Shopping & Delivery' :
+               selectedService === 'driver' ? 'Driver Dashboard' :
+               selectedService === 'merchant-store' ? 'Store Management' :
                selectedService === 'admin' ? 'Admin Dashboard' : ''}
             </DialogTitle>
           </DialogHeader>
