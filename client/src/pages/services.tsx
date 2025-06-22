@@ -11,6 +11,9 @@ import CryptoTrading from "@/components/crypto/crypto-trading";
 import InvestmentProducts from "@/components/investment/investment-products";
 import AdminDashboard from "@/components/admin/admin-dashboard";
 import MultiCurrencyTrading from "@/components/trading/multi-currency-trading";
+import BillPayments from "@/components/services/bill-payments";
+import ShoppingMarketplace from "@/components/services/shopping-marketplace";
+import RideHailing from "@/components/services/ride-hailing";
 
 export default function Services() {
   const { toast } = useToast();
@@ -45,7 +48,7 @@ export default function Services() {
   ];
 
   const handleServiceLaunch = (serviceId: string, serviceName: string) => {
-    const availableServices = ['loans', 'virtual-card', 'crypto', 'investment', 'admin', 'trading'];
+    const availableServices = ['loans', 'virtual-card', 'crypto', 'investment', 'admin', 'trading', 'bills', 'shopping', 'ride'];
     if (availableServices.includes(serviceId)) {
       setSelectedService(serviceId);
     } else {
@@ -70,6 +73,12 @@ export default function Services() {
         return <AdminDashboard />;
       case 'trading':
         return <MultiCurrencyTrading />;
+      case 'bills':
+        return <BillPayments />;
+      case 'shopping':
+        return <ShoppingMarketplace />;
+      case 'ride':
+        return <RideHailing />;
       default:
         return null;
     }
@@ -156,6 +165,9 @@ export default function Services() {
                selectedService === 'crypto' ? 'Crypto Trading' :
                selectedService === 'investment' ? 'Investment Products' :
                selectedService === 'trading' ? 'Multi-Currency Trading' :
+               selectedService === 'bills' ? 'Bill Payments' :
+               selectedService === 'shopping' ? 'Shopping Marketplace' :
+               selectedService === 'ride' ? 'Ride Hailing' :
                selectedService === 'admin' ? 'Admin Dashboard' : ''}
             </DialogTitle>
           </DialogHeader>

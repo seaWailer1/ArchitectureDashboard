@@ -17,6 +17,13 @@ export async function seedDatabase() {
   try {
     console.log("Seeding database with sample data...");
 
+    // Check if data already exists
+    const existingAssets = await db.select().from(digitalAssets).limit(1);
+    if (existingAssets.length > 0) {
+      console.log("Sample data already exists, skipping seed");
+      return { message: "Sample data already exists" };
+    }
+
     // Seed digital assets
     const assets = await db.insert(digitalAssets).values([
       {
