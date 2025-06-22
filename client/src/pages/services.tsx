@@ -14,6 +14,7 @@ import MultiCurrencyTrading from "@/components/trading/multi-currency-trading";
 import BillPayments from "@/components/services/bill-payments";
 import ShoppingMarketplace from "@/components/services/shopping-marketplace";
 import RideHailing from "@/components/services/ride-hailing";
+import DeliveryService from "@/components/services/delivery-service";
 
 export default function Services() {
   const { toast } = useToast();
@@ -42,13 +43,14 @@ export default function Services() {
         { id: "virtual-card", name: "Virtual Cards", icon: Building, color: "bg-emerald-100 text-emerald-600", description: "Secure online payments" },
         { id: "investment", name: "Investments", icon: Users, color: "bg-green-100 text-green-600", description: "Grow your wealth" },
         { id: "crypto", name: "Crypto Trading", icon: MoreHorizontal, color: "bg-orange-100 text-orange-600", description: "Trade cryptocurrencies" },
+        { id: "trading", name: "Currency Trading", icon: Smartphone, color: "bg-indigo-100 text-indigo-600", description: "Multi-currency arbitrage" },
         { id: "admin", name: "Admin Portal", icon: MoreHorizontal, color: "bg-gray-100 text-gray-600", description: "System analytics" },
       ]
     }
   ];
 
   const handleServiceLaunch = (serviceId: string, serviceName: string) => {
-    const availableServices = ['loans', 'virtual-card', 'crypto', 'investment', 'admin', 'trading', 'bills', 'shopping', 'ride'];
+    const availableServices = ['loans', 'virtual-card', 'crypto', 'investment', 'admin', 'trading', 'bills', 'shopping', 'ride', 'delivery'];
     if (availableServices.includes(serviceId)) {
       setSelectedService(serviceId);
     } else {
@@ -79,6 +81,8 @@ export default function Services() {
         return <ShoppingMarketplace />;
       case 'ride':
         return <RideHailing />;
+      case 'delivery':
+        return <DeliveryService />;
       default:
         return null;
     }
@@ -168,6 +172,7 @@ export default function Services() {
                selectedService === 'bills' ? 'Bill Payments' :
                selectedService === 'shopping' ? 'Shopping Marketplace' :
                selectedService === 'ride' ? 'Ride Hailing' :
+               selectedService === 'delivery' ? 'Package Delivery' :
                selectedService === 'admin' ? 'Admin Dashboard' : ''}
             </DialogTitle>
           </DialogHeader>

@@ -11,8 +11,12 @@ import {
   Minus,
   MapPin,
   Truck,
-  CreditCard
+  CreditCard,
+  Sparkles,
+  TrendingUp,
+  Clock
 } from "lucide-react";
+import ProductDetail from "./product-detail";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -30,13 +34,35 @@ interface Product {
   price: number;
   originalPrice?: number;
   category: string;
-  seller: string;
+  seller: {
+    id: string;
+    name: string;
+    rating: number;
+    totalSales: number;
+    verified: boolean;
+    location: string;
+  };
   rating: number;
   reviews: number;
   imageUrl?: string;
+  images: string[];
   inStock: boolean;
+  stockQuantity: number;
   shippingFee: number;
   deliveryTime: string;
+  specifications: Record<string, string>;
+  variants: Array<{
+    id: string;
+    name: string;
+    price: number;
+    inStock: boolean;
+  }>;
+  tags: string[];
+  discount?: {
+    type: 'percentage' | 'fixed';
+    value: number;
+    validUntil: string;
+  };
 }
 
 interface CartItem {
@@ -58,35 +84,71 @@ export default function ShoppingMarketplace() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [showProductDetail, setShowProductDetail] = useState(false);
   const [cart, setCart] = useState<CartItem[]>([]);
   const [showCart, setShowCart] = useState(false);
+  const [sortBy, setSortBy] = useState("popular");
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
   const categories = [
-    { id: "all", name: "All Categories" },
-    { id: "electronics", name: "Electronics" },
-    { id: "fashion", name: "Fashion" },
-    { id: "home", name: "Home & Garden" },
-    { id: "beauty", name: "Beauty & Health" },
-    { id: "sports", name: "Sports & Outdoors" },
-    { id: "books", name: "Books & Media" }
+    { id: "all", name: "All Categories", icon: "🛍️" },
+    { id: "electronics", name: "Electronics", icon: "📱" },
+    { id: "fashion", name: "Fashion", icon: "👗" },
+    { id: "home", name: "Home & Garden", icon: "🏠" },
+    { id: "beauty", name: "Beauty & Health", icon: "💄" },
+    { id: "sports", name: "Sports & Outdoors", icon: "⚽" },
+    { id: "books", name: "Books & Media", icon: "📚" }
+  ];
+
+  const sortOptions = [
+    { id: "popular", name: "Most Popular" },
+    { id: "price_low", name: "Price: Low to High" },
+    { id: "price_high", name: "Price: High to Low" },
+    { id: "rating", name: "Highest Rated" },
+    { id: "newest", name: "Newest First" }
   ];
 
   const mockProducts: Product[] = [
     {
       id: "PROD_001",
       name: "Wireless Bluetooth Headphones",
-      description: "High-quality wireless headphones with noise cancellation",
+      description: "Premium wireless headphones with active noise cancellation, 30-hour battery life, and superior sound quality. Perfect for music lovers and professionals.",
       price: 89.99,
       originalPrice: 129.99,
       category: "electronics",
-      seller: "TechStore Africa",
+      seller: {
+        id: "SELL_001",
+        name: "TechStore Africa",
+        rating: 4.8,
+        totalSales: 2847,
+        verified: true,
+        location: "Lagos, Nigeria"
+      },
       rating: 4.5,
       reviews: 128,
+      images: ["/images/headphones-1.jpg", "/images/headphones-2.jpg"],
       inStock: true,
+      stockQuantity: 47,
       shippingFee: 5.99,
-      deliveryTime: "2-3 days"
+      deliveryTime: "2-3 days",
+      specifications: {
+        "Battery Life": "30 hours",
+        "Connectivity": "Bluetooth 5.0",
+        "Weight": "250g",
+        "Warranty": "2 years"
+      },
+      variants: [
+        { id: "VAR_001", name: "Black", price: 89.99, inStock: true },
+        { id: "VAR_002", name: "White", price: 94.99, inStock: true },
+        { id: "VAR_003", name: "Blue", price: 89.99, inStock: false }
+      ],
+      tags: ["wireless", "bluetooth", "noise-cancelling", "premium"],
+      discount: {
+        type: 'percentage',
+        value: 30,
+        validUntil: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString()
+      }
     },
     {
       id: "PROD_002",
@@ -195,15 +257,31 @@ export default function ShoppingMarketplace() {
     },
   });
 
-  const filteredProducts = mockProducts.filter(product => {
-    const matchesSearch = searchTerm === "" || 
-      product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      product.description.toLowerCase().includes(searchTerm.toLowerCase());
-    
-    const matchesCategory = selectedCategory === "all" || product.category === selectedCategory;
-    
-    return matchesSearch && matchesCategory;
-  });
+  const filteredAndSortedProducts = mockProducts
+    .filter(product => {
+      const matchesSearch = searchTerm === "" || 
+        product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        product.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        product.tags?.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
+      
+      const matchesCategory = selectedCategory === "all" || product.category === selectedCategory;
+      
+      return matchesSearch && matchesCategory;
+    })
+    .sort((a, b) => {
+      switch (sortBy) {
+        case "price_low":
+          return a.price - b.price;
+        case "price_high":
+          return b.price - a.price;
+        case "rating":
+          return b.rating - a.rating;
+        case "newest":
+          return new Date(b.id).getTime() - new Date(a.id).getTime();
+        default:
+          return b.reviews - a.reviews; // popularity by review count
+      }
+    });
 
   const addToCart = (product: Product) => {
     const existingItem = cart.find(item => item.productId === product.id);
@@ -276,13 +354,30 @@ export default function ShoppingMarketplace() {
     }
   };
 
+  if (showProductDetail && selectedProduct) {
+    return (
+      <ProductDetail 
+        product={selectedProduct} 
+        onBack={() => {
+          setShowProductDetail(false);
+          setSelectedProduct(null);
+        }}
+        onAddToCart={(product, variant) => {
+          addToCart(product);
+          setShowProductDetail(false);
+          setSelectedProduct(null);
+        }}
+      />
+    );
+  }
+
   return (
     <div className="space-y-6">
       <div className="text-center">
         <div className="w-16 h-16 bg-gradient-to-br from-purple-400 to-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
           <ShoppingBag className="w-8 h-8 text-white" />
         </div>
-        <h2 className="text-2xl font-bold text-neutral-900 mb-2">Shopping Marketplace</h2>
+        <h2 className="text-2xl font-bold text-neutral-900 mb-2">AfriMarket</h2>
         <p className="text-neutral-600">Discover amazing products from African sellers</p>
       </div>
 
@@ -297,16 +392,15 @@ export default function ShoppingMarketplace() {
           {/* Search and Filters */}
           <div className="space-y-3">
             <div className="flex space-x-2">
-              <div className="flex-1">
+              <div className="flex-1 relative">
+                <Search className="absolute left-3 top-3 w-4 h-4 text-neutral-400" />
                 <Input
-                  placeholder="Search products..."
+                  placeholder="Search products, brands, or sellers..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
+                  className="pl-10"
                 />
               </div>
-              <Button variant="outline" size="icon">
-                <Search className="w-4 h-4" />
-              </Button>
               <Dialog open={showCart} onOpenChange={setShowCart}>
                 <DialogTrigger asChild>
                   <Button variant="outline" className="relative">
@@ -322,27 +416,83 @@ export default function ShoppingMarketplace() {
               </Dialog>
             </div>
 
-            <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-              <SelectTrigger>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {categories.map(category => (
-                  <SelectItem key={category.id} value={category.id}>
-                    {category.name}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            {/* Quick Category Filters */}
+            <div className="flex space-x-2 overflow-x-auto pb-2">
+              {categories.map(category => (
+                <Button
+                  key={category.id}
+                  variant={selectedCategory === category.id ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => setSelectedCategory(category.id)}
+                  className="flex-shrink-0 text-xs"
+                >
+                  <span className="mr-1">{category.icon}</span>
+                  {category.name}
+                </Button>
+              ))}
+            </div>
+
+            {/* Sort Options */}
+            <div className="flex justify-between items-center">
+              <span className="text-sm text-neutral-600">
+                {filteredAndSortedProducts.length} products found
+              </span>
+              <Select value={sortBy} onValueChange={setSortBy}>
+                <SelectTrigger className="w-40">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {sortOptions.map(option => (
+                    <SelectItem key={option.id} value={option.id}>
+                      {option.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
           </div>
+
+          {/* Trending/Featured Section */}
+          <Card>
+            <CardContent className="p-4">
+              <div className="flex items-center space-x-2 mb-3">
+                <Sparkles className="w-5 h-5 text-accent" />
+                <h3 className="font-semibold">Trending Now</h3>
+              </div>
+              <div className="flex space-x-2 overflow-x-auto">
+                {["Wireless Earbuds", "African Prints", "Skincare", "Home Decor"].map(trend => (
+                  <Badge key={trend} variant="outline" className="flex-shrink-0 cursor-pointer hover:bg-accent/10">
+                    <TrendingUp className="w-3 h-3 mr-1" />
+                    {trend}
+                  </Badge>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
 
           {/* Products Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {filteredProducts.map((product) => (
+            {filteredAndSortedProducts.map((product) => (
               <Card key={product.id} className="hover:shadow-md transition-shadow">
                 <CardContent className="p-4">
-                  <div className="aspect-square bg-neutral-100 rounded-lg mb-3 flex items-center justify-center">
+                  <div className="aspect-square bg-neutral-100 rounded-lg mb-3 flex items-center justify-center relative">
                     <ShoppingBag className="w-12 h-12 text-neutral-400" />
+                    {product.discount && (
+                      <Badge className="absolute top-2 left-2 bg-red-500 text-white text-xs">
+                        -{product.discount.value}{product.discount.type === 'percentage' ? '%' : '$'}
+                      </Badge>
+                    )}
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="absolute top-2 right-2 w-8 h-8 p-0"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        // Toggle favorite
+                      }}
+                    >
+                      <Heart className="w-4 h-4" />
+                    </Button>
                   </div>
                   
                   <h3 className="font-bold mb-1">{product.name}</h3>
@@ -370,7 +520,7 @@ export default function ShoppingMarketplace() {
                   <div className="flex items-center justify-between text-xs text-neutral-600 mb-3">
                     <span className="flex items-center">
                       <MapPin className="w-3 h-3 mr-1" />
-                      {product.seller}
+                      {product.seller.name}
                     </span>
                     <span className="flex items-center">
                       <Truck className="w-3 h-3 mr-1" />
@@ -383,7 +533,10 @@ export default function ShoppingMarketplace() {
                       variant="outline" 
                       size="sm" 
                       className="flex-1"
-                      onClick={() => setSelectedProduct(product)}
+                      onClick={() => {
+                        setSelectedProduct(product);
+                        setShowProductDetail(true);
+                      }}
                     >
                       View Details
                     </Button>

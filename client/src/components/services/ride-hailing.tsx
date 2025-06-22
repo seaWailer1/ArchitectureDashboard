@@ -32,6 +32,8 @@ interface RideType {
   pricePerKm: number;
   capacity: number;
   eta: string;
+  features: string[];
+  vehicleTypes: string[];
 }
 
 interface Driver {
@@ -77,17 +79,21 @@ export default function RideHailing() {
       basePrice: 2.50,
       pricePerKm: 0.85,
       capacity: 4,
-      eta: "3-5 min"
+      eta: "3-5 min",
+      features: ["AC", "Safety verified"],
+      vehicleTypes: ["Sedan", "Hatchback"]
     },
     {
       id: "comfort",
-      name: "AfriRide Comfort",
+      name: "AfriRide Comfort", 
       description: "Premium vehicles with extra comfort",
       icon: Car,
       basePrice: 3.50,
       pricePerKm: 1.20,
       capacity: 4,
-      eta: "5-8 min"
+      eta: "5-8 min",
+      features: ["Premium AC", "Leather seats", "Phone charger", "Water"],
+      vehicleTypes: ["SUV", "Premium Sedan"]
     },
     {
       id: "share",
@@ -97,7 +103,9 @@ export default function RideHailing() {
       basePrice: 1.50,
       pricePerKm: 0.60,
       capacity: 2,
-      eta: "8-12 min"
+      eta: "8-12 min", 
+      features: ["Shared ride", "Eco-friendly", "Meet new people"],
+      vehicleTypes: ["Sedan", "Hatchback"]
     },
     {
       id: "moto",
@@ -107,7 +115,33 @@ export default function RideHailing() {
       basePrice: 1.00,
       pricePerKm: 0.45,
       capacity: 1,
-      eta: "2-4 min"
+      eta: "2-4 min",
+      features: ["Helmet provided", "Beat traffic", "Express delivery"],
+      vehicleTypes: ["Motorcycle", "Scooter"]
+    },
+    {
+      id: "xl",
+      name: "AfriRide XL",
+      description: "Extra space for groups and luggage",
+      icon: Car,
+      basePrice: 4.00,
+      pricePerKm: 1.50,
+      capacity: 6,
+      eta: "6-10 min",
+      features: ["6 seats", "Large trunk", "Family friendly"],
+      vehicleTypes: ["Van", "Large SUV"]
+    },
+    {
+      id: "luxury",
+      name: "AfriRide Luxury",
+      description: "Premium luxury experience",
+      icon: Car,
+      basePrice: 8.00,
+      pricePerKm: 2.50,
+      capacity: 4,
+      eta: "8-15 min",
+      features: ["Luxury vehicle", "Professional driver", "Refreshments", "Wi-Fi"],
+      vehicleTypes: ["Mercedes", "BMW", "Audi"]
     }
   ];
 
