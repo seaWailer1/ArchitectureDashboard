@@ -3,6 +3,17 @@ import {
   wallets,
   transactions,
   userRoles,
+  userPreferences,
+  securityLogs,
+  userDevices,
+  supportTickets,
+  accountRecovery,
+  assetHoldings,
+  digitalAssets,
+  userInvestments,
+  investmentProducts,
+  creditFacilities,
+  tradingPairs,
   type User,
   type UpsertUser,
   type Wallet,
@@ -11,6 +22,16 @@ import {
   type InsertTransaction,
   type UserRole,
   type InsertUserRole,
+  type UserPreference,
+  type InsertUserPreference,
+  type SecurityLog,
+  type InsertSecurityLog,
+  type UserDevice,
+  type InsertUserDevice,
+  type SupportTicket,
+  type InsertSupportTicket,
+  type AccountRecovery,
+  type InsertAccountRecovery,
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc, and, or } from "drizzle-orm";
@@ -107,19 +128,44 @@ export class DatabaseStorage implements IStorage {
 
   // Wallet operations
   async createWallet(walletData: InsertWallet): Promise<Wallet> {
-    const [wallet] = await db
-      .insert(wallets)
-      .values(walletData)
-      .returning();
-    return wallet;
+    try {
+      const [wallet] = await db
+        .insert(wallets)
+        .values(walletData)
+        .returning();
+      return wallet;
+    } catch (error) {
+      // If walletType column doesn't exist, create without it
+      if (error.code === '42703') {
+        const { walletType, ...walletDataWithoutType } = walletData;
+        const [wallet] = await db
+          .insert(wallets)
+          .values(walletDataWithoutType)
+          .returning();
+        return wallet;
+      }
+      throw error;
+    }
   }
 
   async getWalletByUserId(userId: string): Promise<Wallet | undefined> {
-    const [wallet] = await db
-      .select()
-      .from(wallets)
-      .where(and(eq(wallets.userId, userId), eq(wallets.isActive, true)));
-    return wallet;
+    try {
+      const [wallet] = await db
+        .select()
+        .from(wallets)
+        .where(and(eq(wallets.userId, userId), eq(wallets.isActive, true)));
+      return wallet;
+    } catch (error) {
+      // If walletType column doesn't exist, try without it
+      if (error.code === '42703') {
+        const [wallet] = await db
+          .select()
+          .from(wallets)
+          .where(eq(wallets.userId, userId));
+        return wallet;
+      }
+      throw error;
+    }
   }
 
   async updateWalletBalance(walletId: number, balance: string, pendingBalance?: string): Promise<Wallet> {

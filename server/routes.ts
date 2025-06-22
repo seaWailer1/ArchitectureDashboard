@@ -239,6 +239,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Migration route for walletType column
+  app.post('/api/migrate/wallet-type', async (req: any, res) => {
+    try {
+      const { addWalletTypeColumn } = await import('./migrate-wallet-type');
+      await addWalletTypeColumn();
+      res.json({ message: "Migration completed successfully" });
+    } catch (error) {
+      console.error("Migration error:", error);
+      res.status(500).json({ message: "Migration failed", error: error.message });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }
