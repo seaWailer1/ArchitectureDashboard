@@ -78,6 +78,9 @@ export interface IStorage {
   getCreditFacilities(userId: string): Promise<any[]>;
   getDigitalAssets(): Promise<any[]>;
   getInvestmentProducts(): Promise<any[]>;
+  getTradingPairs(): Promise<any[]>;
+  executeTrade(userId: string, tradeData: any): Promise<any>;
+  createInvestment(userId: string, investmentData: any): Promise<any>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -467,6 +470,84 @@ export class DatabaseStorage implements IStorage {
       .from(investmentProducts)
       .where(eq(investmentProducts.isActive, true))
       .orderBy(investmentProducts.riskLevel, investmentProducts.expectedReturn);
+  }
+
+  async getTradingPairs(): Promise<any[]> {
+    try {
+      return await db
+        .select({
+          id: tradingPairs.id,
+          symbol: tradingPairs.symbol,
+          lastPrice: tradingPairs.lastPrice,
+          volume24h: tradingPairs.volume24h,
+          priceChange24h: tradingPairs.priceChange24h,
+          baseAsset: {
+            id: digitalAssets.id,
+            symbol: digitalAssets.symbol,
+            name: digitalAssets.name,
+            type: digitalAssets.type,
+            exchangeRate: digitalAssets.exchangeRate,
+            priceChange24h: digitalAssets.priceChange24h,
+          },
+          quoteAsset: {
+            symbol: "USD",
+            name: "US Dollar",
+            type: "fiat",
+          }
+        })
+        .from(tradingPairs)
+        .innerJoin(digitalAssets, eq(tradingPairs.baseAssetId, digitalAssets.id))
+        .where(eq(tradingPairs.isActive, true));
+    } catch (error) {
+      return [];
+    }
+  }
+
+  async executeTrade(userId: string, tradeData: any): Promise<any> {
+    // Simulate trade execution - in production this would integrate with exchange APIs
+    return {
+      id: Date.now(),
+      userId,
+      ...tradeData,
+      status: 'completed',
+      executedAt: new Date(),
+    };
+  }
+
+  async createInvestment(userId: string, investmentData: any): Promise<any> {
+    const { productId, principalAmount } = investmentData;
+    
+    // Get the product details
+    const [product] = await db
+      .select()
+      .from(investmentProducts)
+      .where(eq(investmentProducts.id, productId));
+    
+    if (!product) {
+      throw new Error('Investment product not found');
+    }
+
+    // Calculate maturity date
+    const startDate = new Date();
+    const maturityDate = new Date();
+    maturityDate.setMonth(maturityDate.getMonth() + product.tenure);
+
+    // Create investment record
+    const [investment] = await db
+      .insert(userInvestments)
+      .values({
+        userId,
+        productId,
+        principalAmount: principalAmount.toString(),
+        currentValue: principalAmount.toString(),
+        interestEarned: "0.00",
+        status: "active",
+        startDate,
+        maturityDate,
+      })
+      .returning();
+
+    return investment;
   }
 }
 

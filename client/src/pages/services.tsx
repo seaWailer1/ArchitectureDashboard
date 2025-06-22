@@ -7,6 +7,9 @@ import AppHeader from "@/components/layout/app-header";
 import BottomNavigation from "@/components/layout/bottom-navigation";
 import LoanApplication from "@/components/loans/loan-application";
 import VirtualCardManager from "@/components/virtual-card/virtual-card";
+import CryptoTrading from "@/components/crypto/crypto-trading";
+import InvestmentProducts from "@/components/investment/investment-products";
+import AdminDashboard from "@/components/admin/admin-dashboard";
 
 export default function Services() {
   const { toast } = useToast();
@@ -33,13 +36,15 @@ export default function Services() {
       services: [
         { id: "loans", name: "Micro Loans", icon: CreditCard, color: "bg-red-100 text-red-600", description: "Quick personal loans" },
         { id: "virtual-card", name: "Virtual Cards", icon: Building, color: "bg-emerald-100 text-emerald-600", description: "Secure online payments" },
-        { id: "insurance", name: "Insurance", icon: Users, color: "bg-orange-100 text-orange-600", description: "Affordable insurance" },
+        { id: "investment", name: "Investments", icon: Users, color: "bg-green-100 text-green-600", description: "Grow your wealth" },
+        { id: "admin", name: "Admin Portal", icon: MoreHorizontal, color: "bg-gray-100 text-gray-600", description: "System analytics" },
       ]
     }
   ];
 
   const handleServiceLaunch = (serviceId: string, serviceName: string) => {
-    if (serviceId === 'loans' || serviceId === 'virtual-card') {
+    const availableServices = ['loans', 'virtual-card', 'crypto', 'investment', 'admin'];
+    if (availableServices.includes(serviceId)) {
       setSelectedService(serviceId);
     } else {
       toast({
@@ -55,6 +60,12 @@ export default function Services() {
         return <LoanApplication />;
       case 'virtual-card':
         return <VirtualCardManager />;
+      case 'crypto':
+        return <CryptoTrading />;
+      case 'investment':
+        return <InvestmentProducts />;
+      case 'admin':
+        return <AdminDashboard />;
       default:
         return null;
     }
@@ -137,7 +148,10 @@ export default function Services() {
           <DialogHeader>
             <DialogTitle>
               {selectedService === 'loans' ? 'Micro Loans' : 
-               selectedService === 'virtual-card' ? 'Virtual Cards' : ''}
+               selectedService === 'virtual-card' ? 'Virtual Cards' :
+               selectedService === 'crypto' ? 'Crypto Trading' :
+               selectedService === 'investment' ? 'Investment Products' :
+               selectedService === 'admin' ? 'Admin Dashboard' : ''}
             </DialogTitle>
           </DialogHeader>
           {renderServiceContent()}
