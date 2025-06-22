@@ -186,7 +186,7 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getTransactionsByWalletId(walletId: number, limit: number = 10): Promise<Transaction[]> {
-    return await db
+    return await this.db
       .select()
       .from(transactions)
       .where(or(
@@ -206,7 +206,7 @@ export class DatabaseStorage implements IStorage {
   }
 
   async updateTransactionStatus(id: number, status: string): Promise<Transaction> {
-    const [transaction] = await db
+    const [transaction] = await this.db
       .update(transactions)
       .set({ status: status as any, updatedAt: new Date() })
       .where(eq(transactions.id, id))
@@ -216,7 +216,7 @@ export class DatabaseStorage implements IStorage {
 
   // User role operations
   async createUserRole(userRoleData: InsertUserRole): Promise<UserRole> {
-    const [userRole] = await db
+    const [userRole] = await this.db
       .insert(userRoles)
       .values(userRoleData)
       .returning();
@@ -224,14 +224,14 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getUserRoles(userId: string): Promise<UserRole[]> {
-    return await db
+    return await this.db
       .select()
       .from(userRoles)
       .where(and(eq(userRoles.userId, userId), eq(userRoles.isActive, true)));
   }
 
   async updateUserCurrentRole(userId: string, role: string): Promise<User> {
-    const [user] = await db
+    const [user] = await this.db
       .update(users)
       .set({ currentRole: role as any, updatedAt: new Date() })
       .where(eq(users.id, userId))
@@ -241,7 +241,7 @@ export class DatabaseStorage implements IStorage {
 
   // KYC operations
   async updateKYCStatus(userId: string, status: string): Promise<User> {
-    const [user] = await db
+    const [user] = await this.db
       .update(users)
       .set({ kycStatus: status as any, updatedAt: new Date() })
       .where(eq(users.id, userId))
@@ -253,7 +253,7 @@ export class DatabaseStorage implements IStorage {
     const updateData: any = { updatedAt: new Date() };
     updateData[field] = status;
     
-    const [user] = await db
+    const [user] = await this.db
       .update(users)
       .set(updateData)
       .where(eq(users.id, userId))
