@@ -150,20 +150,14 @@ export class DatabaseStorage implements IStorage {
 
   async getWalletByUserId(userId: string): Promise<Wallet | undefined> {
     try {
-      const [wallet] = await db
+      const [wallet] = await this.db
         .select()
         .from(wallets)
-        .where(and(eq(wallets.userId, userId), eq(wallets.isActive, true)));
+        .where(eq(wallets.userId, userId))
+        .limit(1);
       return wallet;
     } catch (error) {
-      // If walletType column doesn't exist, try without it
-      if (error.code === '42703') {
-        const [wallet] = await db
-          .select()
-          .from(wallets)
-          .where(eq(wallets.userId, userId));
-        return wallet;
-      }
+      console.error("Error fetching wallet:", error);
       throw error;
     }
   }
@@ -174,7 +168,7 @@ export class DatabaseStorage implements IStorage {
       updateData.pendingBalance = pendingBalance;
     }
     
-    const [wallet] = await db
+    const [wallet] = await this.db
       .update(wallets)
       .set(updateData)
       .where(eq(wallets.id, walletId))
@@ -184,7 +178,7 @@ export class DatabaseStorage implements IStorage {
 
   // Transaction operations
   async createTransaction(transactionData: InsertTransaction): Promise<Transaction> {
-    const [transaction] = await db
+    const [transaction] = await this.db
       .insert(transactions)
       .values(transactionData)
       .returning();
@@ -204,7 +198,7 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getTransactionById(id: number): Promise<Transaction | undefined> {
-    const [transaction] = await db
+    const [transaction] = await this.db
       .select()
       .from(transactions)
       .where(eq(transactions.id, id));
