@@ -358,6 +358,230 @@ export const kycDocuments = pgTable("kyc_documents", {
   updatedAt: timestamp("updated_at").defaultNow(),
 });
 
+// E-commerce and Delivery Schema
+export const stores = pgTable("stores", {
+  id: serial("id").primaryKey(),
+  merchantId: varchar("merchant_id").notNull().references(() => users.id),
+  name: varchar("name").notNull(),
+  description: text("description"),
+  category: varchar("category").notNull(), // restaurant, grocery, pharmacy, electronics, fashion, etc.
+  address: text("address").notNull(),
+  latitude: decimal("latitude", { precision: 10, scale: 7 }),
+  longitude: decimal("longitude", { precision: 10, scale: 7 }),
+  phone: varchar("phone"),
+  email: varchar("email"),
+  businessHours: jsonb("business_hours"), // {monday: {open: "09:00", close: "21:00"}, ...}
+  deliveryRadius: decimal("delivery_radius", { precision: 5, scale: 2 }).default("5.00"), // km
+  minimumOrderAmount: decimal("minimum_order_amount", { precision: 10, scale: 2 }).default("0.00"),
+  deliveryFee: decimal("delivery_fee", { precision: 8, scale: 2 }).default("2.00"),
+  freeDeliveryThreshold: decimal("free_delivery_threshold", { precision: 10, scale: 2 }),
+  rating: decimal("rating", { precision: 3, scale: 2 }).default("0.00"),
+  totalReviews: integer("total_reviews").default(0),
+  isActive: boolean("is_active").default(true),
+  isFeatured: boolean("is_featured").default(false),
+  imageUrl: varchar("image_url"),
+  bannerUrl: varchar("banner_url"),
+  tags: text("tags").array(), // fast_delivery, eco_friendly, halal, etc.
+  preparationTime: integer("preparation_time").default(30), // minutes
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+export const products = pgTable("products", {
+  id: serial("id").primaryKey(),
+  storeId: integer("store_id").notNull().references(() => stores.id),
+  name: varchar("name").notNull(),
+  description: text("description"),
+  category: varchar("category").notNull(),
+  subcategory: varchar("subcategory"),
+  price: decimal("price", { precision: 10, scale: 2 }).notNull(),
+  originalPrice: decimal("original_price", { precision: 10, scale: 2 }),
+  sku: varchar("sku"),
+  barcode: varchar("barcode"),
+  stock: integer("stock").default(0),
+  minStock: integer("min_stock").default(0),
+  unit: varchar("unit").default("piece"), // piece, kg, liter, etc.
+  weight: decimal("weight", { precision: 8, scale: 3 }), // in kg
+  dimensions: jsonb("dimensions"), // {length, width, height} in cm
+  imageUrls: text("image_urls").array(),
+  isActive: boolean("is_active").default(true),
+  isFeatured: boolean("is_featured").default(false),
+  rating: decimal("rating", { precision: 3, scale: 2 }).default("0.00"),
+  totalReviews: integer("total_reviews").default(0),
+  tags: text("tags").array(),
+  nutritionInfo: jsonb("nutrition_info"), // for food items
+  allergens: text("allergens").array(),
+  ingredients: text("ingredients").array(),
+  preparationTime: integer("preparation_time"), // minutes for food
+  isVegetarian: boolean("is_vegetarian").default(false),
+  isVegan: boolean("is_vegan").default(false),
+  isGlutenFree: boolean("is_gluten_free").default(false),
+  isHalal: boolean("is_halal").default(false),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+export const orders = pgTable("orders", {
+  id: serial("id").primaryKey(),
+  customerId: varchar("customer_id").notNull().references(() => users.id),
+  storeId: integer("store_id").notNull().references(() => stores.id),
+  orderNumber: varchar("order_number").notNull().unique(),
+  status: varchar("status", { 
+    enum: ["pending", "confirmed", "preparing", "ready", "picked_up", "delivered", "cancelled"] 
+  }).default("pending"),
+  orderType: varchar("order_type", { enum: ["delivery", "pickup"] }).default("delivery"),
+  subtotal: decimal("subtotal", { precision: 10, scale: 2 }).notNull(),
+  deliveryFee: decimal("delivery_fee", { precision: 8, scale: 2 }).default("0.00"),
+  serviceFee: decimal("service_fee", { precision: 8, scale: 2 }).default("0.00"),
+  tax: decimal("tax", { precision: 8, scale: 2 }).default("0.00"),
+  discount: decimal("discount", { precision: 8, scale: 2 }).default("0.00"),
+  totalAmount: decimal("total_amount", { precision: 10, scale: 2 }).notNull(),
+  paymentMethod: varchar("payment_method").notNull(),
+  paymentStatus: varchar("payment_status", { enum: ["pending", "paid", "failed", "refunded"] }).default("pending"),
+  deliveryAddress: jsonb("delivery_address"), // {street, city, state, country, latitude, longitude}
+  deliveryInstructions: text("delivery_instructions"),
+  estimatedDeliveryTime: timestamp("estimated_delivery_time"),
+  actualDeliveryTime: timestamp("actual_delivery_time"),
+  preparationTime: integer("preparation_time"), // minutes
+  driverId: varchar("driver_id").references(() => users.id),
+  driverAssignedAt: timestamp("driver_assigned_at"),
+  pickedUpAt: timestamp("picked_up_at"),
+  deliveredAt: timestamp("delivered_at"),
+  cancelledAt: timestamp("cancelled_at"),
+  cancellationReason: text("cancellation_reason"),
+  rating: integer("rating"), // 1-5 stars
+  review: text("review"),
+  reviewedAt: timestamp("reviewed_at"),
+  metadata: jsonb("metadata"), // special requests, allergies, etc.
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+export const orderItems = pgTable("order_items", {
+  id: serial("id").primaryKey(),
+  orderId: integer("order_id").notNull().references(() => orders.id),
+  productId: integer("product_id").notNull().references(() => products.id),
+  quantity: integer("quantity").notNull(),
+  unitPrice: decimal("unit_price", { precision: 10, scale: 2 }).notNull(),
+  totalPrice: decimal("total_price", { precision: 10, scale: 2 }).notNull(),
+  customizations: jsonb("customizations"), // size, extras, modifications
+  specialInstructions: text("special_instructions"),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const deliveries = pgTable("deliveries", {
+  id: serial("id").primaryKey(),
+  orderId: integer("order_id").references(() => orders.id),
+  driverId: varchar("driver_id").notNull().references(() => users.id),
+  deliveryType: varchar("delivery_type", { enum: ["food", "grocery", "pharmacy", "package", "documents"] }).notNull(),
+  status: varchar("status", { 
+    enum: ["assigned", "heading_to_pickup", "arrived_at_pickup", "picked_up", "heading_to_delivery", "arrived_at_delivery", "delivered", "cancelled"] 
+  }).default("assigned"),
+  pickupAddress: jsonb("pickup_address").notNull(),
+  deliveryAddress: jsonb("delivery_address").notNull(),
+  estimatedDistance: decimal("estimated_distance", { precision: 8, scale: 2 }), // km
+  actualDistance: decimal("actual_distance", { precision: 8, scale: 2 }),
+  estimatedDuration: integer("estimated_duration"), // minutes
+  actualDuration: integer("actual_duration"),
+  deliveryFee: decimal("delivery_fee", { precision: 8, scale: 2 }).notNull(),
+  vehicleType: varchar("vehicle_type", { enum: ["motorbike", "bicycle", "car", "van"] }).notNull(),
+  currentLocation: jsonb("current_location"), // {latitude, longitude, timestamp}
+  proofOfDelivery: jsonb("proof_of_delivery"), // {photo, signature, otp}
+  customerRating: integer("customer_rating"), // 1-5 stars
+  customerFeedback: text("customer_feedback"),
+  driverNotes: text("driver_notes"),
+  assignedAt: timestamp("assigned_at").defaultNow(),
+  pickedUpAt: timestamp("picked_up_at"),
+  deliveredAt: timestamp("delivered_at"),
+  cancelledAt: timestamp("cancelled_at"),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+export const drivers = pgTable("drivers", {
+  id: serial("id").primaryKey(),
+  userId: varchar("user_id").notNull().references(() => users.id),
+  licenseNumber: varchar("license_number").notNull(),
+  vehicleType: varchar("vehicle_type", { enum: ["motorbike", "bicycle", "car", "van"] }).notNull(),
+  vehicleMake: varchar("vehicle_make"),
+  vehicleModel: varchar("vehicle_model"),
+  vehicleYear: integer("vehicle_year"),
+  vehicleColor: varchar("vehicle_color"),
+  plateNumber: varchar("plate_number").notNull(),
+  insurance: jsonb("insurance"), // {provider, policyNumber, expiryDate}
+  isActive: boolean("is_active").default(false),
+  isOnline: boolean("is_online").default(false),
+  currentLocation: jsonb("current_location"), // {latitude, longitude, timestamp}
+  totalDeliveries: integer("total_deliveries").default(0),
+  rating: decimal("rating", { precision: 3, scale: 2 }).default("0.00"),
+  totalRatings: integer("total_ratings").default(0),
+  earnings: decimal("earnings", { precision: 10, scale: 2 }).default("0.00"),
+  weeklyEarnings: decimal("weekly_earnings", { precision: 10, scale: 2 }).default("0.00"),
+  monthlyEarnings: decimal("monthly_earnings", { precision: 10, scale: 2 }).default("0.00"),
+  lastDeliveryAt: timestamp("last_delivery_at"),
+  verificationStatus: varchar("verification_status", { enum: ["pending", "verified", "rejected"] }).default("pending"),
+  backgroundCheckStatus: varchar("background_check_status", { enum: ["pending", "passed", "failed"] }).default("pending"),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+export const coupons = pgTable("coupons", {
+  id: serial("id").primaryKey(),
+  code: varchar("code").notNull().unique(),
+  title: varchar("title").notNull(),
+  description: text("description"),
+  type: varchar("type", { enum: ["percentage", "fixed_amount", "free_delivery"] }).notNull(),
+  value: decimal("value", { precision: 10, scale: 2 }).notNull(),
+  minimumOrderAmount: decimal("minimum_order_amount", { precision: 10, scale: 2 }),
+  maximumDiscount: decimal("maximum_discount", { precision: 10, scale: 2 }),
+  usageLimit: integer("usage_limit"),
+  usageCount: integer("usage_count").default(0),
+  userLimit: integer("user_limit").default(1), // per user
+  applicableStores: integer("applicable_stores").array(), // store IDs
+  applicableCategories: text("applicable_categories").array(),
+  isActive: boolean("is_active").default(true),
+  startDate: timestamp("start_date").notNull(),
+  endDate: timestamp("end_date").notNull(),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const reviews = pgTable("reviews", {
+  id: serial("id").primaryKey(),
+  customerId: varchar("customer_id").notNull().references(() => users.id),
+  orderId: integer("order_id").references(() => orders.id),
+  storeId: integer("store_id").references(() => stores.id),
+  productId: integer("product_id").references(() => products.id),
+  driverId: varchar("driver_id").references(() => users.id),
+  rating: integer("rating").notNull(), // 1-5 stars
+  title: varchar("title"),
+  comment: text("comment"),
+  images: text("images").array(),
+  isVerified: boolean("is_verified").default(false),
+  isPublic: boolean("is_public").default(true),
+  merchantResponse: text("merchant_response"),
+  merchantResponseAt: timestamp("merchant_response_at"),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+export const promotions = pgTable("promotions", {
+  id: serial("id").primaryKey(),
+  storeId: integer("store_id").references(() => stores.id),
+  title: varchar("title").notNull(),
+  description: text("description"),
+  type: varchar("type", { enum: ["discount", "bogo", "free_item", "bundle"] }).notNull(),
+  discount: decimal("discount", { precision: 5, scale: 2 }), // percentage or amount
+  applicableProducts: integer("applicable_products").array(), // product IDs
+  minimumOrderAmount: decimal("minimum_order_amount", { precision: 10, scale: 2 }),
+  isActive: boolean("is_active").default(true),
+  startDate: timestamp("start_date").notNull(),
+  endDate: timestamp("end_date").notNull(),
+  imageUrl: varchar("image_url"),
+  priority: integer("priority").default(0),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
 // Relations
 export const usersRelations = relations(users, ({ many, one }) => ({
   wallets: many(wallets),
@@ -522,6 +746,105 @@ export const kycDocumentsRelations = relations(kycDocuments, ({ one }) => ({
   }),
 }));
 
+// E-commerce Relations
+export const storesRelations = relations(stores, ({ one, many }) => ({
+  merchant: one(users, {
+    fields: [stores.merchantId],
+    references: [users.id],
+  }),
+  products: many(products),
+  orders: many(orders),
+  reviews: many(reviews),
+  promotions: many(promotions),
+}));
+
+export const productsRelations = relations(products, ({ one, many }) => ({
+  store: one(stores, {
+    fields: [products.storeId],
+    references: [stores.id],
+  }),
+  orderItems: many(orderItems),
+  reviews: many(reviews),
+}));
+
+export const ordersRelations = relations(orders, ({ one, many }) => ({
+  customer: one(users, {
+    fields: [orders.customerId],
+    references: [users.id],
+  }),
+  store: one(stores, {
+    fields: [orders.storeId],
+    references: [stores.id],
+  }),
+  driver: one(users, {
+    fields: [orders.driverId],
+    references: [users.id],
+  }),
+  items: many(orderItems),
+  delivery: one(deliveries),
+  reviews: many(reviews),
+}));
+
+export const orderItemsRelations = relations(orderItems, ({ one }) => ({
+  order: one(orders, {
+    fields: [orderItems.orderId],
+    references: [orders.id],
+  }),
+  product: one(products, {
+    fields: [orderItems.productId],
+    references: [products.id],
+  }),
+}));
+
+export const deliveriesRelations = relations(deliveries, ({ one }) => ({
+  order: one(orders, {
+    fields: [deliveries.orderId],
+    references: [orders.id],
+  }),
+  driver: one(users, {
+    fields: [deliveries.driverId],
+    references: [users.id],
+  }),
+}));
+
+export const driversRelations = relations(drivers, ({ one, many }) => ({
+  user: one(users, {
+    fields: [drivers.userId],
+    references: [users.id],
+  }),
+  deliveries: many(deliveries),
+}));
+
+export const reviewsRelations = relations(reviews, ({ one }) => ({
+  customer: one(users, {
+    fields: [reviews.customerId],
+    references: [users.id],
+  }),
+  order: one(orders, {
+    fields: [reviews.orderId],
+    references: [orders.id],
+  }),
+  store: one(stores, {
+    fields: [reviews.storeId],
+    references: [stores.id],
+  }),
+  product: one(products, {
+    fields: [reviews.productId],
+    references: [products.id],
+  }),
+  driver: one(users, {
+    fields: [reviews.driverId],
+    references: [users.id],
+  }),
+}));
+
+export const promotionsRelations = relations(promotions, ({ one }) => ({
+  store: one(stores, {
+    fields: [promotions.storeId],
+    references: [stores.id],
+  }),
+}));
+
 // Insert schemas
 export const insertUserSchema = createInsertSchema(users).omit({
   createdAt: true,
@@ -638,6 +961,60 @@ export const insertAccountRecoverySchema = createInsertSchema(accountRecovery).o
   createdAt: true,
 });
 
+// E-commerce Insert Schemas
+export const insertStoreSchema = createInsertSchema(stores).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const insertProductSchema = createInsertSchema(products).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const insertOrderSchema = createInsertSchema(orders).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const insertOrderItemSchema = createInsertSchema(orderItems).omit({
+  id: true,
+  createdAt: true,
+});
+
+export const insertDeliverySchema = createInsertSchema(deliveries).omit({
+  id: true,
+  assignedAt: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const insertDriverSchema = createInsertSchema(drivers).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const insertCouponSchema = createInsertSchema(coupons).omit({
+  id: true,
+  createdAt: true,
+});
+
+export const insertReviewSchema = createInsertSchema(reviews).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const insertPromotionSchema = createInsertSchema(promotions).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
 // Types
 export type UpsertUser = typeof users.$inferInsert;
 export type User = typeof users.$inferSelect;
@@ -679,3 +1056,23 @@ export type InsertCreditFacility = z.infer<typeof insertCreditFacilitySchema>;
 export type CreditFacility = typeof creditFacilities.$inferSelect;
 export type InsertTradingPair = z.infer<typeof insertTradingPairSchema>;
 export type TradingPair = typeof tradingPairs.$inferSelect;
+
+// E-commerce Types
+export type InsertStore = z.infer<typeof insertStoreSchema>;
+export type Store = typeof stores.$inferSelect;
+export type InsertProduct = z.infer<typeof insertProductSchema>;
+export type Product = typeof products.$inferSelect;
+export type InsertOrder = z.infer<typeof insertOrderSchema>;
+export type Order = typeof orders.$inferSelect;
+export type InsertOrderItem = z.infer<typeof insertOrderItemSchema>;
+export type OrderItem = typeof orderItems.$inferSelect;
+export type InsertDelivery = z.infer<typeof insertDeliverySchema>;
+export type Delivery = typeof deliveries.$inferSelect;
+export type InsertDriver = z.infer<typeof insertDriverSchema>;
+export type Driver = typeof drivers.$inferSelect;
+export type InsertCoupon = z.infer<typeof insertCouponSchema>;
+export type Coupon = typeof coupons.$inferSelect;
+export type InsertReview = z.infer<typeof insertReviewSchema>;
+export type Review = typeof reviews.$inferSelect;
+export type InsertPromotion = z.infer<typeof insertPromotionSchema>;
+export type Promotion = typeof promotions.$inferSelect;
