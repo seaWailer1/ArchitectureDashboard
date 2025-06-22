@@ -70,6 +70,14 @@ export interface IStorage {
   updateAccountSettings(userId: string, settings: Partial<User>): Promise<User>;
   deactivateAccount(userId: string): Promise<User>;
   reactivateAccount(userId: string): Promise<User>;
+  
+  // Enhanced wallet operations
+  getUserWallets(userId: string): Promise<Wallet[]>;
+  getAssetHoldings(userId: string): Promise<any[]>;
+  getUserInvestments(userId: string): Promise<any[]>;
+  getCreditFacilities(userId: string): Promise<any[]>;
+  getDigitalAssets(): Promise<any[]>;
+  getInvestmentProducts(): Promise<any[]>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -372,6 +380,93 @@ export class DatabaseStorage implements IStorage {
       .where(eq(users.id, userId))
       .returning();
     return result;
+  }
+
+  // Enhanced wallet operations
+  async getUserWallets(userId: string): Promise<Wallet[]> {
+    return await db
+      .select()
+      .from(wallets)
+      .where(eq(wallets.userId, userId))
+      .orderBy(wallets.walletType);
+  }
+
+  async getAssetHoldings(userId: string): Promise<any[]> {
+    const userWallets = await this.getUserWallets(userId);
+    const walletIds = userWallets.map(w => w.id);
+    
+    if (walletIds.length === 0) return [];
+
+    return await db
+      .select({
+        id: assetHoldings.id,
+        balance: assetHoldings.balance,
+        totalInvested: assetHoldings.totalInvested,
+        averageBuyPrice: assetHoldings.averageBuyPrice,
+        asset: {
+          symbol: digitalAssets.symbol,
+          name: digitalAssets.name,
+          type: digitalAssets.type,
+          iconUrl: digitalAssets.iconUrl,
+          exchangeRate: digitalAssets.exchangeRate,
+          priceChange24h: digitalAssets.priceChange24h,
+        }
+      })
+      .from(assetHoldings)
+      .innerJoin(digitalAssets, eq(assetHoldings.assetId, digitalAssets.id))
+      .where(
+        and(
+          eq(assetHoldings.walletId, walletIds[0]), // Simplified for demo
+          eq(digitalAssets.isActive, true)
+        )
+      );
+  }
+
+  async getUserInvestments(userId: string): Promise<any[]> {
+    return await db
+      .select({
+        id: userInvestments.id,
+        principalAmount: userInvestments.principalAmount,
+        currentValue: userInvestments.currentValue,
+        interestEarned: userInvestments.interestEarned,
+        status: userInvestments.status,
+        startDate: userInvestments.startDate,
+        maturityDate: userInvestments.maturityDate,
+        product: {
+          name: investmentProducts.name,
+          type: investmentProducts.type,
+          expectedReturn: investmentProducts.expectedReturn,
+          riskLevel: investmentProducts.riskLevel,
+        }
+      })
+      .from(userInvestments)
+      .innerJoin(investmentProducts, eq(userInvestments.productId, investmentProducts.id))
+      .where(eq(userInvestments.userId, userId))
+      .orderBy(desc(userInvestments.createdAt));
+  }
+
+  async getCreditFacilities(userId: string): Promise<any[]> {
+    return await db
+      .select()
+      .from(creditFacilities)
+      .where(eq(creditFacilities.userId, userId))
+      .orderBy(creditFacilities.type);
+  }
+
+  async getDigitalAssets(): Promise<any[]> {
+    return await db
+      .select()
+      .from(digitalAssets)
+      .where(eq(digitalAssets.isActive, true))
+      .orderBy(digitalAssets.type, digitalAssets.symbol);
+  }
+
+  async getInvestmentProducts(): Promise<any[]> {
+    return await db
+      .select()
+      .from(investmentProducts)
+      .where(eq(investmentProducts.isActive, true))
+      .orderBy(investmentProducts.riskLevel, investmentProducts.expectedReturn);
   }
 }
 

@@ -142,9 +142,105 @@ export const accountRecovery = pgTable("account_recovery", {
 export const wallets = pgTable("wallets", {
   id: serial("id").primaryKey(),
   userId: varchar("user_id").notNull().references(() => users.id),
-  balance: decimal("balance", { precision: 10, scale: 2 }).default("0.00"),
-  pendingBalance: decimal("pending_balance", { precision: 10, scale: 2 }).default("0.00"),
+  walletType: varchar("wallet_type", { enum: ["primary", "savings", "investment", "crypto"] }).default("primary"),
+  balance: decimal("balance", { precision: 15, scale: 8 }).default("0.00"),
+  pendingBalance: decimal("pending_balance", { precision: 15, scale: 8 }).default("0.00"),
+  currency: varchar("currency", { length: 10 }).default("USD"),
+  isActive: boolean("is_active").default(true),
+  dailyLimit: decimal("daily_limit", { precision: 10, scale: 2 }).default("5000.00"),
+  monthlyLimit: decimal("monthly_limit", { precision: 10, scale: 2 }).default("50000.00"),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// Digital currencies and assets
+export const digitalAssets = pgTable("digital_assets", {
+  id: serial("id").primaryKey(),
+  symbol: varchar("symbol", { length: 20 }).unique().notNull(),
+  name: varchar("name").notNull(),
+  type: varchar("type", { enum: ["fiat", "cryptocurrency", "cbdc", "stablecoin"] }).notNull(),
+  decimals: integer("decimals").default(8),
+  iconUrl: varchar("icon_url"),
+  isActive: boolean("is_active").default(true),
+  exchangeRate: decimal("exchange_rate", { precision: 15, scale: 8 }).default("1.00"),
+  marketCap: decimal("market_cap", { precision: 20, scale: 2 }),
+  volume24h: decimal("volume_24h", { precision: 20, scale: 2 }),
+  priceChange24h: decimal("price_change_24h", { precision: 5, scale: 2 }),
+  lastUpdated: timestamp("last_updated").defaultNow(),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+// Asset holdings per wallet
+export const assetHoldings = pgTable("asset_holdings", {
+  id: serial("id").primaryKey(),
+  walletId: integer("wallet_id").notNull().references(() => wallets.id),
+  assetId: integer("asset_id").notNull().references(() => digitalAssets.id),
+  balance: decimal("balance", { precision: 20, scale: 8 }).default("0.00"),
+  averageBuyPrice: decimal("average_buy_price", { precision: 15, scale: 8 }),
+  totalInvested: decimal("total_invested", { precision: 15, scale: 2 }).default("0.00"),
+  lastTransactionAt: timestamp("last_transaction_at"),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// Investment products
+export const investmentProducts = pgTable("investment_products", {
+  id: serial("id").primaryKey(),
+  name: varchar("name").notNull(),
+  description: text("description"),
+  type: varchar("type", { enum: ["savings", "fixed_deposit", "mutual_fund", "bonds", "stocks"] }).notNull(),
+  riskLevel: varchar("risk_level", { enum: ["low", "medium", "high"] }).notNull(),
+  expectedReturn: decimal("expected_return", { precision: 5, scale: 2 }).notNull(),
+  minimumAmount: decimal("minimum_amount", { precision: 10, scale: 2 }).notNull(),
+  maximumAmount: decimal("maximum_amount", { precision: 10, scale: 2 }),
+  tenure: integer("tenure"), // in months
   currency: varchar("currency", { length: 3 }).default("USD"),
+  isActive: boolean("is_active").default(true),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// User investments
+export const userInvestments = pgTable("user_investments", {
+  id: serial("id").primaryKey(),
+  userId: varchar("user_id").notNull().references(() => users.id),
+  productId: integer("product_id").notNull().references(() => investmentProducts.id),
+  principalAmount: decimal("principal_amount", { precision: 10, scale: 2 }).notNull(),
+  currentValue: decimal("current_value", { precision: 10, scale: 2 }).notNull(),
+  interestEarned: decimal("interest_earned", { precision: 10, scale: 2 }).default("0.00"),
+  status: varchar("status", { enum: ["active", "matured", "withdrawn", "cancelled"] }).default("active"),
+  startDate: timestamp("start_date").defaultNow(),
+  maturityDate: timestamp("maturity_date"),
+  lastInterestPayout: timestamp("last_interest_payout"),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// Credit facilities
+export const creditFacilities = pgTable("credit_facilities", {
+  id: serial("id").primaryKey(),
+  userId: varchar("user_id").notNull().references(() => users.id),
+  type: varchar("type", { enum: ["credit_line", "overdraft", "payday_advance"] }).notNull(),
+  creditLimit: decimal("credit_limit", { precision: 10, scale: 2 }).notNull(),
+  availableCredit: decimal("available_credit", { precision: 10, scale: 2 }).notNull(),
+  usedCredit: decimal("used_credit", { precision: 10, scale: 2 }).default("0.00"),
+  interestRate: decimal("interest_rate", { precision: 5, scale: 2 }).notNull(),
+  status: varchar("status", { enum: ["active", "suspended", "closed"] }).default("active"),
+  lastPaymentDate: timestamp("last_payment_date"),
+  nextPaymentDate: timestamp("next_payment_date"),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// Crypto trading pairs
+export const tradingPairs = pgTable("trading_pairs", {
+  id: serial("id").primaryKey(),
+  baseAssetId: integer("base_asset_id").notNull().references(() => digitalAssets.id),
+  quoteAssetId: integer("quote_asset_id").notNull().references(() => digitalAssets.id),
+  symbol: varchar("symbol").notNull(), // e.g., "BTC/USD"
+  lastPrice: decimal("last_price", { precision: 15, scale: 8 }),
+  volume24h: decimal("volume_24h", { precision: 20, scale: 8 }),
+  priceChange24h: decimal("price_change_24h", { precision: 5, scale: 2 }),
   isActive: boolean("is_active").default(true),
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
@@ -323,6 +419,59 @@ export const walletsRelations = relations(wallets, ({ one, many }) => ({
   receivedTransactions: many(transactions, {
     relationName: "receivedTransactions",
   }),
+  assetHoldings: many(assetHoldings),
+}));
+
+export const digitalAssetsRelations = relations(digitalAssets, ({ many }) => ({
+  holdings: many(assetHoldings),
+  baseTradingPairs: many(tradingPairs, { relationName: "baseTradingPairs" }),
+  quoteTradingPairs: many(tradingPairs, { relationName: "quoteTradingPairs" }),
+}));
+
+export const assetHoldingsRelations = relations(assetHoldings, ({ one }) => ({
+  wallet: one(wallets, {
+    fields: [assetHoldings.walletId],
+    references: [wallets.id],
+  }),
+  asset: one(digitalAssets, {
+    fields: [assetHoldings.assetId],
+    references: [digitalAssets.id],
+  }),
+}));
+
+export const investmentProductsRelations = relations(investmentProducts, ({ many }) => ({
+  userInvestments: many(userInvestments),
+}));
+
+export const userInvestmentsRelations = relations(userInvestments, ({ one }) => ({
+  user: one(users, {
+    fields: [userInvestments.userId],
+    references: [users.id],
+  }),
+  product: one(investmentProducts, {
+    fields: [userInvestments.productId],
+    references: [investmentProducts.id],
+  }),
+}));
+
+export const creditFacilitiesRelations = relations(creditFacilities, ({ one }) => ({
+  user: one(users, {
+    fields: [creditFacilities.userId],
+    references: [users.id],
+  }),
+}));
+
+export const tradingPairsRelations = relations(tradingPairs, ({ one }) => ({
+  baseAsset: one(digitalAssets, {
+    fields: [tradingPairs.baseAssetId],
+    references: [digitalAssets.id],
+    relationName: "baseTradingPairs",
+  }),
+  quoteAsset: one(digitalAssets, {
+    fields: [tradingPairs.quoteAssetId],
+    references: [digitalAssets.id],
+    relationName: "quoteTradingPairs",
+  }),
 }));
 
 export const transactionsRelations = relations(transactions, ({ one }) => ({
@@ -426,6 +575,42 @@ export const insertMiniAppSchema = createInsertSchema(miniApps).omit({
   updatedAt: true,
 });
 
+export const insertDigitalAssetSchema = createInsertSchema(digitalAssets).omit({
+  id: true,
+  createdAt: true,
+  lastUpdated: true,
+});
+
+export const insertAssetHoldingSchema = createInsertSchema(assetHoldings).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const insertInvestmentProductSchema = createInsertSchema(investmentProducts).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const insertUserInvestmentSchema = createInsertSchema(userInvestments).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const insertCreditFacilitySchema = createInsertSchema(creditFacilities).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const insertTradingPairSchema = createInsertSchema(tradingPairs).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
 export const insertUserPreferenceSchema = createInsertSchema(userPreferences).omit({
   id: true,
   createdAt: true,
@@ -482,3 +667,15 @@ export type InsertSupportTicket = z.infer<typeof insertSupportTicketSchema>;
 export type SupportTicket = typeof supportTickets.$inferSelect;
 export type InsertAccountRecovery = z.infer<typeof insertAccountRecoverySchema>;
 export type AccountRecovery = typeof accountRecovery.$inferSelect;
+export type InsertDigitalAsset = z.infer<typeof insertDigitalAssetSchema>;
+export type DigitalAsset = typeof digitalAssets.$inferSelect;
+export type InsertAssetHolding = z.infer<typeof insertAssetHoldingSchema>;
+export type AssetHolding = typeof assetHoldings.$inferSelect;
+export type InsertInvestmentProduct = z.infer<typeof insertInvestmentProductSchema>;
+export type InvestmentProduct = typeof investmentProducts.$inferSelect;
+export type InsertUserInvestment = z.infer<typeof insertUserInvestmentSchema>;
+export type UserInvestment = typeof userInvestments.$inferSelect;
+export type InsertCreditFacility = z.infer<typeof insertCreditFacilitySchema>;
+export type CreditFacility = typeof creditFacilities.$inferSelect;
+export type InsertTradingPair = z.infer<typeof insertTradingPairSchema>;
+export type TradingPair = typeof tradingPairs.$inferSelect;
