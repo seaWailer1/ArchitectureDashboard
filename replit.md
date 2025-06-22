@@ -13,6 +13,10 @@ Key Features:
 - Agent network for cash-in/cash-out services
 - Merchant dashboard with business analytics
 - Mini-app ecosystem foundation for third-party services
+- Comprehensive account management with security controls
+- User preferences and notification settings
+- Device management and security monitoring
+- Support ticket system and account recovery
 
 ## System Architecture
 
@@ -140,6 +144,7 @@ Key Features:
 - December 23, 2024: Added Micro Loans application system with interest calculation
 - December 23, 2024: Integrated Virtual Card management with security features
 - December 23, 2024: Enhanced services page with functional loan and virtual card modules
+- December 23, 2024: Implemented comprehensive user account mechanics with security settings, preferences management, device tracking, and support system
 
 ## User Preferences
 

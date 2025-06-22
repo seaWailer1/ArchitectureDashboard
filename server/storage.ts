@@ -40,6 +40,36 @@ export interface IStorage {
   // KYC operations
   updateKYCStatus(userId: string, status: string): Promise<User>;
   updateVerificationStatus(userId: string, field: string, status: boolean): Promise<User>;
+  
+  // User preferences operations
+  getUserPreferences(userId: string): Promise<UserPreference[]>;
+  upsertUserPreference(preference: InsertUserPreference): Promise<UserPreference>;
+  deleteUserPreference(userId: string, category: string, key: string): Promise<void>;
+  
+  // Security operations
+  logSecurityEvent(log: InsertSecurityLog): Promise<SecurityLog>;
+  getSecurityLogs(userId: string, limit?: number): Promise<SecurityLog[]>;
+  
+  // Device management
+  registerDevice(device: InsertUserDevice): Promise<UserDevice>;
+  getUserDevices(userId: string): Promise<UserDevice[]>;
+  updateDeviceStatus(deviceId: string, isActive: boolean): Promise<UserDevice>;
+  trustDevice(deviceId: string): Promise<UserDevice>;
+  
+  // Support system
+  createSupportTicket(ticket: InsertSupportTicket): Promise<SupportTicket>;
+  getUserSupportTickets(userId: string): Promise<SupportTicket[]>;
+  updateTicketStatus(ticketId: number, status: string): Promise<SupportTicket>;
+  
+  // Account recovery
+  createRecoveryToken(recovery: InsertAccountRecovery): Promise<AccountRecovery>;
+  getRecoveryToken(token: string): Promise<AccountRecovery | undefined>;
+  useRecoveryToken(token: string): Promise<AccountRecovery>;
+  
+  // Account management
+  updateAccountSettings(userId: string, settings: Partial<User>): Promise<User>;
+  deactivateAccount(userId: string): Promise<User>;
+  reactivateAccount(userId: string): Promise<User>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -178,6 +208,170 @@ export class DatabaseStorage implements IStorage {
       .where(eq(users.id, userId))
       .returning();
     return user;
+  }
+
+  // User preferences operations
+  async getUserPreferences(userId: string): Promise<UserPreference[]> {
+    return await db.select().from(userPreferences).where(eq(userPreferences.userId, userId));
+  }
+
+  async upsertUserPreference(preference: InsertUserPreference): Promise<UserPreference> {
+    const [result] = await db
+      .insert(userPreferences)
+      .values(preference)
+      .onConflictDoUpdate({
+        target: [userPreferences.userId, userPreferences.category, userPreferences.key],
+        set: {
+          value: preference.value,
+          updatedAt: new Date(),
+        },
+      })
+      .returning();
+    return result;
+  }
+
+  async deleteUserPreference(userId: string, category: string, key: string): Promise<void> {
+    await db
+      .delete(userPreferences)
+      .where(
+        and(
+          eq(userPreferences.userId, userId),
+          eq(userPreferences.category, category),
+          eq(userPreferences.key, key)
+        )
+      );
+  }
+
+  // Security operations
+  async logSecurityEvent(log: InsertSecurityLog): Promise<SecurityLog> {
+    const [result] = await db.insert(securityLogs).values(log).returning();
+    return result;
+  }
+
+  async getSecurityLogs(userId: string, limit: number = 50): Promise<SecurityLog[]> {
+    return await db
+      .select()
+      .from(securityLogs)
+      .where(eq(securityLogs.userId, userId))
+      .orderBy(desc(securityLogs.createdAt))
+      .limit(limit);
+  }
+
+  // Device management
+  async registerDevice(device: InsertUserDevice): Promise<UserDevice> {
+    const [result] = await db
+      .insert(userDevices)
+      .values(device)
+      .onConflictDoUpdate({
+        target: userDevices.deviceId,
+        set: {
+          lastUsedAt: new Date(),
+          deviceName: device.deviceName,
+          isActive: true,
+        },
+      })
+      .returning();
+    return result;
+  }
+
+  async getUserDevices(userId: string): Promise<UserDevice[]> {
+    return await db
+      .select()
+      .from(userDevices)
+      .where(eq(userDevices.userId, userId))
+      .orderBy(desc(userDevices.lastUsedAt));
+  }
+
+  async updateDeviceStatus(deviceId: string, isActive: boolean): Promise<UserDevice> {
+    const [result] = await db
+      .update(userDevices)
+      .set({ isActive })
+      .where(eq(userDevices.deviceId, deviceId))
+      .returning();
+    return result;
+  }
+
+  async trustDevice(deviceId: string): Promise<UserDevice> {
+    const [result] = await db
+      .update(userDevices)
+      .set({ isTrusted: true })
+      .where(eq(userDevices.deviceId, deviceId))
+      .returning();
+    return result;
+  }
+
+  // Support system
+  async createSupportTicket(ticket: InsertSupportTicket): Promise<SupportTicket> {
+    const [result] = await db.insert(supportTickets).values(ticket).returning();
+    return result;
+  }
+
+  async getUserSupportTickets(userId: string): Promise<SupportTicket[]> {
+    return await db
+      .select()
+      .from(supportTickets)
+      .where(eq(supportTickets.userId, userId))
+      .orderBy(desc(supportTickets.createdAt));
+  }
+
+  async updateTicketStatus(ticketId: number, status: string): Promise<SupportTicket> {
+    const [result] = await db
+      .update(supportTickets)
+      .set({ status })
+      .where(eq(supportTickets.id, ticketId))
+      .returning();
+    return result;
+  }
+
+  // Account recovery
+  async createRecoveryToken(recovery: InsertAccountRecovery): Promise<AccountRecovery> {
+    const [result] = await db.insert(accountRecovery).values(recovery).returning();
+    return result;
+  }
+
+  async getRecoveryToken(token: string): Promise<AccountRecovery | undefined> {
+    const [result] = await db
+      .select()
+      .from(accountRecovery)
+      .where(eq(accountRecovery.token, token));
+    return result;
+  }
+
+  async useRecoveryToken(token: string): Promise<AccountRecovery> {
+    const [result] = await db
+      .update(accountRecovery)
+      .set({ usedAt: new Date() })
+      .where(eq(accountRecovery.token, token))
+      .returning();
+    return result;
+  }
+
+  // Account management
+  async updateAccountSettings(userId: string, settings: Partial<User>): Promise<User> {
+    const [result] = await db
+      .update(users)
+      .set({ ...settings, updatedAt: new Date() })
+      .where(eq(users.id, userId))
+      .returning();
+    return result;
+  }
+
+  async deactivateAccount(userId: string): Promise<User> {
+    const [result] = await db
+      .update(users)
+      .set({ isActive: false, updatedAt: new Date() })
+      .where(eq(users.id, userId))
+      .returning();
+    return result;
+  }
+
+  async reactivateAccount(userId: string): Promise<User> {
+    const [result] = await db
+      .update(users)
+      .set({ isActive: true, updatedAt: new Date() })
+      .where(eq(users.id, userId))
+      .returning();
+    return result;
   }
 }
 

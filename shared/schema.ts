@@ -49,8 +49,94 @@ export const users = pgTable("users", {
   businessAddress: text("business_address"),
   agentCode: varchar("agent_code"),
   creditScore: integer("credit_score").default(0),
+  // Account settings and preferences
+  isActive: boolean("is_active").default(true),
+  twoFactorEnabled: boolean("two_factor_enabled").default(false),
+  notificationsEnabled: boolean("notifications_enabled").default(true),
+  emailNotifications: boolean("email_notifications").default(true),
+  smsNotifications: boolean("sms_notifications").default(true),
+  pushNotifications: boolean("push_notifications").default(true),
+  darkMode: boolean("dark_mode").default(false),
+  currency: varchar("currency", { length: 3 }).default("USD"),
+  timezone: varchar("timezone").default("UTC"),
+  lastLoginAt: timestamp("last_login_at"),
+  passwordChangedAt: timestamp("password_changed_at"),
+  accountLockedAt: timestamp("account_locked_at"),
+  failedLoginAttempts: integer("failed_login_attempts").default(0),
+  termsAcceptedAt: timestamp("terms_accepted_at"),
+  privacyAcceptedAt: timestamp("privacy_accepted_at"),
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// User preferences and settings
+export const userPreferences = pgTable("user_preferences", {
+  id: serial("id").primaryKey(),
+  userId: varchar("user_id").notNull().references(() => users.id),
+  category: varchar("category").notNull(), // security, notifications, privacy, appearance
+  key: varchar("key").notNull(),
+  value: text("value"),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// Security logs for account activities
+export const securityLogs = pgTable("security_logs", {
+  id: serial("id").primaryKey(),
+  userId: varchar("user_id").notNull().references(() => users.id),
+  action: varchar("action").notNull(), // login, logout, password_change, role_switch, etc.
+  ipAddress: varchar("ip_address"),
+  userAgent: text("user_agent"),
+  deviceInfo: jsonb("device_info"),
+  location: jsonb("location"),
+  status: varchar("status", { enum: ["success", "failed", "blocked"] }).notNull(),
+  metadata: jsonb("metadata"),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+// Device management
+export const userDevices = pgTable("user_devices", {
+  id: serial("id").primaryKey(),
+  userId: varchar("user_id").notNull().references(() => users.id),
+  deviceId: varchar("device_id").unique().notNull(),
+  deviceName: varchar("device_name"),
+  deviceType: varchar("device_type", { enum: ["mobile", "tablet", "desktop", "unknown"] }),
+  os: varchar("os"),
+  browser: varchar("browser"),
+  isActive: boolean("is_active").default(true),
+  isTrusted: boolean("is_trusted").default(false),
+  lastUsedAt: timestamp("last_used_at").defaultNow(),
+  firstUsedAt: timestamp("first_used_at").defaultNow(),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+// Support tickets
+export const supportTickets = pgTable("support_tickets", {
+  id: serial("id").primaryKey(),
+  userId: varchar("user_id").notNull().references(() => users.id),
+  ticketNumber: varchar("ticket_number").unique().notNull(),
+  subject: varchar("subject").notNull(),
+  description: text("description").notNull(),
+  category: varchar("category", { enum: ["account", "payment", "technical", "kyc", "general"] }).notNull(),
+  priority: varchar("priority", { enum: ["low", "medium", "high", "urgent"] }).default("medium"),
+  status: varchar("status", { enum: ["open", "pending", "resolved", "closed"] }).default("open"),
+  assignedTo: varchar("assigned_to"),
+  resolution: text("resolution"),
+  resolvedAt: timestamp("resolved_at"),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// Account recovery
+export const accountRecovery = pgTable("account_recovery", {
+  id: serial("id").primaryKey(),
+  userId: varchar("user_id").notNull().references(() => users.id),
+  token: varchar("token").unique().notNull(),
+  type: varchar("type", { enum: ["password_reset", "email_verification", "phone_verification", "account_unlock"] }).notNull(),
+  expiresAt: timestamp("expires_at").notNull(),
+  usedAt: timestamp("used_at"),
+  ipAddress: varchar("ip_address"),
+  createdAt: timestamp("created_at").defaultNow(),
 });
 
 export const wallets = pgTable("wallets", {
@@ -184,6 +270,46 @@ export const usersRelations = relations(users, ({ many, one }) => ({
   merchant: one(merchants),
   agent: one(agents),
   kycDocuments: many(kycDocuments),
+  preferences: many(userPreferences),
+  securityLogs: many(securityLogs),
+  devices: many(userDevices),
+  supportTickets: many(supportTickets),
+  recoveryTokens: many(accountRecovery),
+}));
+
+export const userPreferencesRelations = relations(userPreferences, ({ one }) => ({
+  user: one(users, {
+    fields: [userPreferences.userId],
+    references: [users.id],
+  }),
+}));
+
+export const securityLogsRelations = relations(securityLogs, ({ one }) => ({
+  user: one(users, {
+    fields: [securityLogs.userId],
+    references: [users.id],
+  }),
+}));
+
+export const userDevicesRelations = relations(userDevices, ({ one }) => ({
+  user: one(users, {
+    fields: [userDevices.userId],
+    references: [users.id],
+  }),
+}));
+
+export const supportTicketsRelations = relations(supportTickets, ({ one }) => ({
+  user: one(users, {
+    fields: [supportTickets.userId],
+    references: [users.id],
+  }),
+}));
+
+export const accountRecoveryRelations = relations(accountRecovery, ({ one }) => ({
+  user: one(users, {
+    fields: [accountRecovery.userId],
+    references: [users.id],
+  }),
 }));
 
 export const walletsRelations = relations(wallets, ({ one, many }) => ({
@@ -300,6 +426,33 @@ export const insertMiniAppSchema = createInsertSchema(miniApps).omit({
   updatedAt: true,
 });
 
+export const insertUserPreferenceSchema = createInsertSchema(userPreferences).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const insertSecurityLogSchema = createInsertSchema(securityLogs).omit({
+  id: true,
+  createdAt: true,
+});
+
+export const insertUserDeviceSchema = createInsertSchema(userDevices).omit({
+  id: true,
+  createdAt: true,
+});
+
+export const insertSupportTicketSchema = createInsertSchema(supportTickets).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const insertAccountRecoverySchema = createInsertSchema(accountRecovery).omit({
+  id: true,
+  createdAt: true,
+});
+
 // Types
 export type UpsertUser = typeof users.$inferInsert;
 export type User = typeof users.$inferSelect;
@@ -319,3 +472,13 @@ export type InsertKycDocument = z.infer<typeof insertKycDocumentSchema>;
 export type KycDocument = typeof kycDocuments.$inferSelect;
 export type InsertMiniApp = z.infer<typeof insertMiniAppSchema>;
 export type MiniApp = typeof miniApps.$inferSelect;
+export type InsertUserPreference = z.infer<typeof insertUserPreferenceSchema>;
+export type UserPreference = typeof userPreferences.$inferSelect;
+export type InsertSecurityLog = z.infer<typeof insertSecurityLogSchema>;
+export type SecurityLog = typeof securityLogs.$inferSelect;
+export type InsertUserDevice = z.infer<typeof insertUserDeviceSchema>;
+export type UserDevice = typeof userDevices.$inferSelect;
+export type InsertSupportTicket = z.infer<typeof insertSupportTicketSchema>;
+export type SupportTicket = typeof supportTickets.$inferSelect;
+export type InsertAccountRecovery = z.infer<typeof insertAccountRecoverySchema>;
+export type AccountRecovery = typeof accountRecovery.$inferSelect;
