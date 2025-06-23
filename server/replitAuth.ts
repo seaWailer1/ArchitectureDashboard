@@ -128,16 +128,30 @@ export async function setupAuth(app: Express) {
 }
 
 export const isAuthenticated: RequestHandler = async (req, res, next) => {
-  // Development mode bypass
+  // Development mode bypass with user switching support
   if (process.env.NODE_ENV === 'development') {
-    if (!req.user) {
+    // Check if we have a dev user override from session
+    const devUserId = (req as any).session?.devUserId;
+    
+    if (devUserId) {
+      // Use the switched user
+      req.user = {
+        claims: {
+          sub: devUserId,
+          email: `${devUserId}@example.com`,
+          name: "Test User"
+        },
+        expires_at: Math.floor(Date.now() / 1000) + 3600
+      };
+    } else if (!req.user) {
+      // Default development user
       req.user = {
         claims: {
           sub: "dev-user-123",
           email: "dev@example.com",
           name: "Development User"
         },
-        expires_at: Math.floor(Date.now() / 1000) + 3600 // 1 hour from now
+        expires_at: Math.floor(Date.now() / 1000) + 3600
       };
     }
     return next();

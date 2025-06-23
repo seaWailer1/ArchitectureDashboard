@@ -36,10 +36,10 @@ interface PresetUser {
   role: string;
   status: string;
   description: string;
-  phoneNumber: string;
-  address: string;
-  city: string;
-  country: string;
+  phoneNumber?: string;
+  address?: string;
+  city?: string;
+  country?: string;
 }
 
 export default function TestLogin() {
@@ -92,17 +92,13 @@ export default function TestLogin() {
       // Store user data in sessionStorage for auto-fill
       sessionStorage.setItem('testUserData', JSON.stringify(userData));
       
-      // Clear cache and navigate to onboarding
+      // Clear cache and force a page reload to ensure authentication state updates
       queryClient.clear();
       
-      // Navigate based on user status
-      if (userData.status === 'verified') {
-        setLocation("/");
-      } else if (userData.status === 'in_progress') {
-        setLocation("/kyc");
-      } else {
-        setLocation("/onboarding");
-      }
+      // Force page reload to update authentication context
+      setTimeout(() => {
+        window.location.reload();
+      }, 500);
     },
     onError: () => {
       toast({
