@@ -136,7 +136,7 @@ export class DatabaseStorage implements IStorage {
         .values(walletData)
         .returning();
       return wallet;
-    } catch (error) {
+    } catch (error: any) {
       // If walletType column doesn't exist, create without it
       if (error.code === '42703') {
         const { walletType, ...walletDataWithoutType } = walletData;
@@ -370,7 +370,7 @@ export class DatabaseStorage implements IStorage {
   async updateTicketStatus(ticketId: number, status: string): Promise<SupportTicket> {
     const [result] = await db
       .update(supportTickets)
-      .set({ status })
+      .set({ status: status as any })
       .where(eq(supportTickets.id, ticketId))
       .returning();
     return result;
@@ -572,7 +572,7 @@ export class DatabaseStorage implements IStorage {
     // Calculate maturity date
     const startDate = new Date();
     const maturityDate = new Date();
-    maturityDate.setMonth(maturityDate.getMonth() + product.tenure);
+    maturityDate.setMonth(maturityDate.getMonth() + (product.tenure || 12));
 
     // Create investment record
     const [investment] = await db

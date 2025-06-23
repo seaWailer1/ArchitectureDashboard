@@ -5,31 +5,76 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { useAuth } from "@/hooks/useAuth";
 import NotFound from "@/pages/not-found";
-import Landing from "@/pages/landing";
 import Home from "@/pages/home";
 import Wallets from "@/pages/wallets";
 import Transactions from "@/pages/transactions";
 import QR from "@/pages/qr";
 import Services from "@/pages/services";
 import Profile from "@/pages/profile";
+import SignIn from "@/pages/signin";
+import Onboarding from "@/pages/onboarding";
+import KYC from "@/pages/kyc";
 
 function Router() {
-  const { isAuthenticated, isLoading } = useAuth();
+  const { user, isAuthenticated, isLoading } = useAuth();
 
+  // Show loading state
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
+        <div className="text-white text-center">
+          <div className="w-16 h-16 border-4 border-white/30 border-t-white rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-lg">Loading AfriPay...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Not authenticated - show sign in
+  if (!isAuthenticated) {
+    return (
+      <Switch>
+        <Route path="/signin" component={SignIn} />
+        <Route path="/" component={SignIn} />
+        <Route component={SignIn} />
+      </Switch>
+    );
+  }
+
+  // Check if user needs onboarding
+  if (!user?.firstName || !user?.lastName) {
+    return (
+      <Switch>
+        <Route path="/onboarding" component={Onboarding} />
+        <Route path="/" component={Onboarding} />
+        <Route component={Onboarding} />
+      </Switch>
+    );
+  }
+
+  // Check if user needs KYC
+  if (user?.kycStatus !== 'verified') {
+    return (
+      <Switch>
+        <Route path="/kyc" component={KYC} />
+        <Route path="/" component={KYC} />
+        <Route component={KYC} />
+      </Switch>
+    );
+  }
+
+  // Authenticated and verified - show main app
   return (
     <Switch>
-      {isLoading || !isAuthenticated ? (
-        <Route path="/" component={Landing} />
-      ) : (
-        <>
-          <Route path="/" component={Home} />
-          <Route path="/wallets" component={Wallets} />
-          <Route path="/transactions" component={Transactions} />
-          <Route path="/qr" component={QR} />
-          <Route path="/services" component={Services} />
-          <Route path="/profile" component={Profile} />
-        </>
-      )}
+      <Route path="/" component={Home} />
+      <Route path="/profile" component={Profile} />
+      <Route path="/qr" component={QR} />
+      <Route path="/services" component={Services} />
+      <Route path="/transactions" component={Transactions} />
+      <Route path="/wallets" component={Wallets} />
+      <Route path="/signin" component={SignIn} />
+      <Route path="/onboarding" component={Onboarding} />
+      <Route path="/kyc" component={KYC} />
       <Route component={NotFound} />
     </Switch>
   );
