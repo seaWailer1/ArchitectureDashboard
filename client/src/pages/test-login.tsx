@@ -53,9 +53,7 @@ export default function TestLogin() {
 
   const createUsersMutation = useMutation({
     mutationFn: async () => {
-      return await apiRequest('/api/preset-users/create', {
-        method: 'POST',
-      });
+      return await apiRequest('POST', '/api/preset-users/create');
     },
     onSuccess: () => {
       toast({
@@ -75,35 +73,51 @@ export default function TestLogin() {
 
   const simulateOnboardingMutation = useMutation({
     mutationFn: async (userData: PresetUser) => {
-      // First switch to the user
-      await apiRequest(`/api/preset-users/switch/${userData.id}`, {
-        method: 'POST',
-      });
-      
-      // Return user data for auto-fill
-      return userData;
+      try {
+        // First switch to the user
+        const response = await apiRequest('POST', `/api/preset-users/switch/${userData.id}`);
+        
+        console.log('User switch response:', response);
+        
+        // Return user data for auto-fill
+        return userData;
+      } catch (error) {
+        console.error('Error switching user:', error);
+        throw error;
+      }
     },
     onSuccess: (userData) => {
-      toast({
-        title: "Starting Onboarding Journey",
-        description: `Beginning simulation with ${userData.name}`,
-      });
+      console.log('User switching successful:', userData);
       
       // Store user data in sessionStorage for auto-fill
-      sessionStorage.setItem('testUserData', JSON.stringify(userData));
+      const autoFillData = {
+        name: userData.name,
+        email: userData.email,
+        role: userData.role,
+        phoneNumber: userData.phoneNumber || `+234 123 456 7890`,
+        address: userData.address || `123 Main Street`,
+        city: userData.city || `Lagos`,
+        country: userData.country || `NG`,
+      };
       
-      // Clear cache and force a page reload to ensure authentication state updates
+      sessionStorage.setItem('testUserData', JSON.stringify(autoFillData));
+      
+      toast({
+        title: "Starting Journey",
+        description: `Switching to ${userData.name}`,
+      });
+      
+      // Clear cache and force a page reload
       queryClient.clear();
-      
-      // Force page reload to update authentication context
       setTimeout(() => {
         window.location.reload();
-      }, 500);
+      }, 1000);
     },
-    onError: () => {
+    onError: (error) => {
+      console.error('Mutation error:', error);
       toast({
         title: "Error",
-        description: "Failed to start onboarding simulation.",
+        description: "Failed to load onboarding simulation. Please try again.",
         variant: "destructive",
       });
     },
