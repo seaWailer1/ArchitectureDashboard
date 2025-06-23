@@ -437,7 +437,7 @@ export default function TestLogin() {
                     <div className="space-y-4">
                       <div className="flex items-center space-x-3 mb-4">
                         <div className="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center">
-                          <Sparkles className="w-5 h-5 text-emerald-600" />
+                          <Shield className="w-5 h-5 text-emerald-600" />
                         </div>
                         <h4 className="font-bold text-lg text-primary">Auto-Fill Features</h4>
                       </div>
