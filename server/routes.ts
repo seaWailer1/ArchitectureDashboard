@@ -13,7 +13,22 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get('/api/auth/user', isAuthenticated, async (req: any, res) => {
     try {
       const userId = req.user.claims.sub;
-      const user = await storage.getUser(userId);
+      let user = await storage.getUser(userId);
+      
+      // Auto-generate demo data for first-time users
+      if (user && !user.currentRole) {
+        try {
+          const { createUserSampleData } = await import('./seed-data');
+          await createUserSampleData(userId, 'consumer');
+          console.log(`Auto-generated demo data for user: ${userId}`);
+          
+          // Fetch updated user data
+          user = await storage.getUser(userId);
+        } catch (seedError) {
+          console.error("Error auto-seeding demo data:", seedError);
+        }
+      }
+      
       res.json(user);
     } catch (error) {
       console.error("Error fetching user:", error);
@@ -28,13 +43,26 @@ export async function registerRoutes(app: Express): Promise<Server> {
       let wallet = await storage.getWalletByUserId(userId);
       
       if (!wallet) {
-        // Create wallet if it doesn't exist
+        // Create wallet and automatically seed demo data for new users
         wallet = await storage.createWallet({
           userId,
           balance: "0.00",
           pendingBalance: "0.00",
           currency: "USD"
         });
+        
+        // Auto-generate demo data for new users
+        try {
+          const { createUserSampleData } = await import('./seed-data');
+          await createUserSampleData(userId, 'consumer');
+          console.log(`Auto-generated demo data for new user: ${userId}`);
+          
+          // Fetch updated wallet with demo data
+          wallet = await storage.getWalletByUserId(userId);
+        } catch (seedError) {
+          console.error("Error auto-seeding demo data:", seedError);
+          // Continue without failing the wallet creation
+        }
       }
       
       res.json(wallet);
@@ -214,6 +242,133 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error updating verification status:", error);
       res.status(500).json({ message: "Failed to update verification status" });
+    }
+  });
+
+  // Enhanced wallet operations
+  app.get('/api/wallets', isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      let wallets = await storage.getUserWallets(userId);
+      
+      // Auto-seed if user has no wallets or empty balances
+      if (wallets.length === 0 || wallets.every(w => parseFloat(w.balance || "0") === 0)) {
+        try {
+          const { createUserSampleData } = await import('./seed-data');
+          await createUserSampleData(userId, 'consumer');
+          console.log(`Auto-generated wallet data for user: ${userId}`);
+          wallets = await storage.getUserWallets(userId);
+        } catch (seedError) {
+          console.error("Error auto-seeding wallet data:", seedError);
+        }
+      }
+      
+      res.json(wallets);
+    } catch (error) {
+      console.error("Error fetching user wallets:", error);
+      res.status(500).json({ message: "Failed to fetch wallets" });
+    }
+  });
+
+  app.get('/api/wallets/holdings', isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      let holdings = await storage.getAssetHoldings(userId);
+      
+      // Auto-seed if user has no holdings
+      if (holdings.length === 0) {
+        try {
+          const { createUserSampleData } = await import('./seed-data');
+          await createUserSampleData(userId, 'consumer');
+          console.log(`Auto-generated holdings for user: ${userId}`);
+          holdings = await storage.getAssetHoldings(userId);
+        } catch (seedError) {
+          console.error("Error auto-seeding holdings:", seedError);
+        }
+      }
+      
+      res.json(holdings);
+    } catch (error) {
+      console.error("Error fetching asset holdings:", error);
+      res.status(500).json({ message: "Failed to fetch holdings" });
+    }
+  });
+
+  app.get('/api/investments', isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      let investments = await storage.getUserInvestments(userId);
+      
+      // Auto-seed if user has no investments
+      if (investments.length === 0) {
+        try {
+          const { createUserSampleData } = await import('./seed-data');
+          await createUserSampleData(userId, 'consumer');
+          console.log(`Auto-generated investments for user: ${userId}`);
+          investments = await storage.getUserInvestments(userId);
+        } catch (seedError) {
+          console.error("Error auto-seeding investments:", seedError);
+        }
+      }
+      
+      res.json(investments);
+    } catch (error) {
+      console.error("Error fetching investments:", error);
+      res.status(500).json({ message: "Failed to fetch investments" });
+    }
+  });
+
+  app.get('/api/credit-facilities', isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      let facilities = await storage.getCreditFacilities(userId);
+      
+      // Auto-seed if user has no credit facilities
+      if (facilities.length === 0) {
+        try {
+          const { createUserSampleData } = await import('./seed-data');
+          await createUserSampleData(userId, 'consumer');
+          console.log(`Auto-generated credit facilities for user: ${userId}`);
+          facilities = await storage.getCreditFacilities(userId);
+        } catch (seedError) {
+          console.error("Error auto-seeding credit facilities:", seedError);
+        }
+      }
+      
+      res.json(facilities);
+    } catch (error) {
+      console.error("Error fetching credit facilities:", error);
+      res.status(500).json({ message: "Failed to fetch credit facilities" });
+    }
+  });
+
+  app.get('/api/digital-assets', async (req: any, res) => {
+    try {
+      const assets = await storage.getDigitalAssets();
+      res.json(assets);
+    } catch (error) {
+      console.error("Error fetching digital assets:", error);
+      res.status(500).json({ message: "Failed to fetch digital assets" });
+    }
+  });
+
+  app.get('/api/investment-products', async (req: any, res) => {
+    try {
+      const products = await storage.getInvestmentProducts();
+      res.json(products);
+    } catch (error) {
+      console.error("Error fetching investment products:", error);
+      res.status(500).json({ message: "Failed to fetch investment products" });
+    }
+  });
+
+  app.get('/api/trading-pairs', async (req: any, res) => {
+    try {
+      const pairs = await storage.getTradingPairs();
+      res.json(pairs);
+    } catch (error) {
+      console.error("Error fetching trading pairs:", error);
+      res.status(500).json({ message: "Failed to fetch trading pairs" });
     }
   });
 
