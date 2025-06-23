@@ -173,7 +173,7 @@ export default function AgentDashboard() {
                 <Users className="w-6 h-6 text-blue-600" />
               </div>
             </div>
-          </div>
+          </CardContent>
         </Card>
       </div>
 

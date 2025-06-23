@@ -5,15 +5,9 @@ import { useToast } from "@/hooks/use-toast";
 import AppHeader from "@/components/layout/app-header";
 import BottomNavigation from "@/components/layout/bottom-navigation";
 
-import WalletSummary from "@/components/wallet/wallet-summary";
-import EnhancedWalletSummary from "@/components/wallet/enhanced-wallet-summary";
-
-import QuickActions from "@/components/wallet/quick-actions";
-import RecentTransactions from "@/components/transactions/recent-transactions";
-import MiniAppLauncher from "@/components/mini-apps/mini-app-launcher";
-import KYCStatusCard from "@/components/kyc/kyc-status-card";
-import MerchantDashboard from "@/components/merchant/merchant-dashboard";
-import AgentDashboard from "@/components/agent/agent-dashboard";
+import ConsumerDashboard from "@/components/dashboard/consumer-dashboard";
+import MerchantDashboard from "@/components/dashboard/merchant-dashboard";
+import AgentDashboard from "@/components/dashboard/agent-dashboard";
 import { UserProfile } from "@/types";
 
 export default function Home() {
