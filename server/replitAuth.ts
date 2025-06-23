@@ -38,7 +38,7 @@ export function getSession() {
     saveUninitialized: false,
     cookie: {
       httpOnly: true,
-      secure: true,
+      secure: process.env.NODE_ENV === 'production',
       maxAge: sessionTtl,
     },
   });
@@ -128,6 +128,21 @@ export async function setupAuth(app: Express) {
 }
 
 export const isAuthenticated: RequestHandler = async (req, res, next) => {
+  // Development mode bypass
+  if (process.env.NODE_ENV === 'development') {
+    if (!req.user) {
+      req.user = {
+        claims: {
+          sub: "dev-user-123",
+          email: "dev@example.com",
+          name: "Development User"
+        },
+        expires_at: Math.floor(Date.now() / 1000) + 3600 // 1 hour from now
+      };
+    }
+    return next();
+  }
+
   const user = req.user as any;
 
   if (!req.isAuthenticated() || !user.expires_at) {

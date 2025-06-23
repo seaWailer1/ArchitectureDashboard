@@ -10,9 +10,47 @@ export async function registerRoutes(app: Express): Promise<Server> {
   await setupAuth(app);
 
   // Auth routes
-  app.get('/api/auth/user', isAuthenticated, async (req: any, res) => {
+  app.get('/api/auth/user', async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      let userId: string;
+      
+      // Development mode: create or use existing dev user
+      if (process.env.NODE_ENV === 'development') {
+        userId = "dev-user-123";
+        let user = await storage.getUser(userId);
+        
+        if (!user) {
+          // Create development user
+          user = await storage.upsertUser({
+            id: userId,
+            email: "dev@example.com",
+            name: "Development User",
+            currentRole: "consumer"
+          });
+          
+          // Auto-generate demo data for dev user
+          try {
+            const { createUserSampleData } = await import('./seed-data');
+            await createUserSampleData(userId, 'consumer');
+            console.log(`Auto-generated demo data for dev user: ${userId}`);
+          } catch (seedError) {
+            console.error("Error auto-seeding demo data:", seedError);
+          }
+          
+          // Fetch updated user data
+          user = await storage.getUser(userId);
+        }
+        
+        res.json(user);
+        return;
+      }
+      
+      // Production mode: require authentication
+      if (!req.user) {
+        return res.status(401).json({ message: "Unauthorized" });
+      }
+      
+      userId = req.user.claims.sub;
       let user = await storage.getUser(userId);
       
       // Auto-generate demo data for first-time users
@@ -246,9 +284,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Enhanced wallet operations
-  app.get('/api/wallets', isAuthenticated, async (req: any, res) => {
+  app.get('/api/wallets', async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      let userId: string;
+      
+      if (process.env.NODE_ENV === 'development') {
+        userId = "dev-user-123";
+      } else {
+        if (!req.user) {
+          return res.status(401).json({ message: "Unauthorized" });
+        }
+        userId = req.user.claims.sub;
+      }
+      
       let wallets = await storage.getUserWallets(userId);
       
       // Auto-seed if user has no wallets or empty balances
@@ -270,9 +318,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get('/api/wallets/holdings', isAuthenticated, async (req: any, res) => {
+  app.get('/api/wallets/holdings', async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      let userId: string;
+      
+      if (process.env.NODE_ENV === 'development') {
+        userId = "dev-user-123";
+      } else {
+        if (!req.user) {
+          return res.status(401).json({ message: "Unauthorized" });
+        }
+        userId = req.user.claims.sub;
+      }
+      
       let holdings = await storage.getAssetHoldings(userId);
       
       // Auto-seed if user has no holdings
@@ -294,9 +352,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get('/api/investments', isAuthenticated, async (req: any, res) => {
+  app.get('/api/investments', async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      let userId: string;
+      
+      if (process.env.NODE_ENV === 'development') {
+        userId = "dev-user-123";
+      } else {
+        if (!req.user) {
+          return res.status(401).json({ message: "Unauthorized" });
+        }
+        userId = req.user.claims.sub;
+      }
+      
       let investments = await storage.getUserInvestments(userId);
       
       // Auto-seed if user has no investments
@@ -318,9 +386,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get('/api/credit-facilities', isAuthenticated, async (req: any, res) => {
+  app.get('/api/credit-facilities', async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      let userId: string;
+      
+      if (process.env.NODE_ENV === 'development') {
+        userId = "dev-user-123";
+      } else {
+        if (!req.user) {
+          return res.status(401).json({ message: "Unauthorized" });
+        }
+        userId = req.user.claims.sub;
+      }
+      
       let facilities = await storage.getCreditFacilities(userId);
       
       // Auto-seed if user has no credit facilities
