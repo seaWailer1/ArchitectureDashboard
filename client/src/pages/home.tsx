@@ -4,7 +4,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
 import AppHeader from "@/components/layout/app-header";
 import BottomNavigation from "@/components/layout/bottom-navigation";
-import RoleSwitcher from "@/components/role/role-switcher";
+
 import WalletSummary from "@/components/wallet/wallet-summary";
 import EnhancedWalletSummary from "@/components/wallet/enhanced-wallet-summary";
 
@@ -87,7 +87,6 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-neutral-100">
       <AppHeader />
-      <RoleSwitcher />
       
       <main className="max-w-md mx-auto px-4 pb-20">
         {renderRoleSpecificContent()}
