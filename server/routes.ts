@@ -9,6 +9,52 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Auth middleware
   await setupAuth(app);
 
+  // Preset users route
+  app.get('/api/preset-users', async (req, res) => {
+    try {
+      const { getPresetUserCredentials } = await import('./preset-users');
+      const credentials = await getPresetUserCredentials();
+      res.json(credentials);
+    } catch (error) {
+      console.error("Error fetching preset users:", error);
+      res.status(500).json({ message: "Failed to fetch preset users" });
+    }
+  });
+
+  app.post('/api/preset-users/create', async (req, res) => {
+    try {
+      const { createPresetUsers } = await import('./preset-users');
+      await createPresetUsers();
+      res.json({ success: true, message: "Preset users created successfully" });
+    } catch (error) {
+      console.error("Error creating preset users:", error);
+      res.status(500).json({ message: "Failed to create preset users" });
+    }
+  });
+
+  app.post('/api/preset-users/switch/:userId', async (req: any, res) => {
+    try {
+      const { userId } = req.params;
+      
+      // In development mode, simulate switching to preset user
+      if (process.env.NODE_ENV === 'development') {
+        const user = await storage.getUser(userId);
+        if (!user) {
+          return res.status(404).json({ message: "Preset user not found" });
+        }
+        
+        // For demo purposes, we'll return the user data
+        // In a real implementation, you'd update the session
+        res.json({ success: true, user });
+      } else {
+        res.status(400).json({ message: "Preset user switching only available in development" });
+      }
+    } catch (error) {
+      console.error("Error switching to preset user:", error);
+      res.status(500).json({ message: "Failed to switch user" });
+    }
+  });
+
   // Auth routes
   app.get('/api/auth/user', async (req: any, res) => {
     try {

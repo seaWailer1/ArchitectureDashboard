@@ -14,6 +14,7 @@ import Profile from "@/pages/profile";
 import SignIn from "@/pages/signin";
 import Onboarding from "@/pages/onboarding";
 import KYC from "@/pages/kyc";
+import PresetUsers from "@/pages/preset-users";
 
 function Router() {
   const { user, isAuthenticated, isLoading } = useAuth();
@@ -75,6 +76,7 @@ function Router() {
       <Route path="/signin" component={SignIn} />
       <Route path="/onboarding" component={Onboarding} />
       <Route path="/kyc" component={KYC} />
+      <Route path="/preset-users" component={PresetUsers} />
       <Route component={NotFound} />
     </Switch>
   );
