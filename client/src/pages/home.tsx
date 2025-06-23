@@ -7,7 +7,7 @@ import BottomNavigation from "@/components/layout/bottom-navigation";
 import RoleSwitcher from "@/components/role/role-switcher";
 import WalletSummary from "@/components/wallet/wallet-summary";
 import EnhancedWalletSummary from "@/components/wallet/enhanced-wallet-summary";
-import DemoDataSeeder from "@/components/wallet/demo-data-seeder";
+
 import QuickActions from "@/components/wallet/quick-actions";
 import RecentTransactions from "@/components/transactions/recent-transactions";
 import MiniAppLauncher from "@/components/mini-apps/mini-app-launcher";
