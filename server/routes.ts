@@ -14,16 +14,24 @@ import { insertTransactionSchema, insertUserRoleSchema } from "@shared/schema";
 import { z } from "zod";
 
 export async function registerRoutes(app: Express): Promise<Server> {
-  // Security middleware
+  // Security middleware - more lenient for development
   const limiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 100, // Limit each IP to 100 requests per windowMs
+    max: 1000, // Increased limit for development
     message: "Too many requests from this IP",
     standardHeaders: true,
     legacyHeaders: false,
+    skip: (req) => {
+      // Skip rate limiting for static assets and development
+      return process.env.NODE_ENV === 'development' || 
+             req.url.includes('/assets/') || 
+             req.url.includes('/_vite/') ||
+             req.url.includes('.js') ||
+             req.url.includes('.css');
+    }
   });
   
-  app.use(limiter);
+  app.use('/api/', limiter); // Only apply to API routes
   
   // Auth middleware
   await setupAuth(app);
@@ -226,7 +234,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.post('/api/kyc/verify-otp', validateRequest(kycDocumentSchema.pick({ phoneNumber: true, verificationCode: true })), async (req: any, res) => {
+  app.post('/api/kyc/verify-otp', async (req: any, res) => {
     try {
       let userId: string;
       
