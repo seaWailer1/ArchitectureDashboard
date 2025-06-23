@@ -1,5 +1,5 @@
 import { Link, useLocation } from "wouter";
-import { Home, List, QrCode, Grid3X3, User } from "lucide-react";
+import { Home, Wallet, List, QrCode, Grid3X3, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { t } from "@/lib/i18n";
 
@@ -12,7 +12,7 @@ export default function BottomNavigation({ currentPage }: BottomNavigationProps)
 
   const navItems = [
     { path: "/", icon: Home, label: t('home'), id: "home" },
-    { path: "/transactions", icon: List, label: t('history'), id: "transactions" },
+    { path: "/wallets", icon: Wallet, label: "Wallets", id: "wallets" },
     { path: "/qr", icon: QrCode, label: t('pay'), id: "qr", special: true },
     { path: "/services", icon: Grid3X3, label: t('services'), id: "services" },
     { path: "/profile", icon: User, label: t('profile'), id: "profile" },

@@ -7,6 +7,7 @@ import { useAuth } from "@/hooks/useAuth";
 import NotFound from "@/pages/not-found";
 import Landing from "@/pages/landing";
 import Home from "@/pages/home";
+import Wallets from "@/pages/wallets";
 import Transactions from "@/pages/transactions";
 import QR from "@/pages/qr";
 import Services from "@/pages/services";
@@ -22,6 +23,7 @@ function Router() {
       ) : (
         <>
           <Route path="/" component={Home} />
+          <Route path="/wallets" component={Wallets} />
           <Route path="/transactions" component={Transactions} />
           <Route path="/qr" component={QR} />
           <Route path="/services" component={Services} />
