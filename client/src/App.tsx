@@ -50,8 +50,8 @@ function Router() {
       <Switch>
         <Route path="/test-login" component={TestLogin} />
         <Route path="/onboarding" component={Onboarding} />
-        <Route path="/" component={Onboarding} />
-        <Route component={Onboarding} />
+        <Route path="/" component={TestLogin} />
+        <Route component={TestLogin} />
       </Switch>
     );
   }
@@ -60,6 +60,7 @@ function Router() {
   if (user?.kycStatus !== 'verified') {
     return (
       <Switch>
+        <Route path="/test-login" component={TestLogin} />
         <Route path="/kyc" component={KYC} />
         <Route path="/" component={KYC} />
         <Route component={KYC} />
