@@ -43,8 +43,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
           return res.status(404).json({ message: "Preset user not found" });
         }
         
-        // For demo purposes, we'll return the user data
-        // In a real implementation, you'd update the session
+        // Update the development user ID to switch context
+        global.devUserId = userId;
+        
         res.json({ success: true, user });
       } else {
         res.status(400).json({ message: "Preset user switching only available in development" });
@@ -62,7 +63,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       // Development mode: create or use existing dev user
       if (process.env.NODE_ENV === 'development') {
-        userId = "dev-user-123";
+        userId = (global as any).devUserId || "dev-user-123";
         let user = await storage.getUser(userId);
         
         if (!user) {
