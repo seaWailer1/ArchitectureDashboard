@@ -12,6 +12,7 @@ import QR from "@/pages/qr";
 import Services from "@/pages/services";
 import Profile from "@/pages/profile";
 import SignIn from "@/pages/signin";
+import TestLogin from "@/pages/test-login";
 import Onboarding from "@/pages/onboarding";
 import KYC from "@/pages/kyc";
 import PresetUsers from "@/pages/preset-users";
@@ -31,13 +32,14 @@ function Router() {
     );
   }
 
-  // Not authenticated - show sign in
+  // Not authenticated - show test login or sign in
   if (!isAuthenticated) {
     return (
       <Switch>
+        <Route path="/test-login" component={TestLogin} />
         <Route path="/signin" component={SignIn} />
-        <Route path="/" component={SignIn} />
-        <Route component={SignIn} />
+        <Route path="/" component={TestLogin} />
+        <Route component={TestLogin} />
       </Switch>
     );
   }

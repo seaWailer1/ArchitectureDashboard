@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { 
   ArrowRight, 
@@ -12,7 +12,8 @@ import {
   Phone,
   Mail,
   MapPin,
-  Calendar
+  Calendar,
+  Sparkles
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -43,6 +44,7 @@ export default function Onboarding() {
   const [currentStep, setCurrentStep] = useState(0);
   const [, setLocation] = useLocation();
   const { toast } = useToast();
+  const [isAutoFilled, setIsAutoFilled] = useState(false);
   
   const [formData, setFormData] = useState<OnboardingData>({
     firstName: "",
@@ -57,6 +59,42 @@ export default function Onboarding() {
     acceptedTerms: false,
     acceptedPrivacy: false,
   });
+
+  // Auto-fill data from test user if available
+  useEffect(() => {
+    const testUserData = sessionStorage.getItem('testUserData');
+    if (testUserData) {
+      try {
+        const userData = JSON.parse(testUserData);
+        const nameParts = userData.name.split(' ');
+        setFormData({
+          firstName: nameParts[0] || "",
+          lastName: nameParts.slice(1).join(' ') || "",
+          email: userData.email || "",
+          phone: userData.phoneNumber || "",
+          dateOfBirth: "1990-01-01", // Default date
+          address: userData.address || "",
+          city: userData.city || "",
+          country: userData.country || "",
+          preferredRole: userData.role || "consumer",
+          acceptedTerms: false,
+          acceptedPrivacy: false,
+        });
+        setIsAutoFilled(true);
+        
+        // Show notification about auto-fill
+        toast({
+          title: "Information Pre-filled",
+          description: `Using ${userData.name}'s details for demo experience`,
+        });
+        
+        // Clear the session data
+        sessionStorage.removeItem('testUserData');
+      } catch (error) {
+        console.error('Error parsing test user data:', error);
+      }
+    }
+  }, [toast]);
 
   const steps = [
     { title: "Welcome", icon: Globe },
@@ -163,8 +201,15 @@ export default function Onboarding() {
         return (
           <div className="space-y-6">
             <div className="text-center">
+              <User className="w-16 h-16 text-primary mx-auto mb-4" />
               <h2 className="text-2xl font-bold mb-2">Personal Information</h2>
               <p className="text-neutral-600">Tell us a bit about yourself</p>
+              {isAutoFilled && (
+                <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg flex items-center justify-center space-x-2">
+                  <Sparkles className="w-5 h-5 text-blue-600" />
+                  <span className="text-sm text-blue-700 font-medium">Information pre-filled for demo experience</span>
+                </div>
+              )}
             </div>
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
@@ -175,6 +220,7 @@ export default function Onboarding() {
                     value={formData.firstName}
                     onChange={(e) => updateFormData('firstName', e.target.value)}
                     placeholder="John"
+                    className={isAutoFilled ? "bg-blue-50 border-blue-200" : ""}
                   />
                 </div>
                 <div>
@@ -184,6 +230,7 @@ export default function Onboarding() {
                     value={formData.lastName}
                     onChange={(e) => updateFormData('lastName', e.target.value)}
                     placeholder="Doe"
+                    className={isAutoFilled ? "bg-blue-50 border-blue-200" : ""}
                   />
                 </div>
               </div>
@@ -194,6 +241,7 @@ export default function Onboarding() {
                   type="date"
                   value={formData.dateOfBirth}
                   onChange={(e) => updateFormData('dateOfBirth', e.target.value)}
+                  className={isAutoFilled ? "bg-blue-50 border-blue-200" : ""}
                 />
               </div>
             </div>
@@ -204,6 +252,7 @@ export default function Onboarding() {
         return (
           <div className="space-y-6">
             <div className="text-center">
+              <Phone className="w-16 h-16 text-primary mx-auto mb-4" />
               <h2 className="text-2xl font-bold mb-2">Contact Details</h2>
               <p className="text-neutral-600">How can we reach you?</p>
             </div>
@@ -216,6 +265,7 @@ export default function Onboarding() {
                   value={formData.email}
                   onChange={(e) => updateFormData('email', e.target.value)}
                   placeholder="john@example.com"
+                  className={isAutoFilled ? "bg-blue-50 border-blue-200" : ""}
                 />
               </div>
               <div>
@@ -226,6 +276,7 @@ export default function Onboarding() {
                   value={formData.phone}
                   onChange={(e) => updateFormData('phone', e.target.value)}
                   placeholder="+234 123 456 7890"
+                  className={isAutoFilled ? "bg-blue-50 border-blue-200" : ""}
                 />
               </div>
               <div>
@@ -235,6 +286,7 @@ export default function Onboarding() {
                   value={formData.address}
                   onChange={(e) => updateFormData('address', e.target.value)}
                   placeholder="123 Main Street"
+                  className={isAutoFilled ? "bg-blue-50 border-blue-200" : ""}
                 />
               </div>
               <div className="grid grid-cols-2 gap-4">
@@ -245,12 +297,13 @@ export default function Onboarding() {
                     value={formData.city}
                     onChange={(e) => updateFormData('city', e.target.value)}
                     placeholder="Lagos"
+                    className={isAutoFilled ? "bg-blue-50 border-blue-200" : ""}
                   />
                 </div>
                 <div>
                   <Label htmlFor="country">Country</Label>
                   <Select value={formData.country} onValueChange={(value) => updateFormData('country', value)}>
-                    <SelectTrigger>
+                    <SelectTrigger className={isAutoFilled ? "bg-blue-50 border-blue-200" : ""}>
                       <SelectValue placeholder="Select country" />
                     </SelectTrigger>
                     <SelectContent>
