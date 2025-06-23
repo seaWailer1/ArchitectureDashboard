@@ -1,0 +1,96 @@
+config:
+  target: 'http://localhost:5000'
+  phases:
+    - duration: 60
+      arrivalRate: 10
+      name: "Warm up"
+    - duration: 120
+      arrivalRate: 50
+      name: "Normal load"
+    - duration: 60
+      arrivalRate: 100
+      name: "Peak load"
+    - duration: 60
+      arrivalRate: 200
+      name: "Stress test"
+  payload:
+    path: "./test-data.csv"
+    fields:
+      - "userId"
+      - "amount"
+      - "currency"
+
+scenarios:
+  - name: "Authentication Flow"
+    weight: 30
+    flow:
+      - get:
+          url: "/api/auth/user"
+          headers:
+            Authorization: "Bearer test-token"
+          capture:
+            - json: "$.id"
+              as: "userId"
+      - think: 2
+
+  - name: "Wallet Operations"
+    weight: 40
+    flow:
+      - get:
+          url: "/api/wallet"
+          headers:
+            Authorization: "Bearer test-token"
+      - post:
+          url: "/api/transactions"
+          headers:
+            Authorization: "Bearer test-token"
+          json:
+            type: "send"
+            amount: "{{ amount }}"
+            description: "Load test transaction"
+      - think: 3
+
+  - name: "Transaction History"
+    weight: 20
+    flow:
+      - get:
+          url: "/api/transactions"
+          headers:
+            Authorization: "Bearer test-token"
+          qs:
+            limit: 10
+            offset: 0
+      - think: 1
+
+  - name: "E-commerce Flow"
+    weight: 10
+    flow:
+      - get:
+          url: "/api/ecommerce/stores"
+      - get:
+          url: "/api/ecommerce/products"
+          qs:
+            category: "food"
+            limit: 20
+      - post:
+          url: "/api/ecommerce/orders"
+          headers:
+            Authorization: "Bearer test-token"
+          json:
+            storeId: 1
+            items:
+              - productId: 1
+                quantity: 2
+            deliveryAddress: "123 Test Street"
+      - think: 5
+
+plugins:
+  expect: {}
+  metrics-by-endpoint: {}
+
+expect:
+  - statusCode: 200
+  - statusCode: 401
+  - contentType: json
+  - hasProperty: data
+  - maxResponseTime: 2000
