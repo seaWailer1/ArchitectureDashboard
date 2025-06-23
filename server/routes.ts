@@ -299,8 +299,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       let wallets = await storage.getUserWallets(userId);
       
-      // Auto-seed if user has no wallets or empty balances
-      if (wallets.length === 0 || wallets.every(w => parseFloat(w.balance || "0") === 0)) {
+      // Only auto-seed if user has absolutely no wallets
+      if (wallets.length === 0) {
         try {
           const { createUserSampleData } = await import('./seed-data');
           await createUserSampleData(userId, 'consumer');
@@ -331,20 +331,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         userId = req.user.claims.sub;
       }
       
-      let holdings = await storage.getAssetHoldings(userId);
-      
-      // Auto-seed if user has no holdings
-      if (holdings.length === 0) {
-        try {
-          const { createUserSampleData } = await import('./seed-data');
-          await createUserSampleData(userId, 'consumer');
-          console.log(`Auto-generated holdings for user: ${userId}`);
-          holdings = await storage.getAssetHoldings(userId);
-        } catch (seedError) {
-          console.error("Error auto-seeding holdings:", seedError);
-        }
-      }
-      
+      const holdings = await storage.getAssetHoldings(userId);
       res.json(holdings);
     } catch (error) {
       console.error("Error fetching asset holdings:", error);
@@ -365,20 +352,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         userId = req.user.claims.sub;
       }
       
-      let investments = await storage.getUserInvestments(userId);
-      
-      // Auto-seed if user has no investments
-      if (investments.length === 0) {
-        try {
-          const { createUserSampleData } = await import('./seed-data');
-          await createUserSampleData(userId, 'consumer');
-          console.log(`Auto-generated investments for user: ${userId}`);
-          investments = await storage.getUserInvestments(userId);
-        } catch (seedError) {
-          console.error("Error auto-seeding investments:", seedError);
-        }
-      }
-      
+      const investments = await storage.getUserInvestments(userId);
       res.json(investments);
     } catch (error) {
       console.error("Error fetching investments:", error);
@@ -399,20 +373,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         userId = req.user.claims.sub;
       }
       
-      let facilities = await storage.getCreditFacilities(userId);
-      
-      // Auto-seed if user has no credit facilities
-      if (facilities.length === 0) {
-        try {
-          const { createUserSampleData } = await import('./seed-data');
-          await createUserSampleData(userId, 'consumer');
-          console.log(`Auto-generated credit facilities for user: ${userId}`);
-          facilities = await storage.getCreditFacilities(userId);
-        } catch (seedError) {
-          console.error("Error auto-seeding credit facilities:", seedError);
-        }
-      }
-      
+      const facilities = await storage.getCreditFacilities(userId);
       res.json(facilities);
     } catch (error) {
       console.error("Error fetching credit facilities:", error);
