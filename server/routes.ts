@@ -20,12 +20,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
         let user = await storage.getUser(userId);
         
         if (!user) {
-          // Create development user
+          // Create development user with complete profile
           user = await storage.upsertUser({
             id: userId,
             email: "dev@example.com",
-            name: "Development User",
-            currentRole: "consumer"
+            firstName: "Development",
+            lastName: "User",
+            currentRole: "consumer",
+            kycStatus: "verified",
+            phoneVerified: true,
+            documentsVerified: true,
+            biometricVerified: true
           });
           
           // Auto-generate demo data for dev user
@@ -71,6 +76,150 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error fetching user:", error);
       res.status(500).json({ message: "Failed to fetch user" });
+    }
+  });
+
+  // Onboarding routes
+  app.post('/api/onboarding/complete', async (req: any, res) => {
+    try {
+      let userId: string;
+      
+      if (process.env.NODE_ENV === 'development') {
+        userId = "dev-user-123";
+      } else {
+        if (!req.user) {
+          return res.status(401).json({ message: "Unauthorized" });
+        }
+        userId = req.user.claims.sub;
+      }
+      
+      const {
+        firstName,
+        lastName,
+        email,
+        phone,
+        dateOfBirth,
+        address,
+        city,
+        country,
+        preferredRole
+      } = req.body;
+      
+      const user = await storage.upsertUser({
+        id: userId,
+        email,
+        firstName,
+        lastName,
+        phone,
+        dateOfBirth,
+        address,
+        city,
+        country,
+        currentRole: preferredRole,
+        kycStatus: 'pending'
+      });
+      
+      res.json({ success: true, user });
+    } catch (error) {
+      console.error("Error completing onboarding:", error);
+      res.status(500).json({ message: "Failed to complete onboarding" });
+    }
+  });
+
+  // KYC routes
+  app.post('/api/kyc/send-otp', async (req: any, res) => {
+    try {
+      const { phoneNumber } = req.body;
+      
+      // In a real implementation, you would integrate with an SMS service
+      // For now, we'll simulate sending an OTP
+      const otp = Math.floor(100000 + Math.random() * 900000).toString();
+      
+      // Store OTP in session or database (for demo, we'll just log it)
+      console.log(`OTP for ${phoneNumber}: ${otp}`);
+      
+      res.json({ success: true, message: "OTP sent successfully" });
+    } catch (error) {
+      console.error("Error sending OTP:", error);
+      res.status(500).json({ message: "Failed to send OTP" });
+    }
+  });
+
+  app.post('/api/kyc/verify-otp', async (req: any, res) => {
+    try {
+      let userId: string;
+      
+      if (process.env.NODE_ENV === 'development') {
+        userId = "dev-user-123";
+      } else {
+        if (!req.user) {
+          return res.status(401).json({ message: "Unauthorized" });
+        }
+        userId = req.user.claims.sub;
+      }
+      
+      const { phoneNumber, verificationCode } = req.body;
+      
+      // In a real implementation, you would verify the OTP against stored value
+      // For demo, we'll accept any 6-digit code
+      if (verificationCode && verificationCode.length === 6) {
+        await storage.updateVerificationStatus(userId, 'phoneVerified', true);
+        res.json({ success: true, message: "Phone verified successfully" });
+      } else {
+        res.status(400).json({ message: "Invalid verification code" });
+      }
+    } catch (error) {
+      console.error("Error verifying OTP:", error);
+      res.status(500).json({ message: "Failed to verify OTP" });
+    }
+  });
+
+  app.post('/api/kyc/upload-document', async (req: any, res) => {
+    try {
+      let userId: string;
+      
+      if (process.env.NODE_ENV === 'development') {
+        userId = "dev-user-123";
+      } else {
+        if (!req.user) {
+          return res.status(401).json({ message: "Unauthorized" });
+        }
+        userId = req.user.claims.sub;
+      }
+      
+      // In a real implementation, you would handle file uploads
+      // For demo, we'll just mark documents as verified
+      await storage.updateVerificationStatus(userId, 'documentsVerified', true);
+      
+      res.json({ success: true, message: "Documents uploaded successfully" });
+    } catch (error) {
+      console.error("Error uploading documents:", error);
+      res.status(500).json({ message: "Failed to upload documents" });
+    }
+  });
+
+  app.post('/api/kyc/submit-biometric', async (req: any, res) => {
+    try {
+      let userId: string;
+      
+      if (process.env.NODE_ENV === 'development') {
+        userId = "dev-user-123";
+      } else {
+        if (!req.user) {
+          return res.status(401).json({ message: "Unauthorized" });
+        }
+        userId = req.user.claims.sub;
+      }
+      
+      // In a real implementation, you would process biometric data
+      // For demo, we'll mark biometric as verified and complete KYC
+      await storage.updateVerificationStatus(userId, 'biometricVerified', true);
+      await storage.updateKYCStatus(userId, 'verified');
+      
+      res.json({ success: true, message: "Biometric verification completed" });
+    } catch (error) {
+      console.error("Error submitting biometric:", error);
+      res.status(500).json({ message: "Failed to submit biometric data" });
     }
   });
 
