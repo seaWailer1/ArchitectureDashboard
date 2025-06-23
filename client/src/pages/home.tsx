@@ -55,32 +55,11 @@ export default function Home() {
   const renderRoleSpecificContent = () => {
     switch (user?.currentRole) {
       case 'merchant':
-        return (
-          <div className="space-y-6">
-            <EnhancedWalletSummary />
-            <MerchantDashboard />
-            <KYCStatusCard />
-          </div>
-        );
+        return <MerchantDashboard />;
       case 'agent':
-        return (
-          <div className="space-y-6">
-            <EnhancedWalletSummary />
-            <AgentDashboard />
-            <KYCStatusCard />
-          </div>
-        );
+        return <AgentDashboard />;
       default: // consumer
-        return (
-          <div className="space-y-6">
-            <EnhancedWalletSummary />
-
-            <QuickActions />
-            <RecentTransactions />
-            <MiniAppLauncher />
-            <KYCStatusCard />
-          </div>
-        );
+        return <ConsumerDashboard />;
     }
   };
 
