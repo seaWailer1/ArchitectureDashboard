@@ -1,0 +1,28 @@
+{
+  "name": "afripay-testing",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "test:api": "jest --testPathPattern=api",
+    "test:integration": "jest --testPathPattern=integration",
+    "test:e2e": "playwright test",
+    "test:security": "npm audit && jest --testPathPattern=security",
+    "test:performance": "artillery run performance-tests.yml",
+    "test:all": "npm run test && npm run test:e2e && npm run test:security && npm run test:performance"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.40.0",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/jest-dom": "^6.1.0",
+    "@testing-library/user-event": "^14.5.0",
+    "@types/jest": "^29.5.8",
+    "@types/supertest": "^2.0.16",
+    "artillery": "^2.0.0",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "supertest": "^6.3.3",
+    "ts-jest": "^29.1.1"
+  }
+}
