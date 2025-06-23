@@ -239,6 +239,53 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Demo data management routes
+  app.post('/api/seed-demo-data', isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const { role, scenario, features } = req.body;
+      
+      // Import seed functions
+      const { createUserSampleData } = await import('./seed-data');
+      
+      // Create basic demo data
+      await createUserSampleData(userId, role || 'consumer');
+      
+      res.json({ 
+        message: "Demo data generated successfully",
+        scenario: scenario || 'basic',
+        role: role || 'consumer'
+      });
+    } catch (error) {
+      console.error("Error seeding demo data:", error);
+      res.status(500).json({ 
+        message: "Failed to generate demo data", 
+        error: error.message 
+      });
+    }
+  });
+
+  app.post('/api/clear-demo-data', isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      
+      // Get user's wallet to clear demo transactions
+      const wallet = await storage.getWalletByUserId(userId);
+      if (wallet) {
+        // Reset wallet balance to zero
+        await storage.updateWalletBalance(wallet.id, "0.00", "0.00");
+      }
+      
+      res.json({ message: "Demo data cleared successfully" });
+    } catch (error) {
+      console.error("Error clearing demo data:", error);
+      res.status(500).json({ 
+        message: "Failed to clear demo data", 
+        error: error.message 
+      });
+    }
+  });
+
   // Migration route for walletType column
   app.post('/api/migrate/wallet-type', async (req: any, res) => {
     try {

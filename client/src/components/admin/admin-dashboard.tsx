@@ -18,6 +18,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
+import DemoDataManager from "@/components/admin/demo-data-manager";
 
 interface AdminStats {
   totalUsers: number;
@@ -462,17 +463,7 @@ export default function AdminDashboard() {
         </TabsContent>
 
         <TabsContent value="demo" className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center space-x-2">
-                <Sparkles className="w-5 h-5" />
-                <span>Demo Data Management</span>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <DemoDataGenerator />
-            </CardContent>
-          </Card>
+          <DemoDataManager />
         </TabsContent>
       </Tabs>
     </div>

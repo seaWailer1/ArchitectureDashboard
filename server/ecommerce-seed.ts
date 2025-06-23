@@ -1,4 +1,4 @@
-import { storage } from "./storage.js";
+import { storage } from "./storage";
 import { nanoid } from "nanoid";
 
 export async function seedEcommerceData() {
