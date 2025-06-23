@@ -1,11 +1,30 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
+import rateLimit from "express-rate-limit";
 import { storage } from "./storage";
 import { setupAuth, isAuthenticated } from "./replitAuth";
+import { 
+  validateRequest, 
+  onboardingSchema, 
+  transactionSchema, 
+  kycDocumentSchema,
+  sanitizeString 
+} from "./validation";
 import { insertTransactionSchema, insertUserRoleSchema } from "@shared/schema";
 import { z } from "zod";
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Security middleware
+  const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100, // Limit each IP to 100 requests per windowMs
+    message: "Too many requests from this IP",
+    standardHeaders: true,
+    legacyHeaders: false,
+  });
+  
+  app.use(limiter);
+  
   // Auth middleware
   await setupAuth(app);
 
@@ -36,20 +55,35 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const { userId } = req.params;
       
-      // In development mode, simulate switching to preset user
-      if (process.env.NODE_ENV === 'development') {
-        const user = await storage.getUser(userId);
-        if (!user) {
-          return res.status(404).json({ message: "Preset user not found" });
-        }
-        
-        // Update the development user ID to switch context
-        global.devUserId = userId;
-        
-        res.json({ success: true, user });
-      } else {
-        res.status(400).json({ message: "Preset user switching only available in development" });
+      // Validate userId format to prevent injection
+      if (!/^[a-zA-Z0-9\-_]+$/.test(userId)) {
+        return res.status(400).json({ message: "Invalid user ID format" });
       }
+      
+      // Restrict to development environment only
+      if (process.env.NODE_ENV !== 'development') {
+        return res.status(403).json({ message: "User switching not allowed in production" });
+      }
+      
+      // Validate against whitelist of preset users
+      const allowedUsers = [
+        'consumer-001', 'consumer-002', 'consumer-new', 'consumer-kyc',
+        'merchant-001', 'merchant-002', 'agent-001', 'dev-user-123'
+      ];
+      
+      if (!allowedUsers.includes(userId)) {
+        return res.status(403).json({ message: "User not in allowed preset list" });
+      }
+      
+      const user = await storage.getUser(userId);
+      if (!user) {
+        return res.status(404).json({ message: "Preset user not found" });
+      }
+      
+      // Securely update development context without global variables
+      req.session.devUserId = userId;
+      
+      res.json({ success: true, user });
     } catch (error) {
       console.error("Error switching to preset user:", error);
       res.status(500).json({ message: "Failed to switch user" });
@@ -63,7 +97,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       // Development mode: create or use existing dev user
       if (process.env.NODE_ENV === 'development') {
-        userId = (global as any).devUserId || "dev-user-123";
+        userId = req.session?.devUserId || "dev-user-123";
         let user = await storage.getUser(userId);
         
         if (!user) {
@@ -154,13 +188,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       const user = await storage.upsertUser({
         id: userId,
-        email,
-        firstName,
-        lastName,
-        phone,
+        email: sanitizeString(email),
+        firstName: sanitizeString(firstName),
+        lastName: sanitizeString(lastName),
+        phone: sanitizeString(phone),
         dateOfBirth,
-        address,
-        city,
+        address: sanitizeString(address),
+        city: sanitizeString(city),
         country,
         currentRole: preferredRole,
         kycStatus: 'pending'
@@ -192,7 +226,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.post('/api/kyc/verify-otp', async (req: any, res) => {
+  app.post('/api/kyc/verify-otp', validateRequest(kycDocumentSchema.pick({ phoneNumber: true, verificationCode: true })), async (req: any, res) => {
     try {
       let userId: string;
       
