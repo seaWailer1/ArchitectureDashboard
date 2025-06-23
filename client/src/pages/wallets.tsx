@@ -216,25 +216,25 @@ export default function Wallets() {
           </CardContent>
         </Card>
 
-        <Tabs defaultValue="wallets" className="w-full">
+        <Tabs defaultValue="primary" className="w-full">
           <TabsList className="grid w-full grid-cols-4">
-            <TabsTrigger value="wallets">Wallets</TabsTrigger>
+            <TabsTrigger value="primary">Primary</TabsTrigger>
             <TabsTrigger value="crypto">Crypto</TabsTrigger>
-            <TabsTrigger value="investments">Invest</TabsTrigger>
-            <TabsTrigger value="credit">Credit</TabsTrigger>
+            <TabsTrigger value="savings">Savings</TabsTrigger>
+            <TabsTrigger value="investment">Investment</TabsTrigger>
           </TabsList>
 
-          <TabsContent value="wallets" className="space-y-4">
+          <TabsContent value="primary" className="space-y-4">
             <div className="flex items-center justify-between">
-              <h2 className="text-lg font-semibold">My Wallets</h2>
-              <Button size="sm" onClick={() => handleWalletAction("Create", 0)}>
+              <h2 className="text-lg font-semibold">Primary Wallets</h2>
+              <Button size="sm" onClick={() => handleWalletAction("Create Primary", 0)}>
                 <Plus className="w-4 h-4 mr-2" />
                 Add Wallet
               </Button>
             </div>
 
             <div className="space-y-3">
-              {wallets.map((wallet) => {
+              {wallets.filter(w => w.walletType === 'primary').map((wallet) => {
                 const Icon = getWalletIcon(wallet.walletType);
                 const colorClass = getWalletColor(wallet.walletType);
                 
@@ -247,11 +247,11 @@ export default function Wallets() {
                             <Icon className="w-6 h-6" />
                           </div>
                           <div>
-                            <p className="font-medium capitalize">
-                              {wallet.walletType.replace('_', ' ')} Wallet
+                            <p className="font-medium">
+                              {wallet.walletType.charAt(0).toUpperCase() + wallet.walletType.slice(1)} Wallet
                             </p>
                             <p className="text-sm text-neutral-600">
-                              {wallet.currency} • ID: {wallet.id}
+                              {wallet.currency} • Main spending account
                             </p>
                           </div>
                         </div>
@@ -286,6 +286,70 @@ export default function Wallets() {
                               <DropdownMenuItem onClick={() => handleWalletAction("Topup", wallet.id)}>
                                 <Plus className="w-4 h-4 mr-2" />
                                 Top Up
+                              </DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                );
+              })}
+            </div>
+          </TabsContent>
+
+          <TabsContent value="savings" className="space-y-4">
+            <div className="flex items-center justify-between">
+              <h2 className="text-lg font-semibold">Savings Wallets</h2>
+              <Button size="sm" onClick={() => handleWalletAction("Create Savings", 0)}>
+                <Plus className="w-4 h-4 mr-2" />
+                Add Savings
+              </Button>
+            </div>
+
+            <div className="space-y-3">
+              {wallets.filter(w => w.walletType === 'savings').map((wallet) => {
+                const Icon = getWalletIcon(wallet.walletType);
+                const colorClass = getWalletColor(wallet.walletType);
+                
+                return (
+                  <Card key={wallet.id}>
+                    <CardContent className="p-4">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center space-x-3">
+                          <div className={`w-12 h-12 rounded-full flex items-center justify-center ${colorClass}`}>
+                            <Icon className="w-6 h-6" />
+                          </div>
+                          <div>
+                            <p className="font-medium">Savings Wallet</p>
+                            <p className="text-sm text-neutral-600">
+                              {wallet.currency} • Long-term savings
+                            </p>
+                          </div>
+                        </div>
+                        
+                        <div className="flex items-center space-x-2">
+                          <div className="text-right">
+                            <p className="font-semibold">
+                              {showBalances ? formatCurrency(wallet.balance, wallet.currency) : "****"}
+                            </p>
+                            <p className="text-xs text-green-600">Earning interest</p>
+                          </div>
+                          
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <Button variant="ghost" size="sm">
+                                <MoreVertical className="w-4 h-4" />
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent>
+                              <DropdownMenuItem onClick={() => handleWalletAction("Transfer In", wallet.id)}>
+                                <ArrowDownToLine className="w-4 h-4 mr-2" />
+                                Transfer In
+                              </DropdownMenuItem>
+                              <DropdownMenuItem onClick={() => handleWalletAction("Transfer Out", wallet.id)}>
+                                <Send className="w-4 h-4 mr-2" />
+                                Transfer Out
                               </DropdownMenuItem>
                             </DropdownMenuContent>
                           </DropdownMenu>
@@ -346,111 +410,109 @@ export default function Wallets() {
             </div>
           </TabsContent>
 
-          <TabsContent value="investments" className="space-y-4">
+          <TabsContent value="investment" className="space-y-4">
             <div className="flex items-center justify-between">
-              <h2 className="text-lg font-semibold">Investments</h2>
-              <Button size="sm" onClick={() => handleWalletAction("New Investment", 0)}>
+              <h2 className="text-lg font-semibold">Investment Wallets</h2>
+              <Button size="sm" onClick={() => handleWalletAction("Create Investment", 0)}>
                 <Plus className="w-4 h-4 mr-2" />
-                Invest
+                Add Investment
               </Button>
             </div>
 
             <div className="space-y-3">
-              {investments.map((investment) => {
-                const gain = parseFloat(investment.currentValue) - parseFloat(investment.principalAmount);
-                const gainPercent = (gain / parseFloat(investment.principalAmount)) * 100;
+              {wallets.filter(w => w.walletType === 'investment').map((wallet) => {
+                const Icon = getWalletIcon(wallet.walletType);
+                const colorClass = getWalletColor(wallet.walletType);
                 
                 return (
-                  <Card key={investment.id}>
+                  <Card key={wallet.id}>
                     <CardContent className="p-4">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-3">
-                          <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center">
-                            <TrendingUp className="w-5 h-5 text-purple-600" />
+                          <div className={`w-12 h-12 rounded-full flex items-center justify-center ${colorClass}`}>
+                            <Icon className="w-6 h-6" />
                           </div>
                           <div>
-                            <p className="font-medium">{investment.product.name}</p>
-                            <p className="text-sm text-neutral-600">{investment.product.type}</p>
-                            <Badge variant="outline" className="text-xs">
-                              {investment.product.riskLevel} Risk
-                            </Badge>
-                          </div>
-                        </div>
-                        
-                        <div className="text-right">
-                          <p className="font-semibold">
-                            {showBalances ? formatCurrency(investment.currentValue) : "****"}
-                          </p>
-                          <p className="text-sm text-neutral-600">
-                            Principal: {showBalances ? formatCurrency(investment.principalAmount) : "****"}
-                          </p>
-                          <Badge variant={gain >= 0 ? "default" : "destructive"} className="text-xs">
-                            {showBalances ? `${gain >= 0 ? '+' : ''}${gainPercent.toFixed(2)}%` : "****"}
-                          </Badge>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                );
-              })}
-            </div>
-          </TabsContent>
-
-          <TabsContent value="credit" className="space-y-4">
-            <div className="flex items-center justify-between">
-              <h2 className="text-lg font-semibold">Credit Facilities</h2>
-              <Button size="sm" onClick={() => handleWalletAction("Apply Credit", 0)}>
-                <Plus className="w-4 h-4 mr-2" />
-                Apply
-              </Button>
-            </div>
-
-            <div className="space-y-3">
-              {creditFacilities.map((facility) => {
-                const utilizationPercent = (parseFloat(facility.usedCredit) / parseFloat(facility.creditLimit)) * 100;
-                
-                return (
-                  <Card key={facility.id}>
-                    <CardContent className="p-4">
-                      <div className="flex items-center justify-between mb-3">
-                        <div className="flex items-center space-x-3">
-                          <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
-                            <CreditCard className="w-5 h-5 text-blue-600" />
-                          </div>
-                          <div>
-                            <p className="font-medium capitalize">{facility.type.replace('_', ' ')}</p>
+                            <p className="font-medium">Investment Wallet</p>
                             <p className="text-sm text-neutral-600">
-                              {facility.interestRate}% APR
+                              {wallet.currency} • Portfolio funds
                             </p>
                           </div>
                         </div>
                         
-                        <div className="text-right">
-                          <p className="font-semibold">
-                            {showBalances ? formatCurrency(facility.availableCredit) : "****"}
-                          </p>
-                          <p className="text-sm text-neutral-600">Available</p>
-                          <Badge variant={facility.status === 'active' ? 'default' : 'secondary'}>
-                            {facility.status}
-                          </Badge>
-                        </div>
-                      </div>
-                      
-                      <div className="space-y-2">
-                        <div className="flex justify-between text-sm">
-                          <span>Credit Utilization</span>
-                          <span>{showBalances ? `${utilizationPercent.toFixed(1)}%` : "****"}</span>
-                        </div>
-                        <Progress value={utilizationPercent} className="h-2" />
-                        <div className="flex justify-between text-xs text-neutral-600">
-                          <span>Used: {showBalances ? formatCurrency(facility.usedCredit) : "****"}</span>
-                          <span>Limit: {showBalances ? formatCurrency(facility.creditLimit) : "****"}</span>
+                        <div className="flex items-center space-x-2">
+                          <div className="text-right">
+                            <p className="font-semibold">
+                              {showBalances ? formatCurrency(wallet.balance, wallet.currency) : "****"}
+                            </p>
+                            <p className="text-xs text-purple-600">Available to invest</p>
+                          </div>
+                          
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <Button variant="ghost" size="sm">
+                                <MoreVertical className="w-4 h-4" />
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent>
+                              <DropdownMenuItem onClick={() => handleWalletAction("Invest", wallet.id)}>
+                                <TrendingUp className="w-4 h-4 mr-2" />
+                                Invest Funds
+                              </DropdownMenuItem>
+                              <DropdownMenuItem onClick={() => handleWalletAction("Add Funds", wallet.id)}>
+                                <Plus className="w-4 h-4 mr-2" />
+                                Add Funds
+                              </DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
                         </div>
                       </div>
                     </CardContent>
                   </Card>
                 );
               })}
+
+              {/* Investment Holdings */}
+              <div className="mt-6">
+                <h3 className="text-md font-medium mb-3">Active Investments</h3>
+                {investments.map((investment) => {
+                  const gain = parseFloat(investment.currentValue) - parseFloat(investment.principalAmount);
+                  const gainPercent = (gain / parseFloat(investment.principalAmount)) * 100;
+                  
+                  return (
+                    <Card key={investment.id} className="mb-3">
+                      <CardContent className="p-4">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center space-x-3">
+                            <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center">
+                              <TrendingUp className="w-5 h-5 text-purple-600" />
+                            </div>
+                            <div>
+                              <p className="font-medium">{investment.product.name}</p>
+                              <p className="text-sm text-neutral-600">{investment.product.type}</p>
+                              <Badge variant="outline" className="text-xs">
+                                {investment.product.riskLevel} Risk
+                              </Badge>
+                            </div>
+                          </div>
+                          
+                          <div className="text-right">
+                            <p className="font-semibold">
+                              {showBalances ? formatCurrency(investment.currentValue) : "****"}
+                            </p>
+                            <p className="text-sm text-neutral-600">
+                              Principal: {showBalances ? formatCurrency(investment.principalAmount) : "****"}
+                            </p>
+                            <Badge variant={gain >= 0 ? "default" : "destructive"} className="text-xs">
+                              {showBalances ? `${gain >= 0 ? '+' : ''}${gainPercent.toFixed(2)}%` : "****"}
+                            </Badge>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  );
+                })}
+              </div>
             </div>
           </TabsContent>
         </Tabs>
