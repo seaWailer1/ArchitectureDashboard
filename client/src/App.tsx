@@ -48,6 +48,7 @@ function Router() {
   if (!user?.firstName || !user?.lastName) {
     return (
       <Switch>
+        <Route path="/test-login" component={TestLogin} />
         <Route path="/onboarding" component={Onboarding} />
         <Route path="/" component={Onboarding} />
         <Route component={Onboarding} />
@@ -75,6 +76,7 @@ function Router() {
       <Route path="/services" component={Services} />
       <Route path="/transactions" component={Transactions} />
       <Route path="/wallets" component={Wallets} />
+      <Route path="/test-login" component={TestLogin} />
       <Route path="/signin" component={SignIn} />
       <Route path="/onboarding" component={Onboarding} />
       <Route path="/kyc" component={KYC} />
