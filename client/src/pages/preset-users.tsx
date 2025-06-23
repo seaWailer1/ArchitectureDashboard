@@ -78,8 +78,10 @@ export default function PresetUsers() {
         title: "User Switched",
         description: `Successfully switched to user ${userId}`,
       });
-      queryClient.invalidateQueries({ queryKey: ["/api/auth/user"] });
-      setLocation("/");
+      // Clear all cached data and refresh
+      queryClient.clear();
+      // Force page reload to ensure clean state
+      window.location.href = "/";
     },
     onError: () => {
       toast({
