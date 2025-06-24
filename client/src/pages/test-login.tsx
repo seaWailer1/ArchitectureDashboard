@@ -194,7 +194,7 @@ export default function TestLogin() {
         {/* Header */}
         <div className="text-center text-white mb-12">
           <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-6">
-            <Globe className="w-8 h-8 text-white" />
+            <FaGlobe className="w-8 h-8 text-white" />
           </div>
           <h1 className="text-4xl font-bold mb-4">AfriPay Demo</h1>
           <p className="text-xl text-white/90 mb-2">Test User Journeys</p>
@@ -206,19 +206,19 @@ export default function TestLogin() {
         {/* Features Preview */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8 max-w-4xl mx-auto">
           <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 text-center text-white">
-            <Shield className="w-6 h-6 mx-auto mb-2" />
+            <FaShield className="w-6 h-6 mx-auto mb-2" />
             <p className="text-sm font-medium">Secure KYC</p>
           </div>
           <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 text-center text-white">
-            <Smartphone className="w-6 h-6 mx-auto mb-2" />
+            <FaMobile className="w-6 h-6 mx-auto mb-2" />
             <p className="text-sm font-medium">Mobile First</p>
           </div>
           <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 text-center text-white">
-            <CreditCard className="w-6 h-6 mx-auto mb-2" />
+            <FaCreditCard className="w-6 h-6 mx-auto mb-2" />
             <p className="text-sm font-medium">Multi-Wallet</p>
           </div>
           <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 text-center text-white">
-            <Users className="w-6 h-6 mx-auto mb-2" />
+            <FaUsers className="w-6 h-6 mx-auto mb-2" />
             <p className="text-sm font-medium">Multi-Role</p>
           </div>
         </div>
@@ -266,12 +266,12 @@ export default function TestLogin() {
                         className="w-full flex items-center justify-center space-x-2"
                       >
                         {simulateOnboardingMutation.isPending ? (
-                          <RefreshCw className="w-4 h-4 animate-spin" />
+                          <FaRedo className="w-4 h-4 animate-spin" />
                         ) : (
-                          <Play className="w-4 h-4" />
+                          <FaPlay className="w-4 h-4" />
                         )}
                         <span>Start Journey</span>
-                        <ArrowRight className="w-4 h-4" />
+                        <FaArrowRight className="w-4 h-4" />
                       </Button>
                     </CardContent>
                   </Card>
@@ -283,7 +283,7 @@ export default function TestLogin() {
                 <Card className="text-center py-16 bg-white/98 backdrop-blur-lg border border-white/20 rounded-3xl">
                   <CardContent>
                     <div className="w-24 h-24 bg-gradient-to-br from-neutral-200 to-neutral-300 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                      <Users className="w-12 h-12 text-neutral-500" />
+                      <FaUsers className="w-12 h-12 text-neutral-500" />
                     </div>
                     <h3 className="text-2xl font-bold text-neutral-900 mb-3">No Test Users Available</h3>
                     <p className="text-neutral-600 mb-8 max-w-md mx-auto">
@@ -295,9 +295,9 @@ export default function TestLogin() {
                       className="flex items-center space-x-3 mx-auto bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 px-8 py-3 rounded-2xl font-bold shadow-lg hover:shadow-xl transition-all"
                     >
                       {createUsersMutation.isPending ? (
-                        <RefreshCw className="w-5 h-5 animate-spin" />
+                        <FaRedo className="w-5 h-5 animate-spin" />
                       ) : (
-                        <Plus className="w-5 h-5" />
+                        <FaPlus className="w-5 h-5" />
                       )}
                       <span>Create Test Users</span>
                     </Button>
@@ -309,7 +309,7 @@ export default function TestLogin() {
               <Card className="bg-white/95 backdrop-blur-sm">
                 <CardHeader>
                   <CardTitle className="flex items-center space-x-2">
-                    <Shield className="w-5 h-5" />
+                    <FaShield className="w-5 h-5" />
                     <span>Quick Guide</span>
                   </CardTitle>
                 </CardHeader>
@@ -337,7 +337,7 @@ export default function TestLogin() {
                       onClick={() => setLocation("/signin")}
                       className="flex items-center space-x-2 mx-auto"
                     >
-                      <LogIn className="w-4 h-4" />
+                      <FaSignInAlt className="w-4 h-4" />
                       <span>Regular Sign In</span>
                     </Button>
                   </div>

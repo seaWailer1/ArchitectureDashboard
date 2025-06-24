@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { User, Shield, Settings, HelpCircle, LogOut, ChevronRight, Edit2, Camera, Phone, Mail, MapPin, Calendar, CreditCard, Globe, Bell, Lock, Smartphone, Download, Trash2, Plus } from "lucide-react";
+import { FaUser, FaShield, FaCog, FaQuestionCircle, FaSignOutAlt, FaChevronRight, FaEdit, FaCamera, FaPhone, FaEnvelope, FaMapMarkerAlt, FaCalendar, FaCreditCard, FaGlobe, FaBell, FaLock, FaMobile, FaDownload, FaTrash, FaPlus } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
