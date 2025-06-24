@@ -10,7 +10,7 @@ import {
   kycDocumentSchema,
   sanitizeString 
 } from "./validation";
-import { insertTransactionSchema, insertUserRoleSchema } from "@shared/schema";
+import { insertTransactionSchema, insertUserRoleSchema } from "../shared/schema.js";
 import { z } from "zod";
 
 export async function registerRoutes(app: Express): Promise<Server> {

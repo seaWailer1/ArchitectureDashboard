@@ -32,7 +32,7 @@ import {
   type InsertSupportTicket,
   type AccountRecovery,
   type InsertAccountRecovery,
-} from "@shared/schema";
+} from "../shared/schema.js";
 import { db } from "./db";
 import { eq, desc, and, or } from "drizzle-orm";
 

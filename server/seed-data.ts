@@ -11,7 +11,7 @@ import {
   merchants,
   agents,
   wallets,
-} from "@shared/schema";
+} from "../shared/schema.js";
 
 export async function seedDatabase() {
   try {
