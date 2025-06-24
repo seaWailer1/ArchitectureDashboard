@@ -76,7 +76,7 @@ export default function AppHeader() {
             value={user?.language || 'en'}
             size="small"
             style={{ width: 64 }}
-            bordered={false}
+            variant="borderless"
             options={[
               { value: 'en', label: 'EN' },
               { value: 'fr', label: 'FR' },
