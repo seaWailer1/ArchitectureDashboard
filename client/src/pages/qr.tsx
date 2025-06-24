@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Camera, QrCode } from "lucide-react";
+import { FaCamera, FaQrcode } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import AppHeader from "@/components/layout/app-header";
 import BottomNavigation from "@/components/layout/bottom-navigation";
@@ -24,7 +24,7 @@ export default function QR() {
               onClick={() => setShowQRModal(true)}
             >
               <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
-                <Camera className="w-6 h-6 text-primary" />
+                <FaCamera className="w-6 h-6 text-primary" />
               </div>
               <div className="flex-1">
                 <h3 className="font-semibold text-neutral-900">Scan QR Code</h3>
@@ -38,7 +38,7 @@ export default function QR() {
               onClick={() => setShowQRModal(true)}
             >
               <div className="w-12 h-12 bg-accent/10 rounded-full flex items-center justify-center">
-                <QrCode className="w-6 h-6 text-accent" />
+                <FaQrcode className="w-6 h-6 text-accent" />
               </div>
               <div className="flex-1">
                 <h3 className="font-semibold text-neutral-900">Generate QR Code</h3>

@@ -1,19 +1,6 @@
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { FaUsers, FaUserCheck, FaClock, FaMapMarkerAlt, FaPhone, FaEnvelope, FaShield } from "react-icons/fa";
-  CreditCard,
-  User,
-  RefreshCw,
-  LogIn,
-  Plus,
-  CheckCircle,
-  AlertCircle,
-  XCircle,
-  Globe,
-  ArrowRight,
-  Smartphone,
-  Play
-} from "lucide-react";
+import { FaUsers, FaUserCheck, FaClock, FaMapMarkerAlt, FaPhone, FaEnvelope, FaShieldAlt, FaCreditCard, FaUser, FaRedo, FaSignInAlt, FaPlus, FaCheckCircle, FaExclamationCircle, FaTimesCircle, FaGlobe, FaArrowRight, FaMobile, FaPlay } from "react-icons/fa";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -121,7 +108,7 @@ export default function TestLogin() {
       case 'merchant':
         return <FaCreditCard className="w-4 h-4" />;
       case 'agent':
-        return <FaShield className="w-4 h-4" />;
+        return <FaShieldAlt className="w-4 h-4" />;
       default:
         return <FaUser className="w-4 h-4" />;
     }
@@ -199,7 +186,7 @@ export default function TestLogin() {
         {/* Features Preview */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8 max-w-4xl mx-auto">
           <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 text-center text-white">
-            <FaShield className="w-6 h-6 mx-auto mb-2" />
+            <FaShieldAlt className="w-6 h-6 mx-auto mb-2" />
             <p className="text-sm font-medium">Secure KYC</p>
           </div>
           <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 text-center text-white">
@@ -302,7 +289,7 @@ export default function TestLogin() {
               <Card className="bg-white/95 backdrop-blur-sm">
                 <CardHeader>
                   <CardTitle className="flex items-center space-x-2">
-                    <FaShield className="w-5 h-5" />
+                    <FaShieldAlt className="w-5 h-5" />
                     <span>Quick Guide</span>
                   </CardTitle>
                 </CardHeader>

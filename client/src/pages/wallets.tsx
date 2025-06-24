@@ -1,20 +1,6 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { 
-  Wallet, 
-  CreditCard, 
-  TrendingUp, 
-  Bitcoin, 
-  Plus, 
-  Eye, 
-  EyeOff,
-  Send,
-  ArrowDownToLine,
-  MoreVertical,
-  PiggyBank,
-  Building2,
-  Coins
-} from "lucide-react";
+import { FaWallet, FaCreditCard, FaChartLine, FaBitcoin, FaPlus, FaEye, FaEyeSlash, FaPaperPlane, FaDownload, FaEllipsisV, FaPiggyBank, FaBuilding, FaCoins } from "react-icons/fa";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
