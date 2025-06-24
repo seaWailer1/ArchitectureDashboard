@@ -1,7 +1,7 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import { Card, Typography, Button, Space, Avatar, Row, Col, Progress } from 'antd';
+import { Card, Typography, Button, Space, Avatar, Row, Col, Progress, Badge } from 'antd';
 import { WalletOutlined, SendOutlined, DownloadOutlined, QrcodeOutlined, UserOutlined } from '@ant-design/icons';
 import { useState } from 'react';
 import AppHeader from '@/components/layout/app-header';
@@ -45,12 +45,17 @@ export default function HomePage() {
   const { data: user } = useQuery<UserProfile>({
     queryKey: ['/api/auth/user'],
     queryFn: async () => {
-      const response = await fetch('/api/auth/user');
-      if (!response.ok) {
-        // Return a default user for development
+      try {
+        const response = await fetch('/api/auth/user');
+        if (!response.ok) {
+          throw new Error('API not available');
+        }
+        return response.json();
+      } catch (error) {
+        // Return demo data when API is not available
         return {
           id: 'dev-user-123',
-          email: 'dev@example.com',
+          email: 'demo@afriPay.com',
           firstName: 'Demo',
           lastName: 'User',
           currentRole: 'consumer',
@@ -60,55 +65,64 @@ export default function HomePage() {
           biometricVerified: true
         };
       }
-      return response.json();
     },
   });
 
   const { data: wallets = [] } = useQuery<WalletData[]>({
     queryKey: ['/api/wallets'],
     queryFn: async () => {
-      const response = await fetch('/api/wallets');
-      if (!response.ok) {
-        // Return default wallet for development
+      try {
+        const response = await fetch('/api/wallets');
+        if (!response.ok) throw new Error('API not available');
+        return response.json();
+      } catch (error) {
         return [{
           id: 1,
           userId: 'dev-user-123',
           walletType: 'primary',
-          balance: '2500.00',
-          pendingBalance: '0.00',
+          balance: '2850.75',
+          pendingBalance: '150.00',
           currency: 'USD'
         }];
       }
-      return response.json();
     },
   });
 
   const { data: transactions = [] } = useQuery<TransactionData[]>({
     queryKey: ['/api/transactions'],
     queryFn: async () => {
-      const response = await fetch('/api/transactions');
-      if (!response.ok) {
-        // Return sample transactions for development
+      try {
+        const response = await fetch('/api/transactions');
+        if (!response.ok) throw new Error('API not available');
+        return response.json();
+      } catch (error) {
         return [
           {
             id: 1,
             type: 'receive',
-            amount: '500.00',
+            amount: '850.00',
             status: 'completed',
-            description: 'Salary Payment',
+            description: 'Freelance Payment',
             createdAt: new Date().toISOString()
           },
           {
             id: 2,
             type: 'send',
-            amount: '50.00',
+            amount: '75.50',
             status: 'completed',
-            description: 'Grocery Shopping',
+            description: 'Utility Bill',
             createdAt: new Date(Date.now() - 86400000).toISOString()
+          },
+          {
+            id: 3,
+            type: 'receive',
+            amount: '200.00',
+            status: 'pending',
+            description: 'Refund Processing',
+            createdAt: new Date(Date.now() - 3600000).toISOString()
           }
         ];
       }
-      return response.json();
     },
   });
 
