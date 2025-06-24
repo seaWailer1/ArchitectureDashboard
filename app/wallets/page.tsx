@@ -21,6 +21,7 @@ interface WalletData {
 
 export default function WalletsPage() {
   const [balanceVisible, setBalanceVisible] = useState(true);
+  const { isFirstVisit } = useFeatureHints('wallets', 'consumer');
   const [activeTab, setActiveTab] = useState('primary');
 
   const { data: wallets = [] } = useQuery<WalletData[]>({

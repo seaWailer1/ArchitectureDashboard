@@ -22,6 +22,8 @@ interface UserProfile {
 }
 
 export default function ProfilePage() {
+  const { isFirstVisit } = useFeatureHints('profile', 'consumer');
+  
   const { data: user } = useQuery<UserProfile>({
     queryKey: ['/api/auth/user'],
     queryFn: async () => {

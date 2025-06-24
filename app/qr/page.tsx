@@ -9,6 +9,8 @@ import FeatureHints, { useFeatureHints } from '@/components/ui/feature-hints';
 const { Title, Text } = Typography;
 
 export default function QRPage() {
+  const { isFirstVisit } = useFeatureHints('qr', 'consumer');
+  
   return (
     <div className="mobile-container">
       <AppHeader />
