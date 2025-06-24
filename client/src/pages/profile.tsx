@@ -106,12 +106,6 @@ export default function Profile() {
   const handleSaveProfile = () => {
     updateProfileMutation.mutate(editForm);
   };
-    },
-  ];
-
-  const handleLogout = () => {
-    window.location.href = "/api/logout";
-  };
 
   return (
     <div className="min-h-screen bg-neutral-100">
