@@ -38,12 +38,12 @@ Key Features:
 ## System Architecture
 
 ### Frontend Architecture
-- **Framework**: React 18 with TypeScript
-- **Routing**: Wouter for client-side routing
+- **Framework**: Next.js with React 18 and TypeScript
+- **Routing**: Next.js App Router for file-based routing
 - **State Management**: TanStack Query for server state management
-- **UI Framework**: Radix UI components with Tailwind CSS styling
-- **Component Library**: Shadcn/ui for consistent design system
-- **Build Tool**: Vite for fast development and optimized builds
+- **UI Framework**: Ant Design components with Tailwind CSS styling
+- **Component Library**: Ant Design for consistent design system
+- **Build Tool**: Next.js for optimized builds and SSR/SSG capabilities
 
 ### Backend Architecture
 - **Runtime**: Node.js with Express.js server
@@ -183,6 +183,7 @@ Key Features:
 - June 23, 2025: Created comprehensive pre-login test user selection page with auto-fill functionality for onboarding simulation. Implemented 7 preset user personas across different roles and KYC statuses with visual journey indicators. Enhanced UI with modern gradient designs, improved card layouts, and interactive elements. Cleaned up wallet database duplicates and optimized data integrity.
 - June 23, 2025: Simplified test login page visual design and implemented comprehensive profile module system with 4 main tabs (Overview, Security, Settings, Support). Added complete profile editing, role switching, security management (2FA, device management), notification preferences, and support ticket system with full backend API integration.
 - June 23, 2025: Migrated all icons from Lucide React to React Icons (FontAwesome) throughout the entire application for consistent icon usage. Updated test-login, profile, navigation, transactions, services, onboarding, KYC, wallets, and QR pages to use FaIcon equivalents while maintaining all existing functionality.
+- June 23, 2025: Major framework migration from Vite + Radix UI to Next.js + Ant Design. Updated build system to use Next.js App Router, replaced Radix UI components with Ant Design components, restructured project to follow Next.js conventions, and configured concurrent development with Express backend on separate ports.
 
 ## User Preferences
 
