@@ -8,7 +8,8 @@ const nextConfig = {
         destination: 'http://localhost:5000/api/:path*'
       }
     ];
-  }
+  },
+  output: 'standalone'
 };
 
 export default nextConfig;

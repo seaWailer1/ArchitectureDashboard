@@ -2,7 +2,7 @@
 
 import { useQuery } from '@tanstack/react-query';
 import { Card, Typography, Button, Space, Avatar, Row, Col, Statistic, Progress, Badge } from 'antd';
-import { WalletOutlined, SendOutlined, ReceiveMoneyOutlined, QrcodeOutlined, UserOutlined } from '@ant-design/icons';
+import { WalletOutlined, SendOutlined, DownloadOutlined, QrcodeOutlined, UserOutlined } from '@ant-design/icons';
 import { useState, useEffect } from 'react';
 import AppHeader from '@/components/layout/app-header';
 import BottomNavigation from '@/components/layout/bottom-navigation';
@@ -205,7 +205,7 @@ export default function HomePage() {
                 type="default" 
                 shape="circle" 
                 size="large" 
-                icon={<ReceiveMoneyOutlined />}
+                icon={<DownloadOutlined />}
                 style={{ width: '100%', height: 56 }}
               />
               <Text className="block text-center mt-2 text-xs">Receive</Text>
