@@ -9,7 +9,10 @@ const nextConfig = {
       }
     ];
   },
-  reactStrictMode: true
+  reactStrictMode: true,
+  experimental: {
+    optimizePackageImports: ['antd', '@ant-design/icons']
+  }
 };
 
 export default nextConfig;

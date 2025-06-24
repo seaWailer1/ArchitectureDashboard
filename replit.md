@@ -185,6 +185,7 @@ Key Features:
 - June 23, 2025: Migrated all icons from Lucide React to React Icons (FontAwesome) throughout the entire application for consistent icon usage. Updated test-login, profile, navigation, transactions, services, onboarding, KYC, wallets, and QR pages to use FaIcon equivalents while maintaining all existing functionality.
 - June 23, 2025: Major framework migration from Vite + Radix UI to Next.js + Ant Design. Updated build system to use Next.js App Router, replaced Radix UI components with Ant Design components, restructured project to follow Next.js conventions, and configured concurrent development with Express backend on separate ports.
 - June 24, 2025: Completed Next.js + Ant Design migration with proper routing configuration. Application now runs on Next.js 15.3.4 with App Router, Ant Design UI components, concurrent Express API server (port 5000) and Next.js frontend (port 3000), API proxy configuration, and responsive mobile-first design maintained across all pages.
+- June 24, 2025: Updated all dependencies to latest versions including Next.js 15.x, Ant Design 5.x, React 19.x, TypeScript 5.x, TanStack Query, Drizzle ORM, and supporting libraries. Replaced deprecated Ant Design props (bodyStyle → styles.body, bordered → variant) and optimized build configuration with package imports optimization.
 
 ## User Preferences
 

@@ -71,13 +71,15 @@ export default function ServicesPage() {
                   border: 'none',
                   boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
                 }}
-                bodyStyle={{ 
-                  padding: '16px',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  height: '100%'
+                styles={{ 
+                  body: {
+                    padding: '16px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    height: '100%'
+                  }
                 }}
               >
                 <div 
@@ -111,7 +113,7 @@ export default function ServicesPage() {
         <Card 
           title="Quick Actions" 
           style={{ marginTop: '24px' }}
-          bodyStyle={{ padding: '16px' }}
+          styles={{ body: { padding: '16px' } }}
         >
           <Space direction="vertical" style={{ width: '100%' }} size="middle">
             <Button type="primary" block size="large">
