@@ -5,6 +5,7 @@ import { UserOutlined, SettingOutlined, LogoutOutlined, EditOutlined } from '@an
 import { useQuery } from '@tanstack/react-query';
 import AppHeader from '@/components/layout/app-header';
 import BottomNavigation from '@/components/layout/bottom-navigation';
+import FeatureHints, { useFeatureHints } from '@/client/src/components/ui/feature-hints';
 
 const { Title, Text } = Typography;
 

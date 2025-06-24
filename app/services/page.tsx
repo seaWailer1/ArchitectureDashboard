@@ -4,10 +4,12 @@ import { Card, Typography, Row, Col, Button, Space } from 'antd';
 import { CarOutlined, ShoppingOutlined, ThunderboltOutlined, MobileOutlined, CreditCardOutlined, BankOutlined } from '@ant-design/icons';
 import AppHeader from '@/components/layout/app-header';
 import BottomNavigation from '@/components/layout/bottom-navigation';
+import FeatureHints, { useFeatureHints } from '@/client/src/components/ui/feature-hints';
 
 const { Title, Text } = Typography;
 
 export default function ServicesPage() {
+  const { isFirstVisit } = useFeatureHints('services', 'consumer');
   const services = [
     {
       id: 'transport',

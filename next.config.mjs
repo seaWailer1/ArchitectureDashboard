@@ -12,6 +12,9 @@ const nextConfig = {
   reactStrictMode: true,
   experimental: {
     optimizePackageImports: ['antd', '@ant-design/icons']
+  },
+  async redirects() {
+    return [];
   }
 };
 
