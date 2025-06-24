@@ -1,6 +1,10 @@
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
-import { log } from "./vite";
+// Simple logging function since we no longer use Vite
+function log(message: string, source = "express") {
+  const timestamp = new Date().toLocaleTimeString();
+  console.log(`${timestamp} [${source}] ${message}`);
+}
 
 const app = express();
 app.use(express.json());
