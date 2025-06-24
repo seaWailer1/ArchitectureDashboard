@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Car, ShoppingBag, Zap, Smartphone, CreditCard, Building, Users, MoreHorizontal, Package } from "lucide-react";
+import { FaCar, FaShoppingBag, FaBolt, FaMobile, FaCreditCard, FaBuilding, FaUsers, FaEllipsisH, FaBox } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";

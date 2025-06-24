@@ -1,13 +1,6 @@
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { 
-  Users, 
-  UserCheck, 
-  Clock, 
-  MapPin,
-  Phone,
-  Mail,
-  Shield,
+import { FaUsers, FaUserCheck, FaClock, FaMapMarkerAlt, FaPhone, FaEnvelope, FaShield } from "react-icons/fa";
   CreditCard,
   User,
   RefreshCw,
@@ -126,26 +119,26 @@ export default function TestLogin() {
   const getRoleIcon = (role: string) => {
     switch (role) {
       case 'merchant':
-        return <CreditCard className="w-4 h-4" />;
+        return <FaCreditCard className="w-4 h-4" />;
       case 'agent':
-        return <Shield className="w-4 h-4" />;
+        return <FaShield className="w-4 h-4" />;
       default:
-        return <User className="w-4 h-4" />;
+        return <FaUser className="w-4 h-4" />;
     }
   };
 
   const getStatusIcon = (status: string) => {
     switch (status) {
       case 'verified':
-        return <CheckCircle className="w-4 h-4 text-green-600" />;
+        return <FaCheckCircle className="w-4 h-4 text-green-600" />;
       case 'in_progress':
-        return <Clock className="w-4 h-4 text-yellow-600" />;
+        return <FaClock className="w-4 h-4 text-yellow-600" />;
       case 'pending':
-        return <AlertCircle className="w-4 h-4 text-orange-600" />;
+        return <FaExclamationCircle className="w-4 h-4 text-orange-600" />;
       case 'rejected':
-        return <XCircle className="w-4 h-4 text-red-600" />;
+        return <FaTimesCircle className="w-4 h-4 text-red-600" />;
       default:
-        return <Clock className="w-4 h-4 text-gray-400" />;
+        return <FaClock className="w-4 h-4 text-gray-400" />;
     }
   };
 

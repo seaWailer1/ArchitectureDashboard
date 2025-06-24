@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { ArrowDown, ArrowUp, Plus, Filter } from "lucide-react";
+import { FaArrowDown, FaArrowUp, FaPlus, FaFilter } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -20,13 +20,13 @@ export default function Transactions() {
   const getTransactionIcon = (type: string) => {
     switch (type) {
       case 'receive':
-        return { icon: ArrowDown, color: 'bg-success/10 text-success' };
+        return { icon: FaArrowDown, color: 'bg-success/10 text-success' };
       case 'send':
-        return { icon: ArrowUp, color: 'bg-primary/10 text-primary' };
+        return { icon: FaArrowUp, color: 'bg-primary/10 text-primary' };
       case 'topup':
-        return { icon: Plus, color: 'bg-accent/10 text-accent' };
+        return { icon: FaPlus, color: 'bg-accent/10 text-accent' };
       default:
-        return { icon: ArrowUp, color: 'bg-neutral-100 text-neutral-600' };
+        return { icon: FaArrowUp, color: 'bg-neutral-100 text-neutral-600' };
     }
   };
 
