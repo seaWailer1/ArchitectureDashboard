@@ -32,6 +32,11 @@ export default function RootLayout({
 
   return (
     <html lang="en">
+      <head>
+        <title>AfriPay - Pan-African Fintech SuperApp</title>
+        <meta name="description" content="Complete fintech solution for Africa with multi-role wallets, QR payments, and financial services" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </head>
       <body>
         <AntdRegistry>
           <ConfigProvider theme={theme}>
