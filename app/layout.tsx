@@ -37,7 +37,7 @@ export default function RootLayout({
         <meta name="description" content="Complete fintech solution for Africa with multi-role wallets, QR payments, and financial services" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
-      <body>
+      <body suppressHydrationWarning={true}>
         <AntdRegistry>
           <ConfigProvider theme={theme}>
             <QueryClientProvider client={queryClient}>

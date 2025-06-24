@@ -1,9 +1,9 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import { Card, Typography, Button, Space, Avatar, Row, Col, Statistic, Progress, Badge } from 'antd';
+import { Card, Typography, Button, Space, Avatar, Row, Col, Progress } from 'antd';
 import { WalletOutlined, SendOutlined, DownloadOutlined, QrcodeOutlined, UserOutlined } from '@ant-design/icons';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import AppHeader from '@/components/layout/app-header';
 import BottomNavigation from '@/components/layout/bottom-navigation';
 
