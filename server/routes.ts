@@ -730,6 +730,141 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // User profile management routes
+  app.patch('/api/user/profile', isAuthenticated, async (req, res) => {
+    try {
+      const userId = req.session?.user?.id;
+      if (!userId) {
+        return res.status(401).json({ message: "Unauthorized" });
+      }
+
+      const updates = req.body;
+      const sanitizedUpdates = {
+        firstName: updates.firstName ? sanitizeString(updates.firstName) : undefined,
+        lastName: updates.lastName ? sanitizeString(updates.lastName) : undefined,
+        phoneNumber: updates.phoneNumber ? sanitizeString(updates.phoneNumber) : undefined,
+        address: updates.address ? sanitizeString(updates.address) : undefined,
+        dateOfBirth: updates.dateOfBirth,
+      };
+
+      // Remove undefined values
+      Object.keys(sanitizedUpdates).forEach(key => 
+        sanitizedUpdates[key] === undefined && delete sanitizedUpdates[key]
+      );
+
+      const updatedUser = await storage.updateAccountSettings(userId, sanitizedUpdates);
+      res.json(updatedUser);
+    } catch (error) {
+      console.error("Error updating profile:", error);
+      res.status(500).json({ message: "Failed to update profile" });
+    }
+  });
+
+  // Role switching route
+  app.post('/api/user/switch-role', isAuthenticated, async (req, res) => {
+    try {
+      const userId = req.session?.user?.id;
+      const { role } = req.body;
+
+      if (!userId) {
+        return res.status(401).json({ message: "Unauthorized" });
+      }
+
+      if (!['consumer', 'merchant', 'agent'].includes(role)) {
+        return res.status(400).json({ message: "Invalid role" });
+      }
+
+      const updatedUser = await storage.updateUserCurrentRole(userId, role);
+      
+      // Update session
+      if (req.session?.user) {
+        req.session.user.currentRole = role;
+      }
+
+      res.json(updatedUser);
+    } catch (error) {
+      console.error("Error switching role:", error);
+      res.status(500).json({ message: "Failed to switch role" });
+    }
+  });
+
+  // User devices route
+  app.get('/api/user/devices', isAuthenticated, async (req, res) => {
+    try {
+      const userId = req.session?.user?.id;
+      if (!userId) {
+        return res.status(401).json({ message: "Unauthorized" });
+      }
+
+      const devices = await storage.getUserDevices(userId);
+      res.json(devices);
+    } catch (error) {
+      console.error("Error fetching user devices:", error);
+      res.status(500).json({ message: "Failed to fetch devices" });
+    }
+  });
+
+  // Security logs route
+  app.get('/api/user/security-logs', isAuthenticated, async (req, res) => {
+    try {
+      const userId = req.session?.user?.id;
+      if (!userId) {
+        return res.status(401).json({ message: "Unauthorized" });
+      }
+
+      const logs = await storage.getSecurityLogs(userId);
+      res.json(logs);
+    } catch (error) {
+      console.error("Error fetching security logs:", error);
+      res.status(500).json({ message: "Failed to fetch security logs" });
+    }
+  });
+
+  // Support tickets route
+  app.get('/api/user/support-tickets', isAuthenticated, async (req, res) => {
+    try {
+      const userId = req.session?.user?.id;
+      if (!userId) {
+        return res.status(401).json({ message: "Unauthorized" });
+      }
+
+      const tickets = await storage.getUserSupportTickets(userId);
+      res.json(tickets);
+    } catch (error) {
+      console.error("Error fetching support tickets:", error);
+      res.status(500).json({ message: "Failed to fetch support tickets" });
+    }
+  });
+
+  // Create support ticket route
+  app.post('/api/user/support-tickets', isAuthenticated, async (req, res) => {
+    try {
+      const userId = req.session?.user?.id;
+      if (!userId) {
+        return res.status(401).json({ message: "Unauthorized" });
+      }
+
+      const { subject, description, priority } = req.body;
+      
+      if (!subject || !description) {
+        return res.status(400).json({ message: "Subject and description are required" });
+      }
+
+      const ticket = await storage.createSupportTicket({
+        userId,
+        subject: sanitizeString(subject),
+        description: sanitizeString(description),
+        priority: priority || 'medium',
+        status: 'open',
+      });
+
+      res.json(ticket);
+    } catch (error) {
+      console.error("Error creating support ticket:", error);
+      res.status(500).json({ message: "Failed to create support ticket" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

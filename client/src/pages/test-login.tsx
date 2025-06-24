@@ -192,52 +192,34 @@ export default function TestLogin() {
     <div className="min-h-screen bg-gradient-to-br from-primary via-secondary to-accent">
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
-        <div className="text-center text-white mb-16">
-          <div className="relative">
-            <div className="w-24 h-24 bg-gradient-to-br from-white/30 to-white/10 rounded-full flex items-center justify-center mx-auto mb-8 backdrop-blur-lg border border-white/20 shadow-2xl">
-              <Globe className="w-12 h-12 text-white" />
-            </div>
-            <div className="absolute -top-2 -right-2 w-6 h-6 bg-green-400 rounded-full border-2 border-white/50 animate-pulse"></div>
+        <div className="text-center text-white mb-12">
+          <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-6">
+            <Globe className="w-8 h-8 text-white" />
           </div>
-          <h1 className="text-5xl font-bold mb-6 bg-gradient-to-r from-white via-white/90 to-white/80 bg-clip-text text-transparent">
-            AfriPay Demo Experience
-          </h1>
-          <p className="text-2xl text-white/95 mb-4 font-medium">Test the Complete User Journey</p>
-          <p className="text-white/80 max-w-3xl mx-auto text-lg leading-relaxed">
-            Select a test user profile to experience the onboarding and KYC journey. 
-            Each user has different scenarios to demonstrate various features and flows across Africa's financial ecosystem.
+          <h1 className="text-4xl font-bold mb-4">AfriPay Demo</h1>
+          <p className="text-xl text-white/90 mb-2">Test User Journeys</p>
+          <p className="text-white/80 max-w-2xl mx-auto">
+            Select a test user to experience different onboarding and KYC scenarios.
           </p>
         </div>
 
         {/* Features Preview */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16 max-w-5xl mx-auto">
-          <div className="group bg-gradient-to-br from-white/20 to-white/5 backdrop-blur-lg rounded-2xl p-6 text-center text-white border border-white/10 hover:border-white/30 transition-all duration-300 hover:scale-105">
-            <div className="w-12 h-12 bg-gradient-to-br from-green-400 to-green-600 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
-              <Shield className="w-7 h-7 text-white" />
-            </div>
-            <p className="font-semibold">Secure KYC</p>
-            <p className="text-xs text-white/70 mt-1">Bank-grade security</p>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8 max-w-4xl mx-auto">
+          <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 text-center text-white">
+            <Shield className="w-6 h-6 mx-auto mb-2" />
+            <p className="text-sm font-medium">Secure KYC</p>
           </div>
-          <div className="group bg-gradient-to-br from-white/20 to-white/5 backdrop-blur-lg rounded-2xl p-6 text-center text-white border border-white/10 hover:border-white/30 transition-all duration-300 hover:scale-105">
-            <div className="w-12 h-12 bg-gradient-to-br from-blue-400 to-blue-600 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
-              <Smartphone className="w-7 h-7 text-white" />
-            </div>
-            <p className="font-semibold">Mobile First</p>
-            <p className="text-xs text-white/70 mt-1">Optimized experience</p>
+          <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 text-center text-white">
+            <Smartphone className="w-6 h-6 mx-auto mb-2" />
+            <p className="text-sm font-medium">Mobile First</p>
           </div>
-          <div className="group bg-gradient-to-br from-white/20 to-white/5 backdrop-blur-lg rounded-2xl p-6 text-center text-white border border-white/10 hover:border-white/30 transition-all duration-300 hover:scale-105">
-            <div className="w-12 h-12 bg-gradient-to-br from-purple-400 to-purple-600 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
-              <CreditCard className="w-7 h-7 text-white" />
-            </div>
-            <p className="font-semibold">Multi-Wallet</p>
-            <p className="text-xs text-white/70 mt-1">Crypto & fiat support</p>
+          <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 text-center text-white">
+            <CreditCard className="w-6 h-6 mx-auto mb-2" />
+            <p className="text-sm font-medium">Multi-Wallet</p>
           </div>
-          <div className="group bg-gradient-to-br from-white/20 to-white/5 backdrop-blur-lg rounded-2xl p-6 text-center text-white border border-white/10 hover:border-white/30 transition-all duration-300 hover:scale-105">
-            <div className="w-12 h-12 bg-gradient-to-br from-orange-400 to-orange-600 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
-              <Users className="w-7 h-7 text-white" />
-            </div>
-            <p className="font-semibold">Multi-Role</p>
-            <p className="text-xs text-white/70 mt-1">Consumer, merchant, agent</p>
+          <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 text-center text-white">
+            <Users className="w-6 h-6 mx-auto mb-2" />
+            <p className="text-sm font-medium">Multi-Role</p>
           </div>
         </div>
 
@@ -249,83 +231,48 @@ export default function TestLogin() {
           ) : (
             <>
               {/* User Selection */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8 mb-12">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
                 {presetUsers?.map((user: PresetUser) => (
-                  <Card key={user.id} className="group relative overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 bg-white/98 backdrop-blur-lg border border-white/20 rounded-3xl">
-                    {/* Gradient overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                    
-                    <CardHeader className="relative pb-4">
-                      <div className="flex items-center justify-between mb-4">
-                        <div className="flex items-center space-x-4">
-                          <div className="relative">
-                            <div className="w-16 h-16 bg-gradient-to-br from-primary via-secondary to-accent rounded-2xl flex items-center justify-center text-white font-bold text-lg shadow-lg group-hover:scale-110 transition-transform duration-300">
-                              {user.name.split(' ').map(n => n[0]).join('')}
-                            </div>
-                            <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-gradient-to-br from-green-400 to-green-600 rounded-full border-2 border-white flex items-center justify-center">
-                              {getStatusIcon(user.status)}
-                            </div>
-                          </div>
-                          <div>
-                            <CardTitle className="text-xl font-bold text-neutral-900">{user.name}</CardTitle>
-                            <p className="text-sm text-neutral-600 font-medium">{user.email}</p>
-                          </div>
+                  <Card key={user.id} className="hover:shadow-lg transition-shadow bg-white/95 backdrop-blur-sm">
+                    <CardHeader className="pb-3">
+                      <div className="flex items-center space-x-3 mb-3">
+                        <div className="w-12 h-12 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center text-white font-semibold">
+                          {user.name.split(' ').map(n => n[0]).join('')}
+                        </div>
+                        <div>
+                          <CardTitle className="text-lg">{user.name}</CardTitle>
+                          <p className="text-sm text-neutral-600">{user.email}</p>
                         </div>
                       </div>
                       
-                      <div className="flex items-center space-x-2 mb-4">
-                        <Badge variant={getRoleVariant(user.role)} className="flex items-center space-x-2 px-3 py-1 rounded-full font-semibold">
+                      <div className="flex items-center space-x-2 mb-2">
+                        <Badge variant={getRoleVariant(user.role)} className="flex items-center space-x-1">
                           {getRoleIcon(user.role)}
                           <span className="capitalize">{user.role}</span>
                         </Badge>
-                        <Badge variant={getStatusVariant(user.status)} className="flex items-center space-x-2 px-3 py-1 rounded-full font-semibold">
+                        <Badge variant={getStatusVariant(user.status)} className="flex items-center space-x-1">
                           {getStatusIcon(user.status)}
                           <span className="capitalize">{user.status}</span>
                         </Badge>
                       </div>
                       
-                      <p className="text-sm text-neutral-700 leading-relaxed">{user.description}</p>
+                      <p className="text-sm text-neutral-700">{user.description}</p>
                     </CardHeader>
                     
-                    <CardContent className="relative pt-0">
-                      <div className="space-y-4">
-                        {/* User Details */}
-                        <div className="bg-gradient-to-r from-neutral-50 to-neutral-100/50 rounded-2xl p-4 space-y-3">
-                          <div className="flex items-center space-x-3 text-sm text-neutral-700">
-                            <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                              <Phone className="w-4 h-4 text-blue-600" />
-                            </div>
-                            <span className="font-medium">{user.phoneNumber || '+234 123 456 7890'}</span>
-                          </div>
-                          <div className="flex items-center space-x-3 text-sm text-neutral-700">
-                            <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
-                              <MapPin className="w-4 h-4 text-red-600" />
-                            </div>
-                            <span className="font-medium">{user.city || 'Lagos'}, {user.country || 'Nigeria'}</span>
-                          </div>
-                        </div>
-                        
-                        {/* Journey Preview */}
-                        <div className="bg-gradient-to-r from-primary/10 to-secondary/10 rounded-2xl p-4 border border-primary/20">
-                          <h4 className="font-bold text-sm mb-2 text-primary">Journey Preview</h4>
-                          <p className="text-sm text-neutral-700 leading-relaxed">{getJourneyDescription(user.status)}</p>
-                        </div>
-                        
-                        {/* Action Button */}
-                        <Button 
-                          onClick={() => simulateOnboardingMutation.mutate(user)}
-                          disabled={simulateOnboardingMutation.isPending}
-                          className="w-full h-12 flex items-center justify-center space-x-3 bg-gradient-to-r from-primary via-secondary to-accent hover:from-primary/90 hover:via-secondary/90 hover:to-accent/90 rounded-2xl font-bold text-white shadow-lg hover:shadow-xl transition-all duration-300 group-hover:scale-105"
-                        >
-                          {simulateOnboardingMutation.isPending ? (
-                            <RefreshCw className="w-5 h-5 animate-spin" />
-                          ) : (
-                            <Play className="w-5 h-5" />
-                          )}
-                          <span>Start Journey</span>
-                          <ArrowRight className="w-5 h-5" />
-                        </Button>
-                      </div>
+                    <CardContent className="pt-0">
+                      <Button 
+                        onClick={() => simulateOnboardingMutation.mutate(user)}
+                        disabled={simulateOnboardingMutation.isPending}
+                        className="w-full flex items-center justify-center space-x-2"
+                      >
+                        {simulateOnboardingMutation.isPending ? (
+                          <RefreshCw className="w-4 h-4 animate-spin" />
+                        ) : (
+                          <Play className="w-4 h-4" />
+                        )}
+                        <span>Start Journey</span>
+                        <ArrowRight className="w-4 h-4" />
+                      </Button>
                     </CardContent>
                   </Card>
                 ))}
@@ -359,127 +306,39 @@ export default function TestLogin() {
               )}
 
               {/* Instructions */}
-              <Card className="bg-white/98 backdrop-blur-lg border border-white/20 rounded-3xl overflow-hidden">
-                <CardHeader className="bg-gradient-to-r from-primary/10 via-secondary/10 to-accent/10">
-                  <CardTitle className="flex items-center space-x-3 text-2xl">
-                    <div className="w-10 h-10 bg-gradient-to-br from-primary to-secondary rounded-xl flex items-center justify-center">
-                      <Shield className="w-6 h-6 text-white" />
-                    </div>
-                    <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Demo Instructions</span>
+              <Card className="bg-white/95 backdrop-blur-sm">
+                <CardHeader>
+                  <CardTitle className="flex items-center space-x-2">
+                    <Shield className="w-5 h-5" />
+                    <span>Quick Guide</span>
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="pt-8">
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div className="space-y-4">
-                      <div className="flex items-center space-x-3 mb-4">
-                        <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                          <User className="w-5 h-5 text-blue-600" />
-                        </div>
-                        <h4 className="font-bold text-lg text-primary">User Roles</h4>
-                      </div>
-                      <ul className="space-y-3">
-                        <li className="flex items-start space-x-3 p-3 bg-blue-50 rounded-xl">
-                          <User className="w-5 h-5 text-blue-600 mt-0.5" />
-                          <div>
-                            <span className="font-semibold text-blue-900">Consumer</span>
-                            <p className="text-sm text-blue-700">Personal banking and payments</p>
-                          </div>
-                        </li>
-                        <li className="flex items-start space-x-3 p-3 bg-green-50 rounded-xl">
-                          <CreditCard className="w-5 h-5 text-green-600 mt-0.5" />
-                          <div>
-                            <span className="font-semibold text-green-900">Merchant</span>
-                            <p className="text-sm text-green-700">Business dashboard and analytics</p>
-                          </div>
-                        </li>
-                        <li className="flex items-start space-x-3 p-3 bg-purple-50 rounded-xl">
-                          <Shield className="w-5 h-5 text-purple-600 mt-0.5" />
-                          <div>
-                            <span className="font-semibold text-purple-900">Agent</span>
-                            <p className="text-sm text-purple-700">Service provider tools and commissions</p>
-                          </div>
-                        </li>
-                      </ul>
+                <CardContent>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                    <div>
+                      <h4 className="font-semibold mb-2">Roles</h4>
+                      <p className="text-neutral-600">Consumer, Merchant, Agent - each with different features</p>
                     </div>
-                    
-                    <div className="space-y-4">
-                      <div className="flex items-center space-x-3 mb-4">
-                        <div className="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center">
-                          <Clock className="w-5 h-5 text-orange-600" />
-                        </div>
-                        <h4 className="font-bold text-lg text-primary">Journey Stages</h4>
-                      </div>
-                      <ul className="space-y-3">
-                        <li className="flex items-start space-x-3 p-3 bg-orange-50 rounded-xl">
-                          <AlertCircle className="w-5 h-5 text-orange-600 mt-0.5" />
-                          <div>
-                            <span className="font-semibold text-orange-900">Pending</span>
-                            <p className="text-sm text-orange-700">Complete onboarding flow</p>
-                          </div>
-                        </li>
-                        <li className="flex items-start space-x-3 p-3 bg-yellow-50 rounded-xl">
-                          <Clock className="w-5 h-5 text-yellow-600 mt-0.5" />
-                          <div>
-                            <span className="font-semibold text-yellow-900">In Progress</span>
-                            <p className="text-sm text-yellow-700">Finish KYC verification</p>
-                          </div>
-                        </li>
-                        <li className="flex items-start space-x-3 p-3 bg-green-50 rounded-xl">
-                          <CheckCircle className="w-5 h-5 text-green-600 mt-0.5" />
-                          <div>
-                            <span className="font-semibold text-green-900">Verified</span>
-                            <p className="text-sm text-green-700">Access full application</p>
-                          </div>
-                        </li>
-                      </ul>
+                    <div>
+                      <h4 className="font-semibold mb-2">Status</h4>
+                      <p className="text-neutral-600">Pending (onboarding), In Progress (KYC), Verified (full access)</p>
                     </div>
-                    
-                    <div className="space-y-4">
-                      <div className="flex items-center space-x-3 mb-4">
-                        <div className="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center">
-                          <Shield className="w-5 h-5 text-emerald-600" />
-                        </div>
-                        <h4 className="font-bold text-lg text-primary">Auto-Fill Features</h4>
-                      </div>
-                      <ul className="space-y-3">
-                        <li className="flex items-start space-x-3 p-3 bg-blue-50 rounded-xl">
-                          <Mail className="w-5 h-5 text-blue-600 mt-0.5" />
-                          <div>
-                            <span className="font-semibold text-blue-900">Personal Info</span>
-                            <p className="text-sm text-blue-700">Name, email, and basic details</p>
-                          </div>
-                        </li>
-                        <li className="flex items-start space-x-3 p-3 bg-green-50 rounded-xl">
-                          <Phone className="w-5 h-5 text-green-600 mt-0.5" />
-                          <div>
-                            <span className="font-semibold text-green-900">Contact Details</span>
-                            <p className="text-sm text-green-700">Phone and communication preferences</p>
-                          </div>
-                        </li>
-                        <li className="flex items-start space-x-3 p-3 bg-red-50 rounded-xl">
-                          <MapPin className="w-5 h-5 text-red-600 mt-0.5" />
-                          <div>
-                            <span className="font-semibold text-red-900">Location</span>
-                            <p className="text-sm text-red-700">Address and regional settings</p>
-                          </div>
-                        </li>
-                      </ul>
+                    <div>
+                      <h4 className="font-semibold mb-2">Auto-Fill</h4>
+                      <p className="text-neutral-600">Forms will be pre-filled with user data for testing</p>
                     </div>
                   </div>
                   
-                  <Separator className="my-8" />
+                  <Separator className="my-4" />
                   
-                  <div className="text-center bg-gradient-to-r from-neutral-50 to-neutral-100 rounded-2xl p-6">
-                    <p className="text-neutral-700 mb-4 font-medium">
-                      Want to use the regular authentication flow instead?
-                    </p>
+                  <div className="text-center">
                     <Button 
                       variant="outline" 
                       onClick={() => setLocation("/signin")}
-                      className="flex items-center space-x-2 mx-auto border-2 border-primary/20 hover:border-primary/40 hover:bg-primary/5 rounded-xl px-6 py-2"
+                      className="flex items-center space-x-2 mx-auto"
                     >
                       <LogIn className="w-4 h-4" />
-                      <span>Go to Sign In</span>
+                      <span>Regular Sign In</span>
                     </Button>
                   </div>
                 </CardContent>

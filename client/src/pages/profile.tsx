@@ -1,27 +1,83 @@
-import { useQuery } from "@tanstack/react-query";
-import { User, Shield, Settings, HelpCircle, LogOut, ChevronRight } from "lucide-react";
+import { useState } from "react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { User, Shield, Settings, HelpCircle, LogOut, ChevronRight, Edit2, Camera, Phone, Mail, MapPin, Calendar, CreditCard, Globe, Bell, Lock, Smartphone, Download, Trash2, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Switch } from "@/components/ui/switch";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { useToast } from "@/hooks/use-toast";
 import AppHeader from "@/components/layout/app-header";
 import BottomNavigation from "@/components/layout/bottom-navigation";
 import { UserProfile } from "@/types";
+import { apiRequest } from "@/lib/queryClient";
 
 export default function Profile() {
+  const [activeTab, setActiveTab] = useState("overview");
+  const [isEditing, setIsEditing] = useState(false);
+  const [editForm, setEditForm] = useState({});
+  const { toast } = useToast();
+  const queryClient = useQueryClient();
+
   const { data: user } = useQuery<UserProfile>({
     queryKey: ["/api/auth/user"],
+  });
+
+  const { data: userDevices } = useQuery({
+    queryKey: ["/api/user/devices"],
+  });
+
+  const { data: securityLogs } = useQuery({
+    queryKey: ["/api/user/security-logs"],
+  });
+
+  const { data: supportTickets } = useQuery({
+    queryKey: ["/api/user/support-tickets"],
+  });
+
+  const updateProfileMutation = useMutation({
+    mutationFn: async (updates: Partial<UserProfile>) => {
+      return await apiRequest('PATCH', '/api/user/profile', updates);
+    },
+    onSuccess: () => {
+      toast({ title: "Profile updated successfully" });
+      queryClient.invalidateQueries({ queryKey: ["/api/auth/user"] });
+      setIsEditing(false);
+    },
+    onError: () => {
+      toast({ title: "Failed to update profile", variant: "destructive" });
+    },
+  });
+
+  const switchRoleMutation = useMutation({
+    mutationFn: async (role: string) => {
+      return await apiRequest('POST', '/api/user/switch-role', { role });
+    },
+    onSuccess: () => {
+      toast({ title: "Role switched successfully" });
+      queryClient.invalidateQueries({ queryKey: ["/api/auth/user"] });
+    },
+    onError: () => {
+      toast({ title: "Failed to switch role", variant: "destructive" });
+    },
   });
 
   const getKYCStatusColor = (status?: string) => {
     switch (status) {
       case 'verified':
-        return 'bg-success/10 text-success';
+        return 'bg-green-100 text-green-800';
       case 'in_progress':
-        return 'bg-accent/10 text-accent';
+        return 'bg-yellow-100 text-yellow-800';
       case 'rejected':
-        return 'bg-destructive/10 text-destructive';
+        return 'bg-red-100 text-red-800';
       default:
-        return 'bg-neutral-100 text-neutral-600';
+        return 'bg-gray-100 text-gray-600';
     }
   };
 
@@ -36,30 +92,20 @@ export default function Profile() {
     }
   };
 
-  const menuItems = [
-    {
-      icon: User,
-      label: "Personal Information",
-      description: "Update your profile details",
-      action: () => {},
-    },
-    {
-      icon: Shield,
-      label: "Security & Privacy",
-      description: "Manage security settings",
-      action: () => {},
-    },
-    {
-      icon: Settings,
-      label: "App Settings",
-      description: "Notifications, language, theme",
-      action: () => {},
-    },
-    {
-      icon: HelpCircle,
-      label: "Help & Support",
-      description: "Get help and contact support",
-      action: () => {},
+  const handleEditProfile = () => {
+    setEditForm({
+      firstName: user?.firstName || '',
+      lastName: user?.lastName || '',
+      phoneNumber: user?.phoneNumber || '',
+      address: user?.address || '',
+      dateOfBirth: user?.dateOfBirth || '',
+    });
+    setIsEditing(true);
+  };
+
+  const handleSaveProfile = () => {
+    updateProfileMutation.mutate(editForm);
+  };
     },
   ];
 
