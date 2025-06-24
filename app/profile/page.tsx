@@ -5,7 +5,7 @@ import { UserOutlined, SettingOutlined, LogoutOutlined, EditOutlined } from '@an
 import { useQuery } from '@tanstack/react-query';
 import AppHeader from '@/components/layout/app-header';
 import BottomNavigation from '@/components/layout/bottom-navigation';
-import FeatureHints, { useFeatureHints } from '@/client/src/components/ui/feature-hints';
+import FeatureHints, { useFeatureHints } from '@/components/ui/feature-hints';
 
 const { Title, Text } = Typography;
 
@@ -166,6 +166,13 @@ export default function ProfilePage() {
       </main>
 
       <BottomNavigation currentPage="profile" />
+      
+      {/* Feature Discovery Hints */}
+      <FeatureHints 
+        currentPage="profile" 
+        userRole={user?.currentRole || 'consumer'}
+        isFirstVisit={isFirstVisit}
+      />
     </div>
   );
 }

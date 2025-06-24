@@ -12,6 +12,7 @@ import {
 } from "./validation";
 import { insertTransactionSchema, insertUserRoleSchema } from "../shared/schema.js";
 import { z } from "zod";
+import { getPersonalizedHints, trackHintInteraction, getFeatureCompletionStatus } from './feature-hints-routes.js';
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Security middleware - more lenient for development

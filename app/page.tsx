@@ -6,7 +6,7 @@ import { WalletOutlined, SendOutlined, DownloadOutlined, QrcodeOutlined, UserOut
 import { useState } from 'react';
 import AppHeader from '@/components/layout/app-header';
 import BottomNavigation from '@/components/layout/bottom-navigation';
-import FeatureHints, { useFeatureHints } from '@/client/src/components/ui/feature-hints';
+import FeatureHints, { useFeatureHints } from '@/components/ui/feature-hints';
 
 const { Title, Text } = Typography;
 
@@ -299,6 +299,13 @@ export default function HomePage() {
       </main>
 
       <BottomNavigation currentPage="home" />
+      
+      {/* Feature Discovery Hints */}
+      <FeatureHints 
+        currentPage="home" 
+        userRole={user?.currentRole || 'consumer'}
+        isFirstVisit={isFirstVisit}
+      />
     </div>
   );
 }

@@ -4,7 +4,7 @@ import { Card, Typography, Button, Row, Col, Space } from 'antd';
 import { QrcodeOutlined, CameraOutlined } from '@ant-design/icons';
 import AppHeader from '@/components/layout/app-header';
 import BottomNavigation from '@/components/layout/bottom-navigation';
-import FeatureHints, { useFeatureHints } from '@/client/src/components/ui/feature-hints';
+import FeatureHints, { useFeatureHints } from '@/components/ui/feature-hints';
 
 const { Title, Text } = Typography;
 
@@ -163,6 +163,13 @@ export default function QRPage() {
       </main>
 
       <BottomNavigation currentPage="qr" />
+      
+      {/* Feature Discovery Hints */}
+      <FeatureHints 
+        currentPage="qr" 
+        userRole="consumer"
+        isFirstVisit={isFirstVisit}
+      />
     </div>
   );
 }

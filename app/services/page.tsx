@@ -4,7 +4,7 @@ import { Card, Typography, Row, Col, Button, Space } from 'antd';
 import { CarOutlined, ShoppingOutlined, ThunderboltOutlined, MobileOutlined, CreditCardOutlined, BankOutlined } from '@ant-design/icons';
 import AppHeader from '@/components/layout/app-header';
 import BottomNavigation from '@/components/layout/bottom-navigation';
-import FeatureHints, { useFeatureHints } from '@/client/src/components/ui/feature-hints';
+import FeatureHints, { useFeatureHints } from '@/components/ui/feature-hints';
 
 const { Title, Text } = Typography;
 
@@ -132,6 +132,13 @@ export default function ServicesPage() {
       </main>
 
       <BottomNavigation currentPage="services" />
+      
+      {/* Feature Discovery Hints */}
+      <FeatureHints 
+        currentPage="services" 
+        userRole="consumer"
+        isFirstVisit={isFirstVisit}
+      />
     </div>
   );
 }

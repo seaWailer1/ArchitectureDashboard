@@ -6,7 +6,7 @@ import { Card, Typography, Button, Row, Col, Statistic, Progress, Switch, Tabs, 
 import { WalletOutlined, EyeOutlined, EyeInvisibleOutlined, SendOutlined, DownloadOutlined, PlusOutlined } from '@ant-design/icons';
 import AppHeader from '@/components/layout/app-header';
 import BottomNavigation from '@/components/layout/bottom-navigation';
-import FeatureHints, { useFeatureHints } from '@/client/src/components/ui/feature-hints';
+import FeatureHints, { useFeatureHints } from '@/components/ui/feature-hints';
 
 const { Title, Text } = Typography;
 
@@ -245,6 +245,13 @@ export default function WalletsPage() {
       </main>
 
       <BottomNavigation currentPage="wallets" />
+      
+      {/* Feature Discovery Hints */}
+      <FeatureHints 
+        currentPage="wallets" 
+        userRole={user?.currentRole || 'consumer'}
+        isFirstVisit={isFirstVisit}
+      />
     </div>
   );
 }
