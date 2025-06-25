@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import { Card, Button, Space, Typography, Popover, Badge, FloatButton } from 'antd';
 import { BulbOutlined, CloseOutlined, RightOutlined, CheckOutlined } from '@ant-design/icons';
 
@@ -180,7 +180,7 @@ export default function FeatureHints({ currentPage, userRole, isFirstVisit = fal
   }, []);
 
   // Filter relevant hints based on current context
-  useEffect(() => {
+  const filteredHints = useMemo(() => {
     const relevantHints = FEATURE_HINTS.filter(hint => {
       const isPageMatch = hint.page === currentPage;
       const isRoleMatch = hint.userRole.includes(userRole);
@@ -193,18 +193,20 @@ export default function FeatureHints({ currentPage, userRole, isFirstVisit = fal
     });
 
     // Sort by priority
-    const sortedHints = relevantHints.sort((a, b) => {
+    return relevantHints.sort((a, b) => {
       const priorityOrder = { high: 3, medium: 2, low: 1 };
       return priorityOrder[b.priority] - priorityOrder[a.priority];
     });
+  }, [currentPage, userRole, isFirstVisit, dismissedHints]);
 
-    setActiveHints(sortedHints);
+  useEffect(() => {
+    setActiveHints(filteredHints);
     setCurrentHintIndex(0);
     
-    if (sortedHints.length > 0) {
+    if (filteredHints.length > 0) {
       setShowHintPanel(true);
     }
-  }, [currentPage, userRole, isFirstVisit, dismissedHints]);
+  }, [filteredHints]);
 
   // Set up idle detection for idle-triggered hints
   useEffect(() => {
@@ -247,7 +249,7 @@ export default function FeatureHints({ currentPage, userRole, isFirstVisit = fal
     };
   }, [currentPage, userRole, dismissedHints, activeHints.length, idleTimer]);
 
-  const dismissHint = (hintId: string) => {
+  const dismissHint = useCallback((hintId: string) => {
     const newDismissed = [...dismissedHints, hintId];
     setDismissedHints(newDismissed);
     localStorage.setItem('dismissedHints', JSON.stringify(newDismissed));
@@ -260,7 +262,7 @@ export default function FeatureHints({ currentPage, userRole, isFirstVisit = fal
     } else if (currentHintIndex >= remainingHints.length) {
       setCurrentHintIndex(remainingHints.length - 1);
     }
-  };
+  }, [dismissedHints, activeHints, currentHintIndex]);
 
   const nextHint = () => {
     if (currentHintIndex < activeHints.length - 1) {
