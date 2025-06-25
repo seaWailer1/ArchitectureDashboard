@@ -3,10 +3,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
-import { Wallet, ExternalLink, Copy, RefreshCw } from 'lucide-react';
+import { FaFaWallet, FaFaExternalLinkAltAlt, FaFaCopy, FaRedo } from 'react-icons/fa';
 import { useToast } from '@/hooks/use-toast';
 
-interface WalletConnection {
+interface FaWalletConnection {
   address: string;
   chainId: number;
   balance: string;
@@ -25,9 +25,9 @@ declare global {
   }
 }
 
-export function EthereumWallet() {
+export function EthereumFaWallet() {
   const [connected, setConnected] = useState(false);
-  const [wallet, setWallet] = useState<WalletConnection | null>(null);
+  const [wallet, setFaWallet] = useState<FaWalletConnection | null>(null);
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
 
@@ -52,14 +52,14 @@ export function EthereumWallet() {
     try {
       const accounts = await window.ethereum.request({ method: 'eth_accounts' });
       if (accounts.length > 0) {
-        await updateWalletInfo(accounts[0]);
+        await updateFaWalletInfo(accounts[0]);
       }
     } catch (error) {
       console.error('Error checking connection:', error);
     }
   };
 
-  const connectWallet = async () => {
+  const connectFaWallet = async () => {
     if (!window.ethereum) {
       toast({
         title: 'MetaMask not found',
@@ -72,10 +72,10 @@ export function EthereumWallet() {
     setLoading(true);
     try {
       const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-      await updateWalletInfo(accounts[0]);
+      await updateFaWalletInfo(accounts[0]);
       
       toast({
-        title: 'Wallet connected',
+        title: 'FaWallet connected',
         description: 'Your Ethereum wallet has been successfully connected.',
       });
     } catch (error: any) {
@@ -89,7 +89,7 @@ export function EthereumWallet() {
     }
   };
 
-  const updateWalletInfo = async (address: string) => {
+  const updateFaWalletInfo = async (address: string) => {
     try {
       const [chainId, balance] = await Promise.all([
         window.ethereum!.request({ method: 'eth_chainId' }),
@@ -98,7 +98,7 @@ export function EthereumWallet() {
 
       const balanceInEth = parseInt(balance, 16) / Math.pow(10, 18);
 
-      setWallet({
+      setFaWallet({
         address,
         chainId: parseInt(chainId, 16),
         balance: balanceInEth.toFixed(4),
@@ -123,9 +123,9 @@ export function EthereumWallet() {
 
   const handleAccountsChanged = (accounts: string[]) => {
     if (accounts.length === 0) {
-      disconnectWallet();
+      disconnectFaWallet();
     } else {
-      updateWalletInfo(accounts[0]);
+      updateFaWalletInfo(accounts[0]);
     }
   };
 
@@ -133,11 +133,11 @@ export function EthereumWallet() {
     window.location.reload();
   };
 
-  const disconnectWallet = () => {
-    setWallet(null);
+  const disconnectFaWallet = () => {
+    setFaWallet(null);
     setConnected(false);
     toast({
-      title: 'Wallet disconnected',
+      title: 'FaWallet disconnected',
       description: 'Your wallet has been disconnected.',
     });
   };
@@ -147,7 +147,7 @@ export function EthereumWallet() {
       navigator.clipboard.writeText(wallet.address);
       toast({
         title: 'Address copied',
-        description: 'Wallet address copied to clipboard.',
+        description: 'FaWallet address copied to clipboard.',
       });
     }
   };
@@ -166,7 +166,7 @@ export function EthereumWallet() {
   const refreshBalance = async () => {
     if (wallet?.address) {
       setLoading(true);
-      await updateWalletInfo(wallet.address);
+      await updateFaWalletInfo(wallet.address);
       setLoading(false);
     }
   };
@@ -176,8 +176,8 @@ export function EthereumWallet() {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Wallet className="h-5 w-5" />
-            Connect Ethereum Wallet
+            <FaWallet className="h-5 w-5" />
+            Connect Ethereum FaWallet
           </CardTitle>
           <CardDescription>
             Connect your MetaMask or other Ethereum wallet to access blockchain features
@@ -185,11 +185,11 @@ export function EthereumWallet() {
         </CardHeader>
         <CardContent>
           <Button 
-            onClick={connectWallet} 
+            onClick={connectFaWallet} 
             disabled={loading || !window.ethereum}
             className="w-full"
           >
-            {loading ? 'Connecting...' : 'Connect Wallet'}
+            {loading ? 'Connecting...' : 'Connect FaWallet'}
           </Button>
           {!window.ethereum && (
             <p className="text-sm text-muted-foreground mt-2 text-center">
@@ -201,7 +201,7 @@ export function EthereumWallet() {
                 className="text-primary underline ml-1"
               >
                 Install MetaMask
-                <ExternalLink className="h-3 w-3 inline ml-1" />
+                <FaExternalLinkAlt className="h-3 w-3 inline ml-1" />
               </a>
             </p>
           )}
@@ -215,8 +215,8 @@ export function EthereumWallet() {
       <CardHeader>
         <CardTitle className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Wallet className="h-5 w-5" />
-            Ethereum Wallet
+            <FaWallet className="h-5 w-5" />
+            Ethereum FaWallet
           </div>
           <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">
             Connected
@@ -231,7 +231,7 @@ export function EthereumWallet() {
               {wallet?.address}
             </code>
             <Button size="sm" variant="outline" onClick={copyAddress}>
-              <Copy className="h-4 w-4" />
+              <FaCopy className="h-4 w-4" />
             </Button>
           </div>
         </div>
@@ -250,7 +250,7 @@ export function EthereumWallet() {
             <div className="flex items-center gap-2 mt-1">
               <p className="text-sm font-mono">{wallet?.balance} ETH</p>
               <Button size="sm" variant="ghost" onClick={refreshBalance} disabled={loading}>
-                <RefreshCw className={`h-3 w-3 ${loading ? 'animate-spin' : ''}`} />
+                <FaRedo className={`h-3 w-3 ${loading ? 'animate-spin' : ''}`} />
               </Button>
             </div>
           </div>
@@ -259,7 +259,7 @@ export function EthereumWallet() {
         <Separator />
 
         <div className="flex gap-2">
-          <Button variant="outline" onClick={disconnectWallet} className="flex-1">
+          <Button variant="outline" onClick={disconnectFaWallet} className="flex-1">
             Disconnect
           </Button>
           <Button 
@@ -268,7 +268,7 @@ export function EthereumWallet() {
             className="flex-1"
           >
             View on Etherscan
-            <ExternalLink className="h-4 w-4 ml-2" />
+            <FaExternalLinkAlt className="h-4 w-4 ml-2" />
           </Button>
         </div>
       </CardContent>

@@ -183,6 +183,7 @@ Key Features:
 - June 23, 2025: Created comprehensive pre-login test user selection page with auto-fill functionality for onboarding simulation. Implemented 7 preset user personas across different roles and KYC statuses with visual journey indicators. Enhanced UI with modern gradient designs, improved card layouts, and interactive elements. Cleaned up wallet database duplicates and optimized data integrity.
 - June 23, 2025: Simplified test login page visual design and implemented comprehensive profile module system with 4 main tabs (Overview, Security, Settings, Support). Added complete profile editing, role switching, security management (2FA, device management), notification preferences, and support ticket system with full backend API integration.
 - June 23, 2025: Migrated all icons from Lucide React to React Icons (FontAwesome) throughout the entire application for consistent icon usage. Updated test-login, profile, navigation, transactions, services, onboarding, KYC, wallets, and QR pages to use FaIcon equivalents while maintaining all existing functionality.
+- June 23, 2025: Completed comprehensive cleanup of unused dependencies and assets. Removed lucide-react dependency completely, uninstalled testing frameworks (Jest, Playwright, Artillery), removed test files and documentation, deleted attached assets folder. Fixed all React Icons import errors and icon name conflicts. Application now uses React Icons exclusively with improved performance and cleaner codebase.
 
 ## User Preferences
 

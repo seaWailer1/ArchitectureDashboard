@@ -40,17 +40,17 @@ export default function RoleSwitcher() {
     { 
       id: "consumer", 
       label: t('consumer'), 
-      icon: User 
+      icon: FaUser 
     },
     { 
       id: "merchant", 
       label: t('merchant'), 
-      icon: Store 
+      icon: FaStore 
     },
     { 
       id: "agent", 
       label: t('agent'), 
-      icon: Handshake 
+      icon: FaHandshake 
     },
   ];
 
