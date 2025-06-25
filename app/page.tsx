@@ -6,7 +6,7 @@ import { WalletOutlined, SendOutlined, DownloadOutlined, QrcodeOutlined, UserOut
 import { useState } from 'react';
 import AppHeader from '@/components/layout/app-header';
 import BottomNavigation from '@/components/layout/bottom-navigation';
-import FeatureHints from '@/components/ui/feature-hints-fixed';
+import FeatureHints from '@/components/ui/feature-hints';
 
 const { Title, Text } = Typography;
 
@@ -180,70 +180,133 @@ export default function HomePage() {
           </Row>
         </Card>
 
-        {/* Wallet Balance */}
-        <Card className="mb-4">
-          <Row align="middle" justify="space-between" className="mb-2">
+        {/* Enhanced Balance Card */}
+        <Card 
+          className="mb-4 bg-gradient-primary shadow-custom"
+          styles={{
+            body: {
+              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+              color: 'white',
+              borderRadius: '12px'
+            }
+          }}
+        >
+          <Row align="middle" justify="space-between" className="mb-3">
             <Col>
-              <Text type="secondary">Total Balance</Text>
+              <Text style={{ color: 'white', opacity: 0.9, fontSize: '14px' }}>
+                Total Balance
+              </Text>
             </Col>
             <Col>
               <Button 
                 type="text" 
-                icon={balanceVisible ? <WalletOutlined /> : <WalletOutlined />}
+                size="small"
                 onClick={() => setBalanceVisible(!balanceVisible)}
-              />
+                style={{ color: 'white' }}
+                className="hover:bg-white hover:bg-opacity-20"
+              >
+                {balanceVisible ? '👁️' : '👁️‍🗨️'}
+              </Button>
             </Col>
           </Row>
-          <Title level={2} style={{ margin: 0 }}>
-            {balanceVisible ? `$${totalBalance.toFixed(2)}` : '****'}
+          <Title level={1} style={{ color: 'white', margin: '8px 0', fontWeight: 'bold' }}>
+            {balanceVisible ? `$${totalBalance.toFixed(2)}` : '••••••'}
           </Title>
-          <Text type="secondary">
-            {primaryWallet?.currency || 'USD'} • Primary Wallet
-          </Text>
+          <div className="flex justify-between items-center">
+            <Text style={{ color: 'white', opacity: 0.8, fontSize: '13px' }}>
+              {primaryWallet?.currency || 'USD'} • Primary Wallet
+            </Text>
+            <Badge 
+              count="Active" 
+              style={{ 
+                backgroundColor: '#52c41a',
+                fontSize: '10px',
+                height: '18px',
+                lineHeight: '18px'
+              }}
+            />
+          </div>
         </Card>
 
-        {/* Quick Actions */}
-        <Card title="Quick Actions" className="mb-4">
-          <Row gutter={[16, 16]}>
+        {/* Enhanced Quick Actions */}
+        <Card 
+          title={
+            <Title level={4} style={{ margin: 0, color: '#1f2937' }}>
+              Quick Actions
+            </Title>
+          } 
+          className="mb-4 shadow-sm"
+          styles={{ body: { padding: '16px' } }}
+        >
+          <Row gutter={[12, 16]}>
             <Col span={6}>
-              <Button 
-                type="primary" 
-                shape="circle" 
-                size="large" 
-                icon={<SendOutlined />}
-                style={{ width: '100%', height: 56 }}
-              />
-              <Text className="block text-center mt-2 text-xs">Send</Text>
+              <div className="text-center">
+                <Button 
+                  type="primary" 
+                  shape="circle" 
+                  size="large" 
+                  icon={<SendOutlined />}
+                  className="shadow-md hover:shadow-lg transition-all duration-200"
+                  style={{ 
+                    width: 56, 
+                    height: 56,
+                    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                    border: 'none'
+                  }}
+                />
+                <Text className="block mt-2 text-xs font-medium text-gray-600">Send</Text>
+              </div>
             </Col>
             <Col span={6}>
-              <Button 
-                type="default" 
-                shape="circle" 
-                size="large" 
-                icon={<DownloadOutlined />}
-                style={{ width: '100%', height: 56 }}
-              />
-              <Text className="block text-center mt-2 text-xs">Receive</Text>
+              <div className="text-center">
+                <Button 
+                  shape="circle" 
+                  size="large" 
+                  icon={<DownloadOutlined />}
+                  className="shadow-md hover:shadow-lg transition-all duration-200 hover:bg-green-50"
+                  style={{ 
+                    width: 56, 
+                    height: 56,
+                    borderColor: '#10b981',
+                    color: '#10b981'
+                  }}
+                />
+                <Text className="block mt-2 text-xs font-medium text-gray-600">Receive</Text>
+              </div>
             </Col>
             <Col span={6}>
-              <Button 
-                type="default" 
-                shape="circle" 
-                size="large" 
-                icon={<QrcodeOutlined />}
-                style={{ width: '100%', height: 56 }}
-              />
-              <Text className="block text-center mt-2 text-xs">QR Pay</Text>
+              <div className="text-center">
+                <Button 
+                  shape="circle" 
+                  size="large" 
+                  icon={<QrcodeOutlined />}
+                  className="shadow-md hover:shadow-lg transition-all duration-200 hover:bg-purple-50"
+                  style={{ 
+                    width: 56, 
+                    height: 56,
+                    borderColor: '#8b5cf6',
+                    color: '#8b5cf6'
+                  }}
+                />
+                <Text className="block mt-2 text-xs font-medium text-gray-600">QR Pay</Text>
+              </div>
             </Col>
             <Col span={6}>
-              <Button 
-                type="default" 
-                shape="circle" 
-                size="large" 
-                icon={<WalletOutlined />}
-                style={{ width: '100%', height: 56 }}
-              />
-              <Text className="block text-center mt-2 text-xs">Wallets</Text>
+              <div className="text-center">
+                <Button 
+                  shape="circle" 
+                  size="large" 
+                  icon={<WalletOutlined />}
+                  className="shadow-md hover:shadow-lg transition-all duration-200 hover:bg-blue-50"
+                  style={{ 
+                    width: 56, 
+                    height: 56,
+                    borderColor: '#3b82f6',
+                    color: '#3b82f6'
+                  }}
+                />
+                <Text className="block mt-2 text-xs font-medium text-gray-600">Wallets</Text>
+              </div>
             </Col>
           </Row>
         </Card>
@@ -303,7 +366,7 @@ export default function HomePage() {
       <FeatureHints 
         currentPage="home" 
         userRole={user?.currentRole || 'consumer'}
-        isFirstVisit={isFirstVisit}
+        isFirstVisit={true}
       />
     </div>
   );

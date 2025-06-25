@@ -200,13 +200,12 @@ export default function FeatureHints({ currentPage, userRole, isFirstVisit = fal
   }, [currentPage, userRole, isFirstVisit, dismissedHints]);
 
   useEffect(() => {
-    setActiveHints(filteredHints);
-    setCurrentHintIndex(0);
-    
-    if (filteredHints.length > 0) {
+    if (filteredHints.length > 0 && activeHints.length === 0) {
+      setActiveHints(filteredHints);
+      setCurrentHintIndex(0);
       setShowHintPanel(true);
     }
-  }, [filteredHints]);
+  }, [filteredHints, activeHints.length]);
 
   // Set up idle detection for idle-triggered hints
   useEffect(() => {
@@ -247,7 +246,7 @@ export default function FeatureHints({ currentPage, userRole, isFirstVisit = fal
         clearTimeout(idleTimer);
       }
     };
-  }, [currentPage, userRole, dismissedHints, activeHints.length, idleTimer]);
+  }, [currentPage, userRole, dismissedHints]);
 
   const dismissHint = useCallback((hintId: string) => {
     const newDismissed = [...dismissedHints, hintId];
