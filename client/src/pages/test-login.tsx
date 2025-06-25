@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { FaUsers, FaUserCheck, FaClock, FaMapMarkerAlt, FaPhone, FaEnvelope, FaShieldAltAlt, FaCreditCard, FaUser, FaRedo, FaSignInAlt, FaPlus, FaCheckCircle, FaExclamationCircle, FaTimesCircle, FaGlobe, FaArrowRight, FaMobile, FaPlay } from "react-icons/fa";
+import { FaUsers, FaUserCheck, FaClock, FaMapMarkerAlt, FaPhone, FaEnvelope, FaShieldAltAlt, FaCreditCard, FaUser, FaSync, FaSignInAlt, FaPlus, FaCheckCircle, FaExclamationCircle, FaTimesCircle, FaGlobe, FaArrowRight, FaMobile, FaPlay, FaShieldAlt, FaSync } from "react-icons/fa";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -246,7 +246,7 @@ export default function TestLogin() {
                         className="w-full flex items-center justify-center space-x-2"
                       >
                         {simulateOnboardingMutation.isPending ? (
-                          <FaRedo className="w-4 h-4 animate-spin" />
+                          <FaSync className="w-4 h-4 animate-spin" />
                         ) : (
                           <FaPlay className="w-4 h-4" />
                         )}
@@ -275,7 +275,7 @@ export default function TestLogin() {
                       className="flex items-center space-x-3 mx-auto bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 px-8 py-3 rounded-2xl font-bold shadow-lg hover:shadow-xl transition-all"
                     >
                       {createUsersMutation.isPending ? (
-                        <FaRedo className="w-5 h-5 animate-spin" />
+                        <FaSync className="w-5 h-5 animate-spin" />
                       ) : (
                         <FaPlus className="w-5 h-5" />
                       )}

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useMutation } from "@tanstack/react-query";
-import { FaArrowRight, FaArrowLeft, FaShieldAltAlt, FaMobile, FaCreditCard, FaGlobe, FaCheckCircle, FaUser, FaPhone, FaEnvelope, FaMapMarkerAlt, FaCalendar, FaStar } from "react-icons/fa";
+import { FaArrowRight, FaArrowLeft, FaShieldAltAlt, FaMobile, FaCreditCard, FaGlobe, FaCheckCircle, FaUser, FaPhone, FaEnvelope, FaMapMarkerAlt, FaCalendar, FaStar, FaShieldAlt } from "react-icons/fa";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";

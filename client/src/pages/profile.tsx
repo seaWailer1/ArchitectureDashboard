@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { FaUser, FaShieldAlt, FaCog, FaQuestionCircle, FaSignOutAlt, FaChevronRight, FaEdit, FaCamera, FaPhone, FaEnvelope, FaMapMarkerAlt, FaCalendar, FaCreditCard, FaGlobe, FaBell, FaLock, FaMobile, FaDownload, FaTrash, FaPlus } from "react-icons/fa";
+import { FaUser, FaShieldAlt, FaCog, FaQuestionCircle, FaSignOutAlt, FaChevronRight, FaEdit, FaCamera, FaPhone, FaEnvelope, FaMapMarkerAlt, FaCalendar, FaCreditCard, FaGlobe, FaBell, FaLock, FaMobile, FaDownload, FaTrash, FaPlus, FaShieldAlt } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";

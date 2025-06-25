@@ -3,10 +3,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
-import { FaWallet, FaExternalLinkAltAlt, FaCopy, FaRedo } from 'react-icons/fa';
+import { FaWallet, FaExternalLinkAlt, FaCopy, FaSync } from 'react-icons/fa';
 import { useToast } from '@/hooks/use-toast';
 
-interface FaWalletConnection {
+interface WalletConnection {
   address: string;
   chainId: number;
   balance: string;
@@ -27,7 +27,7 @@ declare global {
 
 export function EthereumFaWallet() {
   const [connected, setConnected] = useState(false);
-  const [wallet, setFaWallet] = useState<FaWalletConnection | null>(null);
+  const [wallet, setFaWallet] = useState<WalletConnection | null>(null);
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
 
@@ -250,7 +250,7 @@ export function EthereumFaWallet() {
             <div className="flex items-center gap-2 mt-1">
               <p className="text-sm font-mono">{wallet?.balance} ETH</p>
               <Button size="sm" variant="ghost" onClick={refreshBalance} disabled={loading}>
-                <FaRedo className={`h-3 w-3 ${loading ? 'animate-spin' : ''}`} />
+                <FaSync className={`h-3 w-3 ${loading ? 'animate-spin' : ''}`} />
               </Button>
             </div>
           </div>
