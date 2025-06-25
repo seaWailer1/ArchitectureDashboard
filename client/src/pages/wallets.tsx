@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { FaWallet, FaCreditCard, FaChartLine, FaFaBitcoin, FaFaPlus, FaEye, FaEyeSlash, FaPaperPlane, FaDownload, FaEllipsisV, FaPiggyBank, FaBuilding, FaCoins } from "react-icons/fa";
+import { FaWallet, FaCreditCard, FaChartLine, FaBitcoin, FaPlus, FaEye, FaEyeSlash, FaPaperPlane, FaDownload, FaEllipsisV, FaPiggyBank, FaBuilding, FaCoins } from "react-icons/fa";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -116,7 +116,7 @@ export default function Wallets() {
     switch (type) {
       case 'primary': return FaWallet;
       case 'savings': return FaPiggyBank;
-      case 'crypto': return FaFaBitcoin;
+      case 'crypto': return FaBitcoin;
       case 'investment': return FaChartLine;
       case 'business': return FaBuilding;
       default: return FaWallet;

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FaFaFaArrowLeft, FaFaFaStar, FaFaFaHeart, FaShareAlt, FaFaFaShoppingCart, FaFaFaTruck, FaFaFaShield, FaCommentDots, FaFaFaPlus, FaFaFaMinus, FaFaFaCheck, FaMapMarkerAlt } from "react-icons/fa";
+import { FaArrowLeft, FaStar, FaHeart, FaShareAlt, FaShoppingCart, FaTruck, FaShieldAlt, FaCommentDots, FaPlus, FaMinus, FaCheck, FaMapMarkerAlt } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
@@ -21,9 +21,9 @@ export default function ProductDetail({ product, onBack, onAddToCart }: ProductD
   const currentPrice = selectedVariant?.price || product.price;
   const isInStock = selectedVariant?.inStock !== false && product.inStock;
 
-  const renderFaFaStars = (rating: number) => {
+  const renderFaStars = (rating: number) => {
     return Array.from({ length: 5 }, (_, i) => (
-      <FaFaStar 
+      <FaStar 
         key={i} 
         className={`w-4 h-4 ${i < Math.floor(rating) ? 'text-yellow-400 fill-current' : 'text-neutral-300'}`} 
       />
@@ -46,11 +46,11 @@ export default function ProductDetail({ product, onBack, onAddToCart }: ProductD
       {/* Header */}
       <div className="flex items-center space-x-3">
         <Button variant="outline" size="sm" onClick={onBack}>
-          <FaFaArrowLeft className="w-4 h-4" />
+          <FaArrowLeft className="w-4 h-4" />
         </Button>
         <h2 className="font-bold text-lg flex-1">{product.name}</h2>
         <Button variant="outline" size="sm" onClick={() => setIsFavorite(!isFavorite)}>
-          <FaFaHeart className={`w-4 h-4 ${isFavorite ? 'fill-red-500 text-red-500' : ''}`} />
+          <FaHeart className={`w-4 h-4 ${isFavorite ? 'fill-red-500 text-red-500' : ''}`} />
         </Button>
         <Button variant="outline" size="sm">
           <FaShareAlt className="w-4 h-4" />
@@ -61,7 +61,7 @@ export default function ProductDetail({ product, onBack, onAddToCart }: ProductD
       <Card>
         <CardContent className="p-4">
           <div className="aspect-square bg-neutral-100 rounded-lg mb-3 flex items-center justify-center">
-            <FaFaShoppingCart className="w-16 h-16 text-neutral-400" />
+            <FaShoppingCart className="w-16 h-16 text-neutral-400" />
           </div>
           {product.images && product.images.length > 1 && (
             <div className="flex space-x-2">
@@ -72,7 +72,7 @@ export default function ProductDetail({ product, onBack, onAddToCart }: ProductD
                   onClick={() => setSelectedImage(index)}
                 >
                   <div className="w-full h-full bg-neutral-100 rounded flex items-center justify-center">
-                    <FaFaShoppingCart className="w-4 h-4 text-neutral-400" />
+                    <FaShoppingCart className="w-4 h-4 text-neutral-400" />
                   </div>
                 </button>
               ))}
@@ -101,7 +101,7 @@ export default function ProductDetail({ product, onBack, onAddToCart }: ProductD
           </div>
           
           <div className="flex items-center space-x-2 mb-2">
-            {renderFaFaStars(product.rating)}
+            {renderFaStars(product.rating)}
             <span className="text-sm text-neutral-600">({product.reviews} reviews)</span>
           </div>
           
@@ -124,17 +124,17 @@ export default function ProductDetail({ product, onBack, onAddToCart }: ProductD
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
               <div className="w-10 h-10 bg-neutral-100 rounded-full flex items-center justify-center">
-                <FaFaShoppingCart className="w-5 h-5 text-neutral-400" />
+                <FaShoppingCart className="w-5 h-5 text-neutral-400" />
               </div>
               <div>
                 <div className="flex items-center space-x-2">
                   <span className="font-medium">{product.seller.name}</span>
                   {product.seller.verified && (
-                    <FaFaCheck className="w-4 h-4 text-success" />
+                    <FaCheck className="w-4 h-4 text-success" />
                   )}
                 </div>
                 <div className="flex items-center space-x-2 text-sm text-neutral-600">
-                  {renderFaFaStars(product.seller.rating)}
+                  {renderFaStars(product.seller.rating)}
                   <span>({product.seller.totalSales} sales)</span>
                 </div>
                 <div className="flex items-center text-xs text-neutral-500">
@@ -186,7 +186,7 @@ export default function ProductDetail({ product, onBack, onAddToCart }: ProductD
                 size="sm"
                 onClick={() => setQuantity(Math.max(1, quantity - 1))}
               >
-                <FaFaMinus className="w-3 h-3" />
+                <FaMinus className="w-3 h-3" />
               </Button>
               <span className="mx-3 font-medium">{quantity}</span>
               <Button 
@@ -194,7 +194,7 @@ export default function ProductDetail({ product, onBack, onAddToCart }: ProductD
                 size="sm"
                 onClick={() => setQuantity(quantity + 1)}
               >
-                <FaFaPlus className="w-3 h-3" />
+                <FaPlus className="w-3 h-3" />
               </Button>
             </div>
           </div>
@@ -219,7 +219,7 @@ export default function ProductDetail({ product, onBack, onAddToCart }: ProductD
             disabled={!isInStock}
             className="w-full"
           >
-            <FaFaShoppingCart className="w-4 h-4 mr-2" />
+            <FaShoppingCart className="w-4 h-4 mr-2" />
             {isInStock ? 'Add to Cart' : 'Out of Stock'}
           </Button>
         </CardContent>
@@ -229,14 +229,14 @@ export default function ProductDetail({ product, onBack, onAddToCart }: ProductD
       <Card>
         <CardContent className="p-4">
           <div className="flex items-center space-x-3 mb-3">
-            <FaFaTruck className="w-5 h-5 text-blue-500" />
+            <FaTruck className="w-5 h-5 text-blue-500" />
             <div>
               <p className="font-medium">Delivery Information</p>
               <p className="text-sm text-neutral-600">Expected delivery: {product.deliveryTime}</p>
             </div>
           </div>
           <div className="flex items-center space-x-3">
-            <FaFaShield className="w-5 h-5 text-success" />
+            <FaShieldAlt className="w-5 h-5 text-success" />
             <div>
               <p className="font-medium">Buyer Protection</p>
               <p className="text-sm text-neutral-600">Full refund if item not as described</p>
@@ -284,7 +284,7 @@ export default function ProductDetail({ product, onBack, onAddToCart }: ProductD
           <Card>
             <CardContent className="p-4">
               <div className="text-center py-6">
-                <FaFaStar className="w-8 h-8 text-neutral-400 mx-auto mb-2" />
+                <FaStar className="w-8 h-8 text-neutral-400 mx-auto mb-2" />
                 <p className="text-neutral-600">No reviews yet</p>
                 <p className="text-sm text-neutral-500">Be the first to review this product</p>
               </div>
