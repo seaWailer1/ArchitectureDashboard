@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FaArrowLeft, FaStar, FaHeart, FaShareAlt, FaShoppingCart, FaTruck, FaShieldAltAlt, FaCommentDots, FaPlus, FaMinus, FaCheck, FaMapMarkerAlt, FaShieldAlt } from "react-icons/fa";
+import { FaArrowLeft, FaStar, FaHeart, FaShareAlt, FaShoppingCart, FaTruck, FaShieldAlt, FaCommentDots, FaPlus, FaMinus, FaCheck, FaMapMarkerAlt } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
@@ -236,7 +236,7 @@ export default function ProductDetail({ product, onBack, onAddToCart }: ProductD
             </div>
           </div>
           <div className="flex items-center space-x-3">
-            <FaShieldAltAlt className="w-5 h-5 text-success" />
+            <FaShieldAlt className="w-5 h-5 text-success" />
             <div>
               <p className="font-medium">Buyer Protection</p>
               <p className="text-sm text-neutral-600">Full refund if item not as described</p>
