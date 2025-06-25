@@ -16,7 +16,7 @@ const nextConfig = {
   async redirects() {
     return [];
   },
-  // Ensure proper hosting configuration
+  // Configure for Replit hosting
   typescript: {
     ignoreBuildErrors: false,
   },
