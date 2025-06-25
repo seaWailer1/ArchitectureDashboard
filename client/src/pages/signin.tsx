@@ -12,7 +12,7 @@ import {
   Eye,
   EyeOff,
   CheckCircle
-} from "lucide-react";
+} from "react-icons/fa";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";

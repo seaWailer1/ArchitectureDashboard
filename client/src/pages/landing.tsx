@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Coins, CreditCard, QrCode, Shield } from "lucide-react";
+import { Coins, CreditCard, QrCode, Shield } from "react-icons/fa";
 
 export default function Landing() {
   return (

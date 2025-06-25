@@ -114,12 +114,12 @@ export default function Wallets() {
 
   const getWalletIcon = (type: string) => {
     switch (type) {
-      case 'primary': return Wallet;
-      case 'savings': return PiggyBank;
-      case 'crypto': return Bitcoin;
-      case 'investment': return TrendingUp;
-      case 'business': return Building2;
-      default: return Wallet;
+      case 'primary': return FaWallet;
+      case 'savings': return FaPiggyBank;
+      case 'crypto': return FaBitcoin;
+      case 'investment': return FaChartLine;
+      case 'business': return FaBuilding;
+      default: return FaWallet;
     }
   };
 
@@ -156,7 +156,7 @@ export default function Wallets() {
                 size="sm"
                 onClick={() => setShowBalances(!showBalances)}
               >
-                {showBalances ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                {showBalances ? <FaEyeSlash className="w-4 h-4" /> : <FaEye className="w-4 h-4" />}
               </Button>
             </CardTitle>
           </CardHeader>

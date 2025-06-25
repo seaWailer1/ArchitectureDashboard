@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { CreditCard, Eye, EyeOff, Copy, Lock, Unlock, Plus } from "lucide-react";
+import { CreditCard, Eye, EyeOff, Copy, Lock, Unlock, Plus } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";

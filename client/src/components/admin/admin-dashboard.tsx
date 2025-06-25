@@ -12,7 +12,7 @@ import {
   RefreshCw,
   Settings,
   Database
-} from "lucide-react";
+} from "react-icons/fa";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";

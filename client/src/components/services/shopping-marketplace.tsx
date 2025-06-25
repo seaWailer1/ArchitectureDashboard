@@ -15,7 +15,7 @@ import {
   Sparkles,
   TrendingUp,
   Clock
-} from "lucide-react";
+} from "react-icons/fa";
 import ProductDetail from "./product-detail";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";

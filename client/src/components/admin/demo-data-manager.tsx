@@ -19,7 +19,7 @@ import {
   Database,
   Trash2,
   Info
-} from "lucide-react";
+} from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";

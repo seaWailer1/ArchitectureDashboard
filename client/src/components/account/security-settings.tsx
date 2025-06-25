@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Shield, Key, Clock, AlertTriangle, CheckCircle, Eye, EyeOff, ArrowLeft } from "lucide-react";
+import { Shield, Key, Clock, AlertTriangle, CheckCircle, Eye, EyeOff, ArrowLeft } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";

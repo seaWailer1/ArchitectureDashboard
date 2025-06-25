@@ -1,18 +1,5 @@
 import { useState } from "react";
-import { 
-  ArrowLeft, 
-  Star, 
-  Heart, 
-  Share2, 
-  ShoppingCart,
-  Truck,
-  Shield,
-  MessageCircle,
-  Plus,
-  Minus,
-  Check,
-  MapPin
-} from "lucide-react";
+import { FaArrowLeft, FaStar, FaHeart, FaShareAlt, FaShoppingCart, FaTruck, FaShield, FaCommentDots, FaPlus, FaMinus, FaCheck, FaMapMarkerAlt } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";

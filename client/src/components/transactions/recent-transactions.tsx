@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { ArrowDown, ArrowUp, Plus } from "lucide-react";
+import { ArrowDown, ArrowUp, Plus } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
 import { t } from "@/lib/i18n";

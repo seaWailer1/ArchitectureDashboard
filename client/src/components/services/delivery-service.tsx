@@ -15,7 +15,7 @@ import {
   Navigation,
   Shield,
   Car
-} from "lucide-react";
+} from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";

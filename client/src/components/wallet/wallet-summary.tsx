@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import { t } from "@/lib/i18n";
 import { WalletData } from "@/types";

@@ -1,4 +1,4 @@
-import { Car, ShoppingBag, Zap, Grid3X3 } from "lucide-react";
+import { Car, ShoppingBag, Zap, Grid3X3 } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { t } from "@/lib/i18n";
