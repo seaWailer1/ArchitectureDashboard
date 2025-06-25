@@ -6,7 +6,7 @@ import { WalletOutlined, SendOutlined, DownloadOutlined, QrcodeOutlined, UserOut
 import { useState } from 'react';
 import AppHeader from '@/components/layout/app-header';
 import BottomNavigation from '@/components/layout/bottom-navigation';
-import FeatureHints, { useFeatureHints } from '@/components/ui/feature-hints';
+import FeatureHints from '@/components/ui/feature-hints-fixed';
 
 const { Title, Text } = Typography;
 
@@ -42,7 +42,6 @@ interface TransactionData {
 
 export default function HomePage() {
   const [balanceVisible, setBalanceVisible] = useState(true);
-  const { isFirstVisit } = useFeatureHints('home', 'consumer');
 
   const { data: user } = useQuery<UserProfile>({
     queryKey: ['/api/auth/user'],
