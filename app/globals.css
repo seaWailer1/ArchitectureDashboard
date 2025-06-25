@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  :root {
+    --border: 214.3 31.8% 91.4%;
+    --radius: 0.5rem;
+  }
+}
+
 /* Enhanced UI styles */
 .ant-card {
   border-radius: 12px;
