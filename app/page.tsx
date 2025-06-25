@@ -4,9 +4,9 @@ import { useQuery } from '@tanstack/react-query';
 import { Card, Typography, Button, Space, Avatar, Row, Col, Progress, Badge } from 'antd';
 import { WalletOutlined, SendOutlined, DownloadOutlined, QrcodeOutlined, UserOutlined } from '@ant-design/icons';
 import { useState } from 'react';
-import AppHeader from '@/components/layout/app-header';
-import BottomNavigation from '@/components/layout/bottom-navigation';
-import FeatureHints from '@/components/ui/feature-hints';
+import AppHeader from '../components/layout/app-header';
+import BottomNavigation from '../components/layout/bottom-navigation';
+import FeatureHints from '../components/ui/feature-hints';
 
 const { Title, Text } = Typography;
 
