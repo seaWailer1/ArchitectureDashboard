@@ -6,7 +6,6 @@ import { Card, Typography, Button, Row, Col, Statistic, Progress, Switch, Tabs, 
 import { WalletOutlined, EyeOutlined, EyeInvisibleOutlined, SendOutlined, DownloadOutlined, PlusOutlined } from '@ant-design/icons';
 import AppHeader from '@/components/layout/app-header';
 import BottomNavigation from '@/components/layout/bottom-navigation';
-import FeatureHints, { useFeatureHints } from '@/components/ui/feature-hints';
 
 const { Title, Text } = Typography;
 
@@ -21,33 +20,13 @@ interface WalletData {
 
 export default function WalletsPage() {
   const [balanceVisible, setBalanceVisible] = useState(true);
-  const { isFirstVisit } = useFeatureHints('wallets', 'consumer');
   const [activeTab, setActiveTab] = useState('primary');
 
   const { data: wallets = [] } = useQuery<WalletData[]>({
     queryKey: ['/api/wallets'],
     queryFn: async () => {
       const response = await fetch('/api/wallets');
-      if (!response.ok) {
-        return [
-          {
-            id: 1,
-            userId: 'dev-user-123',
-            walletType: 'primary',
-            balance: '2500.00',
-            pendingBalance: '0.00',
-            currency: 'USD'
-          },
-          {
-            id: 2,
-            userId: 'dev-user-123',
-            walletType: 'savings',
-            balance: '5000.00',
-            pendingBalance: '0.00',
-            currency: 'USD'
-          }
-        ];
-      }
+      if (!response.ok) throw new Error('Failed to fetch wallets');
       return response.json();
     },
   });
@@ -246,13 +225,6 @@ export default function WalletsPage() {
       </main>
 
       <BottomNavigation currentPage="wallets" />
-      
-      {/* Feature Discovery Hints */}
-      <FeatureHints 
-        currentPage="wallets" 
-        userRole={user?.currentRole || 'consumer'}
-        isFirstVisit={isFirstVisit}
-      />
     </div>
   );
 }

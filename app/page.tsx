@@ -1,12 +1,11 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import { Card, Typography, Button, Space, Avatar, Row, Col, Progress, Badge } from 'antd';
-import { WalletOutlined, SendOutlined, DownloadOutlined, QrcodeOutlined, UserOutlined } from '@ant-design/icons';
-import { useState } from 'react';
-import AppHeader from '../components/layout/app-header';
-import BottomNavigation from '../components/layout/bottom-navigation';
-import FeatureHints from '../components/ui/feature-hints';
+import { Card, Typography, Button, Space, Avatar, Row, Col, Statistic, Progress, Badge } from 'antd';
+import { WalletOutlined, SendOutlined, ReceiveMoneyOutlined, QrcodeOutlined, UserOutlined } from '@ant-design/icons';
+import { useState, useEffect } from 'react';
+import AppHeader from '@/components/layout/app-header';
+import BottomNavigation from '@/components/layout/bottom-navigation';
 
 const { Title, Text } = Typography;
 
@@ -46,84 +45,27 @@ export default function HomePage() {
   const { data: user } = useQuery<UserProfile>({
     queryKey: ['/api/auth/user'],
     queryFn: async () => {
-      try {
-        const response = await fetch('/api/auth/user');
-        if (!response.ok) {
-          throw new Error('API not available');
-        }
-        return response.json();
-      } catch (error) {
-        // Return demo data when API is not available
-        return {
-          id: 'dev-user-123',
-          email: 'demo@afriPay.com',
-          firstName: 'Demo',
-          lastName: 'User',
-          currentRole: 'consumer',
-          kycStatus: 'verified',
-          phoneVerified: true,
-          documentsVerified: true,
-          biometricVerified: true
-        };
-      }
+      const response = await fetch('/api/auth/user');
+      if (!response.ok) throw new Error('Failed to fetch user');
+      return response.json();
     },
   });
 
   const { data: wallets = [] } = useQuery<WalletData[]>({
     queryKey: ['/api/wallets'],
     queryFn: async () => {
-      try {
-        const response = await fetch('/api/wallets');
-        if (!response.ok) throw new Error('API not available');
-        return response.json();
-      } catch (error) {
-        return [{
-          id: 1,
-          userId: 'dev-user-123',
-          walletType: 'primary',
-          balance: '2850.75',
-          pendingBalance: '150.00',
-          currency: 'USD'
-        }];
-      }
+      const response = await fetch('/api/wallets');
+      if (!response.ok) throw new Error('Failed to fetch wallets');
+      return response.json();
     },
   });
 
   const { data: transactions = [] } = useQuery<TransactionData[]>({
     queryKey: ['/api/transactions'],
     queryFn: async () => {
-      try {
-        const response = await fetch('/api/transactions');
-        if (!response.ok) throw new Error('API not available');
-        return response.json();
-      } catch (error) {
-        return [
-          {
-            id: 1,
-            type: 'receive',
-            amount: '850.00',
-            status: 'completed',
-            description: 'Freelance Payment',
-            createdAt: new Date().toISOString()
-          },
-          {
-            id: 2,
-            type: 'send',
-            amount: '75.50',
-            status: 'completed',
-            description: 'Utility Bill',
-            createdAt: new Date(Date.now() - 86400000).toISOString()
-          },
-          {
-            id: 3,
-            type: 'receive',
-            amount: '200.00',
-            status: 'pending',
-            description: 'Refund Processing',
-            createdAt: new Date(Date.now() - 3600000).toISOString()
-          }
-        ];
-      }
+      const response = await fetch('/api/transactions');
+      if (!response.ok) throw new Error('Failed to fetch transactions');
+      return response.json();
     },
   });
 
@@ -180,133 +122,70 @@ export default function HomePage() {
           </Row>
         </Card>
 
-        {/* Enhanced Balance Card */}
-        <Card 
-          className="mb-4 bg-gradient-primary shadow-custom"
-          styles={{
-            body: {
-              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-              color: 'white',
-              borderRadius: '12px'
-            }
-          }}
-        >
-          <Row align="middle" justify="space-between" className="mb-3">
+        {/* Wallet Balance */}
+        <Card className="mb-4">
+          <Row align="middle" justify="space-between" className="mb-2">
             <Col>
-              <Text style={{ color: 'white', opacity: 0.9, fontSize: '14px' }}>
-                Total Balance
-              </Text>
+              <Text type="secondary">Total Balance</Text>
             </Col>
             <Col>
               <Button 
                 type="text" 
-                size="small"
+                icon={balanceVisible ? <WalletOutlined /> : <WalletOutlined />}
                 onClick={() => setBalanceVisible(!balanceVisible)}
-                style={{ color: 'white' }}
-                className="hover:bg-white hover:bg-opacity-20"
-              >
-                {balanceVisible ? '👁️' : '👁️‍🗨️'}
-              </Button>
+              />
             </Col>
           </Row>
-          <Title level={1} style={{ color: 'white', margin: '8px 0', fontWeight: 'bold' }}>
-            {balanceVisible ? `$${totalBalance.toFixed(2)}` : '••••••'}
+          <Title level={2} style={{ margin: 0 }}>
+            {balanceVisible ? `$${totalBalance.toFixed(2)}` : '****'}
           </Title>
-          <div className="flex justify-between items-center">
-            <Text style={{ color: 'white', opacity: 0.8, fontSize: '13px' }}>
-              {primaryWallet?.currency || 'USD'} • Primary Wallet
-            </Text>
-            <Badge 
-              count="Active" 
-              style={{ 
-                backgroundColor: '#52c41a',
-                fontSize: '10px',
-                height: '18px',
-                lineHeight: '18px'
-              }}
-            />
-          </div>
+          <Text type="secondary">
+            {primaryWallet?.currency || 'USD'} • Primary Wallet
+          </Text>
         </Card>
 
-        {/* Enhanced Quick Actions */}
-        <Card 
-          title={
-            <Title level={4} style={{ margin: 0, color: '#1f2937' }}>
-              Quick Actions
-            </Title>
-          } 
-          className="mb-4 shadow-sm"
-          styles={{ body: { padding: '16px' } }}
-        >
-          <Row gutter={[12, 16]}>
+        {/* Quick Actions */}
+        <Card title="Quick Actions" className="mb-4">
+          <Row gutter={[16, 16]}>
             <Col span={6}>
-              <div className="text-center">
-                <Button 
-                  type="primary" 
-                  shape="circle" 
-                  size="large" 
-                  icon={<SendOutlined />}
-                  className="shadow-md hover:shadow-lg transition-all duration-200"
-                  style={{ 
-                    width: 56, 
-                    height: 56,
-                    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                    border: 'none'
-                  }}
-                />
-                <Text className="block mt-2 text-xs font-medium text-gray-600">Send</Text>
-              </div>
+              <Button 
+                type="primary" 
+                shape="circle" 
+                size="large" 
+                icon={<SendOutlined />}
+                style={{ width: '100%', height: 56 }}
+              />
+              <Text className="block text-center mt-2 text-xs">Send</Text>
             </Col>
             <Col span={6}>
-              <div className="text-center">
-                <Button 
-                  shape="circle" 
-                  size="large" 
-                  icon={<DownloadOutlined />}
-                  className="shadow-md hover:shadow-lg transition-all duration-200 hover:bg-green-50"
-                  style={{ 
-                    width: 56, 
-                    height: 56,
-                    borderColor: '#10b981',
-                    color: '#10b981'
-                  }}
-                />
-                <Text className="block mt-2 text-xs font-medium text-gray-600">Receive</Text>
-              </div>
+              <Button 
+                type="default" 
+                shape="circle" 
+                size="large" 
+                icon={<ReceiveMoneyOutlined />}
+                style={{ width: '100%', height: 56 }}
+              />
+              <Text className="block text-center mt-2 text-xs">Receive</Text>
             </Col>
             <Col span={6}>
-              <div className="text-center">
-                <Button 
-                  shape="circle" 
-                  size="large" 
-                  icon={<QrcodeOutlined />}
-                  className="shadow-md hover:shadow-lg transition-all duration-200 hover:bg-purple-50"
-                  style={{ 
-                    width: 56, 
-                    height: 56,
-                    borderColor: '#8b5cf6',
-                    color: '#8b5cf6'
-                  }}
-                />
-                <Text className="block mt-2 text-xs font-medium text-gray-600">QR Pay</Text>
-              </div>
+              <Button 
+                type="default" 
+                shape="circle" 
+                size="large" 
+                icon={<QrcodeOutlined />}
+                style={{ width: '100%', height: 56 }}
+              />
+              <Text className="block text-center mt-2 text-xs">QR Pay</Text>
             </Col>
             <Col span={6}>
-              <div className="text-center">
-                <Button 
-                  shape="circle" 
-                  size="large" 
-                  icon={<WalletOutlined />}
-                  className="shadow-md hover:shadow-lg transition-all duration-200 hover:bg-blue-50"
-                  style={{ 
-                    width: 56, 
-                    height: 56,
-                    borderColor: '#3b82f6',
-                    color: '#3b82f6'
-                  }}
-                />
-                <Text className="block mt-2 text-xs font-medium text-gray-600">Wallets</Text>
-              </div>
+              <Button 
+                type="default" 
+                shape="circle" 
+                size="large" 
+                icon={<WalletOutlined />}
+                style={{ width: '100%', height: 56 }}
+              />
+              <Text className="block text-center mt-2 text-xs">Wallets</Text>
             </Col>
           </Row>
         </Card>
@@ -361,13 +240,6 @@ export default function HomePage() {
       </main>
 
       <BottomNavigation currentPage="home" />
-      
-      {/* Feature Discovery Hints */}
-      <FeatureHints 
-        currentPage="home" 
-        userRole={user?.currentRole || 'consumer'}
-        isFirstVisit={true}
-      />
     </div>
   );
 }

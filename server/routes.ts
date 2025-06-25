@@ -12,36 +12,6 @@ import {
 } from "./validation";
 import { insertTransactionSchema, insertUserRoleSchema } from "../shared/schema.js";
 import { z } from "zod";
-import { getPersonalizedHints, trackHintInteraction, getFeatureCompletionStatus } from './feature-hints-routes.js';
-import { handleUSSDRequest } from './ussd-routes.js';
-import { 
-  syncOfflineTransactions, 
-  getOfflineData, 
-  queueOfflineTransaction, 
-  checkSyncStatus 
-} from './offline-sync.js';
-import { 
-  getNearbyAgents, 
-  initiateCashIn, 
-  initiateCashOut, 
-  confirmCashTransaction, 
-  getAgentDashboard 
-} from './agent-network.js';
-import {
-  getSupportedCurrencies,
-  getExchangeRates,
-  convertCurrency,
-  processMultiCurrencyTransaction,
-  getMultiCurrencyBalances
-} from './multi-currency.js';
-import {
-  performanceMiddleware,
-  compressionMiddleware,
-  cacheMiddleware,
-  bandwidthOptimization,
-  mobileOptimization,
-  getPerformanceAnalytics
-} from './performance-monitor.js';
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Security middleware - more lenient for development

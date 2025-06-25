@@ -1,11 +1,19 @@
-import { AntdRegistry } from '@ant-design/nextjs-registry';
-import type { Metadata } from 'next';
-import './globals.css';
-import ClientProviders from '../components/client-providers';
+'use client';
 
-export const metadata: Metadata = {
-  title: 'AfriPay - Pan-African Fintech SuperApp',
-  description: 'Complete fintech solution for Africa with multi-role wallets, QR payments, and financial services',
+import { ConfigProvider } from 'antd';
+import { AntdRegistry } from '@ant-design/nextjs-registry';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { useState } from 'react';
+import './globals.css';
+
+const theme = {
+  token: {
+    colorPrimary: '#3b82f6',
+    colorSuccess: '#10b981',
+    colorWarning: '#f59e0b',
+    colorError: '#ef4444',
+    borderRadius: 8,
+  },
 };
 
 export default function RootLayout({
@@ -13,13 +21,24 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const [queryClient] = useState(() => new QueryClient({
+    defaultOptions: {
+      queries: {
+        staleTime: 5 * 60 * 1000, // 5 minutes
+        retry: 1,
+      },
+    },
+  }));
+
   return (
     <html lang="en">
-      <body suppressHydrationWarning={true}>
+      <body>
         <AntdRegistry>
-          <ClientProviders>
-            {children}
-          </ClientProviders>
+          <ConfigProvider theme={theme}>
+            <QueryClientProvider client={queryClient}>
+              {children}
+            </QueryClientProvider>
+          </ConfigProvider>
         </AntdRegistry>
       </body>
     </html>

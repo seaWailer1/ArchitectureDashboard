@@ -3,7 +3,6 @@
 import { Layout, Button } from 'antd';
 import { HomeOutlined, WalletOutlined, QrcodeOutlined, AppstoreOutlined, UserOutlined } from '@ant-design/icons';
 import { useRouter, usePathname } from 'next/navigation';
-import Link from 'next/link';
 
 const { Footer } = Layout;
 
@@ -51,18 +50,19 @@ export default function BottomNavigation({ currentPage }: BottomNavigationProps)
           const active = isActive(item.path, item.id);
 
           return (
-            <Link key={item.id} href={item.path} passHref>
-              <Button
-                type="text"
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  padding: '8px 12px',
-                  height: 'auto',
-                  color: active ? '#3b82f6' : '#6b7280'
-                }}
-              >
+            <Button
+              key={item.id}
+              type="text"
+              onClick={() => router.push(item.path)}
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                padding: '8px 12px',
+                height: 'auto',
+                color: active ? '#3b82f6' : '#6b7280'
+              }}
+            >
               {item.special ? (
                 <div style={{
                   width: 32,
@@ -92,8 +92,7 @@ export default function BottomNavigation({ currentPage }: BottomNavigationProps)
               }}>
                 {item.label}
               </span>
-              </Button>
-            </Link>
+            </Button>
           );
         })}
       </div>

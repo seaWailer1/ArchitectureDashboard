@@ -20,15 +20,7 @@ export default function AppHeader() {
     queryKey: ['/api/auth/user'],
     queryFn: async () => {
       const response = await fetch('/api/auth/user');
-      if (!response.ok) {
-        return {
-          id: 'dev-user-123',
-          email: 'dev@example.com',
-          firstName: 'Demo',
-          lastName: 'User',
-          language: 'en'
-        };
-      }
+      if (!response.ok) throw new Error('Failed to fetch user');
       return response.json();
     },
   });
@@ -76,7 +68,7 @@ export default function AppHeader() {
             value={user?.language || 'en'}
             size="small"
             style={{ width: 64 }}
-            variant="borderless"
+            bordered={false}
             options={[
               { value: 'en', label: 'EN' },
               { value: 'fr', label: 'FR' },
