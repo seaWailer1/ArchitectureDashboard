@@ -16,13 +16,13 @@ const nextConfig = {
   async redirects() {
     return [];
   },
-  // Configure for Replit hosting
   typescript: {
     ignoreBuildErrors: false,
   },
   eslint: {
     ignoreDuringBuilds: false,
-  }
+  },
+  output: 'standalone'
 };
 
 export default nextConfig;
