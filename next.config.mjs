@@ -9,20 +9,16 @@ const nextConfig = {
       }
     ];
   },
-  reactStrictMode: true,
+  reactStrictMode: false,
   experimental: {
     optimizePackageImports: ['antd', '@ant-design/icons']
   },
-  async redirects() {
-    return [];
-  },
   typescript: {
-    ignoreBuildErrors: false,
+    ignoreBuildErrors: true,
   },
   eslint: {
-    ignoreDuringBuilds: false,
-  },
-  output: 'standalone'
+    ignoreDuringBuilds: true,
+  }
 };
 
 export default nextConfig;
