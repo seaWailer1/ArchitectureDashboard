@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { FaWallet, FaCreditCard, FaChartLine, FaBitcoin, FaPlus, FaEye, FaEyeSlash, FaPaperPlane, FaDownload, FaEllipsisV, FaPiggyBank, FaBuilding, FaCoins } from "react-icons/fa";
+import { FaWallet, FaCreditCard, FaChartLine, FaFaBitcoin, FaFaPlus, FaEye, FaEyeSlash, FaPaperPlane, FaDownload, FaEllipsisV, FaPiggyBank, FaBuilding, FaCoins } from "react-icons/fa";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -116,7 +116,7 @@ export default function Wallets() {
     switch (type) {
       case 'primary': return FaWallet;
       case 'savings': return FaPiggyBank;
-      case 'crypto': return FaBitcoin;
+      case 'crypto': return FaFaBitcoin;
       case 'investment': return FaChartLine;
       case 'business': return FaBuilding;
       default: return FaWallet;
@@ -214,7 +214,7 @@ export default function Wallets() {
             <div className="flex items-center justify-between">
               <h2 className="text-lg font-semibold">Primary Wallets</h2>
               <Button size="sm" onClick={() => handleWalletAction("Create Primary", 0)}>
-                <Plus className="w-4 h-4 mr-2" />
+                <FaPlus className="w-4 h-4 mr-2" />
                 Add Wallet
               </Button>
             </div>
@@ -257,20 +257,20 @@ export default function Wallets() {
                           <DropdownMenu>
                             <DropdownMenuTrigger asChild>
                               <Button variant="ghost" size="sm">
-                                <MoreVertical className="w-4 h-4" />
+                                <FaEllipsisV className="w-4 h-4" />
                               </Button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent>
-                              <DropdownMenuItem onClick={() => handleWalletAction("Send", wallet.id)}>
-                                <Send className="w-4 h-4 mr-2" />
-                                Send Money
+                              <DropdownMenuItem onClick={() => handleWalletAction("FaPaperPlane", wallet.id)}>
+                                <FaPaperPlane className="w-4 h-4 mr-2" />
+                                FaPaperPlane Money
                               </DropdownMenuItem>
                               <DropdownMenuItem onClick={() => handleWalletAction("Receive", wallet.id)}>
-                                <ArrowDownToLine className="w-4 h-4 mr-2" />
+                                <FaDownload className="w-4 h-4 mr-2" />
                                 Receive Money
                               </DropdownMenuItem>
                               <DropdownMenuItem onClick={() => handleWalletAction("Topup", wallet.id)}>
-                                <Plus className="w-4 h-4 mr-2" />
+                                <FaPlus className="w-4 h-4 mr-2" />
                                 Top Up
                               </DropdownMenuItem>
                             </DropdownMenuContent>
@@ -288,7 +288,7 @@ export default function Wallets() {
             <div className="flex items-center justify-between">
               <h2 className="text-lg font-semibold">Savings Wallets</h2>
               <Button size="sm" onClick={() => handleWalletAction("Create Savings", 0)}>
-                <Plus className="w-4 h-4 mr-2" />
+                <FaPlus className="w-4 h-4 mr-2" />
                 Add Savings
               </Button>
             </div>
@@ -325,16 +325,16 @@ export default function Wallets() {
                           <DropdownMenu>
                             <DropdownMenuTrigger asChild>
                               <Button variant="ghost" size="sm">
-                                <MoreVertical className="w-4 h-4" />
+                                <FaEllipsisV className="w-4 h-4" />
                               </Button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent>
                               <DropdownMenuItem onClick={() => handleWalletAction("Transfer In", wallet.id)}>
-                                <ArrowDownToLine className="w-4 h-4 mr-2" />
+                                <FaDownload className="w-4 h-4 mr-2" />
                                 Transfer In
                               </DropdownMenuItem>
                               <DropdownMenuItem onClick={() => handleWalletAction("Transfer Out", wallet.id)}>
-                                <Send className="w-4 h-4 mr-2" />
+                                <FaPaperPlane className="w-4 h-4 mr-2" />
                                 Transfer Out
                               </DropdownMenuItem>
                             </DropdownMenuContent>
@@ -352,7 +352,7 @@ export default function Wallets() {
             <div className="flex items-center justify-between">
               <h2 className="text-lg font-semibold">Crypto Holdings</h2>
               <Button size="sm" onClick={() => handleWalletAction("Buy Crypto", 0)}>
-                <Plus className="w-4 h-4 mr-2" />
+                <FaPlus className="w-4 h-4 mr-2" />
                 Buy Crypto
               </Button>
             </div>
@@ -369,7 +369,7 @@ export default function Wallets() {
                       <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-3">
                           <div className="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center">
-                            <Bitcoin className="w-5 h-5 text-orange-600" />
+                            <FaBitcoin className="w-5 h-5 text-orange-600" />
                           </div>
                           <div>
                             <p className="font-medium">{holding.asset.symbol}</p>
@@ -400,7 +400,7 @@ export default function Wallets() {
             <div className="flex items-center justify-between">
               <h2 className="text-lg font-semibold">Investment Wallets</h2>
               <Button size="sm" onClick={() => handleWalletAction("Create Investment", 0)}>
-                <Plus className="w-4 h-4 mr-2" />
+                <FaPlus className="w-4 h-4 mr-2" />
                 Add Investment
               </Button>
             </div>
@@ -437,16 +437,16 @@ export default function Wallets() {
                           <DropdownMenu>
                             <DropdownMenuTrigger asChild>
                               <Button variant="ghost" size="sm">
-                                <MoreVertical className="w-4 h-4" />
+                                <FaEllipsisV className="w-4 h-4" />
                               </Button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent>
                               <DropdownMenuItem onClick={() => handleWalletAction("Invest", wallet.id)}>
-                                <TrendingUp className="w-4 h-4 mr-2" />
+                                <FaChartLine className="w-4 h-4 mr-2" />
                                 Invest Funds
                               </DropdownMenuItem>
                               <DropdownMenuItem onClick={() => handleWalletAction("Add Funds", wallet.id)}>
-                                <Plus className="w-4 h-4 mr-2" />
+                                <FaPlus className="w-4 h-4 mr-2" />
                                 Add Funds
                               </DropdownMenuItem>
                             </DropdownMenuContent>
@@ -471,7 +471,7 @@ export default function Wallets() {
                         <div className="flex items-center justify-between">
                           <div className="flex items-center space-x-3">
                             <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center">
-                              <TrendingUp className="w-5 h-5 text-purple-600" />
+                              <FaChartLine className="w-5 h-5 text-purple-600" />
                             </div>
                             <div>
                               <p className="font-medium">{investment.product.name}</p>
