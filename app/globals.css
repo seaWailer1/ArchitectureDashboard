@@ -9,6 +9,12 @@
   }
 }
 
+@layer utilities {
+  .border-border {
+    border-color: hsl(var(--border));
+  }
+}
+
 /* Enhanced UI styles */
 .ant-card {
   border-radius: 12px;
