@@ -34,6 +34,14 @@ import {
   processMultiCurrencyTransaction,
   getMultiCurrencyBalances
 } from './multi-currency.js';
+import {
+  performanceMiddleware,
+  compressionMiddleware,
+  cacheMiddleware,
+  bandwidthOptimization,
+  mobileOptimization,
+  getPerformanceAnalytics
+} from './performance-monitor.js';
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Security middleware - more lenient for development
