@@ -15,6 +15,13 @@ const nextConfig = {
   },
   async redirects() {
     return [];
+  },
+  // Ensure proper hosting configuration
+  typescript: {
+    ignoreBuildErrors: false,
+  },
+  eslint: {
+    ignoreDuringBuilds: false,
   }
 };
 
