@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { 
   Wallet, 
@@ -14,7 +15,14 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
+import SendMoney from "@/components/services/send-money";
+import PayScan from "@/components/services/pay-scan";
+import BuyAirtime from "@/components/services/buy-airtime";
+import PayBills from "@/components/services/pay-bills";
+import Shop from "@/components/services/shop";
+import Transport from "@/components/services/transport";
 
 interface Transaction {
   id: number;

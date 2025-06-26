@@ -2,20 +2,19 @@ import { useState } from "react";
 import { 
   ArrowLeft, 
   Star, 
-  Heart, 
-  Share2, 
+  Heart,
+  Share2,
   ShoppingCart,
-  Truck,
-  Shield,
-  MessageCircle,
   Plus,
   Minus,
-  Check,
-  MapPin
+  Truck,
+  Shield,
+  CheckCircle,
+  Package
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
@@ -26,19 +25,15 @@ interface ProductDetailProps {
 }
 
 export default function ProductDetail({ product, onBack, onAddToCart }: ProductDetailProps) {
-  const [selectedVariant, setSelectedVariant] = useState(product.variants?.[0]);
+  const [selectedVariant, setSelectedVariant] = useState(product.variants?.[0] || null);
   const [quantity, setQuantity] = useState(1);
-  const [selectedImage, setSelectedImage] = useState(0);
   const [isFavorite, setIsFavorite] = useState(false);
-
-  const currentPrice = selectedVariant?.price || product.price;
-  const isInStock = selectedVariant?.inStock !== false && product.inStock;
 
   const renderStars = (rating: number) => {
     return Array.from({ length: 5 }, (_, i) => (
       <Star 
         key={i} 
-        className={`w-4 h-4 ${i < Math.floor(rating) ? 'text-yellow-400 fill-current' : 'text-neutral-300'}`} 
+        className={`w-4 h-4 ${i < Math.floor(rating) ? 'text-yellow-400 fill-current' : 'text-gray-300'}`} 
       />
     ));
   };
@@ -51,260 +46,206 @@ export default function ProductDetail({ product, onBack, onAddToCart }: ProductD
   };
 
   const handleAddToCart = () => {
-    onAddToCart(product, selectedVariant);
+    for (let i = 0; i < quantity; i++) {
+      onAddToCart(product, selectedVariant);
+    }
   };
 
   return (
     <div className="space-y-4">
       {/* Header */}
-      <div className="flex items-center space-x-3">
+      <div className="flex items-center justify-between">
         <Button variant="outline" size="sm" onClick={onBack}>
           <ArrowLeft className="w-4 h-4" />
         </Button>
-        <h2 className="font-bold text-lg flex-1">{product.name}</h2>
-        <Button variant="outline" size="sm" onClick={() => setIsFavorite(!isFavorite)}>
-          <Heart className={`w-4 h-4 ${isFavorite ? 'fill-red-500 text-red-500' : ''}`} />
-        </Button>
-        <Button variant="outline" size="sm">
-          <Share2 className="w-4 h-4" />
-        </Button>
+        <div className="flex space-x-2">
+          <Button 
+            variant="outline" 
+            size="sm"
+            onClick={() => setIsFavorite(!isFavorite)}
+            className={isFavorite ? 'text-red-500' : ''}
+          >
+            <Heart className={`w-4 h-4 ${isFavorite ? 'fill-current' : ''}`} />
+          </Button>
+          <Button variant="outline" size="sm">
+            <Share2 className="w-4 h-4" />
+          </Button>
+        </div>
       </div>
 
-      {/* Product Images */}
-      <Card>
-        <CardContent className="p-4">
-          <div className="aspect-square bg-neutral-100 rounded-lg mb-3 flex items-center justify-center">
-            <ShoppingCart className="w-16 h-16 text-neutral-400" />
-          </div>
-          {product.images && product.images.length > 1 && (
-            <div className="flex space-x-2">
-              {product.images.map((_, index) => (
-                <button
-                  key={index}
-                  className={`w-12 h-12 rounded border-2 ${selectedImage === index ? 'border-primary' : 'border-neutral-200'}`}
-                  onClick={() => setSelectedImage(index)}
-                >
-                  <div className="w-full h-full bg-neutral-100 rounded flex items-center justify-center">
-                    <ShoppingCart className="w-4 h-4 text-neutral-400" />
-                  </div>
-                </button>
-              ))}
-            </div>
-          )}
-        </CardContent>
-      </Card>
+      {/* Product Image */}
+      <div className="aspect-square bg-gray-100 rounded-lg flex items-center justify-center mb-4">
+        <Package className="w-24 h-24 text-gray-400" />
+      </div>
 
-      {/* Price and Discount */}
-      <Card>
-        <CardContent className="p-4">
-          <div className="flex items-center justify-between mb-2">
-            <div>
-              <span className="text-2xl font-bold">{formatCurrency(currentPrice)}</span>
-              {product.originalPrice && product.originalPrice > currentPrice && (
-                <span className="text-lg text-neutral-500 line-through ml-2">
+      {/* Product Info */}
+      <div className="space-y-4">
+        <div>
+          <h1 className="text-xl font-bold mb-2">{product.name}</h1>
+          <div className="flex items-center space-x-2 mb-3">
+            <div className="flex items-center space-x-1">
+              {renderStars(product.rating)}
+            </div>
+            <span className="text-sm text-gray-600">({product.reviews} reviews)</span>
+          </div>
+          
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center space-x-2">
+              <span className="text-2xl font-bold">{formatCurrency(product.price)}</span>
+              {product.originalPrice && (
+                <span className="text-lg text-gray-500 line-through">
                   {formatCurrency(product.originalPrice)}
                 </span>
               )}
             </div>
             {product.discount && (
               <Badge className="bg-red-100 text-red-700">
-                -{product.discount.value}{product.discount.type === 'percentage' ? '%' : ' USD'} OFF
+                -{product.discount.value}% OFF
               </Badge>
             )}
           </div>
-          
-          <div className="flex items-center space-x-2 mb-2">
-            {renderStars(product.rating)}
-            <span className="text-sm text-neutral-600">({product.reviews} reviews)</span>
-          </div>
-          
-          <div className="flex items-center space-x-2">
-            <Badge className={isInStock ? 'bg-success/10 text-success' : 'bg-destructive/10 text-destructive'}>
-              {isInStock ? `${product.stockQuantity} in stock` : 'Out of stock'}
-            </Badge>
-            {product.tags?.map(tag => (
-              <Badge key={tag} variant="outline" className="text-xs">
-                {tag}
-              </Badge>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+        </div>
 
-      {/* Seller Info */}
-      <Card>
-        <CardContent className="p-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-neutral-100 rounded-full flex items-center justify-center">
-                <ShoppingCart className="w-5 h-5 text-neutral-400" />
-              </div>
-              <div>
-                <div className="flex items-center space-x-2">
-                  <span className="font-medium">{product.seller.name}</span>
-                  {product.seller.verified && (
-                    <Check className="w-4 h-4 text-success" />
-                  )}
-                </div>
-                <div className="flex items-center space-x-2 text-sm text-neutral-600">
-                  {renderStars(product.seller.rating)}
-                  <span>({product.seller.totalSales} sales)</span>
-                </div>
-                <div className="flex items-center text-xs text-neutral-500">
-                  <MapPin className="w-3 h-3 mr-1" />
-                  {product.seller.location}
-                </div>
-              </div>
-            </div>
-            <Button variant="outline" size="sm">
-              <MessageCircle className="w-4 h-4 mr-1" />
-              Chat
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Variants */}
-      {product.variants && product.variants.length > 0 && (
-        <Card>
-          <CardContent className="p-4">
-            <h4 className="font-medium mb-3">Select Variant</h4>
-            <div className="grid grid-cols-3 gap-2">
-              {product.variants.map((variant) => (
+        {/* Variants */}
+        {product.variants && (
+          <div>
+            <h3 className="font-medium mb-2">Size</h3>
+            <div className="flex space-x-2">
+              {product.variants.map((variant: any) => (
                 <Button
                   key={variant.id}
                   variant={selectedVariant?.id === variant.id ? "default" : "outline"}
                   size="sm"
-                  disabled={!variant.inStock}
                   onClick={() => setSelectedVariant(variant)}
-                  className="text-xs"
+                  disabled={!variant.inStock}
+                  className="relative"
                 >
                   {variant.name}
-                  {!variant.inStock && <span className="ml-1">(Out)</span>}
+                  {!variant.inStock && (
+                    <span className="absolute inset-0 bg-gray-200 opacity-50 rounded"></span>
+                  )}
                 </Button>
               ))}
             </div>
+          </div>
+        )}
+
+        {/* Quantity */}
+        <div>
+          <h3 className="font-medium mb-2">Quantity</h3>
+          <div className="flex items-center space-x-3">
+            <Button 
+              variant="outline" 
+              size="sm"
+              onClick={() => setQuantity(Math.max(1, quantity - 1))}
+            >
+              <Minus className="w-3 h-3" />
+            </Button>
+            <span className="w-12 text-center">{quantity}</span>
+            <Button 
+              variant="outline" 
+              size="sm"
+              onClick={() => setQuantity(quantity + 1)}
+            >
+              <Plus className="w-3 h-3" />
+            </Button>
+          </div>
+        </div>
+
+        {/* Seller Info */}
+        <Card>
+          <CardContent className="p-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <div className="flex items-center space-x-2">
+                  <h4 className="font-medium">{product.seller.name}</h4>
+                  {product.seller.verified && (
+                    <CheckCircle className="w-4 h-4 text-blue-500" />
+                  )}
+                </div>
+                <div className="flex items-center space-x-2 text-sm text-gray-600">
+                  <div className="flex items-center">
+                    {renderStars(product.seller.rating)}
+                  </div>
+                  <span>• {product.seller.totalSales} sales</span>
+                </div>
+                <p className="text-sm text-gray-600">{product.seller.location}</p>
+              </div>
+            </div>
           </CardContent>
         </Card>
-      )}
 
-      {/* Quantity and Add to Cart */}
-      <Card>
-        <CardContent className="p-4">
-          <div className="flex items-center justify-between mb-4">
-            <span className="font-medium">Quantity</span>
-            <div className="flex items-center space-x-2">
-              <Button 
-                variant="outline" 
-                size="sm"
-                onClick={() => setQuantity(Math.max(1, quantity - 1))}
-              >
-                <Minus className="w-3 h-3" />
-              </Button>
-              <span className="mx-3 font-medium">{quantity}</span>
-              <Button 
-                variant="outline" 
-                size="sm"
-                onClick={() => setQuantity(quantity + 1)}
-              >
-                <Plus className="w-3 h-3" />
-              </Button>
+        {/* Shipping Info */}
+        <Card>
+          <CardContent className="p-4">
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-2">
+                  <Truck className="w-4 h-4 text-blue-600" />
+                  <span className="font-medium">Delivery</span>
+                </div>
+                <span className="text-sm">{product.deliveryTime}</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-2">
+                  <Shield className="w-4 h-4 text-green-600" />
+                  <span className="font-medium">Shipping Fee</span>
+                </div>
+                <span className="text-sm">{formatCurrency(product.shippingFee)}</span>
+              </div>
             </div>
-          </div>
+          </CardContent>
+        </Card>
+
+        {/* Product Details */}
+        <Tabs defaultValue="description" className="w-full">
+          <TabsList className="grid w-full grid-cols-2">
+            <TabsTrigger value="description">Description</TabsTrigger>
+            <TabsTrigger value="reviews">Reviews</TabsTrigger>
+          </TabsList>
           
-          <div className="space-y-2 mb-4">
-            <div className="flex justify-between text-sm">
-              <span>Subtotal</span>
-              <span>{formatCurrency(currentPrice * quantity)}</span>
-            </div>
-            <div className="flex justify-between text-sm">
-              <span>Shipping</span>
-              <span>{formatCurrency(product.shippingFee)}</span>
-            </div>
-            <div className="flex justify-between font-bold">
-              <span>Total</span>
-              <span>{formatCurrency((currentPrice * quantity) + product.shippingFee)}</span>
-            </div>
-          </div>
-          
-          <Button 
-            onClick={handleAddToCart}
-            disabled={!isInStock}
-            className="w-full"
-          >
-            <ShoppingCart className="w-4 h-4 mr-2" />
-            {isInStock ? 'Add to Cart' : 'Out of Stock'}
-          </Button>
-        </CardContent>
-      </Card>
-
-      {/* Delivery Info */}
-      <Card>
-        <CardContent className="p-4">
-          <div className="flex items-center space-x-3 mb-3">
-            <Truck className="w-5 h-5 text-blue-500" />
+          <TabsContent value="description" className="space-y-4">
             <div>
-              <p className="font-medium">Delivery Information</p>
-              <p className="text-sm text-neutral-600">Expected delivery: {product.deliveryTime}</p>
+              <h3 className="font-medium mb-2">Product Description</h3>
+              <p className="text-gray-600 text-sm leading-relaxed">
+                {product.description}
+              </p>
             </div>
-          </div>
-          <div className="flex items-center space-x-3">
-            <Shield className="w-5 h-5 text-success" />
-            <div>
-              <p className="font-medium">Buyer Protection</p>
-              <p className="text-sm text-neutral-600">Full refund if item not as described</p>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Product Details Tabs */}
-      <Tabs defaultValue="description" className="w-full">
-        <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="description">Description</TabsTrigger>
-          <TabsTrigger value="specs">Specifications</TabsTrigger>
-          <TabsTrigger value="reviews">Reviews</TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="description">
-          <Card>
-            <CardContent className="p-4">
-              <p className="text-sm text-neutral-700">{product.description}</p>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="specs">
-          <Card>
-            <CardContent className="p-4">
-              {product.specifications ? (
-                <div className="space-y-2">
-                  {Object.entries(product.specifications).map(([key, value]) => (
-                    <div key={key} className="flex justify-between py-1 border-b border-neutral-100 last:border-0">
-                      <span className="text-sm font-medium">{key}</span>
-                      <span className="text-sm text-neutral-600">{value}</span>
-                    </div>
+            
+            {product.tags && (
+              <div>
+                <h3 className="font-medium mb-2">Tags</h3>
+                <div className="flex flex-wrap gap-2">
+                  {product.tags.map((tag: string) => (
+                    <Badge key={tag} variant="secondary" className="text-xs">
+                      {tag}
+                    </Badge>
                   ))}
                 </div>
-              ) : (
-                <p className="text-sm text-neutral-500">No specifications available</p>
-              )}
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="reviews">
-          <Card>
-            <CardContent className="p-4">
-              <div className="text-center py-6">
-                <Star className="w-8 h-8 text-neutral-400 mx-auto mb-2" />
-                <p className="text-neutral-600">No reviews yet</p>
-                <p className="text-sm text-neutral-500">Be the first to review this product</p>
               </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-      </Tabs>
+            )}
+          </TabsContent>
+          
+          <TabsContent value="reviews" className="space-y-4">
+            <div className="text-center py-8">
+              <Star className="w-12 h-12 text-gray-400 mx-auto mb-2" />
+              <p className="text-gray-600">Reviews coming soon</p>
+            </div>
+          </TabsContent>
+        </Tabs>
+
+        {/* Add to Cart Button */}
+        <div className="sticky bottom-4 bg-white p-4 border-t">
+          <Button 
+            onClick={handleAddToCart}
+            className="w-full"
+            disabled={selectedVariant && !selectedVariant.inStock}
+          >
+            <ShoppingCart className="w-4 h-4 mr-2" />
+            Add to Cart • {formatCurrency((selectedVariant?.price || product.price) * quantity)}
+          </Button>
+        </div>
+      </div>
     </div>
   );
 }
