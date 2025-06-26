@@ -152,16 +152,21 @@
 }
 
 .btn-primary-refined {
-  @apply btn-refined bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm;
+  @apply btn-refined bg-primary text-primary-foreground shadow-sm;
 }
 
 .btn-primary-refined:hover {
-  box-shadow: 0 4px 12px 0 rgba(var(--primary) / 0.3);
+  background-color: hsl(24, 85%, 45%);
+  box-shadow: 0 4px 12px 0 rgba(210, 89, 35, 0.3);
   transform: translateY(-1px);
 }
 
 .btn-secondary-refined {
-  @apply btn-refined bg-secondary text-secondary-foreground hover:bg-secondary/80 border border-border;
+  @apply btn-refined bg-secondary text-secondary-foreground border border-border;
+}
+
+.btn-secondary-refined:hover {
+  background-color: hsl(25, 60%, 20%);
 }
 
 /* Enhanced input styling */
