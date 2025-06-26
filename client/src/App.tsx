@@ -70,23 +70,28 @@ function Router() {
     );
   }
 
-  // Authenticated and verified - show main app
+  // Authenticated and verified - show main app with accessibility enhancements
   return (
-    <Switch>
-      <Route path="/" component={Home} />
-      <Route path="/profile" component={Profile} />
-      <Route path="/qr" component={QR} />
-      <Route path="/services" component={Services} />
-      <Route path="/transactions" component={Transactions} />
-      <Route path="/wallets" component={Wallets} />
-      <Route path="/test-login" component={TestLogin} />
-      <Route path="/signin" component={SignIn} />
-      <Route path="/onboarding" component={Onboarding} />
-      <Route path="/kyc" component={KYC} />
-      <Route path="/preset-users" component={PresetUsers} />
-      <Route path="/partnerships" component={PartnershipsPage} />
-      <Route component={NotFound} />
-    </Switch>
+    <>
+      <SkipNav />
+      <div id="main-content" role="main" tabIndex={-1}>
+        <Switch>
+          <Route path="/" component={Home} />
+          <Route path="/profile" component={Profile} />
+          <Route path="/qr" component={QR} />
+          <Route path="/services" component={Services} />
+          <Route path="/transactions" component={Transactions} />
+          <Route path="/wallets" component={Wallets} />
+          <Route path="/test-login" component={TestLogin} />
+          <Route path="/signin" component={SignIn} />
+          <Route path="/onboarding" component={Onboarding} />
+          <Route path="/kyc" component={KYC} />
+          <Route path="/preset-users" component={PresetUsers} />
+          <Route path="/partnerships" component={PartnershipsPage} />
+          <Route component={NotFound} />
+        </Switch>
+      </div>
+    </>
   );
 }
 
