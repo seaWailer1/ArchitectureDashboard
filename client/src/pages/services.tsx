@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Car, ShoppingBag, Zap, Smartphone, CreditCard, Building, Users, MoreHorizontal, Package, Send, QrCode, Phone } from "lucide-react";
+import { Car, ShoppingBag, Zap, Smartphone, CreditCard, Building, Users, MoreHorizontal, Package, Send, QrCode, Phone, Target } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
@@ -26,6 +26,7 @@ import BuyAirtime from "@/components/services/buy-airtime";
 import PayBills from "@/components/services/pay-bills";
 import Shop from "@/components/services/shop";
 import Transport from "@/components/services/transport";
+import SavingsChallenges from "@/components/savings/savings-challenges";
 
 export default function Services() {
   const { toast } = useToast();
@@ -204,6 +205,7 @@ export default function Services() {
                selectedService === 'pay-bills' ? 'Pay Bills' :
                selectedService === 'shop' ? 'Shop' :
                selectedService === 'transport' ? 'Transport' :
+               selectedService === 'savings-challenges' ? 'Savings Challenges' :
                selectedService === 'loans' ? 'Micro Loans' : 
                selectedService === 'virtual-card' ? 'Virtual Cards' :
                selectedService === 'crypto' ? 'Crypto Trading' :

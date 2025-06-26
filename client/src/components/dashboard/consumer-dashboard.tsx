@@ -10,7 +10,8 @@ import {
   Phone,
   Zap,
   Plus,
-  ArrowUpRight
+  ArrowUpRight,
+  Target
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -23,6 +24,7 @@ import BuyAirtime from "@/components/services/buy-airtime";
 import PayBills from "@/components/services/pay-bills";
 import Shop from "@/components/services/shop";
 import Transport from "@/components/services/transport";
+import SavingsChallenges from "@/components/savings/savings-challenges";
 
 interface Transaction {
   id: number;
@@ -75,7 +77,7 @@ export default function ConsumerDashboard() {
     { icon: Phone, label: "Buy Airtime", color: "bg-purple-100 text-purple-600", action: () => setSelectedService('buy-airtime') },
     { icon: Zap, label: "Pay Bills", color: "bg-orange-100 text-orange-600", action: () => setSelectedService('pay-bills') },
     { icon: ShoppingBag, label: "Shop", color: "bg-pink-100 text-pink-600", action: () => setSelectedService('shop') },
-    { icon: Car, label: "Transport", color: "bg-indigo-100 text-indigo-600", action: () => setSelectedService('transport') },
+    { icon: Target, label: "Save Challenge", color: "bg-yellow-100 text-yellow-600", action: () => setSelectedService('savings-challenges') },
   ];
 
   const getTransactionIcon = (type: string) => {
@@ -236,6 +238,7 @@ export default function ConsumerDashboard() {
                selectedService === 'buy-airtime' ? 'Buy Airtime' :
                selectedService === 'pay-bills' ? 'Pay Bills' :
                selectedService === 'shop' ? 'Shop' :
+               selectedService === 'savings-challenges' ? 'Savings Challenges' :
                selectedService === 'transport' ? 'Transport' : 'Service'}
             </DialogTitle>
           </DialogHeader>
@@ -254,6 +257,9 @@ export default function ConsumerDashboard() {
           )}
           {selectedService === 'shop' && (
             <Shop onBack={() => setSelectedService(null)} />
+          )}
+          {selectedService === 'savings-challenges' && (
+            <SavingsChallenges onBack={() => setSelectedService(null)} />
           )}
           {selectedService === 'transport' && (
             <Transport onBack={() => setSelectedService(null)} />
