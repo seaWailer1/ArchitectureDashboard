@@ -632,28 +632,6 @@ export default function Profile() {
       </div>
 
       <BottomNavigation />
-                  </Button>
-                  {index < menuItems.length - 1 && <Separator />}
-                </div>
-              );
-            })}
-          </div>
-
-          {/* Logout */}
-          <div className="mt-6">
-            <Button
-              variant="outline"
-              className="w-full text-destructive border-destructive hover:bg-destructive hover:text-white"
-              onClick={handleLogout}
-            >
-              <LogOut className="w-4 h-4 mr-2" />
-              Logout
-            </Button>
-          </div>
-        </div>
-      </main>
-      
-      <BottomNavigation currentPage="profile" />
     </div>
   );
 }
