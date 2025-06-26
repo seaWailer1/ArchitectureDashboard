@@ -81,21 +81,21 @@ export default function WalletsRefined() {
     <div className="min-h-screen bg-gradient-to-br from-neutral-50 to-neutral-100 dark:from-neutral-900 dark:to-neutral-800">
       <AppHeader />
       
-      <main className="max-w-md mx-auto px-6 py-6 pb-24">
+      <main className="container-content spacing-y-lg pb-24">
         {/* Total Portfolio Overview */}
-        <Card className="card-refined mb-8 bg-gradient-to-br from-white to-neutral-50 dark:from-neutral-800 dark:to-neutral-900">
-          <CardHeader className="pb-4">
-            <CardTitle className="flex items-center justify-between text-lg">
-              <span className="text-refined-heading">Total Portfolio</span>
+        <Card className="card-refined elevation-2 spacing-lg bg-gradient-to-br from-white to-neutral-50 dark:from-neutral-800 dark:to-neutral-900">
+          <CardHeader className="spacing-y-sm">
+            <CardTitle className="flex items-center justify-between">
+              <span className="text-heading-2 text-refined-heading">Total Portfolio</span>
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => setShowBalances(!showBalances)}
-                className="h-9 w-9 rounded-xl hover:bg-neutral-100 dark:hover:bg-neutral-700"
+                className="touch-aaa rounded-xl hover:bg-neutral-100 dark:hover:bg-neutral-700 focus-aaa"
               >
                 {showBalances ? 
-                  <EyeOff className="w-4 h-4 text-neutral-600" /> : 
-                  <Eye className="w-4 h-4 text-neutral-600" />
+                  <EyeOff className="w-5 h-5 text-neutral-600" aria-label="Hide balances" /> : 
+                  <Eye className="w-5 h-5 text-neutral-600" aria-label="Show balances" />
                 }
               </Button>
             </CardTitle>

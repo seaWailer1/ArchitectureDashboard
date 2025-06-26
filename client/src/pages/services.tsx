@@ -130,20 +130,20 @@ export default function Services() {
     <div className="min-h-screen bg-gradient-to-br from-neutral-50 to-neutral-100 dark:from-neutral-900 dark:to-neutral-800">
       <AppHeader />
       
-      <main className="max-w-md mx-auto px-6 py-6 pb-24">
+      <main className="container-content spacing-y-lg pb-24">
         <div className="space-y-8">
-          <h1 className="text-3xl font-bold text-refined-heading tracking-tight">Services & Apps</h1>
+          <h1 className="text-heading-1 text-refined-heading">Services & Apps</h1>
           
           {/* Featured Services */}
-          <div className="gradient-primary rounded-3xl p-8 text-white shadow-floating">
-            <h2 className="text-xl font-bold mb-3">Mini-App Ecosystem</h2>
-            <p className="text-white/90 text-sm mb-6 leading-relaxed">
+          <div className="brand-primary rounded-3xl spacing-xl text-white elevation-4">
+            <h2 className="text-heading-2 font-bold mb-3">Mini-App Ecosystem</h2>
+            <p className="text-body opacity-90 mb-6 leading-relaxed">
               Discover integrated services and third-party apps in the AfriPay ecosystem
             </p>
             <Button 
               variant="secondary" 
               size="sm"
-              className="bg-white/20 text-white hover:bg-white/30 border-white/20 backdrop-blur-sm font-semibold"
+              className="bg-white/20 text-white hover:bg-white/30 border-white/20 backdrop-blur-sm font-semibold touch-aaa focus-aaa"
               onClick={() => toast({ title: "Coming Soon", description: "Developer portal coming soon" })}
             >
               Developer Portal

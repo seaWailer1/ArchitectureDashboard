@@ -64,10 +64,10 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-neutral-100">
+    <div className="min-h-screen bg-gradient-to-br from-neutral-50 to-neutral-100 dark:from-neutral-900 dark:to-neutral-800">
       <AppHeader />
       
-      <main className="max-w-md mx-auto px-4 pb-20">
+      <main className="container-content spacing-y-md pb-24">
         {renderRoleSpecificContent()}
       </main>
       
