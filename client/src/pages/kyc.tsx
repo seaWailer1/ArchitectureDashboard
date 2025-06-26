@@ -50,20 +50,20 @@ export default function KYC() {
 
   const steps = [
     { 
-      title: "Phone Verification", 
-      icon: Phone, 
+      title: "FaPhone Verification", 
+      icon: FaPhone, 
       description: "Verify your phone number",
       status: phoneVerified ? "completed" : "pending"
     },
     { 
-      title: "Document Upload", 
-      icon: FileText, 
-      description: "Upload identity documents",
+      title: "Document FaUpload", 
+      icon: FaFileAlt, 
+      description: "FaUpload identity documents",
       status: documentUploaded ? "completed" : "pending"
     },
     { 
       title: "Biometric Verification", 
-      icon: Camera, 
+      icon: FaCamera, 
       description: "Take a selfie for verification",
       status: biometricCaptured ? "completed" : "pending"
     },
@@ -101,7 +101,7 @@ export default function KYC() {
     onSuccess: () => {
       setPhoneVerified(true);
       toast({
-        title: "Phone Verified",
+        title: "FaPhone Verified",
         description: "Your phone number has been successfully verified.",
       });
       setCurrentStep(1);
@@ -132,7 +132,7 @@ export default function KYC() {
     },
     onError: () => {
       toast({
-        title: "Upload Failed",
+        title: "FaUpload Failed",
         description: "Failed to upload documents. Please try again.",
         variant: "destructive",
       });
@@ -216,15 +216,15 @@ export default function KYC() {
           <div className="space-y-6">
             <div className="text-center">
               <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Phone className="w-8 h-8 text-blue-600" />
+                <FaPhone className="w-8 h-8 text-blue-600" />
               </div>
-              <h2 className="text-2xl font-bold mb-2">Phone Verification</h2>
+              <h2 className="text-2xl font-bold mb-2">FaPhone Verification</h2>
               <p className="text-neutral-600">We need to verify your phone number for security</p>
             </div>
             
             <div className="space-y-4">
               <div>
-                <Label htmlFor="phone">Phone Number</Label>
+                <Label htmlFor="phone">FaPhone Number</Label>
                 <Input
                   id="phone"
                   type="tel"
@@ -273,10 +273,10 @@ export default function KYC() {
           <div className="space-y-6">
             <div className="text-center">
               <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <FileText className="w-8 h-8 text-green-600" />
+                <FaFileAlt className="w-8 h-8 text-green-600" />
               </div>
               <h2 className="text-2xl font-bold mb-2">Identity Documents</h2>
-              <p className="text-neutral-600">Upload a valid government-issued ID</p>
+              <p className="text-neutral-600">FaUpload a valid government-issued ID</p>
             </div>
             
             <div className="space-y-4">
@@ -308,9 +308,9 @@ export default function KYC() {
               <div>
                 <Label htmlFor="docFront">Document Front</Label>
                 <div className="border-2 border-dashed border-neutral-300 rounded-lg p-6 text-center">
-                  <Upload className="w-8 h-8 text-neutral-400 mx-auto mb-2" />
+                  <FaUpload className="w-8 h-8 text-neutral-400 mx-auto mb-2" />
                   <p className="text-sm text-neutral-600 mb-2">
-                    {kycData.documentFront ? kycData.documentFront.name : "Upload front side"}
+                    {kycData.documentFront ? kycData.documentFront.name : "FaUpload front side"}
                   </p>
                   <input
                     type="file"
@@ -329,9 +329,9 @@ export default function KYC() {
                 <div>
                   <Label htmlFor="docBack">Document Back (Optional)</Label>
                   <div className="border-2 border-dashed border-neutral-300 rounded-lg p-6 text-center">
-                    <Upload className="w-8 h-8 text-neutral-400 mx-auto mb-2" />
+                    <FaUpload className="w-8 h-8 text-neutral-400 mx-auto mb-2" />
                     <p className="text-sm text-neutral-600 mb-2">
-                      {kycData.documentBack ? kycData.documentBack.name : "Upload back side"}
+                      {kycData.documentBack ? kycData.documentBack.name : "FaUpload back side"}
                     </p>
                     <input
                       type="file"
@@ -352,7 +352,7 @@ export default function KYC() {
                 disabled={!kycData.documentType || !kycData.documentNumber || !kycData.documentFront || uploadDocumentMutation.isPending}
                 className="w-full"
               >
-                {uploadDocumentMutation.isPending ? "Uploading..." : "Upload Documents"}
+                {uploadDocumentMutation.isPending ? "Uploading..." : "FaUpload Documents"}
               </Button>
             </div>
           </div>
@@ -363,7 +363,7 @@ export default function KYC() {
           <div className="space-y-6">
             <div className="text-center">
               <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Camera className="w-8 h-8 text-purple-600" />
+                <FaCamera className="w-8 h-8 text-purple-600" />
               </div>
               <h2 className="text-2xl font-bold mb-2">Biometric Verification</h2>
               <p className="text-neutral-600">Take a clear selfie for facial verification</p>
@@ -384,7 +384,7 @@ export default function KYC() {
               <div>
                 <Label htmlFor="selfie">Selfie Photo</Label>
                 <div className="border-2 border-dashed border-neutral-300 rounded-lg p-8 text-center">
-                  <Camera className="w-12 h-12 text-neutral-400 mx-auto mb-3" />
+                  <FaCamera className="w-12 h-12 text-neutral-400 mx-auto mb-3" />
                   <p className="text-sm text-neutral-600 mb-3">
                     {kycData.selfiePhoto ? kycData.selfiePhoto.name : "Take or upload a selfie"}
                   </p>
@@ -398,7 +398,7 @@ export default function KYC() {
                   />
                   <Button variant="outline" asChild>
                     <label htmlFor="selfie" className="cursor-pointer">
-                      <Camera className="w-4 h-4 mr-2" />
+                      <FaCamera className="w-4 h-4 mr-2" />
                       Take Selfie
                     </label>
                   </Button>
@@ -444,7 +444,7 @@ export default function KYC() {
                       'bg-neutral-200 text-neutral-400'
                     }`}>
                       {step.status === 'completed' ? (
-                        <CheckCircle className="w-4 h-4" />
+                        <FaCheckCircle className="w-4 h-4" />
                       ) : (
                         <Icon className="w-4 h-4" />
                       )}
@@ -478,7 +478,7 @@ export default function KYC() {
         <Card className="mt-6">
           <CardContent className="p-4">
             <div className="flex items-start space-x-3">
-              <AlertTriangle className="w-5 h-5 text-amber-600 mt-0.5" />
+              <FaExclamationTriangle className="w-5 h-5 text-amber-600 mt-0.5" />
               <div className="text-sm">
                 <p className="font-medium text-amber-900">Need Help?</p>
                 <p className="text-amber-800">

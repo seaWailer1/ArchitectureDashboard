@@ -30,7 +30,7 @@ export default function Services() {
       title: "Transportation",
       services: [
         { id: "ride", name: "Ride Hailing", icon: Car, color: "bg-blue-100 text-blue-600", description: "Book rides instantly" },
-        { id: "delivery", name: "Delivery", icon: MoreHorizontal, color: "bg-purple-100 text-purple-600", description: "Food & package delivery" },
+        { id: "delivery", name: "Delivery", icon: FaEllipsisH, color: "bg-purple-100 text-purple-600", description: "Food & package delivery" },
       ]
     },
     {
@@ -49,9 +49,9 @@ export default function Services() {
         { id: "loans", name: "Micro Loans", icon: CreditCard, color: "bg-red-100 text-red-600", description: "Quick personal loans" },
         { id: "virtual-card", name: "Virtual Cards", icon: Building, color: "bg-emerald-100 text-emerald-600", description: "Secure online payments" },
         { id: "investment", name: "Investments", icon: Users, color: "bg-green-100 text-green-600", description: "Grow your wealth" },
-        { id: "crypto", name: "Crypto Trading", icon: MoreHorizontal, color: "bg-orange-100 text-orange-600", description: "Trade cryptocurrencies" },
+        { id: "crypto", name: "Crypto Trading", icon: FaEllipsisH, color: "bg-orange-100 text-orange-600", description: "Trade cryptocurrencies" },
         { id: "trading", name: "Currency Trading", icon: Smartphone, color: "bg-indigo-100 text-indigo-600", description: "Multi-currency arbitrage" },
-        { id: "admin", name: "Admin Portal", icon: MoreHorizontal, color: "bg-gray-100 text-gray-600", description: "System analytics" },
+        { id: "admin", name: "Admin Portal", icon: FaEllipsisH, color: "bg-gray-100 text-gray-600", description: "System analytics" },
       ]
     }
   ];

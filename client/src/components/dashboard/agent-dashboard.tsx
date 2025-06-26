@@ -8,12 +8,12 @@ import {
   Award,
   Clock,
   MapPin,
-  Phone,
+  FaPhone,
   Mail,
   Calendar,
   Plus,
   ArrowUpRight,
-  CheckCircle
+  FaCheckCircle
 } from "react-icons/fa";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -88,14 +88,14 @@ export default function AgentDashboard() {
       action: () => toast({ title: "Cash Services", description: "Cash services feature coming soon!" }) 
     },
     { 
-      icon: Phone, 
+      icon: FaPhone, 
       label: "Mobile Money", 
       color: "bg-purple-100 text-purple-600", 
       description: "Mobile money transfers",
       action: () => toast({ title: "Mobile Money", description: "Mobile money feature coming soon!" }) 
     },
     { 
-      icon: CheckCircle, 
+      icon: FaCheckCircle, 
       label: "KYC Verification", 
       color: "bg-orange-100 text-orange-600", 
       description: "Verify customer identity",
@@ -314,7 +314,7 @@ export default function AgentDashboard() {
               <span className="text-sm">Operating Hours: 8AM - 6PM</span>
             </div>
             <div className="flex items-center space-x-3">
-              <Phone className="w-5 h-5 text-neutral-600" />
+              <FaPhone className="w-5 h-5 text-neutral-600" />
               <span className="text-sm">+234 xxx xxxx</span>
             </div>
           </div>

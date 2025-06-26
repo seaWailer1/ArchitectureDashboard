@@ -14,14 +14,14 @@ import {
   ShoppingCart,
   Star,
   MapPin,
-  Phone,
+  FaPhone,
   Mail,
   Settings,
   Image,
   Save,
-  X,
+  FaTimes,
   Check,
-  AlertCircle,
+  FaExclamationCircle,
   Truck,
   Calendar
 } from "react-icons/fa";
@@ -547,7 +547,7 @@ export default function MerchantStoreManagement() {
                       status: "cancelled"
                     })}
                   >
-                    <X className="w-4 h-4 mr-1" />
+                    <FaTimes className="w-4 h-4 mr-1" />
                     Reject
                   </Button>
                 </div>

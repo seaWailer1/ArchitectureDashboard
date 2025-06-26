@@ -7,10 +7,10 @@ import {
   DollarSign,
   Truck,
   User,
-  Phone,
-  Camera,
-  CheckCircle,
-  AlertCircle,
+  FaPhone,
+  FaCamera,
+  FaCheckCircle,
+  FaExclamationCircle,
   Star,
   Navigation,
   Shield,
@@ -570,7 +570,7 @@ export default function DeliveryService() {
                             </p>
                           </div>
                           <Button size="sm" variant="outline">
-                            <Phone className="w-4 h-4" />
+                            <FaPhone className="w-4 h-4" />
                           </Button>
                         </div>
                       </CardContent>
@@ -601,7 +601,7 @@ export default function DeliveryService() {
 
                   {currentDelivery.status === 'delivered' && currentDelivery.proofOfDelivery && (
                     <div className="text-center p-4 bg-success/10 rounded-lg">
-                      <CheckCircle className="w-8 h-8 text-success mx-auto mb-2" />
+                      <FaCheckCircle className="w-8 h-8 text-success mx-auto mb-2" />
                       <p className="font-medium text-success">Package Delivered!</p>
                       <p className="text-sm text-neutral-600">OTP: {currentDelivery.proofOfDelivery.otp}</p>
                       <p className="text-xs text-neutral-500">

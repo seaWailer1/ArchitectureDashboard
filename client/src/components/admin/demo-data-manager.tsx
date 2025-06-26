@@ -11,8 +11,8 @@ import {
   Car,
   ShoppingBag,
   Zap,
-  CheckCircle,
-  AlertCircle,
+  FaCheckCircle,
+  FaExclamationCircle,
   RefreshCw,
   Play,
   Settings,
@@ -334,7 +334,7 @@ export default function DemoDataManager() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                     {selectedScenarioData.features.map((feature, index) => (
                       <div key={index} className="flex items-center space-x-2">
-                        <CheckCircle className="w-4 h-4 text-green-500" />
+                        <FaCheckCircle className="w-4 h-4 text-green-500" />
                         <span className="text-sm">{feature}</span>
                       </div>
                     ))}
@@ -448,7 +448,7 @@ export default function DemoDataManager() {
             <CardContent className="space-y-4">
               <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
                 <div className="flex items-start space-x-2">
-                  <AlertCircle className="w-5 h-5 text-yellow-600 mt-0.5" />
+                  <FaExclamationCircle className="w-5 h-5 text-yellow-600 mt-0.5" />
                   <div>
                     <p className="text-sm font-medium text-yellow-800">Warning</p>
                     <p className="text-sm text-yellow-700">

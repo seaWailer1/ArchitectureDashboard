@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { 
   Package, 
   Truck,
-  CheckCircle,
+  FaCheckCircle,
   Clock,
   Star,
   Eye,
@@ -60,7 +60,7 @@ export default function CustomerOrders() {
         {
           id: "ITEM_002",
           productId: "PROD_002",
-          name: "Phone Case",
+          name: "FaPhone Case",
           price: 15.99,
           quantity: 2,
           seller: "AccessoryHub"
@@ -139,7 +139,7 @@ export default function CustomerOrders() {
 
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case 'delivered': return <CheckCircle className="w-4 h-4" />;
+      case 'delivered': return <FaCheckCircle className="w-4 h-4" />;
       case 'shipped': return <Truck className="w-4 h-4" />;
       case 'processing': case 'confirmed': return <Package className="w-4 h-4" />;
       case 'pending': return <Clock className="w-4 h-4" />;
@@ -407,7 +407,7 @@ export default function CustomerOrders() {
           {completedOrders.length === 0 ? (
             <Card>
               <CardContent className="p-8 text-center">
-                <CheckCircle className="w-12 h-12 text-neutral-400 mx-auto mb-3" />
+                <FaCheckCircle className="w-12 h-12 text-neutral-400 mx-auto mb-3" />
                 <h3 className="font-medium mb-2">No completed orders</h3>
                 <p className="text-neutral-600 text-sm">Your completed orders will appear here</p>
               </CardContent>

@@ -6,7 +6,7 @@ import {
   ArrowRightLeft, 
   Calculator,
   Target,
-  AlertTriangle,
+  FaExclamationTriangle,
   RefreshCw,
   BarChart3,
   DollarSign,

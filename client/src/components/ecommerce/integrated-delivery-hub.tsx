@@ -11,19 +11,19 @@ import {
   Truck,
   Bike,
   Car,
-  Search,
+  FaSearch,
   Filter,
   Plus,
   Minus,
   Heart,
   ShoppingBag,
   Navigation,
-  Phone,
-  CheckCircle,
-  AlertCircle,
+  FaPhone,
+  FaCheckCircle,
+  FaExclamationCircle,
   User,
   DollarSign,
-  Camera,
+  FaCamera,
   MessageSquare,
   ThumbsUp
 } from "react-icons/fa";
@@ -520,12 +520,12 @@ export default function IntegratedDeliveryHub() {
             </div>
           </div>
           
-          {/* Search */}
+          {/* FaSearch */}
           <div className="mt-4">
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-neutral-400 w-4 h-4" />
+              <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-neutral-400 w-4 h-4" />
               <Input
-                placeholder="Search restaurants, stores, items..."
+                placeholder="FaSearch restaurants, stores, items..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="pl-10 bg-white/20 border-white/30 text-white placeholder-white/70"
@@ -759,7 +759,7 @@ export default function IntegratedDeliveryHub() {
                     <p className="text-sm">Samuel Okafor</p>
                     <p className="text-sm text-neutral-600">Honda CG125 • LAG-456-XYZ</p>
                     <Button variant="outline" size="sm" className="mt-2">
-                      <Phone className="w-4 h-4 mr-2" />
+                      <FaPhone className="w-4 h-4 mr-2" />
                       Call Driver
                     </Button>
                   </div>

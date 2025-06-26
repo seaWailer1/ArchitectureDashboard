@@ -15,8 +15,8 @@ import {
   Calendar,
   Download,
   BarChart3,
-  AlertTriangle,
-  CheckCircle
+  FaExclamationTriangle,
+  FaCheckCircle
 } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";

@@ -85,7 +85,7 @@ export default function Onboarding() {
   const steps = [
     { title: "Welcome", icon: Globe },
     { title: "Personal Info", icon: User },
-    { title: "Contact Details", icon: Phone },
+    { title: "Contact Details", icon: FaPhone },
     { title: "Role Selection", icon: CreditCard },
     { title: "Terms & Privacy", icon: Shield },
   ];
@@ -238,7 +238,7 @@ export default function Onboarding() {
         return (
           <div className="space-y-6">
             <div className="text-center">
-              <Phone className="w-16 h-16 text-primary mx-auto mb-4" />
+              <FaPhone className="w-16 h-16 text-primary mx-auto mb-4" />
               <h2 className="text-2xl font-bold mb-2">Contact Details</h2>
               <p className="text-neutral-600">How can we reach you?</p>
             </div>
@@ -255,7 +255,7 @@ export default function Onboarding() {
                 />
               </div>
               <div>
-                <Label htmlFor="phone">Phone Number</Label>
+                <Label htmlFor="phone">FaPhone Number</Label>
                 <Input
                   id="phone"
                   type="tel"
@@ -428,7 +428,7 @@ export default function Onboarding() {
                     index <= currentStep ? 'bg-primary text-white' : 'bg-neutral-200 text-neutral-400'
                   }`}>
                     {index < currentStep ? (
-                      <CheckCircle className="w-4 h-4" />
+                      <FaCheckCircle className="w-4 h-4" />
                     ) : (
                       <Icon className="w-4 h-4" />
                     )}

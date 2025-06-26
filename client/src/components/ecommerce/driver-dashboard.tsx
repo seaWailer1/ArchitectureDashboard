@@ -5,11 +5,11 @@ import {
   MapPin, 
   Clock, 
   DollarSign,
-  Phone,
+  FaPhone,
   MessageSquare,
-  Camera,
-  CheckCircle,
-  AlertCircle,
+  FaCamera,
+  FaCheckCircle,
+  FaExclamationCircle,
   Package,
   Truck,
   Bike,
@@ -336,7 +336,7 @@ export default function DriverDashboard() {
                   <p className="text-xs text-neutral-600">{activeDelivery.pickupAddress}</p>
                 </div>
                 <Button variant="outline" size="sm">
-                  <Phone className="w-4 h-4" />
+                  <FaPhone className="w-4 h-4" />
                 </Button>
               </div>
               <div className="flex items-start space-x-2">
@@ -346,7 +346,7 @@ export default function DriverDashboard() {
                   <p className="text-xs text-neutral-600">{activeDelivery.deliveryAddress}</p>
                 </div>
                 <Button variant="outline" size="sm">
-                  <Phone className="w-4 h-4" />
+                  <FaPhone className="w-4 h-4" />
                 </Button>
               </div>
             </div>

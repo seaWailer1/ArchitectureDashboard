@@ -6,7 +6,7 @@ import {
   QrCode, 
   ShoppingBag, 
   Car,
-  Phone,
+  FaPhone,
   Zap,
   Plus,
   ArrowUpRight
@@ -63,7 +63,7 @@ export default function ConsumerDashboard() {
   const quickServices = [
     { icon: Send, label: "Send Money", color: "bg-blue-100 text-blue-600", action: () => toast({ title: "Send Money", description: "Transfer funds feature coming soon!" }) },
     { icon: QrCode, label: "Pay & Scan", color: "bg-green-100 text-green-600", action: () => toast({ title: "QR Payment", description: "QR payment feature coming soon!" }) },
-    { icon: Phone, label: "Buy Airtime", color: "bg-purple-100 text-purple-600", action: () => toast({ title: "Airtime", description: "Airtime purchase coming soon!" }) },
+    { icon: FaPhone, label: "Buy Airtime", color: "bg-purple-100 text-purple-600", action: () => toast({ title: "Airtime", description: "Airtime purchase coming soon!" }) },
     { icon: Zap, label: "Pay Bills", color: "bg-orange-100 text-orange-600", action: () => toast({ title: "Bills", description: "Bill payment feature coming soon!" }) },
     { icon: ShoppingBag, label: "Shop", color: "bg-pink-100 text-pink-600", action: () => toast({ title: "Shopping", description: "Shopping feature coming soon!" }) },
     { icon: Car, label: "Transport", color: "bg-indigo-100 text-indigo-600", action: () => toast({ title: "Transport", description: "Transport booking coming soon!" }) },

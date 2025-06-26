@@ -146,7 +146,7 @@ export default function Profile() {
               <h3 className="font-medium text-neutral-900 mb-3">Verification Status</h3>
               <div className="space-y-2">
                 <div className="flex justify-between items-center">
-                  <span className="text-sm text-neutral-600">Phone</span>
+                  <span className="text-sm text-neutral-600">FaPhone</span>
                   <Badge className={user?.phoneVerified ? 'bg-success/10 text-success' : 'bg-neutral-100 text-neutral-600'}>
                     {user?.phoneVerified ? 'Verified' : 'Pending'}
                   </Badge>
@@ -187,7 +187,7 @@ export default function Profile() {
                         <p className="text-sm text-neutral-600">{item.description}</p>
                       </div>
                     </div>
-                    <ChevronRight className="w-5 h-5 text-neutral-400" />
+                    <FaChevronRight className="w-5 h-5 text-neutral-400" />
                   </Button>
                   {index < menuItems.length - 1 && <Separator />}
                 </div>

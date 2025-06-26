@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { 
-  Search, 
+  FaSearch, 
   Target, 
   TrendingUp, 
   Clock, 
   DollarSign,
-  AlertTriangle,
+  FaExclamationTriangle,
   Zap,
   Calculator,
   BarChart3,
@@ -157,7 +157,7 @@ export default function ArbitrageScanner() {
       case 'triangular': return <Target className="w-4 h-4" />;
       case 'cross_exchange': return <BarChart3 className="w-4 h-4" />;
       case 'temporal': return <Clock className="w-4 h-4" />;
-      default: return <Search className="w-4 h-4" />;
+      default: return <FaSearch className="w-4 h-4" />;
     }
   };
 
@@ -201,7 +201,7 @@ export default function ArbitrageScanner() {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center space-x-2">
-            <Search className="w-5 h-5" />
+            <FaSearch className="w-5 h-5" />
             <span>Arbitrage Scanner</span>
           </CardTitle>
         </CardHeader>
@@ -209,7 +209,7 @@ export default function ArbitrageScanner() {
           <div className="flex space-x-4">
             <div className="flex-1">
               <Input
-                placeholder="Search currencies or opportunity types..."
+                placeholder="FaSearch currencies or opportunity types..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
@@ -217,12 +217,12 @@ export default function ArbitrageScanner() {
             <Button onClick={handleScan} disabled={scanning}>
               {scanning ? (
                 <>
-                  <Search className="w-4 h-4 mr-2 animate-spin" />
+                  <FaSearch className="w-4 h-4 mr-2 animate-spin" />
                   Scanning...
                 </>
               ) : (
                 <>
-                  <Search className="w-4 h-4 mr-2" />
+                  <FaSearch className="w-4 h-4 mr-2" />
                   Scan Now
                 </>
               )}
@@ -336,7 +336,7 @@ export default function ArbitrageScanner() {
         <CardContent>
           {filteredOpportunities.length === 0 ? (
             <div className="text-center py-8">
-              <Search className="w-12 h-12 text-neutral-400 mx-auto mb-3" />
+              <FaSearch className="w-12 h-12 text-neutral-400 mx-auto mb-3" />
               <p className="text-neutral-600">No opportunities found</p>
               <p className="text-sm text-neutral-500">Try adjusting your filter criteria</p>
             </div>

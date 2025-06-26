@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
-import { X, Camera, QrCode } from "react-icons/fa";
+import { FaTimes, FaCamera, QrCode } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
@@ -50,8 +50,8 @@ export default function QRModal({ isOpen, onClose }: QRModalProps) {
 
   const handleOpenCamera = () => {
     toast({
-      title: "Camera Access",
-      description: "Camera integration will be implemented with device camera APIs",
+      title: "FaCamera Access",
+      description: "FaCamera integration will be implemented with device camera APIs",
     });
   };
 
@@ -80,7 +80,7 @@ export default function QRModal({ isOpen, onClose }: QRModalProps) {
             className="p-2 text-neutral-600 hover:text-neutral-900"
             onClick={handleClose}
           >
-            <X className="w-4 h-4" />
+            <FaTimes className="w-4 h-4" />
           </Button>
         </div>
 
@@ -88,7 +88,7 @@ export default function QRModal({ isOpen, onClose }: QRModalProps) {
           <>
             <div className="bg-neutral-100 rounded-xl p-8 text-center mb-4">
               <div className="w-32 h-32 mx-auto border-2 border-dashed border-neutral-300 rounded-lg flex items-center justify-center">
-                <Camera className="w-12 h-12 text-neutral-400" />
+                <FaCamera className="w-12 h-12 text-neutral-400" />
               </div>
               <p className="text-sm text-neutral-600 mt-3">{t('cameraWillOpen')}</p>
             </div>

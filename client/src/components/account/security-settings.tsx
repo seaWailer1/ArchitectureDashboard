@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Shield, Key, Clock, AlertTriangle, CheckCircle, Eye, EyeOff, ArrowLeft } from "react-icons/fa";
+import { Shield, Key, Clock, FaExclamationTriangle, FaCheckCircle, Eye, EyeOff, ArrowLeft } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
@@ -94,9 +94,9 @@ export default function SecuritySettings({ onBack }: SecuritySettingsProps) {
   const getStatusIcon = (status: string) => {
     switch (status) {
       case "success":
-        return <CheckCircle className="w-4 h-4 text-success" />;
+        return <FaCheckCircle className="w-4 h-4 text-success" />;
       case "failed":
-        return <AlertTriangle className="w-4 h-4 text-destructive" />;
+        return <FaExclamationTriangle className="w-4 h-4 text-destructive" />;
       case "blocked":
         return <Shield className="w-4 h-4 text-warning" />;
       default:
@@ -288,7 +288,7 @@ export default function SecuritySettings({ onBack }: SecuritySettingsProps) {
         <CardContent>
           <div className="grid grid-cols-2 gap-4">
             <div className="text-center p-4 bg-success/5 rounded-lg">
-              <CheckCircle className="w-8 h-8 text-success mx-auto mb-2" />
+              <FaCheckCircle className="w-8 h-8 text-success mx-auto mb-2" />
               <p className="font-medium">Account Active</p>
               <p className="text-sm text-neutral-600">Your account is in good standing</p>
             </div>

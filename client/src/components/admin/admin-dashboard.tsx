@@ -7,7 +7,7 @@ import {
   TrendingUp,
   Activity,
   Shield,
-  AlertTriangle,
+  FaExclamationTriangle,
   Eye,
   RefreshCw,
   Settings,
@@ -138,9 +138,9 @@ export default function AdminDashboard() {
       case 'healthy':
         return <Shield className="w-4 h-4 text-success" />;
       case 'warning':
-        return <AlertTriangle className="w-4 h-4 text-accent" />;
+        return <FaExclamationTriangle className="w-4 h-4 text-accent" />;
       case 'error':
-        return <AlertTriangle className="w-4 h-4 text-destructive" />;
+        return <FaExclamationTriangle className="w-4 h-4 text-destructive" />;
       default:
         return <Activity className="w-4 h-4 text-neutral-600" />;
     }

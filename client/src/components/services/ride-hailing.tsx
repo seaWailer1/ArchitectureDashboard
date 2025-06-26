@@ -7,11 +7,11 @@ import {
   Clock,
   DollarSign,
   Star,
-  Phone,
+  FaPhone,
   Shield,
   Users,
   Timer,
-  CheckCircle
+  FaCheckCircle
 } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -92,7 +92,7 @@ export default function RideHailing() {
       pricePerKm: 1.20,
       capacity: 4,
       eta: "5-8 min",
-      features: ["Premium AC", "Leather seats", "Phone charger", "Water"],
+      features: ["Premium AC", "Leather seats", "FaPhone charger", "Water"],
       vehicleTypes: ["SUV", "Premium Sedan"]
     },
     {
@@ -484,7 +484,7 @@ export default function RideHailing() {
                             </p>
                           </div>
                           <Button size="sm" variant="outline">
-                            <Phone className="w-4 h-4" />
+                            <FaPhone className="w-4 h-4" />
                           </Button>
                         </div>
                       </CardContent>
@@ -534,7 +534,7 @@ export default function RideHailing() {
 
                   {currentRide.status === 'completed' && (
                     <div className="text-center p-4 bg-success/10 rounded-lg">
-                      <CheckCircle className="w-8 h-8 text-success mx-auto mb-2" />
+                      <FaCheckCircle className="w-8 h-8 text-success mx-auto mb-2" />
                       <p className="font-medium text-success">Trip Completed!</p>
                       <p className="text-sm text-neutral-600">Total: {formatCurrency(currentRide.fare)}</p>
                     </div>
@@ -615,7 +615,7 @@ export default function RideHailing() {
                 </div>
                 
                 <div className="flex items-center space-x-3 p-3 bg-neutral-50 rounded-lg">
-                  <Phone className="w-6 h-6 text-accent" />
+                  <FaPhone className="w-6 h-6 text-accent" />
                   <div>
                     <p className="font-medium">24/7 Support</p>
                     <p className="text-sm text-neutral-600">Emergency support available anytime</p>

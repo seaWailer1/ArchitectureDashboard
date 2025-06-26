@@ -88,7 +88,7 @@ export default function Transactions() {
           {/* Filters */}
           <div className="space-y-4 mb-6">
             <Input
-              placeholder="Search transactions..."
+              placeholder="FaSearch transactions..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full"

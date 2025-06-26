@@ -3,7 +3,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { 
   TrendingUp, 
   Shield, 
-  AlertTriangle, 
+  FaExclamationTriangle, 
   DollarSign,
   Calendar,
   Target,
@@ -75,7 +75,7 @@ export default function InvestmentProducts() {
       case 'medium':
         return <Target className="w-4 h-4 text-accent" />;
       case 'high':
-        return <AlertTriangle className="w-4 h-4 text-destructive" />;
+        return <FaExclamationTriangle className="w-4 h-4 text-destructive" />;
       default:
         return <Shield className="w-4 h-4 text-neutral-500" />;
     }

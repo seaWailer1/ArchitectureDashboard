@@ -6,7 +6,7 @@ import {
   Tablet, 
   Shield, 
   ShieldCheck, 
-  X,
+  FaTimes,
   ArrowLeft,
   Clock,
   MapPin 
@@ -242,7 +242,7 @@ export default function DeviceManagement({ onBack }: DeviceManagementProps) {
                             onClick={() => handleDeviceAction(device.deviceId, 'remove')}
                             disabled={updateDeviceMutation.isPending}
                           >
-                            <X className="w-3 h-3" />
+                            <FaTimes className="w-3 h-3" />
                           </Button>
                         </div>
                       </div>

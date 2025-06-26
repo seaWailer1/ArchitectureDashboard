@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { 
   ShoppingBag, 
-  Search, 
+  FaSearch, 
   Filter, 
   Star,
   Heart,
@@ -389,13 +389,13 @@ export default function ShoppingMarketplace() {
         </TabsList>
 
         <TabsContent value="browse" className="space-y-4">
-          {/* Search and Filters */}
+          {/* FaSearch and Filters */}
           <div className="space-y-3">
             <div className="flex space-x-2">
               <div className="flex-1 relative">
-                <Search className="absolute left-3 top-3 w-4 h-4 text-neutral-400" />
+                <FaSearch className="absolute left-3 top-3 w-4 h-4 text-neutral-400" />
                 <Input
-                  placeholder="Search products, brands, or sellers..."
+                  placeholder="FaSearch products, brands, or sellers..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className="pl-10"

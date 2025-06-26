@@ -11,7 +11,7 @@ import {
   Lock,
   Eye,
   EyeOff,
-  ChevronRight 
+  FaChevronRight 
 } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -164,7 +164,7 @@ export default function AccountSettings({ onSectionChange }: AccountSettingsProp
                 />
               </div>
               <Input
-                placeholder="Phone Number"
+                placeholder="FaPhone Number"
                 defaultValue={user?.phoneNumber || ""}
               />
               <Input
@@ -205,7 +205,7 @@ export default function AccountSettings({ onSectionChange }: AccountSettingsProp
                 <p className="text-sm text-neutral-600">Password, 2FA, and security logs</p>
               </div>
             </div>
-            <ChevronRight className="w-4 h-4" />
+            <FaChevronRight className="w-4 h-4" />
           </Button>
 
           <Separator />
@@ -222,7 +222,7 @@ export default function AccountSettings({ onSectionChange }: AccountSettingsProp
                 <p className="text-sm text-neutral-600">{devices.length} active devices</p>
               </div>
             </div>
-            <ChevronRight className="w-4 h-4" />
+            <FaChevronRight className="w-4 h-4" />
           </Button>
         </CardContent>
       </Card>
@@ -352,7 +352,7 @@ export default function AccountSettings({ onSectionChange }: AccountSettingsProp
                 <p className="text-sm text-neutral-600">Get help with your account</p>
               </div>
             </div>
-            <ChevronRight className="w-4 h-4" />
+            <FaChevronRight className="w-4 h-4" />
           </Button>
         </CardContent>
       </Card>

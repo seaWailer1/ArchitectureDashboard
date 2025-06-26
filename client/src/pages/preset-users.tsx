@@ -6,7 +6,7 @@ import {
   UserX, 
   Clock, 
   MapPin,
-  Phone,
+  FaPhone,
   Mail,
   Shield,
   CreditCard,
@@ -14,8 +14,8 @@ import {
   RefreshCw,
   LogIn,
   Plus,
-  CheckCircle,
-  AlertCircle,
+  FaCheckCircle,
+  FaExclamationCircle,
   XCircle
 } from "react-icons/fa";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -106,11 +106,11 @@ export default function PresetUsers() {
   const getStatusIcon = (status: string) => {
     switch (status) {
       case 'verified':
-        return <CheckCircle className="w-4 h-4 text-green-600" />;
+        return <FaCheckCircle className="w-4 h-4 text-green-600" />;
       case 'in_progress':
         return <Clock className="w-4 h-4 text-yellow-600" />;
       case 'pending':
-        return <AlertCircle className="w-4 h-4 text-orange-600" />;
+        return <FaExclamationCircle className="w-4 h-4 text-orange-600" />;
       case 'rejected':
         return <XCircle className="w-4 h-4 text-red-600" />;
       default:
@@ -369,7 +369,7 @@ export default function PresetUsers() {
                 <h4 className="font-semibold mb-3">KYC Status Types</h4>
                 <ul className="space-y-2 text-sm text-neutral-600">
                   <li className="flex items-center space-x-2">
-                    <CheckCircle className="w-4 h-4 text-green-600" />
+                    <FaCheckCircle className="w-4 h-4 text-green-600" />
                     <span><strong>Verified:</strong> Full access to all features</span>
                   </li>
                   <li className="flex items-center space-x-2">
@@ -377,7 +377,7 @@ export default function PresetUsers() {
                     <span><strong>In Progress:</strong> Partial verification completed</span>
                   </li>
                   <li className="flex items-center space-x-2">
-                    <AlertCircle className="w-4 h-4 text-orange-600" />
+                    <FaExclamationCircle className="w-4 h-4 text-orange-600" />
                     <span><strong>Pending:</strong> Requires onboarding/KYC completion</span>
                   </li>
                 </ul>

@@ -3,13 +3,13 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { 
   HelpCircle, 
   MessageSquare, 
-  Phone, 
+  FaPhone, 
   Mail, 
   Send,
   ArrowLeft,
   Clock,
-  CheckCircle,
-  AlertCircle,
+  FaCheckCircle,
+  FaExclamationCircle,
   Book
 } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
@@ -84,11 +84,11 @@ export default function SupportCenter({ onBack }: SupportCenterProps) {
   const getStatusIcon = (status: string) => {
     switch (status) {
       case "resolved":
-        return <CheckCircle className="w-4 h-4 text-success" />;
+        return <FaCheckCircle className="w-4 h-4 text-success" />;
       case "pending":
         return <Clock className="w-4 h-4 text-accent" />;
       case "open":
-        return <AlertCircle className="w-4 h-4 text-primary" />;
+        return <FaExclamationCircle className="w-4 h-4 text-primary" />;
       default:
         return <MessageSquare className="w-4 h-4 text-neutral-500" />;
     }
@@ -166,9 +166,9 @@ export default function SupportCenter({ onBack }: SupportCenterProps) {
         <Button
           variant="outline"
           className="h-auto p-4 flex flex-col items-center space-y-2"
-          onClick={() => toast({ title: "Contact Info", description: "Phone: +1-800-AFRIPAY\nEmail: support@afripay.com" })}
+          onClick={() => toast({ title: "Contact Info", description: "FaPhone: +1-800-AFRIPAY\nEmail: support@afripay.com" })}
         >
-          <Phone className="w-6 h-6 text-success" />
+          <FaPhone className="w-6 h-6 text-success" />
           <span className="text-sm font-medium">Call Support</span>
         </Button>
       </div>
@@ -329,9 +329,9 @@ export default function SupportCenter({ onBack }: SupportCenterProps) {
               </div>
             </div>
             <div className="flex items-center space-x-3">
-              <Phone className="w-5 h-5 text-success" />
+              <FaPhone className="w-5 h-5 text-success" />
               <div>
-                <p className="font-medium">Phone Support</p>
+                <p className="font-medium">FaPhone Support</p>
                 <p className="text-sm text-neutral-600">+1-800-AFRIPAY (24/7)</p>
               </div>
             </div>

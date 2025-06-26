@@ -11,7 +11,7 @@ import {
   Mail,
   Eye,
   EyeOff,
-  CheckCircle
+  FaCheckCircle
 } from "react-icons/fa";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -256,7 +256,7 @@ export default function SignIn() {
                     {formData.confirmPassword && (
                       <div className="absolute right-3 top-3">
                         {formData.password === formData.confirmPassword ? (
-                          <CheckCircle className="w-4 h-4 text-green-500" />
+                          <FaCheckCircle className="w-4 h-4 text-green-500" />
                         ) : (
                           <div className="w-4 h-4 rounded-full bg-red-500" />
                         )}

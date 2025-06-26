@@ -256,7 +256,7 @@ export default function BillPayments() {
 
                 {selectedService.category === 'telecom' ? (
                   <div>
-                    <label className="text-sm font-medium mb-1 block">Phone Number</label>
+                    <label className="text-sm font-medium mb-1 block">FaPhone Number</label>
                     <Input
                       type="tel"
                       placeholder="+234 800 000 0000"

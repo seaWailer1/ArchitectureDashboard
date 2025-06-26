@@ -1,5 +1,5 @@
 import * as React from "react"
-import { ChevronLeft, ChevronRight } from "react-icons/fa"
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa"
 import { DayPicker } from "react-day-picker"
 
 import { cn } from "@/lib/utils"
@@ -53,10 +53,10 @@ function Calendar({
       }}
       components={{
         IconLeft: ({ className, ...props }) => (
-          <ChevronLeft className={cn("h-4 w-4", className)} {...props} />
+          <FaChevronLeft className={cn("h-4 w-4", className)} {...props} />
         ),
         IconRight: ({ className, ...props }) => (
-          <ChevronRight className={cn("h-4 w-4", className)} {...props} />
+          <FaChevronRight className={cn("h-4 w-4", className)} {...props} />
         ),
       }}
       {...props}

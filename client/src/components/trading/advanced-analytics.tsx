@@ -7,7 +7,7 @@ import {
   Calendar,
   DollarSign,
   Target,
-  AlertTriangle,
+  FaExclamationTriangle,
   Zap,
   Brain
 } from "react-icons/fa";
@@ -197,7 +197,7 @@ export default function AdvancedAnalytics() {
   const getInsightIcon = (type: string) => {
     switch (type) {
       case 'opportunity': return <Target className="w-4 h-4 text-success" />;
-      case 'risk': return <AlertTriangle className="w-4 h-4 text-destructive" />;
+      case 'risk': return <FaExclamationTriangle className="w-4 h-4 text-destructive" />;
       case 'trend': return <TrendingUp className="w-4 h-4 text-accent" />;
       default: return <Brain className="w-4 h-4" />;
     }
