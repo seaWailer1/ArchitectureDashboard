@@ -187,36 +187,34 @@ export default function EntertainmentHub() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-neutral-950">
-      {/* Refined Header */}
-      <div className="sticky top-16 z-40 bg-gradient-to-b from-black/90 to-black/70 backdrop-blur-2xl border-b border-white/[0.08]">
-        <div className="container-content py-6 space-y-6">
+    <div className="min-h-screen bg-gradient-to-br from-black via-slate-950 to-black">
+      {/* Sleek Header */}
+      <div className="sticky top-16 z-40 bg-black/95 backdrop-blur-3xl border-b border-white/5">
+        <div className="container-content py-5 space-y-4">
           {/* Title and Search */}
           <div className="flex items-center justify-between">
-            <div className="space-y-1">
-              <h1 className="text-3xl font-bold bg-gradient-to-r from-white via-white to-white/80 bg-clip-text text-transparent">
-                Entertainment
-              </h1>
-              <p className="text-white/60 text-sm">Discover African music, movies & events</p>
+            <div>
+              <h1 className="text-2xl font-bold text-white tracking-tight">Entertainment</h1>
+              <p className="text-white/50 text-xs mt-0.5">African music & events</p>
             </div>
-            <div className="flex items-center gap-3">
-              <div className="relative group">
-                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-4 h-4 text-white/50 group-focus-within:text-white/80 transition-colors" />
+            <div className="flex items-center gap-2">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40" />
                 <Input
-                  placeholder="Search entertainment..."
+                  placeholder="Search..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-12 pr-4 py-3 w-72 bg-white/[0.08] border-white/20 rounded-2xl text-white placeholder:text-white/50 focus:bg-white/[0.12] focus:border-white/30 focus:ring-0 transition-all"
+                  className="pl-10 pr-4 py-2 w-64 bg-white/5 border-white/10 rounded-xl text-white text-sm placeholder:text-white/40 focus:bg-white/10 focus:border-white/20 focus:ring-0"
                 />
               </div>
-              <Button variant="ghost" size="sm" className="w-10 h-10 rounded-xl text-white/70 hover:text-white hover:bg-white/10 transition-all">
-                <MoreVertical className="w-5 h-5" />
+              <Button variant="ghost" size="sm" className="w-9 h-9 rounded-lg text-white/60 hover:text-white hover:bg-white/5">
+                <MoreVertical className="w-4 h-4" />
               </Button>
             </div>
           </div>
           
-          {/* Enhanced Category Pills */}
-          <div className="flex gap-3 overflow-x-auto scrollbar-hide pb-1">
+          {/* Refined Category Pills */}
+          <div className="flex gap-2 overflow-x-auto scrollbar-hide">
             {entertainmentCategories.map((category) => {
               const Icon = category.icon;
               return (
@@ -225,13 +223,13 @@ export default function EntertainmentHub() {
                   variant={selectedCategory === category.id ? "default" : "ghost"}
                   size="sm"
                   onClick={() => setSelectedCategory(category.id)}
-                  className={`flex items-center gap-2 whitespace-nowrap rounded-2xl px-5 py-3 transition-all duration-200 ${
+                  className={`flex items-center gap-1.5 whitespace-nowrap rounded-full px-4 py-2 text-xs transition-all ${
                     selectedCategory === category.id
-                      ? "bg-gradient-to-r from-white to-white/95 text-black hover:from-white/95 hover:to-white/90 shadow-lg"
-                      : "bg-white/[0.08] text-white/80 hover:bg-white/[0.12] hover:text-white border border-white/10"
+                      ? "bg-white text-black hover:bg-white/90"
+                      : "bg-white/5 text-white/70 hover:bg-white/10 hover:text-white border border-white/10"
                   }`}
                 >
-                  <Icon className="w-4 h-4" />
+                  <Icon className="w-3 h-3" />
                   <span className="font-medium">{category.name}</span>
                 </Button>
               );
@@ -242,29 +240,29 @@ export default function EntertainmentHub() {
 
       {/* Main Content */}
       <ScrollArea className="flex-1">
-        <div className="container-content py-8 space-y-12">
-          {/* Featured Hero Section */}
+        <div className="container-content py-6 space-y-8">
+          {/* Hero Banner */}
           <section className="relative">
-            <div className="relative rounded-3xl overflow-hidden bg-gradient-to-r from-purple-600 via-pink-600 to-orange-500 p-8 md:p-12">
-              <div className="absolute inset-0 bg-black/20"></div>
-              <div className="relative z-10 max-w-2xl">
-                <div className="flex items-center gap-2 mb-4">
-                  <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
-                  <span className="text-white/90 text-sm font-medium">TRENDING NOW</span>
+            <div className="relative rounded-2xl overflow-hidden bg-gradient-to-r from-purple-600 to-pink-600 p-6">
+              <div className="absolute inset-0 bg-black/10"></div>
+              <div className="relative z-10 max-w-lg">
+                <div className="flex items-center gap-1.5 mb-3">
+                  <div className="w-1.5 h-1.5 bg-white rounded-full animate-pulse"></div>
+                  <span className="text-white/90 text-xs font-medium tracking-wide">TRENDING</span>
                 </div>
-                <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+                <h2 className="text-2xl font-bold text-white mb-2 leading-tight">
                   Afrobeats Rising
                 </h2>
-                <p className="text-white/80 text-lg mb-6 leading-relaxed">
-                  The hottest tracks from Africa's biggest stars. Featuring Burna Boy, Wizkid, and rising talents.
+                <p className="text-white/80 text-sm mb-4 leading-relaxed">
+                  Top tracks from Africa's stars
                 </p>
-                <div className="flex items-center gap-4">
-                  <Button className="bg-white text-black hover:bg-white/90 rounded-full px-8 py-3 font-semibold">
-                    <Play className="w-4 h-4 mr-2 fill-current" />
-                    Play Now
+                <div className="flex items-center gap-3">
+                  <Button className="bg-white text-black hover:bg-white/90 rounded-full px-6 py-2 text-sm font-medium">
+                    <Play className="w-3 h-3 mr-1.5 fill-current" />
+                    Play
                   </Button>
-                  <Button variant="ghost" className="text-white border-white/30 hover:bg-white/10 rounded-full px-6 py-3">
-                    Add to Library
+                  <Button variant="ghost" className="text-white hover:bg-white/10 rounded-full px-4 py-2 text-sm">
+                    Save
                   </Button>
                 </div>
               </div>
@@ -272,48 +270,50 @@ export default function EntertainmentHub() {
           </section>
 
           {/* Recently Played */}
-          <section className="space-y-6">
+          <section className="space-y-4">
             <div className="flex items-center justify-between">
-              <h2 className="text-2xl font-bold text-white">Recently Played</h2>
-              <Button variant="ghost" size="sm" className="text-white/60 hover:text-white hover:bg-white/[0.08] rounded-xl px-4">
+              <h2 className="text-lg font-bold text-white">Recently Played</h2>
+              <Button variant="ghost" size="sm" className="text-white/50 hover:text-white hover:bg-white/5 rounded-lg px-3 text-xs">
                 See All
-                <ChevronRight className="w-4 h-4 ml-1" />
+                <ChevronRight className="w-3 h-3 ml-1" />
               </Button>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {entertainmentContent.filter(item => item.isPopular).slice(0, 3).map((item) => (
                 <div key={item.id} className="group cursor-pointer">
-                  <div className="relative aspect-square bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 rounded-2xl overflow-hidden mb-4 shadow-2xl">
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                  <div className="relative aspect-square bg-gradient-to-br from-indigo-600 to-purple-600 rounded-xl overflow-hidden mb-3">
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
                     <div className="absolute inset-0 flex items-center justify-center">
-                      <span className="text-5xl">{item.thumbnail}</span>
+                      <span className="text-4xl">{item.thumbnail}</span>
                     </div>
-                    <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-all duration-300 transform group-hover:scale-110">
-                      <Button size="sm" className="rounded-full w-14 h-14 bg-white text-black hover:bg-white/90 shadow-xl">
-                        <Play className="w-6 h-6 fill-current" />
+                    <div className="absolute bottom-2 right-2 opacity-0 group-hover:opacity-100 transition-all duration-200">
+                      <Button size="sm" className="rounded-full w-10 h-10 bg-white text-black hover:bg-white/90">
+                        <Play className="w-4 h-4 fill-current" />
                       </Button>
                     </div>
-                    <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                      <Button variant="ghost" size="sm" className="rounded-full w-10 h-10 bg-black/50 text-white hover:bg-black/70 backdrop-blur-sm">
-                        <Heart className="w-4 h-4" />
+                    <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <Button variant="ghost" size="sm" className="rounded-full w-8 h-8 bg-black/40 text-white hover:bg-black/60">
+                        <Heart className="w-3 h-3" />
                       </Button>
                     </div>
-                    <div className="absolute bottom-3 left-3">
+                    <div className="absolute bottom-2 left-2">
                       <div className="flex items-center gap-1">
-                        <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                        <span className="text-white text-sm font-medium">{item.rating}</span>
+                        <Star className="w-3 h-3 fill-yellow-400 text-yellow-400" />
+                        <span className="text-white text-xs font-medium">{item.rating}</span>
                       </div>
                     </div>
                   </div>
-                  <h3 className="text-lg font-semibold text-white mb-2 truncate">{item.title}</h3>
-                  <p className="text-white/60 text-sm truncate">{item.description}</p>
-                  <div className="flex items-center gap-2 mt-2">
-                    {item.isPremium && (
-                      <Badge className="bg-gradient-to-r from-yellow-400 to-orange-500 text-black text-xs px-2 py-1">
-                        Premium
-                      </Badge>
-                    )}
-                    <span className="text-white/40 text-xs">{item.duration}</span>
+                  <div className="space-y-1">
+                    <h3 className="text-sm font-semibold text-white truncate">{item.title}</h3>
+                    <p className="text-white/50 text-xs truncate">{item.category}</p>
+                    <div className="flex items-center gap-2">
+                      {item.isPremium && (
+                        <Badge className="bg-yellow-500 text-black text-xs px-1.5 py-0.5 rounded">
+                          Premium
+                        </Badge>
+                      )}
+                      <span className="text-white/30 text-xs">{item.duration}</span>
+                    </div>
                   </div>
                 </div>
               ))}
@@ -321,126 +321,125 @@ export default function EntertainmentHub() {
           </section>
 
           {/* Made For You */}
-          <section className="space-y-6">
+          <section className="space-y-4">
             <div className="flex items-center justify-between">
-              <h2 className="text-2xl font-bold text-white">Made For You</h2>
-              <Button variant="ghost" size="sm" className="text-white/60 hover:text-white hover:bg-white/[0.08] rounded-xl px-4">
+              <h2 className="text-lg font-bold text-white">Made For You</h2>
+              <Button variant="ghost" size="sm" className="text-white/50 hover:text-white hover:bg-white/5 rounded-lg px-3 text-xs">
                 See All
-                <ChevronRight className="w-4 h-4 ml-1" />
+                <ChevronRight className="w-3 h-3 ml-1" />
               </Button>
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
               {filteredContent.map((item, index) => (
                 <div key={item.id} className="group cursor-pointer">
-                  <div className="relative aspect-square bg-gradient-to-br from-emerald-500 via-blue-500 to-purple-600 rounded-xl overflow-hidden mb-3 shadow-lg group-hover:shadow-2xl transition-all duration-300">
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+                  <div className="relative aspect-square bg-gradient-to-br from-emerald-500 to-blue-600 rounded-lg overflow-hidden mb-2 group-hover:scale-105 transition-transform duration-200">
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
                     <div className="absolute inset-0 flex items-center justify-center">
-                      <span className="text-3xl group-hover:scale-110 transition-transform duration-300">{item.thumbnail}</span>
+                      <span className="text-2xl">{item.thumbnail}</span>
                     </div>
-                    <div className="absolute bottom-2 right-2 opacity-0 group-hover:opacity-100 transition-all duration-200 transform translate-y-2 group-hover:translate-y-0">
-                      <Button size="sm" className="rounded-full w-12 h-12 bg-white/90 backdrop-blur-sm text-black hover:bg-white hover:scale-105 transition-all shadow-lg">
-                        <Play className="w-4 h-4 fill-current" />
+                    <div className="absolute bottom-1.5 right-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <Button size="sm" className="rounded-full w-8 h-8 bg-white text-black hover:bg-white/90">
+                        <Play className="w-3 h-3 fill-current" />
                       </Button>
                     </div>
                     {item.isPremium && (
-                      <div className="absolute top-2 left-2">
-                        <Badge className="bg-gradient-to-r from-yellow-400 to-orange-500 text-black text-xs px-2 py-1 rounded-full">
-                          Premium
+                      <div className="absolute top-1.5 left-1.5">
+                        <Badge className="bg-yellow-500 text-black text-xs px-1.5 py-0.5 rounded">
+                          Pro
                         </Badge>
                       </div>
                     )}
                   </div>
-                  <h3 className="text-sm font-medium text-white mb-1 truncate group-hover:text-white/80 transition-colors">{item.title}</h3>
-                  <p className="text-xs text-white/50 truncate capitalize">{item.category}</p>
+                  <div className="space-y-0.5">
+                    <h3 className="text-xs font-medium text-white truncate">{item.title}</h3>
+                    <p className="text-xs text-white/40 truncate capitalize">{item.category}</p>
+                  </div>
                 </div>
               ))}
             </div>
           </section>
 
           {/* African Artists */}
-          <section className="space-y-6">
+          <section className="space-y-4">
             <div className="flex items-center justify-between">
-              <h2 className="text-2xl font-bold text-white">African Artists</h2>
-              <Button variant="ghost" size="sm" className="text-white/60 hover:text-white hover:bg-white/[0.08] rounded-xl px-4">
+              <h2 className="text-lg font-bold text-white">African Artists</h2>
+              <Button variant="ghost" size="sm" className="text-white/50 hover:text-white hover:bg-white/5 rounded-lg px-3 text-xs">
                 See All
-                <ChevronRight className="w-4 h-4 ml-1" />
+                <ChevronRight className="w-3 h-3 ml-1" />
               </Button>
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
+            <div className="grid grid-cols-3 md:grid-cols-6 gap-4">
               {[
-                { name: "Burna Boy", followers: "15.2M", gradient: "from-orange-500 to-red-600" },
-                { name: "Wizkid", followers: "12.8M", gradient: "from-green-500 to-teal-600" },
-                { name: "Tiwa Savage", followers: "8.1M", gradient: "from-pink-500 to-rose-600" },
-                { name: "Davido", followers: "11.3M", gradient: "from-blue-500 to-indigo-600" },
-                { name: "Yemi Alade", followers: "5.7M", gradient: "from-purple-500 to-violet-600" },
-                { name: "Mr Eazi", followers: "4.2M", gradient: "from-yellow-500 to-orange-600" }
+                { name: "Burna Boy", followers: "15M", gradient: "from-orange-500 to-red-600" },
+                { name: "Wizkid", followers: "13M", gradient: "from-green-500 to-teal-600" },
+                { name: "Tiwa Savage", followers: "8M", gradient: "from-pink-500 to-rose-600" },
+                { name: "Davido", followers: "11M", gradient: "from-blue-500 to-indigo-600" },
+                { name: "Yemi Alade", followers: "6M", gradient: "from-purple-500 to-violet-600" },
+                { name: "Mr Eazi", followers: "4M", gradient: "from-yellow-500 to-orange-600" }
               ].map((artist, index) => (
                 <div key={artist.name} className="group cursor-pointer text-center">
-                  <div className={`relative w-24 h-24 mx-auto bg-gradient-to-br ${artist.gradient} rounded-full overflow-hidden mb-4 shadow-xl group-hover:shadow-2xl transition-all duration-300 group-hover:scale-105`}>
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
+                  <div className={`relative w-16 h-16 mx-auto bg-gradient-to-br ${artist.gradient} rounded-full overflow-hidden mb-2 group-hover:scale-105 transition-transform duration-200`}>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
                     <div className="absolute inset-0 flex items-center justify-center">
-                      <Users className="w-10 h-10 text-white" />
+                      <Users className="w-6 h-6 text-white" />
                     </div>
-                    <div className="absolute bottom-1 right-1 opacity-0 group-hover:opacity-100 transition-all duration-200">
-                      <Button size="sm" className="rounded-full w-8 h-8 bg-white/90 text-black hover:bg-white shadow-lg">
-                        <Play className="w-3 h-3 fill-current" />
+                    <div className="absolute bottom-0.5 right-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <Button size="sm" className="rounded-full w-6 h-6 bg-white text-black hover:bg-white/90 text-xs">
+                        <Play className="w-2.5 h-2.5 fill-current" />
                       </Button>
                     </div>
-                    <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   </div>
-                  <h3 className="text-sm font-semibold text-white mb-1 group-hover:text-white/80 transition-colors">{artist.name}</h3>
-                  <p className="text-xs text-white/50">{artist.followers} followers</p>
+                  <div className="space-y-0.5">
+                    <h3 className="text-xs font-medium text-white truncate">{artist.name}</h3>
+                    <p className="text-xs text-white/40">{artist.followers}</p>
+                  </div>
                 </div>
               ))}
             </div>
           </section>
 
           {/* Live Events */}
-          <section className="space-y-6">
+          <section className="space-y-4">
             <div className="flex items-center justify-between">
-              <h2 className="text-2xl font-bold text-white">Live Events</h2>
-              <Button variant="ghost" size="sm" className="text-white/60 hover:text-white hover:bg-white/[0.08] rounded-xl px-4">
+              <h2 className="text-lg font-bold text-white">Live Events</h2>
+              <Button variant="ghost" size="sm" className="text-white/50 hover:text-white hover:bg-white/5 rounded-lg px-3 text-xs">
                 See All
-                <ChevronRight className="w-4 h-4 ml-1" />
+                <ChevronRight className="w-3 h-3 ml-1" />
               </Button>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {featuredEvents.map((event, index) => (
-                <div key={event.id} className="group relative bg-gradient-to-br from-white/[0.08] to-white/[0.02] backdrop-blur-xl rounded-2xl p-6 border border-white/10 hover:border-white/20 transition-all duration-300 cursor-pointer hover:bg-white/[0.12]">
-                  <div className="absolute top-4 right-4">
-                    <div className="flex items-center gap-2 bg-red-500/20 backdrop-blur-sm rounded-full px-3 py-1">
-                      <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
-                      <span className="text-red-400 text-xs font-semibold">LIVE</span>
+                <div key={event.id} className="group relative bg-white/5 backdrop-blur-sm rounded-xl p-4 border border-white/10 hover:border-white/20 transition-all cursor-pointer hover:bg-white/10">
+                  <div className="absolute top-3 right-3">
+                    <div className="flex items-center gap-1.5 bg-red-500/20 rounded-full px-2 py-1">
+                      <div className="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse"></div>
+                      <span className="text-red-400 text-xs font-medium">LIVE</span>
                     </div>
                   </div>
                   
-                  <div className="mt-8">
-                    <div className="flex items-center gap-2 mb-3">
-                      <Calendar className="w-4 h-4 text-white/60" />
-                      <span className="text-white/60 text-sm">{event.date}</span>
+                  <div className="mt-6">
+                    <div className="flex items-center gap-1.5 mb-2">
+                      <Calendar className="w-3 h-3 text-white/50" />
+                      <span className="text-white/50 text-xs">{event.date}</span>
                     </div>
                     
-                    <h4 className="text-xl font-bold text-white mb-3 group-hover:text-white/90 transition-colors">{event.title}</h4>
-                    <p className="text-white/60 text-sm mb-6 flex items-center gap-2">
-                      <div className="w-1 h-1 bg-white/40 rounded-full"></div>
-                      {event.location}
-                    </p>
+                    <h4 className="text-sm font-bold text-white mb-2 truncate">{event.title}</h4>
+                    <p className="text-white/50 text-xs mb-4 truncate">{event.location}</p>
                     
                     <div className="flex items-center justify-between">
                       <div>
-                        <span className="text-2xl font-bold text-white">{formatCurrency(event.price)}</span>
-                        <p className="text-white/50 text-xs">per ticket</p>
+                        <span className="text-lg font-bold text-white">{formatCurrency(event.price)}</span>
+                        <p className="text-white/40 text-xs">per ticket</p>
                       </div>
                       <Button
-                        className="bg-gradient-to-r from-white to-white/90 text-black hover:from-white/90 hover:to-white/80 rounded-xl px-6 py-2.5 font-semibold shadow-lg hover:shadow-xl transition-all"
+                        size="sm"
+                        className="bg-white text-black hover:bg-white/90 rounded-lg px-4 py-2 text-xs font-medium"
                         onClick={() => handleEventBooking(event)}
                       >
-                        Book Now
+                        Book
                       </Button>
                     </div>
                   </div>
-                  
-                  <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-white/[0.02] rounded-2xl pointer-events-none"></div>
                 </div>
               ))}
             </div>
@@ -451,60 +450,46 @@ export default function EntertainmentHub() {
         <div className="h-24"></div>
       </ScrollArea>
 
-      {/* Enhanced Mini Player */}
-      <div className="fixed bottom-20 left-0 right-0 bg-gradient-to-t from-black via-black/95 to-black/90 backdrop-blur-2xl border-t border-white/[0.08] z-50 shadow-2xl">
+      {/* Compact Mini Player */}
+      <div className="fixed bottom-20 left-0 right-0 bg-black/95 backdrop-blur-xl border-t border-white/5 z-50">
         <div className="container-app">
-          {/* Progress Bar */}
-          <div className="h-1 bg-white/10 relative">
-            <div className="h-full w-1/3 bg-gradient-to-r from-white to-white/80 rounded-full"></div>
+          {/* Slim Progress Bar */}
+          <div className="h-0.5 bg-white/10 relative">
+            <div className="h-full w-1/3 bg-white rounded-full"></div>
           </div>
           
-          <div className="flex items-center justify-between py-4">
-            {/* Now Playing Info */}
-            <div className="flex items-center gap-4 flex-1 min-w-0">
-              <div className="w-14 h-14 bg-gradient-to-br from-purple-600 via-pink-600 to-orange-600 rounded-xl flex items-center justify-center shadow-lg">
-                <span className="text-xl">🎵</span>
+          <div className="flex items-center justify-between py-3">
+            {/* Now Playing */}
+            <div className="flex items-center gap-3 flex-1 min-w-0">
+              <div className="w-10 h-10 bg-gradient-to-br from-purple-600 to-pink-600 rounded-lg flex items-center justify-center">
+                <span className="text-sm">🎵</span>
               </div>
               <div className="min-w-0">
-                <h4 className="text-sm font-semibold text-white truncate">Afrobeats Hits 2025</h4>
-                <p className="text-xs text-white/60 truncate">Burna Boy, Wizkid & More</p>
-                <div className="flex items-center gap-2 mt-1">
-                  <span className="text-xs text-white/40">2:34</span>
-                  <div className="w-1 h-1 bg-white/40 rounded-full"></div>
-                  <span className="text-xs text-white/40">4:12</span>
-                </div>
+                <h4 className="text-sm font-medium text-white truncate">Afrobeats Hits</h4>
+                <p className="text-xs text-white/50 truncate">Burna Boy & More</p>
               </div>
             </div>
             
-            {/* Playback Controls */}
-            <div className="flex items-center gap-3 mx-8">
-              <Button variant="ghost" size="sm" className="w-10 h-10 text-white/70 hover:text-white hover:bg-white/10 rounded-xl transition-all">
-                <Shuffle className="w-4 h-4" />
+            {/* Controls */}
+            <div className="flex items-center gap-2">
+              <Button variant="ghost" size="sm" className="w-8 h-8 text-white/60 hover:text-white hover:bg-white/10 rounded-lg">
+                <SkipBack className="w-4 h-4" />
               </Button>
-              <Button variant="ghost" size="sm" className="w-10 h-10 text-white/70 hover:text-white hover:bg-white/10 rounded-xl transition-all">
-                <SkipBack className="w-5 h-5" />
+              <Button size="sm" className="rounded-full w-10 h-10 bg-white text-black hover:bg-white/90">
+                <Play className="w-4 h-4 fill-current" />
               </Button>
-              <Button size="sm" className="rounded-full w-12 h-12 bg-white text-black hover:bg-white/90 shadow-lg hover:shadow-xl transition-all hover:scale-105">
-                <Play className="w-5 h-5 fill-current" />
-              </Button>
-              <Button variant="ghost" size="sm" className="w-10 h-10 text-white/70 hover:text-white hover:bg-white/10 rounded-xl transition-all">
-                <SkipForward className="w-5 h-5" />
-              </Button>
-              <Button variant="ghost" size="sm" className="w-10 h-10 text-white/70 hover:text-white hover:bg-white/10 rounded-xl transition-all">
-                <Repeat className="w-4 h-4" />
+              <Button variant="ghost" size="sm" className="w-8 h-8 text-white/60 hover:text-white hover:bg-white/10 rounded-lg">
+                <SkipForward className="w-4 h-4" />
               </Button>
             </div>
 
-            {/* Secondary Controls */}
-            <div className="flex items-center gap-2">
-              <Button variant="ghost" size="sm" className="w-10 h-10 text-white/70 hover:text-white hover:bg-white/10 rounded-xl transition-all">
-                <Heart className="w-4 h-4" />
+            {/* Secondary */}
+            <div className="flex items-center gap-1">
+              <Button variant="ghost" size="sm" className="w-8 h-8 text-white/60 hover:text-white hover:bg-white/10 rounded-lg">
+                <Heart className="w-3 h-3" />
               </Button>
-              <Button variant="ghost" size="sm" className="w-10 h-10 text-white/70 hover:text-white hover:bg-white/10 rounded-xl transition-all">
-                <Share className="w-4 h-4" />
-              </Button>
-              <Button variant="ghost" size="sm" className="w-10 h-10 text-white/70 hover:text-white hover:bg-white/10 rounded-xl transition-all">
-                <Volume2 className="w-4 h-4" />
+              <Button variant="ghost" size="sm" className="w-8 h-8 text-white/60 hover:text-white hover:bg-white/10 rounded-lg">
+                <Volume2 className="w-3 h-3" />
               </Button>
             </div>
           </div>
