@@ -3,6 +3,7 @@ import { createServer, type Server } from "http";
 import rateLimit from "express-rate-limit";
 import { storage } from "./storage";
 import { setupAuth, isAuthenticated } from "./replitAuth";
+import { registerPartnershipRoutes } from "./partnership-routes";
 import { 
   validateRequest, 
   onboardingSchema, 

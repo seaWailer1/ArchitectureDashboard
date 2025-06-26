@@ -56,10 +56,17 @@ export default function PartnerWithAfriPay({ onBack }: PartnerWithAfriPayProps) 
   // Partnership application mutation
   const applyMutation = useMutation({
     mutationFn: async (data: any) => {
-      return apiRequest('/api/partnerships/apply', {
+      const response = await fetch('/api/partnerships/apply', {
         method: 'POST',
-        body: data,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
       });
+      if (!response.ok) {
+        throw new Error('Failed to submit application');
+      }
+      return response.json();
     },
     onSuccess: () => {
       toast({
