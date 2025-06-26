@@ -195,7 +195,7 @@ export default function TestLogin() {
           </div>
           <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 text-center text-white">
             <FaCreditCard className="w-6 h-6 mx-auto mb-2" />
-            <p className="text-sm font-medium">Multi-Wallet</p>
+            <p className="text-sm font-medium">Multi-FaWallet</p>
           </div>
           <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 text-center text-white">
             <FaUsers className="w-6 h-6 mx-auto mb-2" />

@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { 
-  Wallet, 
-  FaTrendingUp, 
+  FaWallet, 
+  FaChartLine, 
   FaPaperPlane, 
   FaQrcode, 
   FaShoppingBag, 
@@ -91,7 +91,7 @@ export default function ConsumerDashboard() {
               <p className="text-white/60 text-sm mt-1">Available in {wallets.length} wallet{wallets.length !== 1 ? 's' : ''}</p>
             </div>
             <div className="text-right">
-              <p className="text-white/80 text-sm">Primary Wallet</p>
+              <p className="text-white/80 text-sm">Primary FaWallet</p>
               <p className="text-xl font-semibold">{formatCurrency(primaryWallet?.balance || 0)}</p>
             </div>
           </div>
@@ -150,7 +150,7 @@ export default function ConsumerDashboard() {
         <CardContent>
           {recentTransactions.length === 0 ? (
             <div className="text-center py-6">
-              <Wallet className="w-12 h-12 text-neutral-400 mx-auto mb-3" />
+              <FaWallet className="w-12 h-12 text-neutral-400 mx-auto mb-3" />
               <p className="text-neutral-600 mb-3">No recent transactions</p>
               <Button size="sm">
                 Start your first transaction
@@ -186,7 +186,7 @@ export default function ConsumerDashboard() {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center space-x-2">
-            <FaTrendingUp className="w-5 h-5" />
+            <FaChartLine className="w-5 h-5" />
             <span>Investment Opportunities</span>
           </CardTitle>
         </CardHeader>

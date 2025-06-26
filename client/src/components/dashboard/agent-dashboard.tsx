@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { 
   FaBuilding, 
-  FaTrendingUp, 
+  FaChartLine, 
   Users, 
   FaDollarSign, 
   Target,
@@ -139,7 +139,7 @@ export default function AgentDashboard() {
               View Targets
             </Button>
             <Button size="sm" className="bg-white/20 hover:bg-white/30 text-white flex-1">
-              <FaTrendingUp className="w-4 h-4 mr-2" />
+              <FaChartLine className="w-4 h-4 mr-2" />
               Analytics
             </Button>
           </div>
@@ -156,7 +156,7 @@ export default function AgentDashboard() {
                 <p className="text-2xl font-bold">{agentMetrics.conversionRate}%</p>
               </div>
               <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-                <FaTrendingUp className="w-6 h-6 text-green-600" />
+                <FaChartLine className="w-6 h-6 text-green-600" />
               </div>
             </div>
           </CardContent>

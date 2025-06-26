@@ -20,10 +20,10 @@ import {
   Wifi,
   Volume2,
   Settings,
-  BarChart3,
+  FaChartBar,
   Calendar,
   Target,
-  FaTrendingUp
+  FaChartLine
 } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -542,7 +542,7 @@ export default function DriverDashboard() {
                 </CardHeader>
                 <CardContent>
                   <div className="text-center py-8">
-                    <BarChart3 className="w-12 h-12 mx-auto text-neutral-400 mb-4" />
+                    <FaChartBar className="w-12 h-12 mx-auto text-neutral-400 mb-4" />
                     <p className="text-neutral-600">Detailed analytics coming soon</p>
                   </div>
                 </CardContent>

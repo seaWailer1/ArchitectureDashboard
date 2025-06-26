@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { 
-  BarChart3, 
+  FaChartBar, 
   Users, 
   FaDollarSign, 
-  FaTrendingUp,
+  FaChartLine,
   Activity,
   Shield,
   FaExclamationTriangle,
@@ -222,7 +222,7 @@ export default function AdminDashboard() {
                 <p className="text-2xl font-bold">{formatNumber(mockStats.activeWallets)}</p>
                 <p className="text-xs text-neutral-600">{mockStats.kycVerified} verified</p>
               </div>
-              <BarChart3 className="w-8 h-8 text-secondary" />
+              <FaChartBar className="w-8 h-8 text-secondary" />
             </div>
           </CardContent>
         </Card>
@@ -395,7 +395,7 @@ export default function AdminDashboard() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex justify-between">
-                  <span>Total Wallet Balance</span>
+                  <span>Total FaWallet Balance</span>
                   <span className="font-bold">{formatCurrency(mockFinancialMetrics.totalWalletBalance)}</span>
                 </div>
                 <div className="flex justify-between">

@@ -1,12 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import { 
   Store, 
-  FaTrendingUp, 
+  FaChartLine, 
   TrendingDown,
   Users, 
   FaCreditCard, 
   FaBox, 
-  BarChart3,
+  FaChartBar,
   FaQrcode,
   Settings,
   FaEye,
@@ -74,7 +74,7 @@ export default function MerchantDashboard() {
     { icon: FaQrcode, label: "Payment QR", color: "bg-blue-100 text-blue-600", action: () => toast({ title: "QR Code", description: "Generate payment QR code" }) },
     { icon: FaBox, label: "Inventory", color: "bg-green-100 text-green-600", action: () => toast({ title: "Inventory", description: "Manage your products" }) },
     { icon: Users, label: "Customers", color: "bg-purple-100 text-purple-600", action: () => toast({ title: "Customers", description: "View customer insights" }) },
-    { icon: BarChart3, label: "Analytics", color: "bg-orange-100 text-orange-600", action: () => toast({ title: "Analytics", description: "View detailed analytics" }) },
+    { icon: FaChartBar, label: "Analytics", color: "bg-orange-100 text-orange-600", action: () => toast({ title: "Analytics", description: "View detailed analytics" }) },
   ];
 
   return (
@@ -87,7 +87,7 @@ export default function MerchantDashboard() {
               <p className="text-white/80 text-sm">Business Balance</p>
               <h2 className="text-3xl font-bold">{formatCurrency(businessWallet?.balance || 0)}</h2>
               <div className="flex items-center space-x-2 mt-2">
-                <FaTrendingUp className="w-4 h-4 text-green-200" />
+                <FaChartLine className="w-4 h-4 text-green-200" />
                 <span className="text-green-200 text-sm">+{businessMetrics.monthlyGrowth}% this month</span>
               </div>
             </div>
@@ -135,7 +135,7 @@ export default function MerchantDashboard() {
                 <p className="text-2xl font-bold">{businessMetrics.totalTransactions}</p>
               </div>
               <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-                <BarChart3 className="w-6 h-6 text-blue-600" />
+                <FaChartBar className="w-6 h-6 text-blue-600" />
               </div>
             </div>
           </CardContent>

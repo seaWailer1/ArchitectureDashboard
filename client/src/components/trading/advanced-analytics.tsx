@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { 
-  BarChart3, 
-  FaTrendingUp, 
+  FaChartBar, 
+  FaChartLine, 
   PieChart, 
   Activity,
   Calendar,
@@ -187,8 +187,8 @@ export default function AdvancedAnalytics() {
 
   const getTrendIcon = (trend: string) => {
     switch (trend) {
-      case 'bullish': return <FaTrendingUp className="w-4 h-4" />;
-      case 'bearish': return <FaTrendingUp className="w-4 h-4 rotate-180" />;
+      case 'bullish': return <FaChartLine className="w-4 h-4" />;
+      case 'bearish': return <FaChartLine className="w-4 h-4 rotate-180" />;
       case 'neutral': return <Activity className="w-4 h-4" />;
       default: return <Activity className="w-4 h-4" />;
     }
@@ -198,7 +198,7 @@ export default function AdvancedAnalytics() {
     switch (type) {
       case 'opportunity': return <Target className="w-4 h-4 text-success" />;
       case 'risk': return <FaExclamationTriangle className="w-4 h-4 text-destructive" />;
-      case 'trend': return <FaTrendingUp className="w-4 h-4 text-accent" />;
+      case 'trend': return <FaChartLine className="w-4 h-4 text-accent" />;
       default: return <Brain className="w-4 h-4" />;
     }
   };
@@ -276,7 +276,7 @@ export default function AdvancedAnalytics() {
                     <p className="text-sm text-neutral-600">Total Trades</p>
                     <p className="text-2xl font-bold">{performanceMetrics.totalTrades}</p>
                   </div>
-                  <BarChart3 className="w-8 h-8 text-primary" />
+                  <FaChartBar className="w-8 h-8 text-primary" />
                 </div>
               </CardContent>
             </Card>

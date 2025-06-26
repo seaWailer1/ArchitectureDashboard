@@ -2,13 +2,13 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { 
   FaDollarSign, 
-  FaTrendingUp, 
+  FaChartLine, 
   TrendingDown, 
   FaEye, 
   FaEyeSlash,
   FaPlus,
   ArrowUpDown,
-  Wallet,
+  FaWallet,
   PiggyBank,
   LineChart,
   Bitcoin
@@ -114,7 +114,7 @@ export default function EnhancedWalletSummary() {
       case 'savings':
         return <PiggyBank className="w-5 h-5" />;
       default:
-        return <Wallet className="w-5 h-5" />;
+        return <FaWallet className="w-5 h-5" />;
     }
   };
 

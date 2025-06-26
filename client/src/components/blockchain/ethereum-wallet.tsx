@@ -6,7 +6,7 @@ import { Separator } from '@/components/ui/separator';
 import { FaWallet, FaExternalLinkAlt, FaCopy, FaSync } from 'react-icons/fa';
 import { useToast } from '@/hooks/use-toast';
 
-interface WalletConnection {
+interface FaWalletConnection {
   address: string;
   chainId: number;
   balance: string;
@@ -27,7 +27,7 @@ declare global {
 
 export function EthereumFaWallet() {
   const [connected, setConnected] = useState(false);
-  const [wallet, setFaWallet] = useState<WalletConnection | null>(null);
+  const [wallet, setFaWallet] = useState<FaWalletConnection | null>(null);
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
 

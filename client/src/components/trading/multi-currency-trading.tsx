@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { 
-  FaTrendingUp, 
+  FaChartLine, 
   TrendingDown, 
   ArrowRightLeft, 
   Calculator,
   Target,
   FaExclamationTriangle,
   RefreshCw,
-  BarChart3,
+  FaChartBar,
   FaDollarSign,
   Timer
 } from "react-icons/fa";
@@ -424,7 +424,7 @@ export default function MultiCurrencyTrading() {
                     <div className="text-right">
                       <p className="font-bold">{formatRate(pair.rate)}</p>
                       <div className={`flex items-center space-x-1 text-sm ${pair.change24h >= 0 ? 'text-success' : 'text-destructive'}`}>
-                        {pair.change24h >= 0 ? <FaTrendingUp className="w-3 h-3" /> : <TrendingDown className="w-3 h-3" />}
+                        {pair.change24h >= 0 ? <FaChartLine className="w-3 h-3" /> : <TrendingDown className="w-3 h-3" />}
                         <span>{pair.change24h.toFixed(2)}%</span>
                       </div>
                     </div>
@@ -514,7 +514,7 @@ export default function MultiCurrencyTrading() {
             <CardContent>
               {recentTrades.length === 0 ? (
                 <div className="text-center py-8">
-                  <BarChart3 className="w-12 h-12 text-neutral-400 mx-auto mb-3" />
+                  <FaChartBar className="w-12 h-12 text-neutral-400 mx-auto mb-3" />
                   <p className="text-neutral-600">No trading history yet</p>
                   <p className="text-sm text-neutral-500">Your trades will appear here</p>
                 </div>

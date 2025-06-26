@@ -12,7 +12,7 @@ import {
   FaMapMarkerAlt,
   FaTruck,
   FaCreditCard,
-  FaTrendingUp,
+  FaChartLine,
   FaClock
 } from "react-icons/fa";
 import ProductDetail from "./product-detail";
@@ -461,7 +461,7 @@ export default function ShoppingMarketplace() {
               <div className="flex space-x-2 overflow-x-auto">
                 {["Wireless Earbuds", "African Prints", "Skincare", "Home Decor"].map(trend => (
                   <Badge key={trend} variant="outline" className="flex-shrink-0 cursor-pointer hover:bg-accent/10">
-                    <FaTrendingUp className="w-3 h-3 mr-1" />
+                    <FaChartLine className="w-3 h-3 mr-1" />
                     {trend}
                   </Badge>
                 ))}

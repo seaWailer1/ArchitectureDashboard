@@ -72,7 +72,7 @@ export default function CustomerOrders() {
       estimatedDelivery: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000).toISOString(),
       deliveryAddress: "123 Main Street, Lagos, Nigeria",
       trackingNumber: "AFR123456789",
-      paymentMethod: "AfriPay Wallet"
+      paymentMethod: "AfriPay FaWallet"
     },
     {
       id: "ORD_2024_002",
@@ -110,7 +110,7 @@ export default function CustomerOrders() {
       orderDate: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
       estimatedDelivery: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toISOString(),
       deliveryAddress: "789 Pine Road, Nairobi, Kenya",
-      paymentMethod: "AfriPay Wallet"
+      paymentMethod: "AfriPay FaWallet"
     }
   ];
 

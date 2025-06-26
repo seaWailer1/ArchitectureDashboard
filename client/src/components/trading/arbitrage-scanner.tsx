@@ -3,13 +3,13 @@ import { useQuery } from "@tanstack/react-query";
 import { 
   FaSearch, 
   Target, 
-  FaTrendingUp, 
+  FaChartLine, 
   FaClock, 
   FaDollarSign,
   FaExclamationTriangle,
   FaBolt,
   Calculator,
-  BarChart3,
+  FaChartBar,
   Settings
 } from "react-icons/fa";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -155,7 +155,7 @@ export default function ArbitrageScanner() {
   const getTypeIcon = (type: string) => {
     switch (type) {
       case 'triangular': return <Target className="w-4 h-4" />;
-      case 'cross_exchange': return <BarChart3 className="w-4 h-4" />;
+      case 'cross_exchange': return <FaChartBar className="w-4 h-4" />;
       case 'temporal': return <FaClock className="w-4 h-4" />;
       default: return <FaSearch className="w-4 h-4" />;
     }
@@ -294,7 +294,7 @@ export default function ArbitrageScanner() {
                   {Math.max(...filteredOpportunities.map(o => o.profitMargin)).toFixed(2)}%
                 </p>
               </div>
-              <FaTrendingUp className="w-8 h-8 text-success" />
+              <FaChartLine className="w-8 h-8 text-success" />
             </div>
           </CardContent>
         </Card>

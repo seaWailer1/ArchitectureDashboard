@@ -3,12 +3,12 @@ import { useQuery } from "@tanstack/react-query";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import { t } from "@/lib/i18n";
-import { WalletData } from "@/types";
+import { FaWalletData } from "@/types";
 
-export default function WalletSummary() {
+export default function FaWalletSummary() {
   const [showBalance, setShowBalance] = useState(true);
   
-  const { data: wallet } = useQuery<WalletData>({
+  const { data: wallet } = useQuery<FaWalletData>({
     queryKey: ["/api/wallet"],
   });
 

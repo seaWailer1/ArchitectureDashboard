@@ -57,7 +57,7 @@ export default function Transactions() {
     
     switch (transaction.type) {
       case 'topup':
-        return 'Wallet Top-up';
+        return 'FaWallet Top-up';
       case 'send':
         return 'Payment Sent';
       case 'receive':

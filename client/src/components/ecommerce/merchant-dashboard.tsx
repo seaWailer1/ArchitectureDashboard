@@ -4,7 +4,7 @@ import {
   FaBox, 
   FaDollarSign,
   FaShoppingCart,
-  FaTrendingUp,
+  FaChartLine,
   Users,
   FaStar,
   FaPlus,
@@ -14,7 +14,7 @@ import {
   FaFilter,
   Calendar,
   Download,
-  BarChart3,
+  FaChartBar,
   FaExclamationTriangle,
   FaCheckCircle
 } from "react-icons/fa";
@@ -317,7 +317,7 @@ export default function MerchantDashboard() {
                     <p className="text-sm text-neutral-600">Avg Order</p>
                     <p className="text-xl font-bold">{formatCurrency(analytics.averageOrderValue)}</p>
                   </div>
-                  <FaTrendingUp className="w-8 h-8 text-accent" />
+                  <FaChartLine className="w-8 h-8 text-accent" />
                 </div>
               </CardContent>
             </Card>

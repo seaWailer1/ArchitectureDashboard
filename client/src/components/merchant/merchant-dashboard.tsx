@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { Store, FaTrendingUp, Users, FaDollarSign, QrCode } from "react-icons/fa";
+import { Store, FaChartLine, Users, FaDollarSign, QrCode } from "react-icons/fa";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -74,7 +74,7 @@ export default function MerchantDashboard() {
               <span className="text-2xl font-bold text-neutral-900">
                 ${todaysRevenue.toFixed(2)}
               </span>
-              <FaTrendingUp className="w-5 h-5 text-success" />
+              <FaChartLine className="w-5 h-5 text-success" />
             </div>
           </CardContent>
         </Card>
@@ -119,7 +119,7 @@ export default function MerchantDashboard() {
         >
           <div className="flex items-center space-x-3">
             <div className="w-10 h-10 bg-accent/10 rounded-lg flex items-center justify-center">
-              <FaTrendingUp className="w-5 h-5 text-accent" />
+              <FaChartLine className="w-5 h-5 text-accent" />
             </div>
             <div>
               <h3 className="font-medium text-neutral-900">Business Analytics</h3>

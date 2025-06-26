@@ -12,7 +12,7 @@ export default function BottomNavigation({ currentPage }: BottomNavigationProps)
 
   const navItems = [
     { path: "/", icon: FaHome, label: t('home'), id: "home" },
-    { path: "/wallets", icon: FaWallet, label: "Wallets", id: "wallets" },
+    { path: "/wallets", icon: FaWallet, label: "FaWallets", id: "wallets" },
     { path: "/qr", icon: FaQrcode, label: t('pay'), id: "qr", special: true },
     { path: "/services", icon: FaTh, label: t('services'), id: "services" },
     { path: "/profile", icon: FaUser, label: t('profile'), id: "profile" },

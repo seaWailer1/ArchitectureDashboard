@@ -6,7 +6,7 @@ import {
   FaBuilding, 
   FaUsers,
   FaCreditCard,
-  FaTrendingUp,
+  FaChartLine,
   FaBox,
   FaCar,
   FaShoppingBag,

@@ -2,13 +2,13 @@ import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { 
   Bitcoin, 
-  FaTrendingUp, 
+  FaChartLine, 
   TrendingDown, 
   ArrowUpDown, 
   FaDollarSign,
   FaPlus,
   FaMinus,
-  BarChart3
+  FaChartBar
 } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -92,7 +92,7 @@ export default function CryptoTrading() {
 
   const getPriceChangeIcon = (change: string) => {
     const value = parseFloat(change);
-    if (value > 0) return <FaTrendingUp className="w-3 h-3" />;
+    if (value > 0) return <FaChartLine className="w-3 h-3" />;
     if (value < 0) return <TrendingDown className="w-3 h-3" />;
     return null;
   };
@@ -315,7 +315,7 @@ export default function CryptoTrading() {
             <CardContent>
               {portfolio.filter((holding: any) => holding.asset?.type === 'cryptocurrency').length === 0 ? (
                 <div className="text-center py-8">
-                  <BarChart3 className="w-12 h-12 text-neutral-400 mx-auto mb-3" />
+                  <FaChartBar className="w-12 h-12 text-neutral-400 mx-auto mb-3" />
                   <p className="text-neutral-600">No crypto holdings yet</p>
                   <p className="text-sm text-neutral-500 mt-1">Start trading to build your portfolio</p>
                 </div>

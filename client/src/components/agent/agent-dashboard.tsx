@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { Handshake, FaTrendingUp, Users, Banknote, FaMapMarkerAlt, FaClock } from "react-icons/fa";
+import { Handshake, FaChartLine, Users, Banknote, FaMapMarkerAlt, FaClock } from "react-icons/fa";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -51,7 +51,7 @@ export default function AgentDashboard() {
       color: "bg-accent/10 text-accent"
     },
     {
-      icon: FaTrendingUp,
+      icon: FaChartLine,
       title: "Commission Tracking",
       description: "Track earnings and performance",
       color: "bg-secondary/10 text-secondary"
@@ -120,7 +120,7 @@ export default function AgentDashboard() {
               <span className="text-2xl font-bold text-neutral-900">
                 ${todaysCommission.toFixed(2)}
               </span>
-              <FaTrendingUp className="w-5 h-5 text-success" />
+              <FaChartLine className="w-5 h-5 text-success" />
             </div>
           </CardContent>
         </Card>

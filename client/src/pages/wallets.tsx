@@ -11,7 +11,7 @@ import AppHeader from "@/components/layout/app-header";
 import BottomNavigation from "@/components/layout/bottom-navigation";
 import { useToast } from "@/hooks/use-toast";
 
-interface WalletData {
+interface FaWalletData {
   id: number;
   userId: string;
   balance: string;
@@ -63,11 +63,11 @@ interface CreditFacility {
   status: string;
 }
 
-export default function Wallets() {
+export default function FaWallets() {
   const [showBalances, setShowBalances] = useState(true);
   const { toast } = useToast();
 
-  const { data: wallets = [] } = useQuery<WalletData[]>({
+  const { data: wallets = [] } = useQuery<FaWalletData[]>({
     queryKey: ["/api/wallets"],
   });
 
@@ -112,7 +112,7 @@ export default function Wallets() {
     }).format(num);
   };
 
-  const getWalletIcon = (type: string) => {
+  const getFaWalletIcon = (type: string) => {
     switch (type) {
       case 'primary': return FaWallet;
       case 'savings': return FaPiggyBank;
@@ -123,7 +123,7 @@ export default function Wallets() {
     }
   };
 
-  const getWalletColor = (type: string) => {
+  const getFaWalletColor = (type: string) => {
     switch (type) {
       case 'primary': return 'bg-blue-100 text-blue-700';
       case 'savings': return 'bg-green-100 text-green-700';
@@ -134,7 +134,7 @@ export default function Wallets() {
     }
   };
 
-  const handleWalletAction = (action: string, walletId: number) => {
+  const handleFaWalletAction = (action: string, walletId: number) => {
     toast({
       title: `${action} Action`,
       description: `${action} functionality coming soon for wallet ${walletId}`,
@@ -212,17 +212,17 @@ export default function Wallets() {
 
           <TabsContent value="primary" className="space-y-4">
             <div className="flex items-center justify-between">
-              <h2 className="text-lg font-semibold">Primary Wallets</h2>
-              <Button size="sm" onClick={() => handleWalletAction("Create Primary", 0)}>
+              <h2 className="text-lg font-semibold">Primary FaWallets</h2>
+              <Button size="sm" onClick={() => handleFaWalletAction("Create Primary", 0)}>
                 <FaPlus className="w-4 h-4 mr-2" />
-                Add Wallet
+                Add FaWallet
               </Button>
             </div>
 
             <div className="space-y-3">
               {wallets.filter(w => w.walletType === 'primary').map((wallet) => {
-                const Icon = getWalletIcon(wallet.walletType);
-                const colorClass = getWalletColor(wallet.walletType);
+                const Icon = getFaWalletIcon(wallet.walletType);
+                const colorClass = getFaWalletColor(wallet.walletType);
                 
                 return (
                   <Card key={wallet.id}>
@@ -234,7 +234,7 @@ export default function Wallets() {
                           </div>
                           <div>
                             <p className="font-medium">
-                              {wallet.walletType.charAt(0).toUpperCase() + wallet.walletType.slice(1)} Wallet
+                              {wallet.walletType.charAt(0).toUpperCase() + wallet.walletType.slice(1)} FaWallet
                             </p>
                             <p className="text-sm text-neutral-600">
                               {wallet.currency} • Main spending account
@@ -261,15 +261,15 @@ export default function Wallets() {
                               </Button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent>
-                              <DropdownMenuItem onClick={() => handleWalletAction("FaPaperPlane", wallet.id)}>
+                              <DropdownMenuItem onClick={() => handleFaWalletAction("FaPaperPlane", wallet.id)}>
                                 <FaPaperPlane className="w-4 h-4 mr-2" />
                                 FaPaperPlane Money
                               </DropdownMenuItem>
-                              <DropdownMenuItem onClick={() => handleWalletAction("Receive", wallet.id)}>
+                              <DropdownMenuItem onClick={() => handleFaWalletAction("Receive", wallet.id)}>
                                 <FaDownload className="w-4 h-4 mr-2" />
                                 Receive Money
                               </DropdownMenuItem>
-                              <DropdownMenuItem onClick={() => handleWalletAction("Topup", wallet.id)}>
+                              <DropdownMenuItem onClick={() => handleFaWalletAction("Topup", wallet.id)}>
                                 <FaPlus className="w-4 h-4 mr-2" />
                                 Top Up
                               </DropdownMenuItem>
@@ -286,8 +286,8 @@ export default function Wallets() {
 
           <TabsContent value="savings" className="space-y-4">
             <div className="flex items-center justify-between">
-              <h2 className="text-lg font-semibold">Savings Wallets</h2>
-              <Button size="sm" onClick={() => handleWalletAction("Create Savings", 0)}>
+              <h2 className="text-lg font-semibold">Savings FaWallets</h2>
+              <Button size="sm" onClick={() => handleFaWalletAction("Create Savings", 0)}>
                 <FaPlus className="w-4 h-4 mr-2" />
                 Add Savings
               </Button>
@@ -295,8 +295,8 @@ export default function Wallets() {
 
             <div className="space-y-3">
               {wallets.filter(w => w.walletType === 'savings').map((wallet) => {
-                const Icon = getWalletIcon(wallet.walletType);
-                const colorClass = getWalletColor(wallet.walletType);
+                const Icon = getFaWalletIcon(wallet.walletType);
+                const colorClass = getFaWalletColor(wallet.walletType);
                 
                 return (
                   <Card key={wallet.id}>
@@ -307,7 +307,7 @@ export default function Wallets() {
                             <Icon className="w-6 h-6" />
                           </div>
                           <div>
-                            <p className="font-medium">Savings Wallet</p>
+                            <p className="font-medium">Savings FaWallet</p>
                             <p className="text-sm text-neutral-600">
                               {wallet.currency} • Long-term savings
                             </p>
@@ -329,11 +329,11 @@ export default function Wallets() {
                               </Button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent>
-                              <DropdownMenuItem onClick={() => handleWalletAction("Transfer In", wallet.id)}>
+                              <DropdownMenuItem onClick={() => handleFaWalletAction("Transfer In", wallet.id)}>
                                 <FaDownload className="w-4 h-4 mr-2" />
                                 Transfer In
                               </DropdownMenuItem>
-                              <DropdownMenuItem onClick={() => handleWalletAction("Transfer Out", wallet.id)}>
+                              <DropdownMenuItem onClick={() => handleFaWalletAction("Transfer Out", wallet.id)}>
                                 <FaPaperPlane className="w-4 h-4 mr-2" />
                                 Transfer Out
                               </DropdownMenuItem>
@@ -351,7 +351,7 @@ export default function Wallets() {
           <TabsContent value="crypto" className="space-y-4">
             <div className="flex items-center justify-between">
               <h2 className="text-lg font-semibold">Crypto Holdings</h2>
-              <Button size="sm" onClick={() => handleWalletAction("Buy Crypto", 0)}>
+              <Button size="sm" onClick={() => handleFaWalletAction("Buy Crypto", 0)}>
                 <FaPlus className="w-4 h-4 mr-2" />
                 Buy Crypto
               </Button>
@@ -398,8 +398,8 @@ export default function Wallets() {
 
           <TabsContent value="investment" className="space-y-4">
             <div className="flex items-center justify-between">
-              <h2 className="text-lg font-semibold">Investment Wallets</h2>
-              <Button size="sm" onClick={() => handleWalletAction("Create Investment", 0)}>
+              <h2 className="text-lg font-semibold">Investment FaWallets</h2>
+              <Button size="sm" onClick={() => handleFaWalletAction("Create Investment", 0)}>
                 <FaPlus className="w-4 h-4 mr-2" />
                 Add Investment
               </Button>
@@ -407,8 +407,8 @@ export default function Wallets() {
 
             <div className="space-y-3">
               {wallets.filter(w => w.walletType === 'investment').map((wallet) => {
-                const Icon = getWalletIcon(wallet.walletType);
-                const colorClass = getWalletColor(wallet.walletType);
+                const Icon = getFaWalletIcon(wallet.walletType);
+                const colorClass = getFaWalletColor(wallet.walletType);
                 
                 return (
                   <Card key={wallet.id}>
@@ -419,7 +419,7 @@ export default function Wallets() {
                             <Icon className="w-6 h-6" />
                           </div>
                           <div>
-                            <p className="font-medium">Investment Wallet</p>
+                            <p className="font-medium">Investment FaWallet</p>
                             <p className="text-sm text-neutral-600">
                               {wallet.currency} • Portfolio funds
                             </p>
@@ -441,11 +441,11 @@ export default function Wallets() {
                               </Button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent>
-                              <DropdownMenuItem onClick={() => handleWalletAction("Invest", wallet.id)}>
+                              <DropdownMenuItem onClick={() => handleFaWalletAction("Invest", wallet.id)}>
                                 <FaChartLine className="w-4 h-4 mr-2" />
                                 Invest Funds
                               </DropdownMenuItem>
-                              <DropdownMenuItem onClick={() => handleWalletAction("Add Funds", wallet.id)}>
+                              <DropdownMenuItem onClick={() => handleFaWalletAction("Add Funds", wallet.id)}>
                                 <FaPlus className="w-4 h-4 mr-2" />
                                 Add Funds
                               </DropdownMenuItem>

@@ -27,7 +27,7 @@ export default function QuickActions() {
       setTopUpAmount("");
       toast({
         title: "Success",
-        description: "Wallet topped up successfully",
+        description: "FaWallet topped up successfully",
       });
     },
     onError: () => {
@@ -116,7 +116,7 @@ export default function QuickActions() {
       <Dialog open={showTopUpDialog} onOpenChange={setShowTopUpDialog}>
         <DialogContent className="max-w-sm mx-auto">
           <DialogHeader>
-            <DialogTitle>Top Up Wallet</DialogTitle>
+            <DialogTitle>Top Up FaWallet</DialogTitle>
           </DialogHeader>
           <div className="space-y-4">
             <div>
