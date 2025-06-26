@@ -35,12 +35,18 @@ export default function Home() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-neutral-100 flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-8 h-8 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center mx-auto mb-2">
-            <i className="fas fa-coins text-white text-sm"></i>
+      <div className="min-h-screen bg-gradient-to-br from-neutral-50 to-neutral-100 dark:from-neutral-900 dark:to-neutral-800 flex items-center justify-center">
+        <div className="text-center space-y-4">
+          <div className="w-16 h-16 gradient-primary rounded-2xl flex items-center justify-center mx-auto shadow-floating animate-pulse">
+            <span className="text-white font-bold text-2xl">A</span>
           </div>
-          <p className="text-neutral-600">Loading...</p>
+          <div className="space-y-2">
+            <h2 className="text-xl font-bold text-foreground">Loading AfriPay</h2>
+            <p className="text-muted-foreground">Setting up your dashboard...</p>
+          </div>
+          <div className="w-8 h-1 bg-primary/20 rounded-full mx-auto overflow-hidden">
+            <div className="w-full h-full bg-primary rounded-full animate-pulse"></div>
+          </div>
         </div>
       </div>
     );

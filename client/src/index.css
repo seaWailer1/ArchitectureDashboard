@@ -94,6 +94,107 @@
   --focus-ring: hsl(210, 100%, 60%);
 }
 
+/* Enhanced shadow system for refined UI depth */
+.shadow-soft {
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.05), 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+}
+
+.shadow-elevated {
+  box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.08), 0 2px 6px 0 rgba(0, 0, 0, 0.12);
+}
+
+.shadow-floating {
+  box-shadow: 0 8px 24px 0 rgba(0, 0, 0, 0.12), 0 4px 12px 0 rgba(0, 0, 0, 0.16);
+}
+
+/* Refined gradient utilities */
+.gradient-primary {
+  background: linear-gradient(135deg, hsl(24, 85%, 35%) 0%, hsl(24, 80%, 45%) 100%);
+}
+
+.gradient-secondary {
+  background: linear-gradient(135deg, hsl(25, 60%, 25%) 0%, hsl(25, 65%, 35%) 100%);
+}
+
+.gradient-accent {
+  background: linear-gradient(135deg, hsl(45, 100%, 35%) 0%, hsl(45, 95%, 45%) 100%);
+}
+
+.gradient-success {
+  background: linear-gradient(135deg, hsl(120, 70%, 25%) 0%, hsl(120, 75%, 35%) 100%);
+}
+
+/* Enhanced card styling */
+.card-refined {
+  @apply bg-card border border-border rounded-xl shadow-soft transition-all duration-200;
+}
+
+.card-refined:hover {
+  @apply shadow-elevated;
+  border-color: rgba(210, 89, 35, 0.2);
+  transform: translateY(-1px);
+}
+
+/* Interactive element enhancements */
+.interactive-hover {
+  @apply transition-all duration-200 cursor-pointer;
+}
+
+.interactive-hover:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.08);
+}
+
+/* Enhanced button styling */
+.btn-refined {
+  @apply inline-flex items-center justify-center rounded-lg font-semibold transition-all duration-200;
+  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2;
+}
+
+.btn-primary-refined {
+  @apply btn-refined bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm;
+}
+
+.btn-primary-refined:hover {
+  box-shadow: 0 4px 12px 0 rgba(var(--primary) / 0.3);
+  transform: translateY(-1px);
+}
+
+.btn-secondary-refined {
+  @apply btn-refined bg-secondary text-secondary-foreground hover:bg-secondary/80 border border-border;
+}
+
+/* Enhanced input styling */
+.input-refined {
+  @apply flex h-12 w-full rounded-lg border-2 border-input bg-background px-4 py-3;
+  @apply text-sm font-medium transition-all duration-200;
+  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1;
+  @apply placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50;
+}
+
+.input-refined:focus {
+  @apply border-primary/50 shadow-sm;
+}
+
+/* Refined spacing system */
+.spacing-sm { padding: 0.75rem; }
+.spacing-md { padding: 1rem; }
+.spacing-lg { padding: 1.5rem; }
+.spacing-xl { padding: 2rem; }
+
+/* Enhanced typography */
+.text-refined-heading {
+  @apply font-bold text-foreground leading-tight tracking-tight;
+}
+
+.text-refined-body {
+  @apply text-foreground/90 leading-relaxed;
+}
+
+.text-refined-muted {
+  @apply text-muted-foreground leading-relaxed;
+}
+
 @layer base {
   * {
     @apply border-border;
