@@ -27,8 +27,8 @@ export default function AppHeader() {
       className="bg-white dark:bg-neutral-900 shadow-sm border-b border-neutral-200 dark:border-neutral-700 sticky top-0 z-50"
       role="banner"
     >
-      <div className="max-w-md mx-auto px-4 py-3">
-        <div className="flex items-center justify-between gap-aaa">
+      <div className="container-app spacing-y-sm">
+        <div className="flex items-center justify-between gap-4">
           {/* App Logo and Title */}
           <div className="flex items-center space-x-3">
             <div 
@@ -38,7 +38,7 @@ export default function AppHeader() {
             >
               <Coins className="text-white w-6 h-6" aria-hidden="true" />
             </div>
-            <h1 className="text-xl font-bold text-neutral-900 dark:text-neutral-100 text-aaa-large">
+            <h1 className="text-heading-3 font-bold text-neutral-900 dark:text-neutral-100">
               {t('appName')}
             </h1>
           </div>

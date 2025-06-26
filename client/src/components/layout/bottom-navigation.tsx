@@ -29,8 +29,8 @@ export default function BottomNavigation({ currentPage }: BottomNavigationProps)
       role="navigation"
       aria-label="Main navigation"
     >
-      <div className="max-w-md mx-auto px-4">
-        <div className="flex justify-around py-2 gap-1">
+      <div className="container-app">
+        <div className="flex justify-around spacing-y-xs gap-1">
           {navItems.map((item) => {
             const Icon = item.icon;
             const active = isActive(item.path, item.id);

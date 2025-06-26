@@ -153,8 +153,8 @@ export default function Services() {
           {/* Service Categories */}
           <div className="space-y-8">
             {serviceCategories.map((category) => (
-              <div key={category.title} className="space-y-4">
-                <h3 className="text-xl font-bold text-refined-heading tracking-tight">{category.title}</h3>
+              <div key={category.title} className="space-y-6">
+                <h3 className="text-heading-3 text-refined-heading">{category.title}</h3>
                 <div className="grid grid-cols-2 gap-4">
                   {category.services.map((service) => {
                     const Icon = service.icon;
@@ -162,14 +162,14 @@ export default function Services() {
                       <Button
                         key={service.id}
                         variant="ghost"
-                        className="card-refined interactive-hover flex flex-col items-center p-5 bg-white dark:bg-neutral-800 h-auto text-center group"
+                        className="card-refined interactive-hover flex flex-col items-center spacing-lg bg-white dark:bg-neutral-800 h-auto text-center group elevation-1 hover:elevation-2 touch-aaa focus-aaa"
                         onClick={() => handleServiceLaunch(service.id, service.name)}
                       >
                         <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-4 shadow-soft transition-all duration-200 group-hover:scale-110 ${service.color}`}>
                           <Icon className="w-7 h-7" />
                         </div>
-                        <h4 className="font-bold text-refined-heading text-sm mb-2 leading-tight">{service.name}</h4>
-                        <p className="text-xs text-refined-muted leading-relaxed">{service.description}</p>
+                        <h4 className="text-body-small font-bold text-refined-heading mb-2 leading-tight">{service.name}</h4>
+                        <p className="text-caption text-refined-muted leading-relaxed">{service.description}</p>
                       </Button>
                     );
                   })}
