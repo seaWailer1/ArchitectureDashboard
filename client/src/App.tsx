@@ -16,6 +16,7 @@ import TestLogin from "@/pages/test-login";
 import Onboarding from "@/pages/onboarding";
 import KYC from "@/pages/kyc";
 import PresetUsers from "@/pages/preset-users";
+import PartnershipsPage from "@/pages/partnerships";
 
 function Router() {
   const { user, isAuthenticated, isLoading } = useAuth();
@@ -82,6 +83,7 @@ function Router() {
       <Route path="/onboarding" component={Onboarding} />
       <Route path="/kyc" component={KYC} />
       <Route path="/preset-users" component={PresetUsers} />
+      <Route path="/partnerships" component={PartnershipsPage} />
       <Route component={NotFound} />
     </Switch>
   );

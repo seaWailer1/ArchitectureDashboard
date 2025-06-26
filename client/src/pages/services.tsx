@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useLocation } from "wouter";
 import { Car, ShoppingBag, Zap, Smartphone, CreditCard, Building, Users, MoreHorizontal, Package, Send, QrCode, Phone, Target } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -31,6 +32,7 @@ import PartnerWithAfriPay from "@/components/partnerships/partner-with-afripay";
 
 export default function Services() {
   const { toast } = useToast();
+  const [, setLocation] = useLocation();
   const [selectedService, setSelectedService] = useState<string | null>(null);
 
   const serviceCategories = [

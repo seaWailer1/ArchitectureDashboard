@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { 
   ArrowLeft, 
@@ -29,7 +29,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
-import { apiRequest } from "@/lib/queryClient";
+import { PartnershipI18n, SupportedLanguage } from "@/lib/i18n-partnerships";
+import LanguageSelector from "./language-selector";
 
 interface PartnerWithAfriPayProps {
   onBack: () => void;
@@ -37,6 +38,8 @@ interface PartnerWithAfriPayProps {
 
 export default function PartnerWithAfriPay({ onBack }: PartnerWithAfriPayProps) {
   const [activeTab, setActiveTab] = useState<'overview' | 'apply' | 'developer' | 'resources'>('overview');
+  const [i18n] = useState(() => new PartnershipI18n());
+  const [currentLanguage, setCurrentLanguage] = useState<SupportedLanguage>(i18n.getCurrentLanguage());
   const [applicationData, setApplicationData] = useState({
     companyName: '',
     contactName: '',
@@ -52,6 +55,21 @@ export default function PartnerWithAfriPay({ onBack }: PartnerWithAfriPayProps) 
   });
 
   const { toast } = useToast();
+  const t = i18n.getTranslations();
+  const isRTL = i18n.isRTL();
+
+  useEffect(() => {
+    // Apply RTL styles when language changes
+    if (isRTL) {
+      document.documentElement.dir = 'rtl';
+    } else {
+      document.documentElement.dir = 'ltr';
+    }
+  }, [isRTL]);
+
+  const handleLanguageChange = (language: SupportedLanguage) => {
+    setCurrentLanguage(language);
+  };
 
   // Partnership application mutation
   const applyMutation = useMutation({
@@ -70,8 +88,8 @@ export default function PartnerWithAfriPay({ onBack }: PartnerWithAfriPayProps) 
     },
     onSuccess: () => {
       toast({
-        title: "Application submitted!",
-        description: "We'll review your partnership application and get back to you within 3-5 business days.",
+        title: t.applicationSubmitted,
+        description: t.applicationSubmittedDesc,
       });
       setApplicationData({
         companyName: '',
@@ -89,7 +107,7 @@ export default function PartnerWithAfriPay({ onBack }: PartnerWithAfriPayProps) 
     },
     onError: (error: any) => {
       toast({
-        title: "Submission failed",
+        title: t.submissionFailed,
         description: error.message || "Please try again",
         variant: "destructive",
       });
@@ -99,8 +117,8 @@ export default function PartnerWithAfriPay({ onBack }: PartnerWithAfriPayProps) 
   const partnershipTypes = [
     {
       id: 'fintech',
-      title: 'Fintech Integration',
-      description: 'Payment processing, lending, investment services',
+      title: t.fintechIntegration,
+      description: t.fintechDescription,
       icon: CreditCard,
       color: 'bg-blue-100 text-blue-600',
       benefits: ['Revenue sharing', 'API access', 'White-label solutions', 'Technical support'],
@@ -108,8 +126,8 @@ export default function PartnerWithAfriPay({ onBack }: PartnerWithAfriPayProps) 
     },
     {
       id: 'ecommerce',
-      title: 'E-commerce Platform',
-      description: 'Online marketplaces, retail integration',
+      title: t.ecommercePlatform,
+      description: t.ecommerceDescription,
       icon: Globe,
       color: 'bg-green-100 text-green-600',
       benefits: ['Payment gateway', 'Instant settlements', 'Fraud protection', 'Analytics'],
@@ -117,8 +135,8 @@ export default function PartnerWithAfriPay({ onBack }: PartnerWithAfriPayProps) 
     },
     {
       id: 'merchant',
-      title: 'Merchant Services',
-      description: 'Point-of-sale, retail solutions',
+      title: t.merchantServices,
+      description: t.merchantDescription,
       icon: Building2,
       color: 'bg-purple-100 text-purple-600',
       benefits: ['POS integration', 'QR payments', 'Inventory sync', 'Sales reports'],
@@ -126,8 +144,8 @@ export default function PartnerWithAfriPay({ onBack }: PartnerWithAfriPayProps) 
     },
     {
       id: 'mobile',
-      title: 'Mobile App Developer',
-      description: 'In-app payments, subscription billing',
+      title: t.mobileAppDeveloper,
+      description: t.mobileDescription,
       icon: Smartphone,
       color: 'bg-orange-100 text-orange-600',
       benefits: ['SDK access', 'App store billing', 'User analytics', 'Developer tools'],
@@ -135,8 +153,8 @@ export default function PartnerWithAfriPay({ onBack }: PartnerWithAfriPayProps) 
     },
     {
       id: 'logistics',
-      title: 'Logistics & Delivery',
-      description: 'Shipping, last-mile delivery services',
+      title: t.logisticsDelivery,
+      description: t.logisticsDescription,
       icon: Zap,
       color: 'bg-yellow-100 text-yellow-600',
       benefits: ['Delivery tracking', 'COD payments', 'Route optimization', 'Customer notifications'],
@@ -144,8 +162,8 @@ export default function PartnerWithAfriPay({ onBack }: PartnerWithAfriPayProps) 
     },
     {
       id: 'enterprise',
-      title: 'Enterprise Solutions',
-      description: 'B2B payments, payroll, expense management',
+      title: t.enterpriseSolutions,
+      description: t.enterpriseDescription,
       icon: BarChart3,
       color: 'bg-indigo-100 text-indigo-600',
       benefits: ['Bulk payments', 'Multi-currency', 'Reporting suite', 'Dedicated support'],
@@ -160,8 +178,8 @@ export default function PartnerWithAfriPay({ onBack }: PartnerWithAfriPayProps) 
   const handleSubmitApplication = () => {
     if (!applicationData.companyName || !applicationData.email || !applicationData.partnershipType) {
       toast({
-        title: "Missing information",
-        description: "Please fill in all required fields",
+        title: t.missingInformation,
+        description: t.fillRequiredFields,
         variant: "destructive",
       });
       return;
@@ -171,25 +189,31 @@ export default function PartnerWithAfriPay({ onBack }: PartnerWithAfriPayProps) 
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-6 space-y-6">
+    <div className={`max-w-4xl mx-auto p-6 space-y-6 ${isRTL ? 'rtl' : 'ltr'}`}>
       {/* Header */}
-      <div className="flex items-center space-x-3">
-        <Button variant="outline" size="sm" onClick={onBack}>
-          <ArrowLeft className="w-4 h-4" />
-        </Button>
-        <div className="flex-1">
-          <h1 className="text-3xl font-bold text-gray-900">Partner with AfriPay</h1>
-          <p className="text-lg text-gray-600 mt-2">Join Africa's leading fintech ecosystem and scale your business across the continent</p>
+      <div className="flex items-center justify-between">
+        <div className="flex items-center space-x-3">
+          <Button variant="outline" size="sm" onClick={onBack}>
+            <ArrowLeft className={`w-4 h-4 ${isRTL ? 'rotate-180' : ''}`} />
+          </Button>
+          <div className="flex-1">
+            <h1 className="text-3xl font-bold text-gray-900">{t.title}</h1>
+            <p className="text-lg text-gray-600 mt-2">{t.subtitle}</p>
+          </div>
         </div>
+        <LanguageSelector 
+          i18n={i18n} 
+          onLanguageChange={handleLanguageChange}
+        />
       </div>
 
       {/* Tab Navigation */}
       <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as any)} className="w-full">
         <TabsList className="grid w-full grid-cols-4">
-          <TabsTrigger value="overview">Overview</TabsTrigger>
-          <TabsTrigger value="apply">Apply</TabsTrigger>
-          <TabsTrigger value="developer">Developer</TabsTrigger>
-          <TabsTrigger value="resources">Resources</TabsTrigger>
+          <TabsTrigger value="overview">{t.overview}</TabsTrigger>
+          <TabsTrigger value="apply">{t.apply}</TabsTrigger>
+          <TabsTrigger value="developer">{t.developer}</TabsTrigger>
+          <TabsTrigger value="resources">{t.resources}</TabsTrigger>
         </TabsList>
 
         {/* Overview Tab */}
@@ -202,23 +226,23 @@ export default function PartnerWithAfriPay({ onBack }: PartnerWithAfriPayProps) 
                   <Handshake className="w-8 h-8" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold">Partner with AfriPay</h3>
-                  <p className="text-white/80">Scale your business across Africa</p>
+                  <h3 className="text-xl font-bold">{t.heroTitle}</h3>
+                  <p className="text-white/80">{t.heroSubtitle}</p>
                 </div>
               </div>
               
               <div className="grid grid-cols-3 gap-4 mb-4">
                 <div className="text-center">
                   <p className="text-2xl font-bold">50M+</p>
-                  <p className="text-sm text-white/80">Active Users</p>
+                  <p className="text-sm text-white/80">{t.activeUsers}</p>
                 </div>
                 <div className="text-center">
                   <p className="text-2xl font-bold">54</p>
-                  <p className="text-sm text-white/80">Countries</p>
+                  <p className="text-sm text-white/80">{t.countries}</p>
                 </div>
                 <div className="text-center">
                   <p className="text-2xl font-bold">$10B+</p>
-                  <p className="text-sm text-white/80">Annual Volume</p>
+                  <p className="text-sm text-white/80">{t.annualVolume}</p>
                 </div>
               </div>
               
@@ -227,15 +251,15 @@ export default function PartnerWithAfriPay({ onBack }: PartnerWithAfriPayProps) 
                 className="w-full"
                 onClick={() => setActiveTab('apply')}
               >
-                Start Partnership Application
-                <ArrowRight className="w-4 h-4 ml-2" />
+                {t.startApplication}
+                <ArrowRight className={`w-4 h-4 ${isRTL ? 'mr-2 rotate-180' : 'ml-2'}`} />
               </Button>
             </CardContent>
           </Card>
 
           {/* Partnership Types */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">Partnership Opportunities</h3>
+            <h3 className="text-lg font-semibold mb-4">{t.partnershipOpportunities}</h3>
             <div className="grid gap-4">
               {partnershipTypes.map((type) => {
                 const Icon = type.icon;
@@ -253,7 +277,7 @@ export default function PartnerWithAfriPay({ onBack }: PartnerWithAfriPayProps) 
                           
                           <div className="grid grid-cols-1 gap-3">
                             <div>
-                              <p className="text-xs font-medium text-gray-500 mb-1">Benefits</p>
+                              <p className="text-xs font-medium text-gray-500 mb-1">{t.benefits}</p>
                               <div className="flex flex-wrap gap-1">
                                 {type.benefits.map((benefit, index) => (
                                   <Badge key={index} variant="secondary" className="text-xs">
@@ -278,28 +302,28 @@ export default function PartnerWithAfriPay({ onBack }: PartnerWithAfriPayProps) 
         <TabsContent value="apply" className="space-y-6">
           <Card>
             <CardHeader>
-              <CardTitle>Partnership Application</CardTitle>
-              <p className="text-sm text-gray-600">Tell us about your business and integration needs</p>
+              <CardTitle>{t.partnershipApplication}</CardTitle>
+              <p className="text-sm text-gray-600">{t.applicationSubtitle}</p>
             </CardHeader>
             <CardContent className="space-y-4">
               {/* Company Information */}
               <div className="space-y-4">
-                <h4 className="font-medium">Company Information</h4>
+                <h4 className="font-medium">{t.companyInformation}</h4>
                 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <Label>Company Name *</Label>
+                    <Label>{t.companyName} *</Label>
                     <Input
-                      placeholder="Your company name"
+                      placeholder={t.companyName}
                       value={applicationData.companyName}
                       onChange={(e) => updateApplicationData('companyName', e.target.value)}
                       className="mt-2"
                     />
                   </div>
                   <div>
-                    <Label>Contact Name *</Label>
+                    <Label>{t.contactName} *</Label>
                     <Input
-                      placeholder="Primary contact person"
+                      placeholder={t.contactName}
                       value={applicationData.contactName}
                       onChange={(e) => updateApplicationData('contactName', e.target.value)}
                       className="mt-2"
@@ -309,7 +333,7 @@ export default function PartnerWithAfriPay({ onBack }: PartnerWithAfriPayProps) 
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <Label>Email Address *</Label>
+                    <Label>{t.emailAddress} *</Label>
                     <Input
                       type="email"
                       placeholder="contact@company.com"
@@ -319,10 +343,10 @@ export default function PartnerWithAfriPay({ onBack }: PartnerWithAfriPayProps) 
                     />
                   </div>
                   <div>
-                    <Label>Partnership Type *</Label>
+                    <Label>{t.partnershipType} *</Label>
                     <Select value={applicationData.partnershipType} onValueChange={(value) => updateApplicationData('partnershipType', value)}>
                       <SelectTrigger className="mt-2">
-                        <SelectValue placeholder="Select partnership type" />
+                        <SelectValue placeholder={t.partnershipType} />
                       </SelectTrigger>
                       <SelectContent>
                         {partnershipTypes.map((type) => (
@@ -336,9 +360,9 @@ export default function PartnerWithAfriPay({ onBack }: PartnerWithAfriPayProps) 
                 </div>
 
                 <div>
-                  <Label>Business Description</Label>
+                  <Label>{t.businessDescription}</Label>
                   <Textarea
-                    placeholder="Describe your business and how you plan to integrate with AfriPay..."
+                    placeholder={t.businessDescriptionPlaceholder}
                     value={applicationData.description}
                     onChange={(e) => updateApplicationData('description', e.target.value)}
                     className="mt-2 h-24"
@@ -351,7 +375,7 @@ export default function PartnerWithAfriPay({ onBack }: PartnerWithAfriPayProps) 
                 disabled={applyMutation.isPending}
                 className="w-full"
               >
-                {applyMutation.isPending ? "Submitting..." : "Submit Application"}
+                {applyMutation.isPending ? t.submitting : t.submitApplication}
               </Button>
             </CardContent>
           </Card>
@@ -361,18 +385,18 @@ export default function PartnerWithAfriPay({ onBack }: PartnerWithAfriPayProps) 
         <TabsContent value="developer" className="space-y-6">
           <Card>
             <CardHeader>
-              <CardTitle>Developer Quick Start</CardTitle>
-              <p className="text-sm text-gray-600">Get started with AfriPay APIs in minutes</p>
+              <CardTitle>{t.developerQuickStart}</CardTitle>
+              <p className="text-sm text-gray-600">{t.getStartedMinutes}</p>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="bg-gray-50 rounded-lg p-4">
-                <h4 className="font-medium mb-2">Step 1: Get API Keys</h4>
-                <p className="text-sm text-gray-600 mb-3">Sign up for a developer account to receive your API credentials</p>
-                <Button size="sm">Create Developer Account</Button>
+                <h4 className="font-medium mb-2">{t.step1Title}</h4>
+                <p className="text-sm text-gray-600 mb-3">{t.step1Description}</p>
+                <Button size="sm">{t.createAccount}</Button>
               </div>
               
               <div className="bg-gray-50 rounded-lg p-4">
-                <h4 className="font-medium mb-2">Step 2: Make Your First API Call</h4>
+                <h4 className="font-medium mb-2">{t.step2Title}</h4>
                 <div className="bg-gray-800 text-green-400 p-3 rounded text-sm font-mono">
                   <div>curl -X GET \</div>
                   <div>&nbsp;&nbsp;https://api.afripay.com/v1/payments \</div>
@@ -387,12 +411,12 @@ export default function PartnerWithAfriPay({ onBack }: PartnerWithAfriPayProps) 
         <TabsContent value="resources" className="space-y-6">
           <Card>
             <CardHeader>
-              <CardTitle>Developer Resources</CardTitle>
+              <CardTitle>{t.developmentResources}</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="text-center py-8">
                 <Code className="w-12 h-12 text-gray-400 mx-auto mb-2" />
-                <p className="text-gray-600">Developer resources coming soon</p>
+                <p className="text-gray-600">{t.comingSoon}</p>
               </div>
             </CardContent>
           </Card>
