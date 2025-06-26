@@ -185,7 +185,7 @@ export default function Services() {
             <Button 
               variant="outline" 
               className="w-full"
-              onClick={() => setSelectedService('partner-portal')}
+              onClick={() => setLocation('/partnerships')}
             >
               Learn More
             </Button>

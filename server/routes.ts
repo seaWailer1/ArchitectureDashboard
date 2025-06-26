@@ -866,6 +866,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Register partnership routes
+  registerPartnershipRoutes(app);
+  
   const httpServer = createServer(app);
   return httpServer;
 }
