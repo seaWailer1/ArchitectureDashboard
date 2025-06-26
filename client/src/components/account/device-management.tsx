@@ -6,11 +6,11 @@ import {
   Tablet, 
   Shield, 
   ShieldCheck, 
-  FaTimes,
-  FaArrowLeft,
-  FaClock,
-  FaMapMarkerAlt 
-} from "react-icons/fa";
+  X,
+  ArrowLeft,
+  Clock,
+  MapPin 
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -99,7 +99,7 @@ export default function DeviceManagement({ onBack }: DeviceManagementProps) {
       {/* Header */}
       <div className="flex items-center space-x-3">
         <Button variant="ghost" size="sm" onClick={onBack}>
-          <FaArrowLeft className="w-4 h-4" />
+          <ArrowLeft className="w-4 h-4" />
         </Button>
         <div>
           <h2 className="text-xl font-bold">Device Management</h2>
@@ -195,11 +195,11 @@ export default function DeviceManagement({ onBack }: DeviceManagementProps) {
                               <span>{device.browser}</span>
                             </div>
                             <div className="flex items-center space-x-1">
-                              <FaClock className="w-3 h-3" />
+                              <Clock className="w-3 h-3" />
                               <span>Last used: {new Date(device.lastUsedAt).toLocaleDateString()}</span>
                             </div>
                             <div className="flex items-center space-x-1">
-                              <FaMapMarkerAlt className="w-3 h-3" />
+                              <MapPin className="w-3 h-3" />
                               <span>First seen: {new Date(device.firstUsedAt).toLocaleDateString()}</span>
                             </div>
                           </div>
@@ -242,7 +242,7 @@ export default function DeviceManagement({ onBack }: DeviceManagementProps) {
                             onClick={() => handleDeviceAction(device.deviceId, 'remove')}
                             disabled={updateDeviceMutation.isPending}
                           >
-                            <FaTimes className="w-3 h-3" />
+                            <X className="w-3 h-3" />
                           </Button>
                         </div>
                       </div>

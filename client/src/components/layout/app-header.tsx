@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { FaBell } from "react-icons/fa";
-import { FaCoins } from "react-icons/fa";
+import { Bell, Coins } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { t, setLanguage, getCurrentLanguage, getAvailableLanguages, type Language } from "@/lib/i18n";
@@ -28,7 +27,7 @@ export default function AppHeader() {
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
             <div className="w-8 h-8 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center">
-              <FaCoins className="text-white w-4 h-4" />
+              <Coins className="text-white w-4 h-4" />
             </div>
             <h1 className="text-lg font-semibold text-neutral-900">{t('appName')}</h1>
           </div>
@@ -49,7 +48,7 @@ export default function AppHeader() {
             
             {/* Notifications */}
             <Button variant="ghost" size="sm" className="relative p-2 text-neutral-600 hover:text-primary">
-              <FaBell className="w-5 h-5" />
+              <Bell className="w-5 h-5" />
               <span className="absolute -top-1 -right-1 w-4 h-4 bg-destructive text-white text-xs rounded-full flex items-center justify-center">
                 2
               </span>

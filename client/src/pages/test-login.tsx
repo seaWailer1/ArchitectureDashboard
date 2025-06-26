@@ -1,6 +1,26 @@
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { FaUsers, FaUserCheck, FaClock, FaMapMarkerAlt, FaPhone, FaEnvelope, FaShieldAlt, FaCreditCard, FaUser, FaSync, FaSignInAlt, FaPlus, FaCheckCircle, FaExclamationCircle, FaTimesCircle, FaGlobe, FaArrowRight, FaMobile, FaPlay } from "react-icons/fa";
+import { 
+  Users, 
+  UserCheck, 
+  Clock, 
+  MapPin,
+  Phone,
+  Mail,
+  Shield,
+  CreditCard,
+  User,
+  RefreshCw,
+  LogIn,
+  Plus,
+  CheckCircle,
+  AlertCircle,
+  XCircle,
+  Globe,
+  ArrowRight,
+  Smartphone,
+  Play
+} from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -57,7 +77,7 @@ export default function TestLogin() {
         // First switch to the user
         const response = await apiRequest('POST', `/api/preset-users/switch/${userData.id}`);
         
-        console.log('FaUser switch response:', response);
+        console.log('User switch response:', response);
         
         // Return user data for auto-fill
         return userData;
@@ -67,7 +87,7 @@ export default function TestLogin() {
       }
     },
     onSuccess: (userData) => {
-      console.log('FaUser switching successful:', userData);
+      console.log('User switching successful:', userData);
       
       // Store user data in sessionStorage for auto-fill
       const autoFillData = {
@@ -106,26 +126,26 @@ export default function TestLogin() {
   const getRoleIcon = (role: string) => {
     switch (role) {
       case 'merchant':
-        return <FaCreditCard className="w-4 h-4" />;
+        return <CreditCard className="w-4 h-4" />;
       case 'agent':
-        return <FaShieldAlt className="w-4 h-4" />;
+        return <Shield className="w-4 h-4" />;
       default:
-        return <FaUser className="w-4 h-4" />;
+        return <User className="w-4 h-4" />;
     }
   };
 
   const getStatusIcon = (status: string) => {
     switch (status) {
       case 'verified':
-        return <FaCheckCircle className="w-4 h-4 text-green-600" />;
+        return <CheckCircle className="w-4 h-4 text-green-600" />;
       case 'in_progress':
-        return <FaClock className="w-4 h-4 text-yellow-600" />;
+        return <Clock className="w-4 h-4 text-yellow-600" />;
       case 'pending':
-        return <FaExclamationCircle className="w-4 h-4 text-orange-600" />;
+        return <AlertCircle className="w-4 h-4 text-orange-600" />;
       case 'rejected':
-        return <FaTimesCircle className="w-4 h-4 text-red-600" />;
+        return <XCircle className="w-4 h-4 text-red-600" />;
       default:
-        return <FaClock className="w-4 h-4 text-gray-400" />;
+        return <Clock className="w-4 h-4 text-gray-400" />;
     }
   };
 
@@ -174,10 +194,10 @@ export default function TestLogin() {
         {/* Header */}
         <div className="text-center text-white mb-12">
           <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-6">
-            <FaGlobe className="w-8 h-8 text-white" />
+            <Globe className="w-8 h-8 text-white" />
           </div>
           <h1 className="text-4xl font-bold mb-4">AfriPay Demo</h1>
-          <p className="text-xl text-white/90 mb-2">Test FaUser Journeys</p>
+          <p className="text-xl text-white/90 mb-2">Test User Journeys</p>
           <p className="text-white/80 max-w-2xl mx-auto">
             Select a test user to experience different onboarding and KYC scenarios.
           </p>
@@ -186,19 +206,19 @@ export default function TestLogin() {
         {/* Features Preview */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8 max-w-4xl mx-auto">
           <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 text-center text-white">
-            <FaShieldAlt className="w-6 h-6 mx-auto mb-2" />
+            <Shield className="w-6 h-6 mx-auto mb-2" />
             <p className="text-sm font-medium">Secure KYC</p>
           </div>
           <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 text-center text-white">
-            <FaMobile className="w-6 h-6 mx-auto mb-2" />
+            <Smartphone className="w-6 h-6 mx-auto mb-2" />
             <p className="text-sm font-medium">Mobile First</p>
           </div>
           <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 text-center text-white">
-            <FaCreditCard className="w-6 h-6 mx-auto mb-2" />
-            <p className="text-sm font-medium">Multi-FaWallet</p>
+            <CreditCard className="w-6 h-6 mx-auto mb-2" />
+            <p className="text-sm font-medium">Multi-Wallet</p>
           </div>
           <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 text-center text-white">
-            <FaUsers className="w-6 h-6 mx-auto mb-2" />
+            <Users className="w-6 h-6 mx-auto mb-2" />
             <p className="text-sm font-medium">Multi-Role</p>
           </div>
         </div>
@@ -210,7 +230,7 @@ export default function TestLogin() {
             </div>
           ) : (
             <>
-              {/* FaUser Selection */}
+              {/* User Selection */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
                 {presetUsers?.map((user: PresetUser) => (
                   <Card key={user.id} className="hover:shadow-lg transition-shadow bg-white/95 backdrop-blur-sm">
@@ -246,12 +266,12 @@ export default function TestLogin() {
                         className="w-full flex items-center justify-center space-x-2"
                       >
                         {simulateOnboardingMutation.isPending ? (
-                          <FaSync className="w-4 h-4 animate-spin" />
+                          <RefreshCw className="w-4 h-4 animate-spin" />
                         ) : (
-                          <FaPlay className="w-4 h-4" />
+                          <Play className="w-4 h-4" />
                         )}
                         <span>Start Journey</span>
-                        <FaArrowRight className="w-4 h-4" />
+                        <ArrowRight className="w-4 h-4" />
                       </Button>
                     </CardContent>
                   </Card>
@@ -263,7 +283,7 @@ export default function TestLogin() {
                 <Card className="text-center py-16 bg-white/98 backdrop-blur-lg border border-white/20 rounded-3xl">
                   <CardContent>
                     <div className="w-24 h-24 bg-gradient-to-br from-neutral-200 to-neutral-300 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                      <FaUsers className="w-12 h-12 text-neutral-500" />
+                      <Users className="w-12 h-12 text-neutral-500" />
                     </div>
                     <h3 className="text-2xl font-bold text-neutral-900 mb-3">No Test Users Available</h3>
                     <p className="text-neutral-600 mb-8 max-w-md mx-auto">
@@ -275,9 +295,9 @@ export default function TestLogin() {
                       className="flex items-center space-x-3 mx-auto bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 px-8 py-3 rounded-2xl font-bold shadow-lg hover:shadow-xl transition-all"
                     >
                       {createUsersMutation.isPending ? (
-                        <FaSync className="w-5 h-5 animate-spin" />
+                        <RefreshCw className="w-5 h-5 animate-spin" />
                       ) : (
-                        <FaPlus className="w-5 h-5" />
+                        <Plus className="w-5 h-5" />
                       )}
                       <span>Create Test Users</span>
                     </Button>
@@ -289,7 +309,7 @@ export default function TestLogin() {
               <Card className="bg-white/95 backdrop-blur-sm">
                 <CardHeader>
                   <CardTitle className="flex items-center space-x-2">
-                    <FaShieldAlt className="w-5 h-5" />
+                    <Shield className="w-5 h-5" />
                     <span>Quick Guide</span>
                   </CardTitle>
                 </CardHeader>
@@ -317,7 +337,7 @@ export default function TestLogin() {
                       onClick={() => setLocation("/signin")}
                       className="flex items-center space-x-2 mx-auto"
                     >
-                      <FaSignInAlt className="w-4 h-4" />
+                      <LogIn className="w-4 h-4" />
                       <span>Regular Sign In</span>
                     </Button>
                   </div>

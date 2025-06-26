@@ -1,17 +1,17 @@
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { 
-  FaQuestionCircle, 
-  FaComment, 
-  FaPhone, 
-  FaEnvelope, 
-  FaPaperPlane,
-  FaArrowLeft,
-  FaClock,
-  FaCheckCircle,
-  FaExclamationCircle,
+  HelpCircle, 
+  MessageSquare, 
+  Phone, 
+  Mail, 
+  Send,
+  ArrowLeft,
+  Clock,
+  CheckCircle,
+  AlertCircle,
   Book
-} from "react-icons/fa";
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -84,13 +84,13 @@ export default function SupportCenter({ onBack }: SupportCenterProps) {
   const getStatusIcon = (status: string) => {
     switch (status) {
       case "resolved":
-        return <FaCheckCircle className="w-4 h-4 text-success" />;
+        return <CheckCircle className="w-4 h-4 text-success" />;
       case "pending":
-        return <FaClock className="w-4 h-4 text-accent" />;
+        return <Clock className="w-4 h-4 text-accent" />;
       case "open":
-        return <FaExclamationCircle className="w-4 h-4 text-primary" />;
+        return <AlertCircle className="w-4 h-4 text-primary" />;
       default:
-        return <FaComment className="w-4 h-4 text-neutral-500" />;
+        return <MessageSquare className="w-4 h-4 text-neutral-500" />;
     }
   };
 
@@ -144,7 +144,7 @@ export default function SupportCenter({ onBack }: SupportCenterProps) {
       {/* Header */}
       <div className="flex items-center space-x-3">
         <Button variant="ghost" size="sm" onClick={onBack}>
-          <FaArrowLeft className="w-4 h-4" />
+          <ArrowLeft className="w-4 h-4" />
         </Button>
         <div>
           <h2 className="text-xl font-bold">Support Center</h2>
@@ -159,16 +159,16 @@ export default function SupportCenter({ onBack }: SupportCenterProps) {
           className="h-auto p-4 flex flex-col items-center space-y-2"
           onClick={() => setShowNewTicket(true)}
         >
-          <FaComment className="w-6 h-6 text-primary" />
+          <MessageSquare className="w-6 h-6 text-primary" />
           <span className="text-sm font-medium">New Ticket</span>
         </Button>
         
         <Button
           variant="outline"
           className="h-auto p-4 flex flex-col items-center space-y-2"
-          onClick={() => toast({ title: "Contact Info", description: "FaPhone: +1-800-AFRIPAY\nEmail: support@afripay.com" })}
+          onClick={() => toast({ title: "Contact Info", description: "Phone: +1-800-AFRIPAY\nEmail: support@afripay.com" })}
         >
-          <FaPhone className="w-6 h-6 text-success" />
+          <Phone className="w-6 h-6 text-success" />
           <span className="text-sm font-medium">Call Support</span>
         </Button>
       </div>
@@ -258,7 +258,7 @@ export default function SupportCenter({ onBack }: SupportCenterProps) {
         <CardContent>
           {tickets.length === 0 ? (
             <div className="text-center py-6">
-              <FaComment className="w-12 h-12 text-neutral-400 mx-auto mb-3" />
+              <MessageSquare className="w-12 h-12 text-neutral-400 mx-auto mb-3" />
               <p className="text-neutral-600">No support tickets yet</p>
               <p className="text-sm text-neutral-500">Create a ticket if you need help</p>
             </div>
@@ -322,21 +322,21 @@ export default function SupportCenter({ onBack }: SupportCenterProps) {
         <CardContent>
           <div className="space-y-3">
             <div className="flex items-center space-x-3">
-              <FaEnvelope className="w-5 h-5 text-primary" />
+              <Mail className="w-5 h-5 text-primary" />
               <div>
                 <p className="font-medium">Email Support</p>
                 <p className="text-sm text-neutral-600">support@afripay.com</p>
               </div>
             </div>
             <div className="flex items-center space-x-3">
-              <FaPhone className="w-5 h-5 text-success" />
+              <Phone className="w-5 h-5 text-success" />
               <div>
-                <p className="font-medium">FaPhone Support</p>
+                <p className="font-medium">Phone Support</p>
                 <p className="text-sm text-neutral-600">+1-800-AFRIPAY (24/7)</p>
               </div>
             </div>
             <div className="flex items-center space-x-3">
-              <FaComment className="w-5 h-5 text-accent" />
+              <MessageSquare className="w-5 h-5 text-accent" />
               <div>
                 <p className="font-medium">Live Chat</p>
                 <p className="text-sm text-neutral-600">Available 9 AM - 6 PM (EST)</p>

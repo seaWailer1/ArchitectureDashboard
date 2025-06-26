@@ -1,4 +1,4 @@
-import { FaCar, FaShoppingBag, FaBolt, FaTh } from "react-icons/fa";
+import { Car, ShoppingBag, Zap, Grid3X3 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { t } from "@/lib/i18n";
@@ -10,28 +10,28 @@ export default function MiniAppLauncher() {
     {
       id: "ride",
       name: t('ride'),
-      icon: FaCar,
+      icon: Car,
       color: "bg-blue-100 text-blue-600",
       description: "Ride-hailing service",
     },
     {
       id: "shop",
       name: t('shop'),
-      icon: FaShoppingBag,
+      icon: ShoppingBag,
       color: "bg-green-100 text-green-600",
       description: "E-commerce platform",
     },
     {
       id: "bills",
       name: t('bills'),
-      icon: FaBolt,
+      icon: Zap,
       color: "bg-yellow-100 text-yellow-600",
       description: "Utility bill payments",
     },
     {
       id: "more",
       name: t('more'),
-      icon: FaTh,
+      icon: Grid3X3,
       color: "bg-neutral-100 text-neutral-600",
       description: "More apps",
     },

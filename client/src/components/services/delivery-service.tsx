@@ -1,21 +1,21 @@
 import { useState, useEffect } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { 
-  FaBox, 
-  FaMapMarkerAlt, 
-  FaClock, 
-  FaDollarSign,
-  FaTruck,
-  FaUser,
-  FaPhone,
-  FaCamera,
-  FaCheckCircle,
-  FaExclamationCircle,
-  FaStar,
-  FaLocationArrow,
+  Package, 
+  MapPin, 
+  Clock, 
+  DollarSign,
+  Truck,
+  User,
+  Phone,
+  Camera,
+  CheckCircle,
+  AlertCircle,
+  Star,
+  Navigation,
   Shield,
-  FaCar
-} from "react-icons/fa";
+  Car
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -103,7 +103,7 @@ export default function DeliveryService() {
       id: "motorbike",
       name: "Motorbike Delivery",
       description: "Fast delivery for small packages",
-      icon: FaLocationArrow,
+      icon: Navigation,
       basePrice: 2.00,
       pricePerKm: 0.50,
       pricePerKg: 0.25,
@@ -115,7 +115,7 @@ export default function DeliveryService() {
       id: "bicycle",
       name: "Bicycle Delivery",
       description: "Eco-friendly delivery for light items",
-      icon: FaLocationArrow,
+      icon: Navigation,
       basePrice: 1.50,
       pricePerKm: 0.30,
       pricePerKg: 0.20,
@@ -125,21 +125,21 @@ export default function DeliveryService() {
     },
     {
       id: "car",
-      name: "FaCar Delivery",
+      name: "Car Delivery",
       description: "Secure delivery for larger packages",
-      icon: FaCar,
+      icon: Car,
       basePrice: 3.50,
       pricePerKm: 0.80,
       pricePerKg: 0.30,
       maxWeight: 50,
       eta: "60-120 min",
-      vehicleType: "FaCar"
+      vehicleType: "Car"
     },
     {
       id: "van",
       name: "Van Delivery",
       description: "Bulk delivery for multiple items",
-      icon: FaTruck,
+      icon: Truck,
       basePrice: 5.00,
       pricePerKm: 1.20,
       pricePerKg: 0.40,
@@ -259,9 +259,9 @@ export default function DeliveryService() {
       setCurrentDelivery(prev => prev ? { ...prev, status: nextStatus } : null);
       
       const messages = {
-        picked_up: "FaBox picked up from sender",
-        in_transit: "FaBox is on the way",
-        delivered: "FaBox delivered successfully"
+        picked_up: "Package picked up from sender",
+        in_transit: "Package is on the way",
+        delivered: "Package delivered successfully"
       };
       
       toast({
@@ -317,7 +317,7 @@ export default function DeliveryService() {
     switch (status) {
       case 'pending': return 'Finding courier...';
       case 'assigned': return 'Courier assigned';
-      case 'picked_up': return 'FaBox picked up';
+      case 'picked_up': return 'Package picked up';
       case 'in_transit': return 'On the way';
       case 'delivered': return 'Delivered';
       case 'cancelled': return 'Cancelled';
@@ -327,7 +327,7 @@ export default function DeliveryService() {
 
   const renderStars = (rating: number) => {
     return Array.from({ length: 5 }, (_, i) => (
-      <FaStar 
+      <Star 
         key={i} 
         className={`w-3 h-3 ${i < Math.floor(rating) ? 'text-yellow-400 fill-current' : 'text-neutral-300'}`} 
       />
@@ -338,7 +338,7 @@ export default function DeliveryService() {
     <div className="space-y-6">
       <div className="text-center">
         <div className="w-16 h-16 bg-gradient-to-br from-green-400 to-blue-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
-          <FaBox className="w-8 h-8 text-white" />
+          <Package className="w-8 h-8 text-white" />
         </div>
         <h2 className="text-2xl font-bold text-neutral-900 mb-2">AfriDeliver</h2>
         <p className="text-neutral-600">Fast, reliable package delivery across Africa</p>
@@ -346,7 +346,7 @@ export default function DeliveryService() {
 
       <Tabs defaultValue="send" className="w-full">
         <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="send">FaPaperPlane FaBox</TabsTrigger>
+          <TabsTrigger value="send">Send Package</TabsTrigger>
           <TabsTrigger value="track">Track Delivery</TabsTrigger>
           <TabsTrigger value="history">History</TabsTrigger>
         </TabsList>
@@ -400,14 +400,14 @@ export default function DeliveryService() {
             </CardContent>
           </Card>
 
-          {/* FaBox Details */}
+          {/* Package Details */}
           <Card>
             <CardHeader>
-              <CardTitle>FaBox Information</CardTitle>
+              <CardTitle>Package Information</CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
               <Textarea
-                placeholder="FaBox description (required for courier)"
+                placeholder="Package description (required for courier)"
                 value={packageDetails.description}
                 onChange={(e) => setPackageDetails({...packageDetails, description: e.target.value})}
               />
@@ -555,7 +555,7 @@ export default function DeliveryService() {
                       <CardContent className="p-4">
                         <div className="flex items-center space-x-3">
                           <div className="w-12 h-12 bg-neutral-100 rounded-full flex items-center justify-center">
-                            <FaUser className="w-6 h-6 text-neutral-400" />
+                            <User className="w-6 h-6 text-neutral-400" />
                           </div>
                           <div className="flex-1">
                             <p className="font-medium">{currentDelivery.courier.name}</p>
@@ -570,7 +570,7 @@ export default function DeliveryService() {
                             </p>
                           </div>
                           <Button size="sm" variant="outline">
-                            <FaPhone className="w-4 h-4" />
+                            <Phone className="w-4 h-4" />
                           </Button>
                         </div>
                       </CardContent>
@@ -594,15 +594,15 @@ export default function DeliveryService() {
                       className="w-full"
                       onClick={simulateDeliveryProgress}
                     >
-                      <FaClock className="w-4 h-4 mr-2" />
+                      <Clock className="w-4 h-4 mr-2" />
                       Simulate Progress
                     </Button>
                   )}
 
                   {currentDelivery.status === 'delivered' && currentDelivery.proofOfDelivery && (
                     <div className="text-center p-4 bg-success/10 rounded-lg">
-                      <FaCheckCircle className="w-8 h-8 text-success mx-auto mb-2" />
-                      <p className="font-medium text-success">FaBox Delivered!</p>
+                      <CheckCircle className="w-8 h-8 text-success mx-auto mb-2" />
+                      <p className="font-medium text-success">Package Delivered!</p>
                       <p className="text-sm text-neutral-600">OTP: {currentDelivery.proofOfDelivery.otp}</p>
                       <p className="text-xs text-neutral-500">
                         Delivered at {new Date(currentDelivery.proofOfDelivery.timestamp).toLocaleTimeString()}
@@ -618,14 +618,14 @@ export default function DeliveryService() {
         <TabsContent value="track" className="space-y-4">
           <Card>
             <CardHeader>
-              <CardTitle>Track FaBox</CardTitle>
+              <CardTitle>Track Package</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
                 <Input placeholder="Enter delivery ID" />
                 <Button className="w-full">
-                  <FaBox className="w-4 h-4 mr-2" />
-                  Track FaBox
+                  <Package className="w-4 h-4 mr-2" />
+                  Track Package
                 </Button>
               </div>
             </CardContent>
@@ -640,7 +640,7 @@ export default function DeliveryService() {
             <CardContent>
               {deliveryHistory.length === 0 ? (
                 <div className="text-center py-8">
-                  <FaBox className="w-12 h-12 text-neutral-400 mx-auto mb-3" />
+                  <Package className="w-12 h-12 text-neutral-400 mx-auto mb-3" />
                   <p className="text-neutral-600">No deliveries yet</p>
                   <p className="text-sm text-neutral-500">Your delivery history will appear here</p>
                 </div>

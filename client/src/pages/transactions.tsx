@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { FaArrowDown, FaArrowUp, FaPlus, FaFilter } from "react-icons/fa";
+import { ArrowDown, ArrowUp, Plus, Filter } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -10,8 +10,8 @@ import { TransactionData } from "@/types";
 
 export default function Transactions() {
   const [searchTerm, setSearchTerm] = useState("");
-  const [filterType, setFaFilterType] = useState("all");
-  const [filterStatus, setFaFilterStatus] = useState("all");
+  const [filterType, setFilterType] = useState("all");
+  const [filterStatus, setFilterStatus] = useState("all");
 
   const { data: transactions = [] } = useQuery<TransactionData[]>({
     queryKey: ["/api/transactions"],
@@ -20,13 +20,13 @@ export default function Transactions() {
   const getTransactionIcon = (type: string) => {
     switch (type) {
       case 'receive':
-        return { icon: FaArrowDown, color: 'bg-success/10 text-success' };
+        return { icon: ArrowDown, color: 'bg-success/10 text-success' };
       case 'send':
-        return { icon: FaArrowUp, color: 'bg-primary/10 text-primary' };
+        return { icon: ArrowUp, color: 'bg-primary/10 text-primary' };
       case 'topup':
-        return { icon: FaPlus, color: 'bg-accent/10 text-accent' };
+        return { icon: Plus, color: 'bg-accent/10 text-accent' };
       default:
-        return { icon: FaArrowUp, color: 'bg-neutral-100 text-neutral-600' };
+        return { icon: ArrowUp, color: 'bg-neutral-100 text-neutral-600' };
     }
   };
 
@@ -57,7 +57,7 @@ export default function Transactions() {
     
     switch (transaction.type) {
       case 'topup':
-        return 'FaWallet Top-up';
+        return 'Wallet Top-up';
       case 'send':
         return 'Payment Sent';
       case 'receive':
@@ -85,29 +85,29 @@ export default function Transactions() {
         <div className="py-6">
           <h1 className="text-2xl font-bold text-neutral-900 mb-6">Transaction History</h1>
           
-          {/* FaFilters */}
+          {/* Filters */}
           <div className="space-y-4 mb-6">
             <Input
-              placeholder="FaSearch transactions..."
+              placeholder="Search transactions..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full"
             />
             
             <div className="flex space-x-3">
-              <Select value={filterType} onValueChange={setFaFilterType}>
+              <Select value={filterType} onValueChange={setFilterType}>
                 <SelectTrigger className="flex-1">
                   <SelectValue placeholder="Type" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">All Types</SelectItem>
-                  <SelectItem value="send">FaPaperPlane</SelectItem>
+                  <SelectItem value="send">Send</SelectItem>
                   <SelectItem value="receive">Receive</SelectItem>
                   <SelectItem value="topup">Top Up</SelectItem>
                 </SelectContent>
               </Select>
               
-              <Select value={filterStatus} onValueChange={setFaFilterStatus}>
+              <Select value={filterStatus} onValueChange={setFilterStatus}>
                 <SelectTrigger className="flex-1">
                   <SelectValue placeholder="Status" />
                 </SelectTrigger>

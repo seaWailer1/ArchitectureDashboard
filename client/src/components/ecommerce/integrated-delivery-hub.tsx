@@ -1,32 +1,32 @@
 import { useState, useEffect } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { 
-  FaShoppingCart, 
+  ShoppingCart, 
   Utensils, 
-  FaBox, 
+  Package, 
   Pill, 
-  FaMapMarkerAlt, 
-  FaClock, 
-  FaStar,
-  FaTruck,
-  FaBicycle,
-  FaCar,
-  FaSearch,
-  FaFilter,
-  FaPlus,
-  FaMinus,
-  FaHeart,
-  FaShoppingBag,
-  FaLocationArrow,
-  FaPhone,
-  FaCheckCircle,
-  FaExclamationCircle,
-  FaUser,
-  FaDollarSign,
-  FaCamera,
-  FaComment,
+  MapPin, 
+  Clock, 
+  Star,
+  Truck,
+  Bike,
+  Car,
+  Search,
+  Filter,
+  Plus,
+  Minus,
+  Heart,
+  ShoppingBag,
+  Navigation,
+  Phone,
+  CheckCircle,
+  AlertCircle,
+  User,
+  DollarSign,
+  Camera,
+  MessageSquare,
   ThumbsUp
-} from "react-icons/fa";
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -102,9 +102,9 @@ export default function IntegratedDeliveryHub() {
 
   const deliveryCategories = [
     { id: "food", name: "Food & Restaurants", icon: Utensils, color: "bg-orange-500" },
-    { id: "grocery", name: "Groceries & Supermarkets", icon: FaShoppingCart, color: "bg-green-500" },
+    { id: "grocery", name: "Groceries & Supermarkets", icon: ShoppingCart, color: "bg-green-500" },
     { id: "pharmacy", name: "Pharmacy & Health", icon: Pill, color: "bg-blue-500" },
-    { id: "retail", name: "Retail & Shopping", icon: FaBox, color: "bg-purple-500" },
+    { id: "retail", name: "Retail & Shopping", icon: Package, color: "bg-purple-500" },
   ];
 
   const deliveryOptions: DeliveryOption[] = [
@@ -112,7 +112,7 @@ export default function IntegratedDeliveryHub() {
       id: "motorbike",
       name: "Express Delivery",
       description: "Fast delivery with motorbike",
-      icon: FaBicycle,
+      icon: Bike,
       estimatedTime: "20-35 min",
       price: 2.50,
       vehicleType: "motorbike"
@@ -121,7 +121,7 @@ export default function IntegratedDeliveryHub() {
       id: "bicycle",
       name: "Eco Delivery",
       description: "Environment-friendly bicycle delivery",
-      icon: FaBicycle,
+      icon: Bike,
       estimatedTime: "35-50 min",
       price: 1.50,
       vehicleType: "bicycle"
@@ -130,7 +130,7 @@ export default function IntegratedDeliveryHub() {
       id: "car",
       name: "Premium Delivery",
       description: "Secure car delivery for larger orders",
-      icon: FaCar,
+      icon: Car,
       estimatedTime: "25-40 min",
       price: 4.00,
       vehicleType: "car"
@@ -407,18 +407,18 @@ export default function IntegratedDeliveryHub() {
         <div className="flex justify-between items-start mb-2">
           <h3 className="font-semibold text-lg">{store.name}</h3>
           <Button variant="ghost" size="sm">
-            <FaHeart className="w-4 h-4" />
+            <Heart className="w-4 h-4" />
           </Button>
         </div>
         <p className="text-sm text-neutral-600 mb-3">{store.description}</p>
         
         <div className="flex items-center space-x-4 text-sm text-neutral-600 mb-2">
           <div className="flex items-center">
-            <FaStar className="w-4 h-4 text-yellow-400 fill-current mr-1" />
+            <Star className="w-4 h-4 text-yellow-400 fill-current mr-1" />
             <span>{store.rating} ({store.totalReviews})</span>
           </div>
           <div className="flex items-center">
-            <FaClock className="w-4 h-4 mr-1" />
+            <Clock className="w-4 h-4 mr-1" />
             <span>{store.deliveryTime}</span>
           </div>
         </div>
@@ -465,12 +465,12 @@ export default function IntegratedDeliveryHub() {
             
             <div className="flex items-center space-x-2 mb-2">
               <div className="flex items-center">
-                <FaStar className="w-4 h-4 text-yellow-400 fill-current mr-1" />
+                <Star className="w-4 h-4 text-yellow-400 fill-current mr-1" />
                 <span className="text-sm">{product.rating}</span>
               </div>
               {product.preparationTime && (
                 <div className="flex items-center">
-                  <FaClock className="w-4 h-4 mr-1" />
+                  <Clock className="w-4 h-4 mr-1" />
                   <span className="text-sm">{product.preparationTime} min</span>
                 </div>
               )}
@@ -488,7 +488,7 @@ export default function IntegratedDeliveryHub() {
                 disabled={product.stock === 0}
                 size="sm"
               >
-                <FaPlus className="w-4 h-4 mr-1" />
+                <Plus className="w-4 h-4 mr-1" />
                 Add
               </Button>
             </div>
@@ -512,7 +512,7 @@ export default function IntegratedDeliveryHub() {
                 className="text-white"
                 onClick={() => setShowCart(true)}
               >
-                <FaShoppingBag className="w-5 h-5" />
+                <ShoppingBag className="w-5 h-5" />
                 {cart.length > 0 && (
                   <Badge className="ml-1 bg-red-500">{cart.length}</Badge>
                 )}
@@ -520,12 +520,12 @@ export default function IntegratedDeliveryHub() {
             </div>
           </div>
           
-          {/* FaSearch */}
+          {/* Search */}
           <div className="mt-4">
             <div className="relative">
-              <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-neutral-400 w-4 h-4" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-neutral-400 w-4 h-4" />
               <Input
-                placeholder="FaSearch restaurants, stores, items..."
+                placeholder="Search restaurants, stores, items..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="pl-10 bg-white/20 border-white/30 text-white placeholder-white/70"
@@ -595,7 +595,7 @@ export default function IntegratedDeliveryHub() {
             
             {cart.length === 0 ? (
               <div className="text-center py-8">
-                <FaShoppingBag className="w-12 h-12 mx-auto text-neutral-400 mb-4" />
+                <ShoppingBag className="w-12 h-12 mx-auto text-neutral-400 mb-4" />
                 <p>Your cart is empty</p>
               </div>
             ) : (
@@ -612,7 +612,7 @@ export default function IntegratedDeliveryHub() {
                         size="sm"
                         onClick={() => updateQuantity(item.product.id, item.quantity - 1)}
                       >
-                        <FaMinus className="w-3 h-3" />
+                        <Minus className="w-3 h-3" />
                       </Button>
                       <span className="w-8 text-center">{item.quantity}</span>
                       <Button
@@ -620,7 +620,7 @@ export default function IntegratedDeliveryHub() {
                         size="sm"
                         onClick={() => updateQuantity(item.product.id, item.quantity + 1)}
                       >
-                        <FaPlus className="w-3 h-3" />
+                        <Plus className="w-3 h-3" />
                       </Button>
                     </div>
                   </div>
@@ -753,13 +753,13 @@ export default function IntegratedDeliveryHub() {
                 {activeOrder.status === "picked_up" && (
                   <div className="bg-blue-50 p-4 rounded-lg">
                     <div className="flex items-center space-x-2 mb-2">
-                      <FaUser className="w-5 h-5" />
+                      <User className="w-5 h-5" />
                       <span className="font-medium">Your Driver</span>
                     </div>
                     <p className="text-sm">Samuel Okafor</p>
                     <p className="text-sm text-neutral-600">Honda CG125 • LAG-456-XYZ</p>
                     <Button variant="outline" size="sm" className="mt-2">
-                      <FaPhone className="w-4 h-4 mr-2" />
+                      <Phone className="w-4 h-4 mr-2" />
                       Call Driver
                     </Button>
                   </div>

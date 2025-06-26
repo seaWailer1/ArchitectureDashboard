@@ -1,16 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
 import { 
-  FaWallet, 
-  FaChartLine, 
-  FaPaperPlane, 
-  FaQrcode, 
-  FaShoppingBag, 
-  FaCar,
-  FaPhone,
-  FaBolt,
-  FaPlus,
-  FaExternalLinkAlt
-} from "react-icons/fa";
+  Wallet, 
+  TrendingUp, 
+  Send, 
+  QrCode, 
+  ShoppingBag, 
+  Car,
+  Phone,
+  Zap,
+  Plus,
+  ArrowUpRight
+} from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -61,12 +61,12 @@ export default function ConsumerDashboard() {
   };
 
   const quickServices = [
-    { icon: FaPaperPlane, label: "FaPaperPlane Money", color: "bg-blue-100 text-blue-600", action: () => toast({ title: "FaPaperPlane Money", description: "Transfer funds feature coming soon!" }) },
-    { icon: FaQrcode, label: "Pay & Scan", color: "bg-green-100 text-green-600", action: () => toast({ title: "QR Payment", description: "QR payment feature coming soon!" }) },
-    { icon: FaPhone, label: "Buy Airtime", color: "bg-purple-100 text-purple-600", action: () => toast({ title: "Airtime", description: "Airtime purchase coming soon!" }) },
-    { icon: FaBolt, label: "Pay Bills", color: "bg-orange-100 text-orange-600", action: () => toast({ title: "Bills", description: "Bill payment feature coming soon!" }) },
-    { icon: FaShoppingBag, label: "Shop", color: "bg-pink-100 text-pink-600", action: () => toast({ title: "Shopping", description: "Shopping feature coming soon!" }) },
-    { icon: FaCar, label: "Transport", color: "bg-indigo-100 text-indigo-600", action: () => toast({ title: "Transport", description: "Transport booking coming soon!" }) },
+    { icon: Send, label: "Send Money", color: "bg-blue-100 text-blue-600", action: () => toast({ title: "Send Money", description: "Transfer funds feature coming soon!" }) },
+    { icon: QrCode, label: "Pay & Scan", color: "bg-green-100 text-green-600", action: () => toast({ title: "QR Payment", description: "QR payment feature coming soon!" }) },
+    { icon: Phone, label: "Buy Airtime", color: "bg-purple-100 text-purple-600", action: () => toast({ title: "Airtime", description: "Airtime purchase coming soon!" }) },
+    { icon: Zap, label: "Pay Bills", color: "bg-orange-100 text-orange-600", action: () => toast({ title: "Bills", description: "Bill payment feature coming soon!" }) },
+    { icon: ShoppingBag, label: "Shop", color: "bg-pink-100 text-pink-600", action: () => toast({ title: "Shopping", description: "Shopping feature coming soon!" }) },
+    { icon: Car, label: "Transport", color: "bg-indigo-100 text-indigo-600", action: () => toast({ title: "Transport", description: "Transport booking coming soon!" }) },
   ];
 
   const getTransactionIcon = (type: string) => {
@@ -91,19 +91,19 @@ export default function ConsumerDashboard() {
               <p className="text-white/60 text-sm mt-1">Available in {wallets.length} wallet{wallets.length !== 1 ? 's' : ''}</p>
             </div>
             <div className="text-right">
-              <p className="text-white/80 text-sm">Primary FaWallet</p>
+              <p className="text-white/80 text-sm">Primary Wallet</p>
               <p className="text-xl font-semibold">{formatCurrency(primaryWallet?.balance || 0)}</p>
             </div>
           </div>
           
           <div className="flex space-x-3">
             <Button size="sm" className="bg-white/20 hover:bg-white/30 text-white flex-1">
-              <FaPlus className="w-4 h-4 mr-2" />
+              <Plus className="w-4 h-4 mr-2" />
               Add Money
             </Button>
             <Button size="sm" className="bg-white/20 hover:bg-white/30 text-white flex-1">
-              <FaPaperPlane className="w-4 h-4 mr-2" />
-              FaPaperPlane
+              <Send className="w-4 h-4 mr-2" />
+              Send
             </Button>
           </div>
         </CardContent>
@@ -143,14 +143,14 @@ export default function ConsumerDashboard() {
             <CardTitle>Recent Activity</CardTitle>
             <Button variant="ghost" size="sm">
               View All
-              <FaExternalLinkAlt className="w-4 h-4 ml-1" />
+              <ArrowUpRight className="w-4 h-4 ml-1" />
             </Button>
           </div>
         </CardHeader>
         <CardContent>
           {recentTransactions.length === 0 ? (
             <div className="text-center py-6">
-              <FaWallet className="w-12 h-12 text-neutral-400 mx-auto mb-3" />
+              <Wallet className="w-12 h-12 text-neutral-400 mx-auto mb-3" />
               <p className="text-neutral-600 mb-3">No recent transactions</p>
               <Button size="sm">
                 Start your first transaction
@@ -186,7 +186,7 @@ export default function ConsumerDashboard() {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center space-x-2">
-            <FaChartLine className="w-5 h-5" />
+            <TrendingUp className="w-5 h-5" />
             <span>Investment Opportunities</span>
           </CardTitle>
         </CardHeader>

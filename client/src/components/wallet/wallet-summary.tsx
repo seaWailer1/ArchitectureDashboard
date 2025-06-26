@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { Eye, EyeOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { t } from "@/lib/i18n";
-import { FaWalletData } from "@/types";
+import { WalletData } from "@/types";
 
-export default function FaWalletSummary() {
+export default function WalletSummary() {
   const [showBalance, setShowBalance] = useState(true);
   
-  const { data: wallet } = useQuery<FaWalletData>({
+  const { data: wallet } = useQuery<WalletData>({
     queryKey: ["/api/wallet"],
   });
 
@@ -46,9 +46,9 @@ export default function FaWalletSummary() {
               onClick={() => setShowBalance(!showBalance)}
             >
               {showBalance ? (
-                <FaEyeSlash className="w-5 h-5" />
+                <EyeOff className="w-5 h-5" />
               ) : (
-                <FaEye className="w-5 h-5" />
+                <Eye className="w-5 h-5" />
               )}
             </Button>
           </div>

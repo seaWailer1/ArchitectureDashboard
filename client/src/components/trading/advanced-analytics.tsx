@@ -1,16 +1,16 @@
 import { useState } from "react";
 import { 
-  FaChartBar, 
-  FaChartLine, 
+  BarChart3, 
+  TrendingUp, 
   PieChart, 
   Activity,
   Calendar,
-  FaDollarSign,
+  DollarSign,
   Target,
-  FaExclamationTriangle,
-  FaBolt,
+  AlertTriangle,
+  Zap,
   Brain
-} from "react-icons/fa";
+} from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
@@ -187,8 +187,8 @@ export default function AdvancedAnalytics() {
 
   const getTrendIcon = (trend: string) => {
     switch (trend) {
-      case 'bullish': return <FaChartLine className="w-4 h-4" />;
-      case 'bearish': return <FaChartLine className="w-4 h-4 rotate-180" />;
+      case 'bullish': return <TrendingUp className="w-4 h-4" />;
+      case 'bearish': return <TrendingUp className="w-4 h-4 rotate-180" />;
       case 'neutral': return <Activity className="w-4 h-4" />;
       default: return <Activity className="w-4 h-4" />;
     }
@@ -197,8 +197,8 @@ export default function AdvancedAnalytics() {
   const getInsightIcon = (type: string) => {
     switch (type) {
       case 'opportunity': return <Target className="w-4 h-4 text-success" />;
-      case 'risk': return <FaExclamationTriangle className="w-4 h-4 text-destructive" />;
-      case 'trend': return <FaChartLine className="w-4 h-4 text-accent" />;
+      case 'risk': return <AlertTriangle className="w-4 h-4 text-destructive" />;
+      case 'trend': return <TrendingUp className="w-4 h-4 text-accent" />;
       default: return <Brain className="w-4 h-4" />;
     }
   };
@@ -276,7 +276,7 @@ export default function AdvancedAnalytics() {
                     <p className="text-sm text-neutral-600">Total Trades</p>
                     <p className="text-2xl font-bold">{performanceMetrics.totalTrades}</p>
                   </div>
-                  <FaChartBar className="w-8 h-8 text-primary" />
+                  <BarChart3 className="w-8 h-8 text-primary" />
                 </div>
               </CardContent>
             </Card>
@@ -300,7 +300,7 @@ export default function AdvancedAnalytics() {
                     <p className="text-sm text-neutral-600">Total Profit</p>
                     <p className="text-2xl font-bold text-success">{formatCurrency(performanceMetrics.totalProfit)}</p>
                   </div>
-                  <FaDollarSign className="w-8 h-8 text-success" />
+                  <DollarSign className="w-8 h-8 text-success" />
                 </div>
               </CardContent>
             </Card>
@@ -501,7 +501,7 @@ export default function AdvancedAnalytics() {
                           </Button>
                           {insight.type === 'opportunity' && (
                             <Button size="sm" className="bg-success hover:bg-success/90">
-                              <FaBolt className="w-3 h-3 mr-1" />
+                              <Zap className="w-3 h-3 mr-1" />
                               Act Now
                             </Button>
                           )}

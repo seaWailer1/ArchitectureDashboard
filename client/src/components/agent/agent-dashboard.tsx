@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { Handshake, FaChartLine, Users, Banknote, FaMapMarkerAlt, FaClock } from "react-icons/fa";
+import { Handshake, TrendingUp, Users, Banknote, MapPin, Clock } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -45,13 +45,13 @@ export default function AgentDashboard() {
       color: "bg-success/10 text-success"
     },
     {
-      icon: FaMapMarkerAlt,
+      icon: MapPin,
       title: "Territory Management",
       description: "Manage your assigned service area",
       color: "bg-accent/10 text-accent"
     },
     {
-      icon: FaChartLine,
+      icon: TrendingUp,
       title: "Commission Tracking",
       description: "Track earnings and performance",
       color: "bg-secondary/10 text-secondary"
@@ -120,7 +120,7 @@ export default function AgentDashboard() {
               <span className="text-2xl font-bold text-neutral-900">
                 ${todaysCommission.toFixed(2)}
               </span>
-              <FaChartLine className="w-5 h-5 text-success" />
+              <TrendingUp className="w-5 h-5 text-success" />
             </div>
           </CardContent>
         </Card>
@@ -172,7 +172,7 @@ export default function AgentDashboard() {
       <Card>
         <CardHeader>
           <CardTitle className="text-lg flex items-center">
-            <FaClock className="w-5 h-5 mr-2" />
+            <Clock className="w-5 h-5 mr-2" />
             Recent Activities
           </CardTitle>
         </CardHeader>

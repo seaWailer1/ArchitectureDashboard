@@ -1,0 +1,118 @@
+
+# 📘 SuperApp Vertical Modules Requirements Specification
+
+---
+
+## 🔶 MODULE 1: E-COMMERCE MINI-APP
+
+### 1.1 Functional Requirements
+| Feature              | Description |
+|----------------------|-------------|
+| Product Discovery    | Category filters, search, and smart recommendations (AI-powered) |
+| Product Detail Page  | Image gallery, dynamic pricing (discounts/taxes), seller profile |
+| Cart Management      | Add/remove items, quantity control, multi-seller handling |
+| Checkout             | Wallet payment, virtual card, QR, BNPL options |
+| Order Tracking       | Live updates, estimated delivery date |
+| Wishlist/Favorites   | Saved for later, back-in-stock notifications |
+| Merchant Dashboard   | Inventory, orders, earnings, reviews |
+| Ratings & Reviews    | User-submitted content with moderation pipeline |
+
+### 1.2 Non-Functional Requirements
+- Mobile responsive, low-bandwidth support
+- Data caching with Redis for fast load
+- Local currency support and dynamic tax rates
+- Complies with PCI-DSS for transactions
+
+### 1.3 APIs & Integration
+- `GET /products`
+- `POST /checkout`
+- `GET /merchant/dashboard`
+- Payment via SuperApp Wallet SDK
+- Integration with logistics APIs (Delivery module)
+
+### 1.4 KPIs
+- Conversion Rate
+- Cart Abandonment Rate
+- Average Order Value
+- Merchant Onboarding Rate
+
+---
+
+## 🔷 MODULE 2: E-HAILING MINI-APP
+
+### 2.1 Functional Requirements
+| Feature              | Description |
+|----------------------|-------------|
+| Ride Booking         | Real-time driver availability, route pricing, ETA |
+| Multi-Role Profiles  | Rider, Driver, Agent |
+| Payments             | In-app wallet, QR scan, virtual card |
+| Fare Splitting       | Group rides, tipping with wallet balance |
+| Trip History         | Previous rides, invoices |
+| Driver Console       | Trip queue, earnings, performance scoring |
+| Safety Features      | SOS button, trip sharing, identity verification |
+
+### 2.2 Non-Functional Requirements
+- Location accuracy optimized for GSM and offline areas
+- Live GPS tracking using low-power APIs
+- Driver verification with biometric KYC
+- Scalable trip dispatch engine (via Kubernetes)
+
+### 2.3 APIs & Integration
+- `POST /ride-request`
+- `GET /driver/trips`
+- `POST /payment/fare`
+- `POST /safety/sos`
+- Integrated with AI fraud detection and driver scoring
+
+### 2.4 KPIs
+- Daily Ride Volume
+- Driver Utilization Rate
+- Rider Retention
+- Trip Success Rate
+
+---
+
+## 🟢 MODULE 3: DELIVERY MINI-APP
+
+### 3.1 Functional Requirements
+| Feature                | Description |
+|------------------------|-------------|
+| Parcel Booking         | Schedule delivery, pickup & drop-off selection |
+| Multi-Weight Pricing   | Pricing based on weight, distance, delivery type |
+| Delivery Tracker       | Real-time courier tracking with SMS/Push updates |
+| Delivery Modes         | Motorbike, bicycle, car (urban-focused) |
+| Courier Profile        | Rating, ID, delivery stats |
+| Merchant API Hook      | Auto-trigger delivery on order completion |
+| Proof of Delivery      | OTP, photo confirmation, e-signature |
+
+### 3.2 Non-Functional Requirements
+- SLA visibility per region
+- Offline sync with retry-logic for delivery logs
+- Data anonymization between sender and courier
+
+### 3.3 APIs & Integration
+- `POST /parcel/create`
+- `GET /parcel/status/:id`
+- `POST /delivery/confirm`
+- Webhook support for merchant systems
+- Integrated with eCommerce and Wallet modules
+
+### 3.4 KPIs
+- Delivery SLA Compliance (%)
+- Failed Delivery Rate
+- Average Delivery Time
+- Courier Ratings
+
+---
+
+## 📦 SYSTEM-WIDE CROSS-MODULE FEATURES
+
+| Feature                | Integration Point |
+|------------------------|-------------------|
+| Wallet SDK             | All modules (payment) |
+| QR Payment             | All modules |
+| Virtual Cards          | E-commerce, Ride Fare |
+| Role Switching         | Consumer → Merchant → Courier/Driver |
+| AI Personalization     | Product/Route/Service Recommendations |
+| KYC/AML Flow           | Embedded for all new merchants/couriers |
+| Mini-App Governance    | Partner onboarding, token permissions, usage telemetry |

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { FaUser, FaStore, FaHandshake } from "react-icons/fa";
+import { User, Store, Handshake } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { apiRequest } from "@/lib/queryClient";
@@ -40,17 +40,17 @@ export default function RoleSwitcher() {
     { 
       id: "consumer", 
       label: t('consumer'), 
-      icon: FaUser 
+      icon: User 
     },
     { 
       id: "merchant", 
       label: t('merchant'), 
-      icon: FaStore 
+      icon: Store 
     },
     { 
       id: "agent", 
       label: t('agent'), 
-      icon: FaHandshake 
+      icon: Handshake 
     },
   ];
 

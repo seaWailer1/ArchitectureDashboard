@@ -1,18 +1,18 @@
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { 
-  FaUser, 
+  User, 
   Shield, 
   Bell, 
   Palette, 
   Globe, 
   Smartphone, 
-  FaQuestionCircle,
+  HelpCircle,
   Lock,
-  FaEye,
-  FaEyeSlash,
-  FaChevronRight 
-} from "react-icons/fa";
+  Eye,
+  EyeOff,
+  ChevronRight 
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
@@ -107,7 +107,7 @@ export default function AccountSettings({ onSectionChange }: AccountSettingsProp
         <CardHeader>
           <CardTitle className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
-              <FaUser className="w-5 h-5" />
+              <User className="w-5 h-5" />
               <span>Profile Information</span>
             </div>
             <Button
@@ -129,7 +129,7 @@ export default function AccountSettings({ onSectionChange }: AccountSettingsProp
                   className="w-16 h-16 rounded-full object-cover"
                 />
               ) : (
-                <FaUser className="w-8 h-8 text-primary" />
+                <User className="w-8 h-8 text-primary" />
               )}
             </div>
             <div className="flex-1">
@@ -164,7 +164,7 @@ export default function AccountSettings({ onSectionChange }: AccountSettingsProp
                 />
               </div>
               <Input
-                placeholder="FaPhone Number"
+                placeholder="Phone Number"
                 defaultValue={user?.phoneNumber || ""}
               />
               <Input
@@ -205,7 +205,7 @@ export default function AccountSettings({ onSectionChange }: AccountSettingsProp
                 <p className="text-sm text-neutral-600">Password, 2FA, and security logs</p>
               </div>
             </div>
-            <FaChevronRight className="w-4 h-4" />
+            <ChevronRight className="w-4 h-4" />
           </Button>
 
           <Separator />
@@ -222,7 +222,7 @@ export default function AccountSettings({ onSectionChange }: AccountSettingsProp
                 <p className="text-sm text-neutral-600">{devices.length} active devices</p>
               </div>
             </div>
-            <FaChevronRight className="w-4 h-4" />
+            <ChevronRight className="w-4 h-4" />
           </Button>
         </CardContent>
       </Card>
@@ -335,7 +335,7 @@ export default function AccountSettings({ onSectionChange }: AccountSettingsProp
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center space-x-2">
-            <FaQuestionCircle className="w-5 h-5" />
+            <HelpCircle className="w-5 h-5" />
             <span>Help & Support</span>
           </CardTitle>
         </CardHeader>
@@ -346,13 +346,13 @@ export default function AccountSettings({ onSectionChange }: AccountSettingsProp
             onClick={() => onSectionChange("support")}
           >
             <div className="flex items-center space-x-3">
-              <FaQuestionCircle className="w-5 h-5" />
+              <HelpCircle className="w-5 h-5" />
               <div className="text-left">
                 <p className="font-medium">Contact Support</p>
                 <p className="text-sm text-neutral-600">Get help with your account</p>
               </div>
             </div>
-            <FaChevronRight className="w-4 h-4" />
+            <ChevronRight className="w-4 h-4" />
           </Button>
         </CardContent>
       </Card>

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { FaUser, FaShieldAlt, FaCog, FaQuestionCircle, FaSignOutAlt, FaChevronRight, FaEdit, FaCamera, FaPhone, FaEnvelope, FaMapMarkerAlt, FaCalendar, FaCreditCard, FaGlobe, FaBell, FaLock, FaMobile, FaDownload, FaTrash, FaPlus } from "react-icons/fa";
+import { User, Shield, Settings, HelpCircle, LogOut, ChevronRight, Edit2, Camera, Phone, Mail, MapPin, Calendar, CreditCard, Globe, Bell, Lock, Smartphone, Download, Trash2, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
@@ -125,7 +125,7 @@ export default function Profile() {
                 <h2 className="text-xl font-bold text-neutral-900">
                   {user?.firstName || user?.lastName 
                     ? `${user.firstName || ''} ${user.lastName || ''}`.trim()
-                    : 'FaUser'
+                    : 'User'
                   }
                 </h2>
                 <p className="text-neutral-600">{user?.email || 'No email'}</p>
@@ -146,7 +146,7 @@ export default function Profile() {
               <h3 className="font-medium text-neutral-900 mb-3">Verification Status</h3>
               <div className="space-y-2">
                 <div className="flex justify-between items-center">
-                  <span className="text-sm text-neutral-600">FaPhone</span>
+                  <span className="text-sm text-neutral-600">Phone</span>
                   <Badge className={user?.phoneVerified ? 'bg-success/10 text-success' : 'bg-neutral-100 text-neutral-600'}>
                     {user?.phoneVerified ? 'Verified' : 'Pending'}
                   </Badge>
@@ -187,7 +187,7 @@ export default function Profile() {
                         <p className="text-sm text-neutral-600">{item.description}</p>
                       </div>
                     </div>
-                    <FaChevronRight className="w-5 h-5 text-neutral-400" />
+                    <ChevronRight className="w-5 h-5 text-neutral-400" />
                   </Button>
                   {index < menuItems.length - 1 && <Separator />}
                 </div>

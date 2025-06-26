@@ -4,20 +4,20 @@ import {
   Users, 
   UserCheck, 
   UserX, 
-  FaClock, 
-  FaMapMarkerAlt,
-  FaPhone,
+  Clock, 
+  MapPin,
+  Phone,
   Mail,
   Shield,
-  FaCreditCard,
-  FaUser,
+  CreditCard,
+  User,
   RefreshCw,
   LogIn,
-  FaPlus,
-  FaCheckCircle,
-  FaExclamationCircle,
+  Plus,
+  CheckCircle,
+  AlertCircle,
   XCircle
-} from "react-icons/fa";
+} from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -75,7 +75,7 @@ export default function PresetUsers() {
     },
     onSuccess: (data, userId) => {
       toast({
-        title: "FaUser Switched",
+        title: "User Switched",
         description: `Successfully switched to user ${userId}`,
       });
       // Clear all cached data and refresh
@@ -95,26 +95,26 @@ export default function PresetUsers() {
   const getRoleIcon = (role: string) => {
     switch (role) {
       case 'merchant':
-        return <FaCreditCard className="w-4 h-4" />;
+        return <CreditCard className="w-4 h-4" />;
       case 'agent':
         return <Shield className="w-4 h-4" />;
       default:
-        return <FaUser className="w-4 h-4" />;
+        return <User className="w-4 h-4" />;
     }
   };
 
   const getStatusIcon = (status: string) => {
     switch (status) {
       case 'verified':
-        return <FaCheckCircle className="w-4 h-4 text-green-600" />;
+        return <CheckCircle className="w-4 h-4 text-green-600" />;
       case 'in_progress':
-        return <FaClock className="w-4 h-4 text-yellow-600" />;
+        return <Clock className="w-4 h-4 text-yellow-600" />;
       case 'pending':
-        return <FaExclamationCircle className="w-4 h-4 text-orange-600" />;
+        return <AlertCircle className="w-4 h-4 text-orange-600" />;
       case 'rejected':
         return <XCircle className="w-4 h-4 text-red-600" />;
       default:
-        return <FaClock className="w-4 h-4 text-gray-400" />;
+        return <Clock className="w-4 h-4 text-gray-400" />;
     }
   };
 
@@ -178,7 +178,7 @@ export default function PresetUsers() {
               {createUsersMutation.isPending ? (
                 <RefreshCw className="w-4 h-4 animate-spin" />
               ) : (
-                <FaPlus className="w-4 h-4" />
+                <Plus className="w-4 h-4" />
               )}
               <span>Create Users</span>
             </Button>
@@ -221,7 +221,7 @@ export default function PresetUsers() {
             <CardContent className="p-4">
               <div className="flex items-center space-x-3">
                 <div className="p-2 bg-orange-100 rounded-lg">
-                  <FaClock className="w-5 h-5 text-orange-600" />
+                  <Clock className="w-5 h-5 text-orange-600" />
                 </div>
                 <div>
                   <p className="text-sm text-neutral-600">Pending KYC</p>
@@ -250,7 +250,7 @@ export default function PresetUsers() {
           </Card>
         </div>
 
-        {/* FaUser List */}
+        {/* User List */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {presetUsers?.map((user: PresetUser) => (
             <Card key={user.id} className="hover:shadow-lg transition-shadow">
@@ -304,7 +304,7 @@ export default function PresetUsers() {
                       ) : (
                         <LogIn className="w-4 h-4" />
                       )}
-                      <span>Switch FaUser</span>
+                      <span>Switch User</span>
                     </Button>
                   </div>
                 </div>
@@ -329,7 +329,7 @@ export default function PresetUsers() {
                 {createUsersMutation.isPending ? (
                   <RefreshCw className="w-4 h-4 animate-spin" />
                 ) : (
-                  <FaPlus className="w-4 h-4" />
+                  <Plus className="w-4 h-4" />
                 )}
                 <span>Create Preset Users</span>
               </Button>
@@ -348,14 +348,14 @@ export default function PresetUsers() {
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <h4 className="font-semibold mb-3">FaUser Types</h4>
+                <h4 className="font-semibold mb-3">User Types</h4>
                 <ul className="space-y-2 text-sm text-neutral-600">
                   <li className="flex items-center space-x-2">
-                    <FaUser className="w-4 h-4 text-blue-600" />
+                    <User className="w-4 h-4 text-blue-600" />
                     <span><strong>Consumer:</strong> Personal banking and payments</span>
                   </li>
                   <li className="flex items-center space-x-2">
-                    <FaCreditCard className="w-4 h-4 text-green-600" />
+                    <CreditCard className="w-4 h-4 text-green-600" />
                     <span><strong>Merchant:</strong> Business dashboard and payment processing</span>
                   </li>
                   <li className="flex items-center space-x-2">
@@ -369,15 +369,15 @@ export default function PresetUsers() {
                 <h4 className="font-semibold mb-3">KYC Status Types</h4>
                 <ul className="space-y-2 text-sm text-neutral-600">
                   <li className="flex items-center space-x-2">
-                    <FaCheckCircle className="w-4 h-4 text-green-600" />
+                    <CheckCircle className="w-4 h-4 text-green-600" />
                     <span><strong>Verified:</strong> Full access to all features</span>
                   </li>
                   <li className="flex items-center space-x-2">
-                    <FaClock className="w-4 h-4 text-yellow-600" />
+                    <Clock className="w-4 h-4 text-yellow-600" />
                     <span><strong>In Progress:</strong> Partial verification completed</span>
                   </li>
                   <li className="flex items-center space-x-2">
-                    <FaExclamationCircle className="w-4 h-4 text-orange-600" />
+                    <AlertCircle className="w-4 h-4 text-orange-600" />
                     <span><strong>Pending:</strong> Requires onboarding/KYC completion</span>
                   </li>
                 </ul>

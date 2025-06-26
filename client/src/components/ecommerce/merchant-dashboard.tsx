@@ -1,23 +1,23 @@
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { 
-  FaBox, 
-  FaDollarSign,
-  FaShoppingCart,
-  FaChartLine,
+  Package, 
+  DollarSign,
+  ShoppingCart,
+  TrendingUp,
   Users,
-  FaStar,
-  FaPlus,
-  FaEye,
+  Star,
+  Plus,
+  Eye,
   Edit3,
   Trash2,
-  FaFilter,
+  Filter,
   Calendar,
   Download,
-  FaChartBar,
-  FaExclamationTriangle,
-  FaCheckCircle
-} from "react-icons/fa";
+  BarChart3,
+  AlertTriangle,
+  CheckCircle
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -246,7 +246,7 @@ export default function MerchantDashboard() {
 
   const renderStars = (rating: number) => {
     return Array.from({ length: 5 }, (_, i) => (
-      <FaStar 
+      <Star 
         key={i} 
         className={`w-3 h-3 ${i < Math.floor(rating) ? 'text-yellow-400 fill-current' : 'text-neutral-300'}`} 
       />
@@ -257,7 +257,7 @@ export default function MerchantDashboard() {
     <div className="space-y-6">
       <div className="text-center">
         <div className="w-16 h-16 bg-gradient-to-br from-emerald-400 to-blue-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
-          <FaBox className="w-8 h-8 text-white" />
+          <Package className="w-8 h-8 text-white" />
         </div>
         <h2 className="text-2xl font-bold text-neutral-900 mb-2">Merchant Dashboard</h2>
         <p className="text-neutral-600">Manage your store and track performance</p>
@@ -281,7 +281,7 @@ export default function MerchantDashboard() {
                     <p className="text-sm text-neutral-600">Revenue</p>
                     <p className="text-xl font-bold">{formatCurrency(analytics.totalRevenue)}</p>
                   </div>
-                  <FaDollarSign className="w-8 h-8 text-success" />
+                  <DollarSign className="w-8 h-8 text-success" />
                 </div>
               </CardContent>
             </Card>
@@ -293,7 +293,7 @@ export default function MerchantDashboard() {
                     <p className="text-sm text-neutral-600">Orders</p>
                     <p className="text-xl font-bold">{analytics.totalOrders}</p>
                   </div>
-                  <FaShoppingCart className="w-8 h-8 text-blue" />
+                  <ShoppingCart className="w-8 h-8 text-blue" />
                 </div>
               </CardContent>
             </Card>
@@ -305,7 +305,7 @@ export default function MerchantDashboard() {
                     <p className="text-sm text-neutral-600">Products</p>
                     <p className="text-xl font-bold">{analytics.totalProducts}</p>
                   </div>
-                  <FaBox className="w-8 h-8 text-purple" />
+                  <Package className="w-8 h-8 text-purple" />
                 </div>
               </CardContent>
             </Card>
@@ -317,7 +317,7 @@ export default function MerchantDashboard() {
                     <p className="text-sm text-neutral-600">Avg Order</p>
                     <p className="text-xl font-bold">{formatCurrency(analytics.averageOrderValue)}</p>
                   </div>
-                  <FaChartLine className="w-8 h-8 text-accent" />
+                  <TrendingUp className="w-8 h-8 text-accent" />
                 </div>
               </CardContent>
             </Card>
@@ -375,7 +375,7 @@ export default function MerchantDashboard() {
             <Dialog open={showAddProduct} onOpenChange={setShowAddProduct}>
               <DialogTrigger asChild>
                 <Button>
-                  <FaPlus className="w-4 h-4 mr-2" />
+                  <Plus className="w-4 h-4 mr-2" />
                   Add Product
                 </Button>
               </DialogTrigger>
@@ -435,7 +435,7 @@ export default function MerchantDashboard() {
                     <div className="flex-1">
                       <div className="flex items-center space-x-3">
                         <div className="w-12 h-12 bg-neutral-100 rounded-lg flex items-center justify-center">
-                          <FaBox className="w-6 h-6 text-neutral-400" />
+                          <Package className="w-6 h-6 text-neutral-400" />
                         </div>
                         <div>
                           <h4 className="font-medium">{product.name}</h4>
@@ -462,7 +462,7 @@ export default function MerchantDashboard() {
                         <Edit3 className="w-4 h-4" />
                       </Button>
                       <Button variant="outline" size="sm">
-                        <FaEye className="w-4 h-4" />
+                        <Eye className="w-4 h-4" />
                       </Button>
                     </div>
                   </div>
@@ -521,7 +521,7 @@ export default function MerchantDashboard() {
                       </Badge>
                       <div className="flex space-x-2 mt-2">
                         <Button variant="outline" size="sm">
-                          <FaEye className="w-4 h-4" />
+                          <Eye className="w-4 h-4" />
                         </Button>
                         {order.status === 'pending' && (
                           <Button size="sm">

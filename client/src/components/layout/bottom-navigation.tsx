@@ -1,5 +1,5 @@
 import { Link, useLocation } from "wouter";
-import { FaHome, FaWallet, FaQrcode, FaTh, FaUser } from "react-icons/fa";
+import { Home, Wallet, List, QrCode, Grid3X3, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { t } from "@/lib/i18n";
 
@@ -11,11 +11,11 @@ export default function BottomNavigation({ currentPage }: BottomNavigationProps)
   const [location] = useLocation();
 
   const navItems = [
-    { path: "/", icon: FaHome, label: t('home'), id: "home" },
-    { path: "/wallets", icon: FaWallet, label: "FaWallets", id: "wallets" },
-    { path: "/qr", icon: FaQrcode, label: t('pay'), id: "qr", special: true },
-    { path: "/services", icon: FaTh, label: t('services'), id: "services" },
-    { path: "/profile", icon: FaUser, label: t('profile'), id: "profile" },
+    { path: "/", icon: Home, label: t('home'), id: "home" },
+    { path: "/wallets", icon: Wallet, label: "Wallets", id: "wallets" },
+    { path: "/qr", icon: QrCode, label: t('pay'), id: "qr", special: true },
+    { path: "/services", icon: Grid3X3, label: t('services'), id: "services" },
+    { path: "/profile", icon: User, label: t('profile'), id: "profile" },
   ];
 
   const isActive = (path: string, id: string) => {

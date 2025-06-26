@@ -1,6 +1,5 @@
 import * as React from "react"
 import { cva, type VariantProps } from "class-variance-authority"
-import { FaExclamationCircle } from "react-icons/fa"
 
 import { cn } from "@/lib/utils"
 

@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Coins, FaCreditCard, QrCode, Shield } from "react-icons/fa";
+import { Coins, CreditCard, QrCode, Shield } from "lucide-react";
 
 export default function Landing() {
   return (
@@ -37,8 +37,8 @@ export default function Landing() {
             
             <Card className="bg-white/10 border-white/20 backdrop-blur-sm">
               <CardContent className="p-4 text-center">
-                <FaCreditCard className="w-8 h-8 text-white mx-auto mb-2" />
-                <p className="text-white text-sm font-medium">Multi-Role FaWallet</p>
+                <CreditCard className="w-8 h-8 text-white mx-auto mb-2" />
+                <p className="text-white text-sm font-medium">Multi-Role Wallet</p>
               </CardContent>
             </Card>
             

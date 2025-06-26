@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { FaQrcode, FaPaperPlane, FaDownload, FaPlus } from "react-icons/fa";
+import { QrCode, Send, Download, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
@@ -27,7 +27,7 @@ export default function QuickActions() {
       setTopUpAmount("");
       toast({
         title: "Success",
-        description: "FaWallet topped up successfully",
+        description: "Wallet topped up successfully",
       });
     },
     onError: () => {
@@ -53,30 +53,30 @@ export default function QuickActions() {
 
   const actions = [
     {
-      icon: FaQrcode,
+      icon: QrCode,
       label: t('scanQR'),
       color: "bg-primary/10 text-primary",
       onClick: () => setShowQRModal(true),
     },
     {
-      icon: FaPaperPlane,
+      icon: Send,
       label: t('send'),
       color: "bg-accent/10 text-accent",
       onClick: () => {
         toast({
           title: "Coming Soon",
-          description: "FaPaperPlane money feature coming soon",
+          description: "Send money feature coming soon",
         });
       },
     },
     {
-      icon: FaDownload,
+      icon: Download,
       label: t('receive'),
       color: "bg-success/10 text-success",
       onClick: () => setShowQRModal(true),
     },
     {
-      icon: FaPlus,
+      icon: Plus,
       label: t('topUp'),
       color: "bg-secondary/10 text-secondary",
       onClick: () => setShowTopUpDialog(true),
@@ -116,7 +116,7 @@ export default function QuickActions() {
       <Dialog open={showTopUpDialog} onOpenChange={setShowTopUpDialog}>
         <DialogContent className="max-w-sm mx-auto">
           <DialogHeader>
-            <DialogTitle>Top Up FaWallet</DialogTitle>
+            <DialogTitle>Top Up Wallet</DialogTitle>
           </DialogHeader>
           <div className="space-y-4">
             <div>

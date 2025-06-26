@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Shield, Key, FaClock, FaExclamationTriangle, FaCheckCircle, FaEye, FaEyeSlash, FaArrowLeft } from "react-icons/fa";
+import { Shield, Key, Clock, AlertTriangle, CheckCircle, Eye, EyeOff, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
@@ -94,13 +94,13 @@ export default function SecuritySettings({ onBack }: SecuritySettingsProps) {
   const getStatusIcon = (status: string) => {
     switch (status) {
       case "success":
-        return <FaCheckCircle className="w-4 h-4 text-success" />;
+        return <CheckCircle className="w-4 h-4 text-success" />;
       case "failed":
-        return <FaExclamationTriangle className="w-4 h-4 text-destructive" />;
+        return <AlertTriangle className="w-4 h-4 text-destructive" />;
       case "blocked":
         return <Shield className="w-4 h-4 text-warning" />;
       default:
-        return <FaClock className="w-4 h-4 text-neutral-500" />;
+        return <Clock className="w-4 h-4 text-neutral-500" />;
     }
   };
 
@@ -109,7 +109,7 @@ export default function SecuritySettings({ onBack }: SecuritySettingsProps) {
       {/* Header */}
       <div className="flex items-center space-x-3">
         <Button variant="ghost" size="sm" onClick={onBack}>
-          <FaArrowLeft className="w-4 h-4" />
+          <ArrowLeft className="w-4 h-4" />
         </Button>
         <div>
           <h2 className="text-xl font-bold">Security Settings</h2>
@@ -158,9 +158,9 @@ export default function SecuritySettings({ onBack }: SecuritySettingsProps) {
                     onClick={() => setShowCurrentPassword(!showCurrentPassword)}
                   >
                     {showCurrentPassword ? (
-                      <FaEyeSlash className="w-4 h-4 text-neutral-500" />
+                      <EyeOff className="w-4 h-4 text-neutral-500" />
                     ) : (
-                      <FaEye className="w-4 h-4 text-neutral-500" />
+                      <Eye className="w-4 h-4 text-neutral-500" />
                     )}
                   </button>
                 </div>
@@ -181,9 +181,9 @@ export default function SecuritySettings({ onBack }: SecuritySettingsProps) {
                     onClick={() => setShowNewPassword(!showNewPassword)}
                   >
                     {showNewPassword ? (
-                      <FaEyeSlash className="w-4 h-4 text-neutral-500" />
+                      <EyeOff className="w-4 h-4 text-neutral-500" />
                     ) : (
-                      <FaEye className="w-4 h-4 text-neutral-500" />
+                      <Eye className="w-4 h-4 text-neutral-500" />
                     )}
                   </button>
                 </div>
@@ -239,7 +239,7 @@ export default function SecuritySettings({ onBack }: SecuritySettingsProps) {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center space-x-2">
-            <FaClock className="w-5 h-5" />
+            <Clock className="w-5 h-5" />
             <span>Recent Security Activity</span>
           </CardTitle>
         </CardHeader>
@@ -288,7 +288,7 @@ export default function SecuritySettings({ onBack }: SecuritySettingsProps) {
         <CardContent>
           <div className="grid grid-cols-2 gap-4">
             <div className="text-center p-4 bg-success/5 rounded-lg">
-              <FaCheckCircle className="w-8 h-8 text-success mx-auto mb-2" />
+              <CheckCircle className="w-8 h-8 text-success mx-auto mb-2" />
               <p className="font-medium">Account Active</p>
               <p className="text-sm text-neutral-600">Your account is in good standing</p>
             </div>

@@ -1,17 +1,17 @@
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { 
-  FaBolt, 
+  Zap, 
   Smartphone, 
   Wifi, 
-  FaCar, 
+  Car, 
   Home,
-  FaCreditCard,
+  CreditCard,
   Receipt,
   Calendar,
-  FaClock,
+  Clock,
   Check
-} from "react-icons/fa";
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -57,7 +57,7 @@ export default function BillPayments() {
       id: "electricity",
       name: "Electricity",
       category: "utilities",
-      icon: FaBolt,
+      icon: Zap,
       color: "bg-yellow-100 text-yellow-600",
       description: "Pay electricity bills",
       fee: 0.5
@@ -102,7 +102,7 @@ export default function BillPayments() {
       id: "insurance",
       name: "Insurance",
       category: "financial",
-      icon: FaCreditCard,
+      icon: CreditCard,
       color: "bg-indigo-100 text-indigo-600",
       description: "Insurance premiums",
       fee: 2.0
@@ -183,9 +183,9 @@ export default function BillPayments() {
   const getStatusIcon = (status: string) => {
     switch (status) {
       case 'completed': return <Check className="w-3 h-3" />;
-      case 'pending': return <FaClock className="w-3 h-3" />;
-      case 'failed': return <FaBolt className="w-3 h-3" />;
-      default: return <FaClock className="w-3 h-3" />;
+      case 'pending': return <Clock className="w-3 h-3" />;
+      case 'failed': return <Zap className="w-3 h-3" />;
+      default: return <Clock className="w-3 h-3" />;
     }
   };
 
@@ -193,7 +193,7 @@ export default function BillPayments() {
     <div className="space-y-6">
       <div className="text-center">
         <div className="w-16 h-16 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
-          <FaBolt className="w-8 h-8 text-white" />
+          <Zap className="w-8 h-8 text-white" />
         </div>
         <h2 className="text-2xl font-bold text-neutral-900 mb-2">Bill Payments</h2>
         <p className="text-neutral-600">Pay all your bills in one place</p>
@@ -256,7 +256,7 @@ export default function BillPayments() {
 
                 {selectedService.category === 'telecom' ? (
                   <div>
-                    <label className="text-sm font-medium mb-1 block">FaPhone Number</label>
+                    <label className="text-sm font-medium mb-1 block">Phone Number</label>
                     <Input
                       type="tel"
                       placeholder="+234 800 000 0000"

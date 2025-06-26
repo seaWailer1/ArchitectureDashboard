@@ -1,18 +1,18 @@
 import { useQuery } from "@tanstack/react-query";
 import { 
   Store, 
-  FaChartLine, 
+  TrendingUp, 
   TrendingDown,
   Users, 
-  FaCreditCard, 
-  FaBox, 
-  FaChartBar,
-  FaQrcode,
+  CreditCard, 
+  Package, 
+  BarChart3,
+  QrCode,
   Settings,
-  FaEye,
-  FaPlus,
-  FaExternalLinkAlt
-} from "react-icons/fa";
+  Eye,
+  Plus,
+  ArrowUpRight
+} from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -71,10 +71,10 @@ export default function MerchantDashboard() {
   };
 
   const quickActions = [
-    { icon: FaQrcode, label: "Payment QR", color: "bg-blue-100 text-blue-600", action: () => toast({ title: "QR Code", description: "Generate payment QR code" }) },
-    { icon: FaBox, label: "Inventory", color: "bg-green-100 text-green-600", action: () => toast({ title: "Inventory", description: "Manage your products" }) },
+    { icon: QrCode, label: "Payment QR", color: "bg-blue-100 text-blue-600", action: () => toast({ title: "QR Code", description: "Generate payment QR code" }) },
+    { icon: Package, label: "Inventory", color: "bg-green-100 text-green-600", action: () => toast({ title: "Inventory", description: "Manage your products" }) },
     { icon: Users, label: "Customers", color: "bg-purple-100 text-purple-600", action: () => toast({ title: "Customers", description: "View customer insights" }) },
-    { icon: FaChartBar, label: "Analytics", color: "bg-orange-100 text-orange-600", action: () => toast({ title: "Analytics", description: "View detailed analytics" }) },
+    { icon: BarChart3, label: "Analytics", color: "bg-orange-100 text-orange-600", action: () => toast({ title: "Analytics", description: "View detailed analytics" }) },
   ];
 
   return (
@@ -87,7 +87,7 @@ export default function MerchantDashboard() {
               <p className="text-white/80 text-sm">Business Balance</p>
               <h2 className="text-3xl font-bold">{formatCurrency(businessWallet?.balance || 0)}</h2>
               <div className="flex items-center space-x-2 mt-2">
-                <FaChartLine className="w-4 h-4 text-green-200" />
+                <TrendingUp className="w-4 h-4 text-green-200" />
                 <span className="text-green-200 text-sm">+{businessMetrics.monthlyGrowth}% this month</span>
               </div>
             </div>
@@ -100,11 +100,11 @@ export default function MerchantDashboard() {
           
           <div className="flex space-x-3">
             <Button size="sm" className="bg-white/20 hover:bg-white/30 text-white flex-1">
-              <FaEye className="w-4 h-4 mr-2" />
+              <Eye className="w-4 h-4 mr-2" />
               View Sales
             </Button>
             <Button size="sm" className="bg-white/20 hover:bg-white/30 text-white flex-1">
-              <FaQrcode className="w-4 h-4 mr-2" />
+              <QrCode className="w-4 h-4 mr-2" />
               Payment QR
             </Button>
           </div>
@@ -121,7 +121,7 @@ export default function MerchantDashboard() {
                 <p className="text-2xl font-bold">{formatCurrency(businessMetrics.totalSales)}</p>
               </div>
               <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-                <FaCreditCard className="w-6 h-6 text-green-600" />
+                <CreditCard className="w-6 h-6 text-green-600" />
               </div>
             </div>
           </CardContent>
@@ -135,7 +135,7 @@ export default function MerchantDashboard() {
                 <p className="text-2xl font-bold">{businessMetrics.totalTransactions}</p>
               </div>
               <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-                <FaChartBar className="w-6 h-6 text-blue-600" />
+                <BarChart3 className="w-6 h-6 text-blue-600" />
               </div>
             </div>
           </CardContent>
@@ -176,7 +176,7 @@ export default function MerchantDashboard() {
             <CardTitle>Sales Performance</CardTitle>
             <Button variant="ghost" size="sm">
               View Details
-              <FaExternalLinkAlt className="w-4 h-4 ml-1" />
+              <ArrowUpRight className="w-4 h-4 ml-1" />
             </Button>
           </div>
         </CardHeader>
@@ -235,7 +235,7 @@ export default function MerchantDashboard() {
           <div className="space-y-3">
             <div className="flex items-center justify-between p-3 border rounded-lg">
               <div className="flex items-center space-x-3">
-                <FaQrcode className="w-5 h-5 text-blue-600" />
+                <QrCode className="w-5 h-5 text-blue-600" />
                 <span className="font-medium">QR Code Payments</span>
               </div>
               <Badge className="bg-green-100 text-green-700">Active</Badge>
@@ -243,14 +243,14 @@ export default function MerchantDashboard() {
             
             <div className="flex items-center justify-between p-3 border rounded-lg">
               <div className="flex items-center space-x-3">
-                <FaCreditCard className="w-5 h-5 text-purple-600" />
+                <CreditCard className="w-5 h-5 text-purple-600" />
                 <span className="font-medium">Card Payments</span>
               </div>
               <Badge className="bg-green-100 text-green-700">Active</Badge>
             </div>
             
             <Button variant="outline" className="w-full">
-              <FaPlus className="w-4 h-4 mr-2" />
+              <Plus className="w-4 h-4 mr-2" />
               Add Payment Method
             </Button>
           </div>

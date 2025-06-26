@@ -1,18 +1,18 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { 
-  FaChartBar, 
+  BarChart3, 
   Users, 
-  FaDollarSign, 
-  FaChartLine,
+  DollarSign, 
+  TrendingUp,
   Activity,
   Shield,
-  FaExclamationTriangle,
-  FaEye,
+  AlertTriangle,
+  Eye,
   RefreshCw,
   Settings,
   Database
-} from "react-icons/fa";
+} from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
@@ -138,9 +138,9 @@ export default function AdminDashboard() {
       case 'healthy':
         return <Shield className="w-4 h-4 text-success" />;
       case 'warning':
-        return <FaExclamationTriangle className="w-4 h-4 text-accent" />;
+        return <AlertTriangle className="w-4 h-4 text-accent" />;
       case 'error':
-        return <FaExclamationTriangle className="w-4 h-4 text-destructive" />;
+        return <AlertTriangle className="w-4 h-4 text-destructive" />;
       default:
         return <Activity className="w-4 h-4 text-neutral-600" />;
     }
@@ -196,7 +196,7 @@ export default function AdminDashboard() {
                 <p className="text-2xl font-bold">{formatCurrency(mockStats.totalVolume)}</p>
                 <p className="text-xs text-success">+12.5% vs last month</p>
               </div>
-              <FaDollarSign className="w-8 h-8 text-success" />
+              <DollarSign className="w-8 h-8 text-success" />
             </div>
           </CardContent>
         </Card>
@@ -222,7 +222,7 @@ export default function AdminDashboard() {
                 <p className="text-2xl font-bold">{formatNumber(mockStats.activeWallets)}</p>
                 <p className="text-xs text-neutral-600">{mockStats.kycVerified} verified</p>
               </div>
-              <FaChartBar className="w-8 h-8 text-secondary" />
+              <BarChart3 className="w-8 h-8 text-secondary" />
             </div>
           </CardContent>
         </Card>
@@ -263,7 +263,7 @@ export default function AdminDashboard() {
 
             <div className="flex items-center justify-between p-3 bg-neutral-50 rounded-lg">
               <div className="flex items-center space-x-2">
-                <FaDollarSign className="w-5 h-5" />
+                <DollarSign className="w-5 h-5" />
                 <span className="font-medium">Payments</span>
               </div>
               <div className="flex items-center space-x-2">
@@ -289,7 +289,7 @@ export default function AdminDashboard() {
           <div className="grid grid-cols-2 gap-4">
             <Card>
               <CardHeader>
-                <CardTitle>FaUser Distribution</CardTitle>
+                <CardTitle>User Distribution</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
@@ -318,7 +318,7 @@ export default function AdminDashboard() {
 
             <Card>
               <CardHeader>
-                <CardTitle>FaUser Activity</CardTitle>
+                <CardTitle>User Activity</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex justify-between items-center">
@@ -395,7 +395,7 @@ export default function AdminDashboard() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex justify-between">
-                  <span>Total FaWallet Balance</span>
+                  <span>Total Wallet Balance</span>
                   <span className="font-bold">{formatCurrency(mockFinancialMetrics.totalWalletBalance)}</span>
                 </div>
                 <div className="flex justify-between">

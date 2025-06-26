@@ -1,6 +1,20 @@
 import { useState, useEffect } from "react";
 import { useMutation } from "@tanstack/react-query";
-import { FaArrowRight, FaArrowLeft, FaShieldAlt, FaMobile, FaCreditCard, FaGlobe, FaCheckCircle, FaUser, FaPhone, FaEnvelope, FaMapMarkerAlt, FaCalendar, FaStar } from "react-icons/fa";
+import { 
+  ArrowRight, 
+  ArrowLeft,
+  Shield, 
+  Smartphone, 
+  CreditCard, 
+  Globe,
+  CheckCircle,
+  User,
+  Phone,
+  Mail,
+  MapPin,
+  Calendar,
+  Sparkles
+} from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -84,9 +98,9 @@ export default function Onboarding() {
 
   const steps = [
     { title: "Welcome", icon: Globe },
-    { title: "Personal Info", icon: FaUser },
-    { title: "Contact Details", icon: FaPhone },
-    { title: "Role Selection", icon: FaCreditCard },
+    { title: "Personal Info", icon: User },
+    { title: "Contact Details", icon: Phone },
+    { title: "Role Selection", icon: CreditCard },
     { title: "Terms & Privacy", icon: Shield },
   ];
 
@@ -171,7 +185,7 @@ export default function Onboarding() {
                   <span>Mobile-first design</span>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <FaCreditCard className="w-5 h-5 text-purple-600" />
+                  <CreditCard className="w-5 h-5 text-purple-600" />
                   <span>Multiple wallets</span>
                 </div>
                 <div className="flex items-center space-x-2">
@@ -187,12 +201,12 @@ export default function Onboarding() {
         return (
           <div className="space-y-6">
             <div className="text-center">
-              <FaUser className="w-16 h-16 text-primary mx-auto mb-4" />
+              <User className="w-16 h-16 text-primary mx-auto mb-4" />
               <h2 className="text-2xl font-bold mb-2">Personal Information</h2>
               <p className="text-neutral-600">Tell us a bit about yourself</p>
               {isAutoFilled && (
                 <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg flex items-center justify-center space-x-2">
-                  <FaStar className="w-5 h-5 text-blue-600" />
+                  <Sparkles className="w-5 h-5 text-blue-600" />
                   <span className="text-sm text-blue-700 font-medium">Information pre-filled for demo experience</span>
                 </div>
               )}
@@ -238,7 +252,7 @@ export default function Onboarding() {
         return (
           <div className="space-y-6">
             <div className="text-center">
-              <FaPhone className="w-16 h-16 text-primary mx-auto mb-4" />
+              <Phone className="w-16 h-16 text-primary mx-auto mb-4" />
               <h2 className="text-2xl font-bold mb-2">Contact Details</h2>
               <p className="text-neutral-600">How can we reach you?</p>
             </div>
@@ -255,7 +269,7 @@ export default function Onboarding() {
                 />
               </div>
               <div>
-                <Label htmlFor="phone">FaPhone Number</Label>
+                <Label htmlFor="phone">Phone Number</Label>
                 <Input
                   id="phone"
                   type="tel"
@@ -322,7 +336,7 @@ export default function Onboarding() {
                 onClick={() => updateFormData('preferredRole', 'consumer')}
               >
                 <div className="flex items-center space-x-3">
-                  <FaUser className="w-6 h-6 text-primary" />
+                  <User className="w-6 h-6 text-primary" />
                   <div>
                     <h3 className="font-semibold">Consumer</h3>
                     <p className="text-sm text-neutral-600">Personal banking and payments</p>
@@ -337,7 +351,7 @@ export default function Onboarding() {
                 onClick={() => updateFormData('preferredRole', 'merchant')}
               >
                 <div className="flex items-center space-x-3">
-                  <FaCreditCard className="w-6 h-6 text-green-600" />
+                  <CreditCard className="w-6 h-6 text-green-600" />
                   <div>
                     <h3 className="font-semibold">Merchant</h3>
                     <p className="text-sm text-neutral-600">Accept payments for your business</p>
@@ -428,7 +442,7 @@ export default function Onboarding() {
                     index <= currentStep ? 'bg-primary text-white' : 'bg-neutral-200 text-neutral-400'
                   }`}>
                     {index < currentStep ? (
-                      <FaCheckCircle className="w-4 h-4" />
+                      <CheckCircle className="w-4 h-4" />
                     ) : (
                       <Icon className="w-4 h-4" />
                     )}
@@ -454,7 +468,7 @@ export default function Onboarding() {
           <div className="flex space-x-3">
             {currentStep > 0 && (
               <Button variant="outline" onClick={handlePrevious} className="flex-1">
-                <FaArrowLeft className="w-4 h-4 mr-2" />
+                <ArrowLeft className="w-4 h-4 mr-2" />
                 Previous
               </Button>
             )}

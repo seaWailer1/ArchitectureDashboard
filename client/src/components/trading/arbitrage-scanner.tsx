@@ -1,17 +1,17 @@
 import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { 
-  FaSearch, 
+  Search, 
   Target, 
-  FaChartLine, 
-  FaClock, 
-  FaDollarSign,
-  FaExclamationTriangle,
-  FaBolt,
+  TrendingUp, 
+  Clock, 
+  DollarSign,
+  AlertTriangle,
+  Zap,
   Calculator,
-  FaChartBar,
+  BarChart3,
   Settings
-} from "react-icons/fa";
+} from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -155,9 +155,9 @@ export default function ArbitrageScanner() {
   const getTypeIcon = (type: string) => {
     switch (type) {
       case 'triangular': return <Target className="w-4 h-4" />;
-      case 'cross_exchange': return <FaChartBar className="w-4 h-4" />;
-      case 'temporal': return <FaClock className="w-4 h-4" />;
-      default: return <FaSearch className="w-4 h-4" />;
+      case 'cross_exchange': return <BarChart3 className="w-4 h-4" />;
+      case 'temporal': return <Clock className="w-4 h-4" />;
+      default: return <Search className="w-4 h-4" />;
     }
   };
 
@@ -201,7 +201,7 @@ export default function ArbitrageScanner() {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center space-x-2">
-            <FaSearch className="w-5 h-5" />
+            <Search className="w-5 h-5" />
             <span>Arbitrage Scanner</span>
           </CardTitle>
         </CardHeader>
@@ -209,7 +209,7 @@ export default function ArbitrageScanner() {
           <div className="flex space-x-4">
             <div className="flex-1">
               <Input
-                placeholder="FaSearch currencies or opportunity types..."
+                placeholder="Search currencies or opportunity types..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
@@ -217,12 +217,12 @@ export default function ArbitrageScanner() {
             <Button onClick={handleScan} disabled={scanning}>
               {scanning ? (
                 <>
-                  <FaSearch className="w-4 h-4 mr-2 animate-spin" />
+                  <Search className="w-4 h-4 mr-2 animate-spin" />
                   Scanning...
                 </>
               ) : (
                 <>
-                  <FaSearch className="w-4 h-4 mr-2" />
+                  <Search className="w-4 h-4 mr-2" />
                   Scan Now
                 </>
               )}
@@ -294,7 +294,7 @@ export default function ArbitrageScanner() {
                   {Math.max(...filteredOpportunities.map(o => o.profitMargin)).toFixed(2)}%
                 </p>
               </div>
-              <FaChartLine className="w-8 h-8 text-success" />
+              <TrendingUp className="w-8 h-8 text-success" />
             </div>
           </CardContent>
         </Card>
@@ -308,7 +308,7 @@ export default function ArbitrageScanner() {
                   {Math.round(filteredOpportunities.reduce((sum, o) => sum + o.timeWindow, 0) / filteredOpportunities.length || 0)}s
                 </p>
               </div>
-              <FaClock className="w-8 h-8 text-accent" />
+              <Clock className="w-8 h-8 text-accent" />
             </div>
           </CardContent>
         </Card>
@@ -322,7 +322,7 @@ export default function ArbitrageScanner() {
                   {formatCurrency(filteredOpportunities.reduce((sum, o) => sum + o.estimatedProfit, 0))}
                 </p>
               </div>
-              <FaDollarSign className="w-8 h-8 text-secondary" />
+              <DollarSign className="w-8 h-8 text-secondary" />
             </div>
           </CardContent>
         </Card>
@@ -336,7 +336,7 @@ export default function ArbitrageScanner() {
         <CardContent>
           {filteredOpportunities.length === 0 ? (
             <div className="text-center py-8">
-              <FaSearch className="w-12 h-12 text-neutral-400 mx-auto mb-3" />
+              <Search className="w-12 h-12 text-neutral-400 mx-auto mb-3" />
               <p className="text-neutral-600">No opportunities found</p>
               <p className="text-sm text-neutral-500">Try adjusting your filter criteria</p>
             </div>
@@ -402,7 +402,7 @@ export default function ArbitrageScanner() {
                         Analyze
                       </Button>
                       <Button size="sm" className="bg-success hover:bg-success/90">
-                        <FaBolt className="w-3 h-3 mr-1" />
+                        <Zap className="w-3 h-3 mr-1" />
                         Execute
                       </Button>
                     </div>

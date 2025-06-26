@@ -2,29 +2,29 @@ import { useState, useEffect } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { 
   Store, 
-  FaBox, 
-  FaPlus, 
+  Package, 
+  Plus, 
   Edit3, 
-  FaEye, 
-  FaChartBar,
-  FaDollarSign,
-  FaClock,
+  Eye, 
+  BarChart3,
+  DollarSign,
+  Clock,
   Users,
-  FaChartLine,
-  FaShoppingCart,
-  FaStar,
-  FaMapMarkerAlt,
-  FaPhone,
+  TrendingUp,
+  ShoppingCart,
+  Star,
+  MapPin,
+  Phone,
   Mail,
   Settings,
   Image,
   Save,
-  FaTimes,
+  X,
   Check,
-  FaExclamationCircle,
-  FaTruck,
+  AlertCircle,
+  Truck,
   Calendar
-} from "react-icons/fa";
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -327,28 +327,28 @@ export default function MerchantStoreManagement() {
       <div className="grid grid-cols-2 gap-4">
         <Card>
           <CardContent className="p-4 text-center">
-            <FaDollarSign className="w-8 h-8 mx-auto text-green-500 mb-2" />
+            <DollarSign className="w-8 h-8 mx-auto text-green-500 mb-2" />
             <p className="text-2xl font-bold">$2,847</p>
             <p className="text-sm text-neutral-600">This Month</p>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-4 text-center">
-            <FaShoppingCart className="w-8 h-8 mx-auto text-blue-500 mb-2" />
+            <ShoppingCart className="w-8 h-8 mx-auto text-blue-500 mb-2" />
             <p className="text-2xl font-bold">{orders.length}</p>
             <p className="text-sm text-neutral-600">Active Orders</p>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-4 text-center">
-            <FaStar className="w-8 h-8 mx-auto text-yellow-500 mb-2" />
+            <Star className="w-8 h-8 mx-auto text-yellow-500 mb-2" />
             <p className="text-2xl font-bold">{store.rating}</p>
             <p className="text-sm text-neutral-600">Rating</p>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-4 text-center">
-            <FaBox className="w-8 h-8 mx-auto text-purple-500 mb-2" />
+            <Package className="w-8 h-8 mx-auto text-purple-500 mb-2" />
             <p className="text-2xl font-bold">{products.length}</p>
             <p className="text-sm text-neutral-600">Products</p>
           </CardContent>
@@ -425,7 +425,7 @@ export default function MerchantStoreManagement() {
       <div className="flex justify-between items-center">
         <h2 className="text-lg font-semibold">Products</h2>
         <Button onClick={() => openProductEditor()}>
-          <FaPlus className="w-4 h-4 mr-2" />
+          <Plus className="w-4 h-4 mr-2" />
           Add Product
         </Button>
       </div>
@@ -547,7 +547,7 @@ export default function MerchantStoreManagement() {
                       status: "cancelled"
                     })}
                   >
-                    <FaTimes className="w-4 h-4 mr-1" />
+                    <X className="w-4 h-4 mr-1" />
                     Reject
                   </Button>
                 </div>

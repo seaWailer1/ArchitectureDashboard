@@ -1,18 +1,18 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { 
-  FaDollarSign, 
-  FaChartLine, 
+  DollarSign, 
+  TrendingUp, 
   TrendingDown, 
-  FaEye, 
-  FaEyeSlash,
-  FaPlus,
+  Eye, 
+  EyeOff,
+  Plus,
   ArrowUpDown,
-  FaWallet,
+  Wallet,
   PiggyBank,
   LineChart,
   Bitcoin
-} from "react-icons/fa";
+} from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -114,7 +114,7 @@ export default function EnhancedWalletSummary() {
       case 'savings':
         return <PiggyBank className="w-5 h-5" />;
       default:
-        return <FaWallet className="w-5 h-5" />;
+        return <Wallet className="w-5 h-5" />;
     }
   };
 
@@ -163,7 +163,7 @@ export default function EnhancedWalletSummary() {
                   className="text-white hover:bg-white/20 p-1"
                   onClick={() => setShowBalances(!showBalances)}
                 >
-                  {showBalances ? <FaEye className="w-4 h-4" /> : <FaEyeSlash className="w-4 h-4" />}
+                  {showBalances ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
                 </Button>
               </div>
             </div>
@@ -175,7 +175,7 @@ export default function EnhancedWalletSummary() {
 
           <div className="flex space-x-3">
             <Button size="sm" className="bg-white/20 hover:bg-white/30 text-white">
-              <FaPlus className="w-4 h-4 mr-2" />
+              <Plus className="w-4 h-4 mr-2" />
               Add Money
             </Button>
             <Button size="sm" className="bg-white/20 hover:bg-white/30 text-white">

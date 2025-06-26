@@ -1,20 +1,20 @@
 import { useQuery } from "@tanstack/react-query";
 import { 
-  FaBuilding, 
-  FaChartLine, 
+  Building2, 
+  TrendingUp, 
   Users, 
-  FaDollarSign, 
+  DollarSign, 
   Target,
   Award,
-  FaClock,
-  FaMapMarkerAlt,
-  FaPhone,
+  Clock,
+  MapPin,
+  Phone,
   Mail,
   Calendar,
-  FaPlus,
-  FaExternalLinkAlt,
-  FaCheckCircle
-} from "react-icons/fa";
+  Plus,
+  ArrowUpRight,
+  CheckCircle
+} from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -81,21 +81,21 @@ export default function AgentDashboard() {
       action: () => toast({ title: "Customer Registration", description: "Customer registration feature coming soon!" }) 
     },
     { 
-      icon: FaDollarSign, 
+      icon: DollarSign, 
       label: "Cash Services", 
       color: "bg-green-100 text-green-600", 
       description: "Cash in/out services",
       action: () => toast({ title: "Cash Services", description: "Cash services feature coming soon!" }) 
     },
     { 
-      icon: FaPhone, 
+      icon: Phone, 
       label: "Mobile Money", 
       color: "bg-purple-100 text-purple-600", 
       description: "Mobile money transfers",
       action: () => toast({ title: "Mobile Money", description: "Mobile money feature coming soon!" }) 
     },
     { 
-      icon: FaCheckCircle, 
+      icon: CheckCircle, 
       label: "KYC Verification", 
       color: "bg-orange-100 text-orange-600", 
       description: "Verify customer identity",
@@ -139,7 +139,7 @@ export default function AgentDashboard() {
               View Targets
             </Button>
             <Button size="sm" className="bg-white/20 hover:bg-white/30 text-white flex-1">
-              <FaChartLine className="w-4 h-4 mr-2" />
+              <TrendingUp className="w-4 h-4 mr-2" />
               Analytics
             </Button>
           </div>
@@ -156,7 +156,7 @@ export default function AgentDashboard() {
                 <p className="text-2xl font-bold">{agentMetrics.conversionRate}%</p>
               </div>
               <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-                <FaChartLine className="w-6 h-6 text-green-600" />
+                <TrendingUp className="w-6 h-6 text-green-600" />
               </div>
             </div>
           </CardContent>
@@ -271,7 +271,7 @@ export default function AgentDashboard() {
             <CardTitle>Recent Customer Activities</CardTitle>
             <Button variant="ghost" size="sm">
               View All
-              <FaExternalLinkAlt className="w-4 h-4 ml-1" />
+              <ArrowUpRight className="w-4 h-4 ml-1" />
             </Button>
           </div>
         </CardHeader>
@@ -306,15 +306,15 @@ export default function AgentDashboard() {
         <CardContent>
           <div className="space-y-3">
             <div className="flex items-center space-x-3">
-              <FaMapMarkerAlt className="w-5 h-5 text-neutral-600" />
+              <MapPin className="w-5 h-5 text-neutral-600" />
               <span className="text-sm">Lagos, Victoria Island</span>
             </div>
             <div className="flex items-center space-x-3">
-              <FaClock className="w-5 h-5 text-neutral-600" />
+              <Clock className="w-5 h-5 text-neutral-600" />
               <span className="text-sm">Operating Hours: 8AM - 6PM</span>
             </div>
             <div className="flex items-center space-x-3">
-              <FaPhone className="w-5 h-5 text-neutral-600" />
+              <Phone className="w-5 h-5 text-neutral-600" />
               <span className="text-sm">+234 xxx xxxx</span>
             </div>
           </div>

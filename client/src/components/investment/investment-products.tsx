@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { 
-  FaChartLine, 
+  TrendingUp, 
   Shield, 
-  FaExclamationTriangle, 
-  FaDollarSign,
+  AlertTriangle, 
+  DollarSign,
   Calendar,
   Target,
   PiggyBank
-} from "react-icons/fa";
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -75,7 +75,7 @@ export default function InvestmentProducts() {
       case 'medium':
         return <Target className="w-4 h-4 text-accent" />;
       case 'high':
-        return <FaExclamationTriangle className="w-4 h-4 text-destructive" />;
+        return <AlertTriangle className="w-4 h-4 text-destructive" />;
       default:
         return <Shield className="w-4 h-4 text-neutral-500" />;
     }
@@ -101,7 +101,7 @@ export default function InvestmentProducts() {
       case 'fixed_deposit':
         return <Calendar className="w-5 h-5" />;
       default:
-        return <FaChartLine className="w-5 h-5" />;
+        return <TrendingUp className="w-5 h-5" />;
     }
   };
 
@@ -163,7 +163,7 @@ export default function InvestmentProducts() {
     <div className="space-y-6">
       <div className="text-center">
         <div className="w-16 h-16 bg-gradient-to-br from-success to-accent rounded-2xl flex items-center justify-center mx-auto mb-4">
-          <FaChartLine className="w-8 h-8 text-white" />
+          <TrendingUp className="w-8 h-8 text-white" />
         </div>
         <h2 className="text-2xl font-bold text-neutral-900 mb-2">Investment Products</h2>
         <p className="text-neutral-600">Grow your wealth with our investment options</p>
@@ -256,7 +256,7 @@ export default function InvestmentProducts() {
                     className="w-full"
                     onClick={() => setSelectedProduct(product)}
                   >
-                    <FaDollarSign className="w-4 h-4 mr-2" />
+                    <DollarSign className="w-4 h-4 mr-2" />
                     Invest Now
                   </Button>
                 </DialogTrigger>

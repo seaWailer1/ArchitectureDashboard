@@ -2,14 +2,14 @@ import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { 
   Bitcoin, 
-  FaChartLine, 
+  TrendingUp, 
   TrendingDown, 
   ArrowUpDown, 
-  FaDollarSign,
-  FaPlus,
-  FaMinus,
-  FaChartBar
-} from "react-icons/fa";
+  DollarSign,
+  Plus,
+  Minus,
+  BarChart3
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -92,7 +92,7 @@ export default function CryptoTrading() {
 
   const getPriceChangeIcon = (change: string) => {
     const value = parseFloat(change);
-    if (value > 0) return <FaChartLine className="w-3 h-3" />;
+    if (value > 0) return <TrendingUp className="w-3 h-3" />;
     if (value < 0) return <TrendingDown className="w-3 h-3" />;
     return null;
   };
@@ -245,7 +245,7 @@ export default function CryptoTrading() {
                       className={orderType === 'buy' ? 'bg-success text-white' : ''}
                       onClick={() => setOrderType('buy')}
                     >
-                      <FaPlus className="w-4 h-4 mr-2" />
+                      <Plus className="w-4 h-4 mr-2" />
                       Buy
                     </Button>
                     <Button
@@ -253,7 +253,7 @@ export default function CryptoTrading() {
                       className={orderType === 'sell' ? 'bg-destructive text-white' : ''}
                       onClick={() => setOrderType('sell')}
                     >
-                      <FaMinus className="w-4 h-4 mr-2" />
+                      <Minus className="w-4 h-4 mr-2" />
                       Sell
                     </Button>
                   </div>
@@ -315,7 +315,7 @@ export default function CryptoTrading() {
             <CardContent>
               {portfolio.filter((holding: any) => holding.asset?.type === 'cryptocurrency').length === 0 ? (
                 <div className="text-center py-8">
-                  <FaChartBar className="w-12 h-12 text-neutral-400 mx-auto mb-3" />
+                  <BarChart3 className="w-12 h-12 text-neutral-400 mx-auto mb-3" />
                   <p className="text-neutral-600">No crypto holdings yet</p>
                   <p className="text-sm text-neutral-500 mt-1">Start trading to build your portfolio</p>
                 </div>
