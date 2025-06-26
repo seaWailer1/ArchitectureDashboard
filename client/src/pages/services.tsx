@@ -27,6 +27,7 @@ import PayBills from "@/components/services/pay-bills";
 import Shop from "@/components/services/shop";
 import Transport from "@/components/services/transport";
 import SavingsChallenges from "@/components/savings/savings-challenges";
+import PartnerWithAfriPay from "@/components/partnerships/partner-with-afripay";
 
 export default function Services() {
   const { toast } = useToast();
@@ -184,7 +185,7 @@ export default function Services() {
             <Button 
               variant="outline" 
               className="w-full"
-              onClick={() => toast({ title: "Coming Soon", description: "Partner integration portal coming soon" })}
+              onClick={() => setSelectedService('partner-portal')}
             >
               Learn More
             </Button>
@@ -206,6 +207,7 @@ export default function Services() {
                selectedService === 'shop' ? 'Shop' :
                selectedService === 'transport' ? 'Transport' :
                selectedService === 'savings-challenges' ? 'Savings Challenges' :
+               selectedService === 'partner-portal' ? 'Partner with AfriPay' :
                selectedService === 'loans' ? 'Micro Loans' : 
                selectedService === 'virtual-card' ? 'Virtual Cards' :
                selectedService === 'crypto' ? 'Crypto Trading' :
