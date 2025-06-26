@@ -33,6 +33,7 @@ interface WalletData {
 }
 
 export default function ConsumerDashboard() {
+  const [selectedService, setSelectedService] = useState<string | null>(null);
   const { toast } = useToast();
 
   const { data: wallets = [] } = useQuery<WalletData[]>({
@@ -61,12 +62,12 @@ export default function ConsumerDashboard() {
   };
 
   const quickServices = [
-    { icon: Send, label: "Send Money", color: "bg-blue-100 text-blue-600", action: () => toast({ title: "Send Money", description: "Transfer funds feature coming soon!" }) },
-    { icon: QrCode, label: "Pay & Scan", color: "bg-green-100 text-green-600", action: () => toast({ title: "QR Payment", description: "QR payment feature coming soon!" }) },
-    { icon: Phone, label: "Buy Airtime", color: "bg-purple-100 text-purple-600", action: () => toast({ title: "Airtime", description: "Airtime purchase coming soon!" }) },
-    { icon: Zap, label: "Pay Bills", color: "bg-orange-100 text-orange-600", action: () => toast({ title: "Bills", description: "Bill payment feature coming soon!" }) },
-    { icon: ShoppingBag, label: "Shop", color: "bg-pink-100 text-pink-600", action: () => toast({ title: "Shopping", description: "Shopping feature coming soon!" }) },
-    { icon: Car, label: "Transport", color: "bg-indigo-100 text-indigo-600", action: () => toast({ title: "Transport", description: "Transport booking coming soon!" }) },
+    { icon: Send, label: "Send Money", color: "bg-blue-100 text-blue-600", action: () => setSelectedService('send-money') },
+    { icon: QrCode, label: "Pay & Scan", color: "bg-green-100 text-green-600", action: () => setSelectedService('pay-scan') },
+    { icon: Phone, label: "Buy Airtime", color: "bg-purple-100 text-purple-600", action: () => setSelectedService('buy-airtime') },
+    { icon: Zap, label: "Pay Bills", color: "bg-orange-100 text-orange-600", action: () => setSelectedService('pay-bills') },
+    { icon: ShoppingBag, label: "Shop", color: "bg-pink-100 text-pink-600", action: () => setSelectedService('shop') },
+    { icon: Car, label: "Transport", color: "bg-indigo-100 text-indigo-600", action: () => setSelectedService('transport') },
   ];
 
   const getTransactionIcon = (type: string) => {
@@ -216,6 +217,41 @@ export default function ConsumerDashboard() {
           </div>
         </CardContent>
       </Card>
+
+      {/* Quick Services Modal */}
+      <Dialog open={!!selectedService} onOpenChange={() => setSelectedService(null)}>
+        <DialogContent className="max-w-md mx-auto max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>
+              {selectedService === 'send-money' ? 'Send Money' :
+               selectedService === 'pay-scan' ? 'Pay & Scan' :
+               selectedService === 'buy-airtime' ? 'Buy Airtime' :
+               selectedService === 'pay-bills' ? 'Pay Bills' :
+               selectedService === 'shop' ? 'Shop' :
+               selectedService === 'transport' ? 'Transport' : 'Service'}
+            </DialogTitle>
+          </DialogHeader>
+          
+          {selectedService === 'send-money' && (
+            <SendMoney onBack={() => setSelectedService(null)} />
+          )}
+          {selectedService === 'pay-scan' && (
+            <PayScan onBack={() => setSelectedService(null)} />
+          )}
+          {selectedService === 'buy-airtime' && (
+            <BuyAirtime onBack={() => setSelectedService(null)} />
+          )}
+          {selectedService === 'pay-bills' && (
+            <PayBills onBack={() => setSelectedService(null)} />
+          )}
+          {selectedService === 'shop' && (
+            <Shop onBack={() => setSelectedService(null)} />
+          )}
+          {selectedService === 'transport' && (
+            <Transport onBack={() => setSelectedService(null)} />
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

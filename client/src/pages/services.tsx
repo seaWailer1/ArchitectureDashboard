@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Car, ShoppingBag, Zap, Smartphone, CreditCard, Building, Users, MoreHorizontal, Package } from "lucide-react";
+import { Car, ShoppingBag, Zap, Smartphone, CreditCard, Building, Users, MoreHorizontal, Package, Send, QrCode, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
@@ -20,12 +20,29 @@ import CustomerOrders from "@/components/ecommerce/customer-orders";
 import IntegratedDeliveryHub from "@/components/ecommerce/integrated-delivery-hub";
 import DriverDashboard from "@/components/ecommerce/driver-dashboard";
 import MerchantStoreManagement from "@/components/ecommerce/merchant-store-management";
+import SendMoney from "@/components/services/send-money";
+import PayScan from "@/components/services/pay-scan";
+import BuyAirtime from "@/components/services/buy-airtime";
+import PayBills from "@/components/services/pay-bills";
+import Shop from "@/components/services/shop";
+import Transport from "@/components/services/transport";
 
 export default function Services() {
   const { toast } = useToast();
   const [selectedService, setSelectedService] = useState<string | null>(null);
 
   const serviceCategories = [
+    {
+      title: "Quick Services",
+      services: [
+        { id: "send-money", name: "Send Money", icon: Send, color: "bg-blue-100 text-blue-600", description: "Transfer funds to friends" },
+        { id: "pay-scan", name: "Pay & Scan", icon: QrCode, color: "bg-green-100 text-green-600", description: "QR code payments" },
+        { id: "buy-airtime", name: "Buy Airtime", icon: Phone, color: "bg-purple-100 text-purple-600", description: "Top up mobile credit" },
+        { id: "pay-bills", name: "Pay Bills", icon: Zap, color: "bg-orange-100 text-orange-600", description: "Pay utilities & services" },
+        { id: "shop", name: "Shop", icon: ShoppingBag, color: "bg-pink-100 text-pink-600", description: "African marketplace" },
+        { id: "transport", name: "Transport", icon: Car, color: "bg-indigo-100 text-indigo-600", description: "Book rides & delivery" },
+      ]
+    },
     {
       title: "Transportation",
       services: [
@@ -181,7 +198,13 @@ export default function Services() {
         <DialogContent className="max-w-md mx-auto max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>
-              {selectedService === 'loans' ? 'Micro Loans' : 
+              {selectedService === 'send-money' ? 'Send Money' :
+               selectedService === 'pay-scan' ? 'Pay & Scan' :
+               selectedService === 'buy-airtime' ? 'Buy Airtime' :
+               selectedService === 'pay-bills' ? 'Pay Bills' :
+               selectedService === 'shop' ? 'Shop' :
+               selectedService === 'transport' ? 'Transport' :
+               selectedService === 'loans' ? 'Micro Loans' : 
                selectedService === 'virtual-card' ? 'Virtual Cards' :
                selectedService === 'crypto' ? 'Crypto Trading' :
                selectedService === 'investment' ? 'Investment Products' :
