@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { 
-  Zap, 
+  FaBolt, 
   Smartphone, 
   Wifi, 
-  Car, 
+  FaCar, 
   Home,
   CreditCard,
   Receipt,
@@ -57,7 +57,7 @@ export default function BillPayments() {
       id: "electricity",
       name: "Electricity",
       category: "utilities",
-      icon: Zap,
+      icon: FaBolt,
       color: "bg-yellow-100 text-yellow-600",
       description: "Pay electricity bills",
       fee: 0.5
@@ -184,7 +184,7 @@ export default function BillPayments() {
     switch (status) {
       case 'completed': return <Check className="w-3 h-3" />;
       case 'pending': return <Clock className="w-3 h-3" />;
-      case 'failed': return <Zap className="w-3 h-3" />;
+      case 'failed': return <FaBolt className="w-3 h-3" />;
       default: return <Clock className="w-3 h-3" />;
     }
   };
@@ -193,7 +193,7 @@ export default function BillPayments() {
     <div className="space-y-6">
       <div className="text-center">
         <div className="w-16 h-16 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
-          <Zap className="w-8 h-8 text-white" />
+          <FaBolt className="w-8 h-8 text-white" />
         </div>
         <h2 className="text-2xl font-bold text-neutral-900 mb-2">Bill Payments</h2>
         <p className="text-neutral-600">Pay all your bills in one place</p>

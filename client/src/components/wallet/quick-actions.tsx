@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { QrCode, Send, Download, Plus } from "react-icons/fa";
+import { FaQrcode, FaPaperPlane, FaDownload, FaPlus } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
@@ -53,30 +53,30 @@ export default function QuickActions() {
 
   const actions = [
     {
-      icon: QrCode,
+      icon: FaQrcode,
       label: t('scanQR'),
       color: "bg-primary/10 text-primary",
       onClick: () => setShowQRModal(true),
     },
     {
-      icon: Send,
+      icon: FaPaperPlane,
       label: t('send'),
       color: "bg-accent/10 text-accent",
       onClick: () => {
         toast({
           title: "Coming Soon",
-          description: "Send money feature coming soon",
+          description: "FaPaperPlane money feature coming soon",
         });
       },
     },
     {
-      icon: Download,
+      icon: FaDownload,
       label: t('receive'),
       color: "bg-success/10 text-success",
       onClick: () => setShowQRModal(true),
     },
     {
-      icon: Plus,
+      icon: FaPlus,
       label: t('topUp'),
       color: "bg-secondary/10 text-secondary",
       onClick: () => setShowTopUpDialog(true),

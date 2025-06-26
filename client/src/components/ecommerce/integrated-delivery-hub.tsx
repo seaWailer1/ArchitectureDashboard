@@ -3,28 +3,28 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { 
   ShoppingCart, 
   Utensils, 
-  Package, 
+  FaBox, 
   Pill, 
-  MapPin, 
+  FaMapMarkerAlt, 
   Clock, 
-  Star,
-  Truck,
-  Bike,
-  Car,
+  FaStar,
+  FaTruck,
+  FaBicycle,
+  FaCar,
   FaSearch,
   Filter,
   Plus,
   Minus,
   Heart,
-  ShoppingBag,
-  Navigation,
+  FaShoppingBag,
+  FaLocationArrow,
   FaPhone,
   FaCheckCircle,
   FaExclamationCircle,
-  User,
+  FaUser,
   DollarSign,
   FaCamera,
-  MessageSquare,
+  FaComment,
   ThumbsUp
 } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
@@ -104,7 +104,7 @@ export default function IntegratedDeliveryHub() {
     { id: "food", name: "Food & Restaurants", icon: Utensils, color: "bg-orange-500" },
     { id: "grocery", name: "Groceries & Supermarkets", icon: ShoppingCart, color: "bg-green-500" },
     { id: "pharmacy", name: "Pharmacy & Health", icon: Pill, color: "bg-blue-500" },
-    { id: "retail", name: "Retail & Shopping", icon: Package, color: "bg-purple-500" },
+    { id: "retail", name: "Retail & Shopping", icon: FaBox, color: "bg-purple-500" },
   ];
 
   const deliveryOptions: DeliveryOption[] = [
@@ -112,7 +112,7 @@ export default function IntegratedDeliveryHub() {
       id: "motorbike",
       name: "Express Delivery",
       description: "Fast delivery with motorbike",
-      icon: Bike,
+      icon: FaBicycle,
       estimatedTime: "20-35 min",
       price: 2.50,
       vehicleType: "motorbike"
@@ -121,7 +121,7 @@ export default function IntegratedDeliveryHub() {
       id: "bicycle",
       name: "Eco Delivery",
       description: "Environment-friendly bicycle delivery",
-      icon: Bike,
+      icon: FaBicycle,
       estimatedTime: "35-50 min",
       price: 1.50,
       vehicleType: "bicycle"
@@ -130,7 +130,7 @@ export default function IntegratedDeliveryHub() {
       id: "car",
       name: "Premium Delivery",
       description: "Secure car delivery for larger orders",
-      icon: Car,
+      icon: FaCar,
       estimatedTime: "25-40 min",
       price: 4.00,
       vehicleType: "car"
@@ -414,7 +414,7 @@ export default function IntegratedDeliveryHub() {
         
         <div className="flex items-center space-x-4 text-sm text-neutral-600 mb-2">
           <div className="flex items-center">
-            <Star className="w-4 h-4 text-yellow-400 fill-current mr-1" />
+            <FaStar className="w-4 h-4 text-yellow-400 fill-current mr-1" />
             <span>{store.rating} ({store.totalReviews})</span>
           </div>
           <div className="flex items-center">
@@ -465,7 +465,7 @@ export default function IntegratedDeliveryHub() {
             
             <div className="flex items-center space-x-2 mb-2">
               <div className="flex items-center">
-                <Star className="w-4 h-4 text-yellow-400 fill-current mr-1" />
+                <FaStar className="w-4 h-4 text-yellow-400 fill-current mr-1" />
                 <span className="text-sm">{product.rating}</span>
               </div>
               {product.preparationTime && (
@@ -512,7 +512,7 @@ export default function IntegratedDeliveryHub() {
                 className="text-white"
                 onClick={() => setShowCart(true)}
               >
-                <ShoppingBag className="w-5 h-5" />
+                <FaShoppingBag className="w-5 h-5" />
                 {cart.length > 0 && (
                   <Badge className="ml-1 bg-red-500">{cart.length}</Badge>
                 )}
@@ -595,7 +595,7 @@ export default function IntegratedDeliveryHub() {
             
             {cart.length === 0 ? (
               <div className="text-center py-8">
-                <ShoppingBag className="w-12 h-12 mx-auto text-neutral-400 mb-4" />
+                <FaShoppingBag className="w-12 h-12 mx-auto text-neutral-400 mb-4" />
                 <p>Your cart is empty</p>
               </div>
             ) : (
@@ -753,7 +753,7 @@ export default function IntegratedDeliveryHub() {
                 {activeOrder.status === "picked_up" && (
                   <div className="bg-blue-50 p-4 rounded-lg">
                     <div className="flex items-center space-x-2 mb-2">
-                      <User className="w-5 h-5" />
+                      <FaUser className="w-5 h-5" />
                       <span className="font-medium">Your Driver</span>
                     </div>
                     <p className="text-sm">Samuel Okafor</p>

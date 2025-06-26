@@ -1,18 +1,18 @@
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { 
-  ShoppingBag, 
+  FaShoppingBag, 
   FaSearch, 
   Filter, 
-  Star,
+  FaStar,
   Heart,
   ShoppingCart,
   Plus,
   Minus,
-  MapPin,
-  Truck,
+  FaMapMarkerAlt,
+  FaTruck,
   CreditCard,
-  Sparkles,
+  FaStar,
   TrendingUp,
   Clock
 } from "react-icons/fa";
@@ -337,7 +337,7 @@ export default function ShoppingMarketplace() {
 
   const renderStars = (rating: number) => {
     return Array.from({ length: 5 }, (_, i) => (
-      <Star 
+      <FaStar 
         key={i} 
         className={`w-3 h-3 ${i < Math.floor(rating) ? 'text-yellow-400 fill-current' : 'text-neutral-300'}`} 
       />
@@ -375,7 +375,7 @@ export default function ShoppingMarketplace() {
     <div className="space-y-6">
       <div className="text-center">
         <div className="w-16 h-16 bg-gradient-to-br from-purple-400 to-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
-          <ShoppingBag className="w-8 h-8 text-white" />
+          <FaShoppingBag className="w-8 h-8 text-white" />
         </div>
         <h2 className="text-2xl font-bold text-neutral-900 mb-2">AfriMarket</h2>
         <p className="text-neutral-600">Discover amazing products from African sellers</p>
@@ -456,7 +456,7 @@ export default function ShoppingMarketplace() {
           <Card>
             <CardContent className="p-4">
               <div className="flex items-center space-x-2 mb-3">
-                <Sparkles className="w-5 h-5 text-accent" />
+                <FaStar className="w-5 h-5 text-accent" />
                 <h3 className="font-semibold">Trending Now</h3>
               </div>
               <div className="flex space-x-2 overflow-x-auto">
@@ -476,7 +476,7 @@ export default function ShoppingMarketplace() {
               <Card key={product.id} className="hover:shadow-md transition-shadow">
                 <CardContent className="p-4">
                   <div className="aspect-square bg-neutral-100 rounded-lg mb-3 flex items-center justify-center relative">
-                    <ShoppingBag className="w-12 h-12 text-neutral-400" />
+                    <FaShoppingBag className="w-12 h-12 text-neutral-400" />
                     {product.discount && (
                       <Badge className="absolute top-2 left-2 bg-red-500 text-white text-xs">
                         -{product.discount.value}{product.discount.type === 'percentage' ? '%' : '$'}
@@ -519,11 +519,11 @@ export default function ShoppingMarketplace() {
                   
                   <div className="flex items-center justify-between text-xs text-neutral-600 mb-3">
                     <span className="flex items-center">
-                      <MapPin className="w-3 h-3 mr-1" />
+                      <FaMapMarkerAlt className="w-3 h-3 mr-1" />
                       {product.seller.name}
                     </span>
                     <span className="flex items-center">
-                      <Truck className="w-3 h-3 mr-1" />
+                      <FaTruck className="w-3 h-3 mr-1" />
                       {product.deliveryTime}
                     </span>
                   </div>
@@ -572,7 +572,7 @@ export default function ShoppingMarketplace() {
                     {cart.map((item) => (
                       <div key={item.productId} className="flex items-center space-x-3 p-2 border rounded">
                         <div className="w-12 h-12 bg-neutral-100 rounded flex items-center justify-center">
-                          <ShoppingBag className="w-6 h-6 text-neutral-400" />
+                          <FaShoppingBag className="w-6 h-6 text-neutral-400" />
                         </div>
                         <div className="flex-1">
                           <p className="font-medium text-sm">{item.product.name}</p>
@@ -635,7 +635,7 @@ export default function ShoppingMarketplace() {
             <CardContent>
               {orders.length === 0 ? (
                 <div className="text-center py-8">
-                  <ShoppingBag className="w-12 h-12 text-neutral-400 mx-auto mb-3" />
+                  <FaShoppingBag className="w-12 h-12 text-neutral-400 mx-auto mb-3" />
                   <p className="text-neutral-600">No orders yet</p>
                   <p className="text-sm text-neutral-500">Start shopping to see your orders here</p>
                 </div>

@@ -125,7 +125,7 @@ export default function Profile() {
                 <h2 className="text-xl font-bold text-neutral-900">
                   {user?.firstName || user?.lastName 
                     ? `${user.firstName || ''} ${user.lastName || ''}`.trim()
-                    : 'User'
+                    : 'FaUser'
                   }
                 </h2>
                 <p className="text-neutral-600">{user?.email || 'No email'}</p>

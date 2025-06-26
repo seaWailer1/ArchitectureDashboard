@@ -101,7 +101,7 @@ export default function Transactions() {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">All Types</SelectItem>
-                  <SelectItem value="send">Send</SelectItem>
+                  <SelectItem value="send">FaPaperPlane</SelectItem>
                   <SelectItem value="receive">Receive</SelectItem>
                   <SelectItem value="topup">Top Up</SelectItem>
                 </SelectContent>

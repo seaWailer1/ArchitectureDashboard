@@ -1,21 +1,21 @@
 import { useState, useEffect } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { 
-  Navigation, 
-  MapPin, 
+  FaLocationArrow, 
+  FaMapMarkerAlt, 
   Clock, 
   DollarSign,
   FaPhone,
-  MessageSquare,
+  FaComment,
   FaCamera,
   FaCheckCircle,
   FaExclamationCircle,
-  Package,
-  Truck,
-  Bike,
-  Car,
-  User,
-  Star,
+  FaBox,
+  FaTruck,
+  FaBicycle,
+  FaCar,
+  FaUser,
+  FaStar,
   Battery,
   Wifi,
   Volume2,
@@ -235,14 +235,14 @@ export default function DriverDashboard() {
 
         <div className="space-y-2 mb-4">
           <div className="flex items-start space-x-2">
-            <MapPin className="w-4 h-4 text-red-500 mt-0.5" />
+            <FaMapMarkerAlt className="w-4 h-4 text-red-500 mt-0.5" />
             <div className="flex-1">
               <p className="text-sm font-medium">Pickup</p>
               <p className="text-xs text-neutral-600">{order.pickupAddress}</p>
             </div>
           </div>
           <div className="flex items-start space-x-2">
-            <MapPin className="w-4 h-4 text-green-500 mt-0.5" />
+            <FaMapMarkerAlt className="w-4 h-4 text-green-500 mt-0.5" />
             <div className="flex-1">
               <p className="text-sm font-medium">Delivery</p>
               <p className="text-xs text-neutral-600">{order.deliveryAddress}</p>
@@ -257,7 +257,7 @@ export default function DriverDashboard() {
               <span>{order.estimatedTime} min</span>
             </div>
             <div className="flex items-center">
-              <Navigation className="w-4 h-4 mr-1" />
+              <FaLocationArrow className="w-4 h-4 mr-1" />
               <span>{order.distance} km</span>
             </div>
           </div>
@@ -330,7 +330,7 @@ export default function DriverDashboard() {
 
             <div className="space-y-3">
               <div className="flex items-start space-x-2">
-                <MapPin className="w-4 h-4 text-red-500 mt-0.5" />
+                <FaMapMarkerAlt className="w-4 h-4 text-red-500 mt-0.5" />
                 <div className="flex-1">
                   <p className="text-sm font-medium">Pickup: {activeDelivery.storeInfo.name}</p>
                   <p className="text-xs text-neutral-600">{activeDelivery.pickupAddress}</p>
@@ -340,7 +340,7 @@ export default function DriverDashboard() {
                 </Button>
               </div>
               <div className="flex items-start space-x-2">
-                <MapPin className="w-4 h-4 text-green-500 mt-0.5" />
+                <FaMapMarkerAlt className="w-4 h-4 text-green-500 mt-0.5" />
                 <div className="flex-1">
                   <p className="text-sm font-medium">Delivery to {activeDelivery.customerName}</p>
                   <p className="text-xs text-neutral-600">{activeDelivery.deliveryAddress}</p>
@@ -365,11 +365,11 @@ export default function DriverDashboard() {
 
             <div className="flex space-x-2">
               <Button variant="outline" className="flex-1">
-                <Navigation className="w-4 h-4 mr-2" />
+                <FaLocationArrow className="w-4 h-4 mr-2" />
                 Navigate
               </Button>
               <Button variant="outline" className="flex-1">
-                <MessageSquare className="w-4 h-4 mr-2" />
+                <FaComment className="w-4 h-4 mr-2" />
                 Message
               </Button>
             </div>
@@ -441,7 +441,7 @@ export default function DriverDashboard() {
                   <div>
                     <p className="text-2xl font-bold flex items-center justify-center">
                       {driverStats.rating}
-                      <Star className="w-4 h-4 text-yellow-400 ml-1" />
+                      <FaStar className="w-4 h-4 text-yellow-400 ml-1" />
                     </p>
                     <p className="text-xs text-neutral-600">Rating</p>
                   </div>
@@ -459,7 +459,7 @@ export default function DriverDashboard() {
                 {orders.length === 0 ? (
                   <Card>
                     <CardContent className="p-8 text-center">
-                      <Package className="w-12 h-12 mx-auto text-neutral-400 mb-4" />
+                      <FaBox className="w-12 h-12 mx-auto text-neutral-400 mb-4" />
                       <p className="text-neutral-600">No orders available</p>
                       <p className="text-sm text-neutral-500">New orders will appear here</p>
                     </CardContent>
@@ -475,7 +475,7 @@ export default function DriverDashboard() {
             {!isOnline && (
               <Card>
                 <CardContent className="p-8 text-center">
-                  <Truck className="w-12 h-12 mx-auto text-neutral-400 mb-4" />
+                  <FaTruck className="w-12 h-12 mx-auto text-neutral-400 mb-4" />
                   <p className="text-neutral-600">You're currently offline</p>
                   <p className="text-sm text-neutral-500">Go online to start receiving orders</p>
                 </CardContent>
@@ -525,7 +525,7 @@ export default function DriverDashboard() {
                       <span>Average Rating</span>
                       <span className="font-semibold flex items-center">
                         {driverStats.rating}
-                        <Star className="w-4 h-4 text-yellow-400 ml-1" />
+                        <FaStar className="w-4 h-4 text-yellow-400 ml-1" />
                       </span>
                     </div>
                   </div>

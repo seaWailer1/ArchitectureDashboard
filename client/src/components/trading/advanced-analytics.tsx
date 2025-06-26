@@ -8,7 +8,7 @@ import {
   DollarSign,
   Target,
   FaExclamationTriangle,
-  Zap,
+  FaBolt,
   Brain
 } from "react-icons/fa";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -501,7 +501,7 @@ export default function AdvancedAnalytics() {
                           </Button>
                           {insight.type === 'opportunity' && (
                             <Button size="sm" className="bg-success hover:bg-success/90">
-                              <Zap className="w-3 h-3 mr-1" />
+                              <FaBolt className="w-3 h-3 mr-1" />
                               Act Now
                             </Button>
                           )}

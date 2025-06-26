@@ -5,12 +5,12 @@ import {
   UserCheck, 
   UserX, 
   Clock, 
-  MapPin,
+  FaMapMarkerAlt,
   FaPhone,
   Mail,
   Shield,
   CreditCard,
-  User,
+  FaUser,
   RefreshCw,
   LogIn,
   Plus,
@@ -75,7 +75,7 @@ export default function PresetUsers() {
     },
     onSuccess: (data, userId) => {
       toast({
-        title: "User Switched",
+        title: "FaUser Switched",
         description: `Successfully switched to user ${userId}`,
       });
       // Clear all cached data and refresh
@@ -99,7 +99,7 @@ export default function PresetUsers() {
       case 'agent':
         return <Shield className="w-4 h-4" />;
       default:
-        return <User className="w-4 h-4" />;
+        return <FaUser className="w-4 h-4" />;
     }
   };
 
@@ -250,7 +250,7 @@ export default function PresetUsers() {
           </Card>
         </div>
 
-        {/* User List */}
+        {/* FaUser List */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {presetUsers?.map((user: PresetUser) => (
             <Card key={user.id} className="hover:shadow-lg transition-shadow">
@@ -304,7 +304,7 @@ export default function PresetUsers() {
                       ) : (
                         <LogIn className="w-4 h-4" />
                       )}
-                      <span>Switch User</span>
+                      <span>Switch FaUser</span>
                     </Button>
                   </div>
                 </div>
@@ -348,10 +348,10 @@ export default function PresetUsers() {
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <h4 className="font-semibold mb-3">User Types</h4>
+                <h4 className="font-semibold mb-3">FaUser Types</h4>
                 <ul className="space-y-2 text-sm text-neutral-600">
                   <li className="flex items-center space-x-2">
-                    <User className="w-4 h-4 text-blue-600" />
+                    <FaUser className="w-4 h-4 text-blue-600" />
                     <span><strong>Consumer:</strong> Personal banking and payments</span>
                   </li>
                   <li className="flex items-center space-x-2">

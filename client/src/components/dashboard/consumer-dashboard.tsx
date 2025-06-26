@@ -2,14 +2,14 @@ import { useQuery } from "@tanstack/react-query";
 import { 
   Wallet, 
   TrendingUp, 
-  Send, 
-  QrCode, 
-  ShoppingBag, 
-  Car,
+  FaPaperPlane, 
+  FaQrcode, 
+  FaShoppingBag, 
+  FaCar,
   FaPhone,
-  Zap,
-  Plus,
-  ArrowUpRight
+  FaBolt,
+  FaPlus,
+  FaExternalLinkAlt
 } from "react-icons/fa";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -61,12 +61,12 @@ export default function ConsumerDashboard() {
   };
 
   const quickServices = [
-    { icon: Send, label: "Send Money", color: "bg-blue-100 text-blue-600", action: () => toast({ title: "Send Money", description: "Transfer funds feature coming soon!" }) },
-    { icon: QrCode, label: "Pay & Scan", color: "bg-green-100 text-green-600", action: () => toast({ title: "QR Payment", description: "QR payment feature coming soon!" }) },
+    { icon: FaPaperPlane, label: "FaPaperPlane Money", color: "bg-blue-100 text-blue-600", action: () => toast({ title: "FaPaperPlane Money", description: "Transfer funds feature coming soon!" }) },
+    { icon: FaQrcode, label: "Pay & Scan", color: "bg-green-100 text-green-600", action: () => toast({ title: "QR Payment", description: "QR payment feature coming soon!" }) },
     { icon: FaPhone, label: "Buy Airtime", color: "bg-purple-100 text-purple-600", action: () => toast({ title: "Airtime", description: "Airtime purchase coming soon!" }) },
-    { icon: Zap, label: "Pay Bills", color: "bg-orange-100 text-orange-600", action: () => toast({ title: "Bills", description: "Bill payment feature coming soon!" }) },
-    { icon: ShoppingBag, label: "Shop", color: "bg-pink-100 text-pink-600", action: () => toast({ title: "Shopping", description: "Shopping feature coming soon!" }) },
-    { icon: Car, label: "Transport", color: "bg-indigo-100 text-indigo-600", action: () => toast({ title: "Transport", description: "Transport booking coming soon!" }) },
+    { icon: FaBolt, label: "Pay Bills", color: "bg-orange-100 text-orange-600", action: () => toast({ title: "Bills", description: "Bill payment feature coming soon!" }) },
+    { icon: FaShoppingBag, label: "Shop", color: "bg-pink-100 text-pink-600", action: () => toast({ title: "Shopping", description: "Shopping feature coming soon!" }) },
+    { icon: FaCar, label: "Transport", color: "bg-indigo-100 text-indigo-600", action: () => toast({ title: "Transport", description: "Transport booking coming soon!" }) },
   ];
 
   const getTransactionIcon = (type: string) => {
@@ -98,12 +98,12 @@ export default function ConsumerDashboard() {
           
           <div className="flex space-x-3">
             <Button size="sm" className="bg-white/20 hover:bg-white/30 text-white flex-1">
-              <Plus className="w-4 h-4 mr-2" />
+              <FaPlus className="w-4 h-4 mr-2" />
               Add Money
             </Button>
             <Button size="sm" className="bg-white/20 hover:bg-white/30 text-white flex-1">
-              <Send className="w-4 h-4 mr-2" />
-              Send
+              <FaPaperPlane className="w-4 h-4 mr-2" />
+              FaPaperPlane
             </Button>
           </div>
         </CardContent>
@@ -143,7 +143,7 @@ export default function ConsumerDashboard() {
             <CardTitle>Recent Activity</CardTitle>
             <Button variant="ghost" size="sm">
               View All
-              <ArrowUpRight className="w-4 h-4 ml-1" />
+              <FaExternalLinkAlt className="w-4 h-4 ml-1" />
             </Button>
           </div>
         </CardHeader>

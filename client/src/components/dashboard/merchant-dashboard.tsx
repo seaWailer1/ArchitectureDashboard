@@ -5,13 +5,13 @@ import {
   TrendingDown,
   Users, 
   CreditCard, 
-  Package, 
+  FaBox, 
   BarChart3,
-  QrCode,
+  FaQrcode,
   Settings,
   Eye,
-  Plus,
-  ArrowUpRight
+  FaPlus,
+  FaExternalLinkAlt
 } from "react-icons/fa";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -71,8 +71,8 @@ export default function MerchantDashboard() {
   };
 
   const quickActions = [
-    { icon: QrCode, label: "Payment QR", color: "bg-blue-100 text-blue-600", action: () => toast({ title: "QR Code", description: "Generate payment QR code" }) },
-    { icon: Package, label: "Inventory", color: "bg-green-100 text-green-600", action: () => toast({ title: "Inventory", description: "Manage your products" }) },
+    { icon: FaQrcode, label: "Payment QR", color: "bg-blue-100 text-blue-600", action: () => toast({ title: "QR Code", description: "Generate payment QR code" }) },
+    { icon: FaBox, label: "Inventory", color: "bg-green-100 text-green-600", action: () => toast({ title: "Inventory", description: "Manage your products" }) },
     { icon: Users, label: "Customers", color: "bg-purple-100 text-purple-600", action: () => toast({ title: "Customers", description: "View customer insights" }) },
     { icon: BarChart3, label: "Analytics", color: "bg-orange-100 text-orange-600", action: () => toast({ title: "Analytics", description: "View detailed analytics" }) },
   ];
@@ -104,7 +104,7 @@ export default function MerchantDashboard() {
               View Sales
             </Button>
             <Button size="sm" className="bg-white/20 hover:bg-white/30 text-white flex-1">
-              <QrCode className="w-4 h-4 mr-2" />
+              <FaQrcode className="w-4 h-4 mr-2" />
               Payment QR
             </Button>
           </div>
@@ -176,7 +176,7 @@ export default function MerchantDashboard() {
             <CardTitle>Sales Performance</CardTitle>
             <Button variant="ghost" size="sm">
               View Details
-              <ArrowUpRight className="w-4 h-4 ml-1" />
+              <FaExternalLinkAlt className="w-4 h-4 ml-1" />
             </Button>
           </div>
         </CardHeader>
@@ -235,7 +235,7 @@ export default function MerchantDashboard() {
           <div className="space-y-3">
             <div className="flex items-center justify-between p-3 border rounded-lg">
               <div className="flex items-center space-x-3">
-                <QrCode className="w-5 h-5 text-blue-600" />
+                <FaQrcode className="w-5 h-5 text-blue-600" />
                 <span className="font-medium">QR Code Payments</span>
               </div>
               <Badge className="bg-green-100 text-green-700">Active</Badge>
@@ -250,7 +250,7 @@ export default function MerchantDashboard() {
             </div>
             
             <Button variant="outline" className="w-full">
-              <Plus className="w-4 h-4 mr-2" />
+              <FaPlus className="w-4 h-4 mr-2" />
               Add Payment Method
             </Button>
           </div>

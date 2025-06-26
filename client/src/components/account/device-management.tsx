@@ -7,9 +7,9 @@ import {
   Shield, 
   ShieldCheck, 
   FaTimes,
-  ArrowLeft,
+  FaArrowLeft,
   Clock,
-  MapPin 
+  FaMapMarkerAlt 
 } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -99,7 +99,7 @@ export default function DeviceManagement({ onBack }: DeviceManagementProps) {
       {/* Header */}
       <div className="flex items-center space-x-3">
         <Button variant="ghost" size="sm" onClick={onBack}>
-          <ArrowLeft className="w-4 h-4" />
+          <FaArrowLeft className="w-4 h-4" />
         </Button>
         <div>
           <h2 className="text-xl font-bold">Device Management</h2>
@@ -199,7 +199,7 @@ export default function DeviceManagement({ onBack }: DeviceManagementProps) {
                               <span>Last used: {new Date(device.lastUsedAt).toLocaleDateString()}</span>
                             </div>
                             <div className="flex items-center space-x-1">
-                              <MapPin className="w-3 h-3" />
+                              <FaMapMarkerAlt className="w-3 h-3" />
                               <span>First seen: {new Date(device.firstUsedAt).toLocaleDateString()}</span>
                             </div>
                           </div>

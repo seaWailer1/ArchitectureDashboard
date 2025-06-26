@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { 
-  Package, 
+  FaBox, 
   DollarSign,
   ShoppingCart,
   TrendingUp,
   Users,
-  Star,
+  FaStar,
   Plus,
   Eye,
   Edit3,
@@ -246,7 +246,7 @@ export default function MerchantDashboard() {
 
   const renderStars = (rating: number) => {
     return Array.from({ length: 5 }, (_, i) => (
-      <Star 
+      <FaStar 
         key={i} 
         className={`w-3 h-3 ${i < Math.floor(rating) ? 'text-yellow-400 fill-current' : 'text-neutral-300'}`} 
       />
@@ -257,7 +257,7 @@ export default function MerchantDashboard() {
     <div className="space-y-6">
       <div className="text-center">
         <div className="w-16 h-16 bg-gradient-to-br from-emerald-400 to-blue-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
-          <Package className="w-8 h-8 text-white" />
+          <FaBox className="w-8 h-8 text-white" />
         </div>
         <h2 className="text-2xl font-bold text-neutral-900 mb-2">Merchant Dashboard</h2>
         <p className="text-neutral-600">Manage your store and track performance</p>
@@ -305,7 +305,7 @@ export default function MerchantDashboard() {
                     <p className="text-sm text-neutral-600">Products</p>
                     <p className="text-xl font-bold">{analytics.totalProducts}</p>
                   </div>
-                  <Package className="w-8 h-8 text-purple" />
+                  <FaBox className="w-8 h-8 text-purple" />
                 </div>
               </CardContent>
             </Card>
@@ -435,7 +435,7 @@ export default function MerchantDashboard() {
                     <div className="flex-1">
                       <div className="flex items-center space-x-3">
                         <div className="w-12 h-12 bg-neutral-100 rounded-lg flex items-center justify-center">
-                          <Package className="w-6 h-6 text-neutral-400" />
+                          <FaBox className="w-6 h-6 text-neutral-400" />
                         </div>
                         <div>
                           <h4 className="font-medium">{product.name}</h4>

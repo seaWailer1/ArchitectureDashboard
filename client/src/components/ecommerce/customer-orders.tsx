@@ -1,15 +1,15 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { 
-  Package, 
-  Truck,
+  FaBox, 
+  FaTruck,
   FaCheckCircle,
   Clock,
-  Star,
+  FaStar,
   Eye,
-  MessageCircle,
-  ArrowLeft,
-  MapPin
+  FaCommentDots,
+  FaArrowLeft,
+  FaMapMarkerAlt
 } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -140,10 +140,10 @@ export default function CustomerOrders() {
   const getStatusIcon = (status: string) => {
     switch (status) {
       case 'delivered': return <FaCheckCircle className="w-4 h-4" />;
-      case 'shipped': return <Truck className="w-4 h-4" />;
-      case 'processing': case 'confirmed': return <Package className="w-4 h-4" />;
+      case 'shipped': return <FaTruck className="w-4 h-4" />;
+      case 'processing': case 'confirmed': return <FaBox className="w-4 h-4" />;
       case 'pending': return <Clock className="w-4 h-4" />;
-      default: return <Package className="w-4 h-4" />;
+      default: return <FaBox className="w-4 h-4" />;
     }
   };
 
@@ -173,7 +173,7 @@ export default function CustomerOrders() {
               setSelectedOrder(null);
             }}
           >
-            <ArrowLeft className="w-4 h-4" />
+            <FaArrowLeft className="w-4 h-4" />
           </Button>
           <h2 className="font-bold text-lg">Order Details</h2>
         </div>
@@ -227,7 +227,7 @@ export default function CustomerOrders() {
               {selectedOrder.items.map((item) => (
                 <div key={item.id} className="flex items-center space-x-3 p-3 bg-neutral-50 rounded-lg">
                   <div className="w-16 h-16 bg-neutral-100 rounded-lg flex items-center justify-center">
-                    <Package className="w-8 h-8 text-neutral-400" />
+                    <FaBox className="w-8 h-8 text-neutral-400" />
                   </div>
                   <div className="flex-1">
                     <h4 className="font-medium">{item.name}</h4>
@@ -261,7 +261,7 @@ export default function CustomerOrders() {
           <CardContent>
             <div className="space-y-3">
               <div className="flex items-start space-x-3">
-                <MapPin className="w-5 h-5 text-neutral-400 mt-1" />
+                <FaMapMarkerAlt className="w-5 h-5 text-neutral-400 mt-1" />
                 <div>
                   <p className="font-medium">Delivery Address</p>
                   <p className="text-sm text-neutral-600">{selectedOrder.deliveryAddress}</p>
@@ -270,7 +270,7 @@ export default function CustomerOrders() {
               
               {selectedOrder.estimatedDelivery && (
                 <div className="flex items-start space-x-3">
-                  <Truck className="w-5 h-5 text-neutral-400 mt-1" />
+                  <FaTruck className="w-5 h-5 text-neutral-400 mt-1" />
                   <div>
                     <p className="font-medium">Estimated Delivery</p>
                     <p className="text-sm text-neutral-600">
@@ -281,7 +281,7 @@ export default function CustomerOrders() {
               )}
 
               <div className="flex items-start space-x-3">
-                <Package className="w-5 h-5 text-neutral-400 mt-1" />
+                <FaBox className="w-5 h-5 text-neutral-400 mt-1" />
                 <div>
                   <p className="font-medium">Payment Method</p>
                   <p className="text-sm text-neutral-600">{selectedOrder.paymentMethod}</p>
@@ -295,12 +295,12 @@ export default function CustomerOrders() {
         <div className="flex space-x-3">
           {selectedOrder.status === 'delivered' && (
             <Button className="flex-1">
-              <Star className="w-4 h-4 mr-2" />
+              <FaStar className="w-4 h-4 mr-2" />
               Rate & Review
             </Button>
           )}
           <Button variant="outline" className="flex-1">
-            <MessageCircle className="w-4 h-4 mr-2" />
+            <FaCommentDots className="w-4 h-4 mr-2" />
             Contact Seller
           </Button>
           {['pending', 'confirmed'].includes(selectedOrder.status) && (
@@ -317,7 +317,7 @@ export default function CustomerOrders() {
     <div className="space-y-6">
       <div className="text-center">
         <div className="w-16 h-16 bg-gradient-to-br from-orange-400 to-red-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
-          <Package className="w-8 h-8 text-white" />
+          <FaBox className="w-8 h-8 text-white" />
         </div>
         <h2 className="text-2xl font-bold text-neutral-900 mb-2">My Orders</h2>
         <p className="text-neutral-600">Track and manage your orders</p>
@@ -337,7 +337,7 @@ export default function CustomerOrders() {
           {activeOrders.length === 0 ? (
             <Card>
               <CardContent className="p-8 text-center">
-                <Package className="w-12 h-12 text-neutral-400 mx-auto mb-3" />
+                <FaBox className="w-12 h-12 text-neutral-400 mx-auto mb-3" />
                 <h3 className="font-medium mb-2">No active orders</h3>
                 <p className="text-neutral-600 text-sm">Your active orders will appear here</p>
               </CardContent>
@@ -391,8 +391,8 @@ export default function CustomerOrders() {
                       </Button>
                       {order.trackingNumber && (
                         <Button variant="outline" size="sm" className="flex-1">
-                          <Truck className="w-4 h-4 mr-2" />
-                          Track Package
+                          <FaTruck className="w-4 h-4 mr-2" />
+                          Track FaBox
                         </Button>
                       )}
                     </div>
@@ -451,7 +451,7 @@ export default function CustomerOrders() {
                       </Button>
                       {order.status === 'delivered' && (
                         <Button variant="outline" size="sm" className="flex-1">
-                          <Star className="w-4 h-4 mr-2" />
+                          <FaStar className="w-4 h-4 mr-2" />
                           Rate & Review
                         </Button>
                       )}

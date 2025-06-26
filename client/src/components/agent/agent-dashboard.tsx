@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { Handshake, TrendingUp, Users, Banknote, MapPin, Clock } from "react-icons/fa";
+import { Handshake, TrendingUp, Users, Banknote, FaMapMarkerAlt, Clock } from "react-icons/fa";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -45,7 +45,7 @@ export default function AgentDashboard() {
       color: "bg-success/10 text-success"
     },
     {
-      icon: MapPin,
+      icon: FaMapMarkerAlt,
       title: "Territory Management",
       description: "Manage your assigned service area",
       color: "bg-accent/10 text-accent"

@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { 
-  Car, 
-  MapPin, 
-  Navigation, 
+  FaCar, 
+  FaMapMarkerAlt, 
+  FaLocationArrow, 
   Clock,
   DollarSign,
-  Star,
+  FaStar,
   FaPhone,
   Shield,
   Users,
@@ -75,7 +75,7 @@ export default function RideHailing() {
       id: "economy",
       name: "AfriRide Economy",
       description: "Affordable rides for everyday travel",
-      icon: Car,
+      icon: FaCar,
       basePrice: 2.50,
       pricePerKm: 0.85,
       capacity: 4,
@@ -87,7 +87,7 @@ export default function RideHailing() {
       id: "comfort",
       name: "AfriRide Comfort", 
       description: "Premium vehicles with extra comfort",
-      icon: Car,
+      icon: FaCar,
       basePrice: 3.50,
       pricePerKm: 1.20,
       capacity: 4,
@@ -111,7 +111,7 @@ export default function RideHailing() {
       id: "moto",
       name: "AfriMoto",
       description: "Quick motorcycle rides for short trips",
-      icon: Navigation,
+      icon: FaLocationArrow,
       basePrice: 1.00,
       pricePerKm: 0.45,
       capacity: 1,
@@ -123,7 +123,7 @@ export default function RideHailing() {
       id: "xl",
       name: "AfriRide XL",
       description: "Extra space for groups and luggage",
-      icon: Car,
+      icon: FaCar,
       basePrice: 4.00,
       pricePerKm: 1.50,
       capacity: 6,
@@ -135,7 +135,7 @@ export default function RideHailing() {
       id: "luxury",
       name: "AfriRide Luxury",
       description: "Premium luxury experience",
-      icon: Car,
+      icon: FaCar,
       basePrice: 8.00,
       pricePerKm: 2.50,
       capacity: 4,
@@ -308,7 +308,7 @@ export default function RideHailing() {
 
   const renderStars = (rating: number) => {
     return Array.from({ length: 5 }, (_, i) => (
-      <Star 
+      <FaStar 
         key={i} 
         className={`w-3 h-3 ${i < Math.floor(rating) ? 'text-yellow-400 fill-current' : 'text-neutral-300'}`} 
       />
@@ -319,7 +319,7 @@ export default function RideHailing() {
     <div className="space-y-6">
       <div className="text-center">
         <div className="w-16 h-16 bg-gradient-to-br from-blue-400 to-cyan-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
-          <Car className="w-8 h-8 text-white" />
+          <FaCar className="w-8 h-8 text-white" />
         </div>
         <h2 className="text-2xl font-bold text-neutral-900 mb-2">AfriRide</h2>
         <p className="text-neutral-600">Safe, reliable rides across Africa</p>
@@ -342,7 +342,7 @@ export default function RideHailing() {
               <div>
                 <label className="text-sm font-medium mb-1 block">Pickup Location</label>
                 <div className="relative">
-                  <MapPin className="absolute left-3 top-3 w-4 h-4 text-neutral-400" />
+                  <FaMapMarkerAlt className="absolute left-3 top-3 w-4 h-4 text-neutral-400" />
                   <Input
                     placeholder="Enter pickup location"
                     value={pickupLocation}
@@ -355,7 +355,7 @@ export default function RideHailing() {
               <div>
                 <label className="text-sm font-medium mb-1 block">Destination</label>
                 <div className="relative">
-                  <Navigation className="absolute left-3 top-3 w-4 h-4 text-neutral-400" />
+                  <FaLocationArrow className="absolute left-3 top-3 w-4 h-4 text-neutral-400" />
                   <Input
                     placeholder="Where are you going?"
                     value={destination}
@@ -469,7 +469,7 @@ export default function RideHailing() {
                       <CardContent className="p-4">
                         <div className="flex items-center space-x-3">
                           <div className="w-12 h-12 bg-neutral-100 rounded-full flex items-center justify-center">
-                            <Car className="w-6 h-6 text-neutral-400" />
+                            <FaCar className="w-6 h-6 text-neutral-400" />
                           </div>
                           <div className="flex-1">
                             <p className="font-medium">{currentRide.driver.name}</p>
@@ -553,7 +553,7 @@ export default function RideHailing() {
             <CardContent>
               {rideHistory.length === 0 ? (
                 <div className="text-center py-8">
-                  <Car className="w-12 h-12 text-neutral-400 mx-auto mb-3" />
+                  <FaCar className="w-12 h-12 text-neutral-400 mx-auto mb-3" />
                   <p className="text-neutral-600">No trips yet</p>
                   <p className="text-sm text-neutral-500">Your ride history will appear here</p>
                 </div>
@@ -607,7 +607,7 @@ export default function RideHailing() {
                 </div>
                 
                 <div className="flex items-center space-x-3 p-3 bg-neutral-50 rounded-lg">
-                  <MapPin className="w-6 h-6 text-blue" />
+                  <FaMapMarkerAlt className="w-6 h-6 text-blue" />
                   <div>
                     <p className="font-medium">Real-time Tracking</p>
                     <p className="text-sm text-neutral-600">Share your trip with family and friends</p>

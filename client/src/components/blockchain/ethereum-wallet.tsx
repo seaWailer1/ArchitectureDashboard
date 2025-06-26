@@ -106,7 +106,7 @@ export function EthereumFaWallet() {
       });
       setConnected(true);
 
-      // Send wallet info to backend
+      // FaPaperPlane wallet info to backend
       await fetch('/api/blockchain/connect-wallet', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

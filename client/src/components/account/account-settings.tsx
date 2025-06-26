@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { 
-  User, 
+  FaUser, 
   Shield, 
   Bell, 
   Palette, 
   Globe, 
   Smartphone, 
-  HelpCircle,
+  FaQuestionCircle,
   Lock,
   Eye,
   EyeOff,
@@ -107,7 +107,7 @@ export default function AccountSettings({ onSectionChange }: AccountSettingsProp
         <CardHeader>
           <CardTitle className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
-              <User className="w-5 h-5" />
+              <FaUser className="w-5 h-5" />
               <span>Profile Information</span>
             </div>
             <Button
@@ -129,7 +129,7 @@ export default function AccountSettings({ onSectionChange }: AccountSettingsProp
                   className="w-16 h-16 rounded-full object-cover"
                 />
               ) : (
-                <User className="w-8 h-8 text-primary" />
+                <FaUser className="w-8 h-8 text-primary" />
               )}
             </div>
             <div className="flex-1">
@@ -335,7 +335,7 @@ export default function AccountSettings({ onSectionChange }: AccountSettingsProp
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center space-x-2">
-            <HelpCircle className="w-5 h-5" />
+            <FaQuestionCircle className="w-5 h-5" />
             <span>Help & Support</span>
           </CardTitle>
         </CardHeader>
@@ -346,7 +346,7 @@ export default function AccountSettings({ onSectionChange }: AccountSettingsProp
             onClick={() => onSectionChange("support")}
           >
             <div className="flex items-center space-x-3">
-              <HelpCircle className="w-5 h-5" />
+              <FaQuestionCircle className="w-5 h-5" />
               <div className="text-left">
                 <p className="font-medium">Contact Support</p>
                 <p className="text-sm text-neutral-600">Get help with your account</p>

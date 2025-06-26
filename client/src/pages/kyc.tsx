@@ -239,7 +239,7 @@ export default function KYC() {
                 disabled={!kycData.phoneNumber || sendOTPMutation.isPending}
                 className="w-full"
               >
-                {sendOTPMutation.isPending ? "Sending..." : "Send Verification Code"}
+                {sendOTPMutation.isPending ? "Sending..." : "FaPaperPlane Verification Code"}
               </Button>
               
               {sendOTPMutation.isSuccess && (

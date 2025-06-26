@@ -7,7 +7,7 @@ import {
   Clock, 
   DollarSign,
   FaExclamationTriangle,
-  Zap,
+  FaBolt,
   Calculator,
   BarChart3,
   Settings
@@ -402,7 +402,7 @@ export default function ArbitrageScanner() {
                         Analyze
                       </Button>
                       <Button size="sm" className="bg-success hover:bg-success/90">
-                        <Zap className="w-3 h-3 mr-1" />
+                        <FaBolt className="w-3 h-3 mr-1" />
                         Execute
                       </Button>
                     </div>

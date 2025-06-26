@@ -1,23 +1,23 @@
 import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { 
-  Sparkles, 
-  User, 
-  Building2, 
-  Users,
+  FaStar, 
+  FaUser, 
+  FaBuilding, 
+  FaUsers,
   CreditCard,
   TrendingUp,
-  Package,
-  Car,
-  ShoppingBag,
-  Zap,
+  FaBox,
+  FaCar,
+  FaShoppingBag,
+  FaBolt,
   FaCheckCircle,
   FaExclamationCircle,
-  RefreshCw,
+  FaSync,
   Play,
-  Settings,
-  Database,
-  Trash2,
+  FaCog,
+  FaDatabase,
+  FaTrash,
   Info
 } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
@@ -55,7 +55,7 @@ export default function DemoDataManager() {
       id: "comprehensive",
       title: "Complete Financial Profile",
       description: "Full ecosystem with all services, transactions, and realistic financial data",
-      icon: Sparkles,
+      icon: FaStar,
       duration: "30 seconds",
       features: [
         "Multi-wallet setup with realistic balances",
@@ -73,7 +73,7 @@ export default function DemoDataManager() {
       id: "consumer_basic",
       title: "New Consumer Journey",
       description: "Fresh user experience with introductory transactions and services",
-      icon: User,
+      icon: FaUser,
       duration: "15 seconds",
       features: [
         "Basic wallet with starter balance",
@@ -88,7 +88,7 @@ export default function DemoDataManager() {
       id: "merchant_active",
       title: "Active Merchant Business",
       description: "Established business with sales history, inventory, and customer base",
-      icon: Building2,
+      icon: FaBuilding,
       duration: "25 seconds",
       features: [
         "Business wallet with revenue",
@@ -103,7 +103,7 @@ export default function DemoDataManager() {
       id: "agent_network",
       title: "Agent Network Operations",
       description: "Active agent with commission tracking, float management, and service network",
-      icon: Users,
+      icon: FaUsers,
       duration: "20 seconds",
       features: [
         "Agent wallet with commissions",
@@ -121,21 +121,21 @@ export default function DemoDataManager() {
       role: "consumer",
       title: "Consumer Profile",
       description: "Personal wallet with savings, basic crypto holdings, and simple transactions",
-      icon: User,
+      icon: FaUser,
       color: "bg-blue-100 text-blue-700"
     },
     {
       role: "merchant",
       title: "Merchant Profile", 
       description: "Business wallet with payment processing, investments, and credit facilities",
-      icon: Building2,
+      icon: FaBuilding,
       color: "bg-green-100 text-green-700"
     },
     {
       role: "agent",
       title: "Agent Profile",
       description: "Agent wallet with commission tracking, float management, and multiple investments",
-      icon: Users,
+      icon: FaUsers,
       color: "bg-purple-100 text-purple-700"
     }
   ];
@@ -253,7 +253,7 @@ export default function DemoDataManager() {
     <div className="space-y-6">
       <div className="text-center">
         <div className="w-16 h-16 bg-gradient-to-br from-pink-400 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
-          <Sparkles className="w-8 h-8 text-white" />
+          <FaStar className="w-8 h-8 text-white" />
         </div>
         <h2 className="text-2xl font-bold text-neutral-900 mb-2">Demo Data Management</h2>
         <p className="text-neutral-600">Generate and manage realistic sample data for testing</p>
@@ -271,7 +271,7 @@ export default function DemoDataManager() {
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center space-x-2">
-                <Settings className="w-5 h-5" />
+                <FaCog className="w-5 h-5" />
                 <span>Demo Configuration</span>
               </CardTitle>
             </CardHeader>
@@ -355,7 +355,7 @@ export default function DemoDataManager() {
               >
                 {isGenerating ? (
                   <>
-                    <RefreshCw className="w-5 h-5 mr-2 animate-spin" />
+                    <FaSync className="w-5 h-5 mr-2 animate-spin" />
                     Generating... ({generationProgress}%)
                   </>
                 ) : (
@@ -385,7 +385,7 @@ export default function DemoDataManager() {
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center space-x-2">
-                <Database className="w-5 h-5" />
+                <FaDatabase className="w-5 h-5" />
                 <span>Quick Demo Generation</span>
               </CardTitle>
             </CardHeader>
@@ -414,7 +414,7 @@ export default function DemoDataManager() {
                           <p className="text-sm text-neutral-600">{option.description}</p>
                         </div>
                         {seedDataMutation.isPending && (
-                          <RefreshCw className="w-4 h-4 animate-spin" />
+                          <FaSync className="w-4 h-4 animate-spin" />
                         )}
                       </div>
                     </Button>
@@ -441,7 +441,7 @@ export default function DemoDataManager() {
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center space-x-2">
-                <Trash2 className="w-5 h-5" />
+                <FaTrash className="w-5 h-5" />
                 <span>Data Management</span>
               </CardTitle>
             </CardHeader>
@@ -467,12 +467,12 @@ export default function DemoDataManager() {
               >
                 {clearDataMutation.isPending ? (
                   <>
-                    <RefreshCw className="w-4 h-4 mr-2 animate-spin" />
+                    <FaSync className="w-4 h-4 mr-2 animate-spin" />
                     Clearing Data...
                   </>
                 ) : (
                   <>
-                    <Trash2 className="w-4 h-4 mr-2" />
+                    <FaTrash className="w-4 h-4 mr-2" />
                     Clear All Demo Data
                   </>
                 )}

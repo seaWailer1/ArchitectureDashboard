@@ -57,7 +57,7 @@ export default function TestLogin() {
         // First switch to the user
         const response = await apiRequest('POST', `/api/preset-users/switch/${userData.id}`);
         
-        console.log('User switch response:', response);
+        console.log('FaUser switch response:', response);
         
         // Return user data for auto-fill
         return userData;
@@ -67,7 +67,7 @@ export default function TestLogin() {
       }
     },
     onSuccess: (userData) => {
-      console.log('User switching successful:', userData);
+      console.log('FaUser switching successful:', userData);
       
       // Store user data in sessionStorage for auto-fill
       const autoFillData = {
@@ -177,7 +177,7 @@ export default function TestLogin() {
             <FaGlobe className="w-8 h-8 text-white" />
           </div>
           <h1 className="text-4xl font-bold mb-4">AfriPay Demo</h1>
-          <p className="text-xl text-white/90 mb-2">Test User Journeys</p>
+          <p className="text-xl text-white/90 mb-2">Test FaUser Journeys</p>
           <p className="text-white/80 max-w-2xl mx-auto">
             Select a test user to experience different onboarding and KYC scenarios.
           </p>
@@ -210,7 +210,7 @@ export default function TestLogin() {
             </div>
           ) : (
             <>
-              {/* User Selection */}
+              {/* FaUser Selection */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
                 {presetUsers?.map((user: PresetUser) => (
                   <Card key={user.id} className="hover:shadow-lg transition-shadow bg-white/95 backdrop-blur-sm">

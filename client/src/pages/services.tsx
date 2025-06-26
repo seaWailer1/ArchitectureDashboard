@@ -29,18 +29,18 @@ export default function Services() {
     {
       title: "Transportation",
       services: [
-        { id: "ride", name: "Ride Hailing", icon: Car, color: "bg-blue-100 text-blue-600", description: "Book rides instantly" },
+        { id: "ride", name: "Ride Hailing", icon: FaCar, color: "bg-blue-100 text-blue-600", description: "Book rides instantly" },
         { id: "delivery", name: "Delivery", icon: FaEllipsisH, color: "bg-purple-100 text-purple-600", description: "Food & package delivery" },
       ]
     },
     {
       title: "Shopping & Delivery",
       services: [
-        { id: "ecommerce", name: "AfriMart", icon: ShoppingBag, color: "bg-purple-100 text-purple-600", description: "Integrated shopping & delivery" },
-        { id: "orders", name: "My Orders", icon: Package, color: "bg-orange-100 text-orange-600", description: "Track your orders" },
+        { id: "ecommerce", name: "AfriMart", icon: FaShoppingBag, color: "bg-purple-100 text-purple-600", description: "Integrated shopping & delivery" },
+        { id: "orders", name: "My Orders", icon: FaBox, color: "bg-orange-100 text-orange-600", description: "Track your orders" },
         { id: "merchant-store", name: "Store Management", icon: Building, color: "bg-emerald-100 text-emerald-600", description: "Manage your store" },
-        { id: "driver", name: "Driver Hub", icon: Car, color: "bg-blue-100 text-blue-600", description: "Driver dashboard" },
-        { id: "bills", name: "Bill Payments", icon: Zap, color: "bg-yellow-100 text-yellow-600", description: "Pay utility bills" },
+        { id: "driver", name: "Driver Hub", icon: FaCar, color: "bg-blue-100 text-blue-600", description: "Driver dashboard" },
+        { id: "bills", name: "Bill Payments", icon: FaBolt, color: "bg-yellow-100 text-yellow-600", description: "Pay utility bills" },
       ]
     },
     {
@@ -189,7 +189,7 @@ export default function Services() {
                selectedService === 'bills' ? 'Bill Payments' :
                selectedService === 'shopping' ? 'Shopping Marketplace' :
                selectedService === 'ride' ? 'Ride Hailing' :
-               selectedService === 'delivery' ? 'Package Delivery' :
+               selectedService === 'delivery' ? 'FaBox Delivery' :
                selectedService === 'merchant' ? 'Merchant Dashboard' :
                selectedService === 'orders' ? 'My Orders' :
                selectedService === 'ecommerce' ? 'AfriMart - Shopping & Delivery' :

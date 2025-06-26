@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { 
   Store, 
-  Package, 
+  FaBox, 
   Plus, 
   Edit3, 
   Eye, 
@@ -12,8 +12,8 @@ import {
   Users,
   TrendingUp,
   ShoppingCart,
-  Star,
-  MapPin,
+  FaStar,
+  FaMapMarkerAlt,
   FaPhone,
   Mail,
   Settings,
@@ -22,7 +22,7 @@ import {
   FaTimes,
   Check,
   FaExclamationCircle,
-  Truck,
+  FaTruck,
   Calendar
 } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
@@ -341,14 +341,14 @@ export default function MerchantStoreManagement() {
         </Card>
         <Card>
           <CardContent className="p-4 text-center">
-            <Star className="w-8 h-8 mx-auto text-yellow-500 mb-2" />
+            <FaStar className="w-8 h-8 mx-auto text-yellow-500 mb-2" />
             <p className="text-2xl font-bold">{store.rating}</p>
             <p className="text-sm text-neutral-600">Rating</p>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-4 text-center">
-            <Package className="w-8 h-8 mx-auto text-purple-500 mb-2" />
+            <FaBox className="w-8 h-8 mx-auto text-purple-500 mb-2" />
             <p className="text-2xl font-bold">{products.length}</p>
             <p className="text-sm text-neutral-600">Products</p>
           </CardContent>

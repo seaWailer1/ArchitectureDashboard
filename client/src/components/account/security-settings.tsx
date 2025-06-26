@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Shield, Key, Clock, FaExclamationTriangle, FaCheckCircle, Eye, EyeOff, ArrowLeft } from "react-icons/fa";
+import { Shield, Key, Clock, FaExclamationTriangle, FaCheckCircle, Eye, EyeOff, FaArrowLeft } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
@@ -109,7 +109,7 @@ export default function SecuritySettings({ onBack }: SecuritySettingsProps) {
       {/* Header */}
       <div className="flex items-center space-x-3">
         <Button variant="ghost" size="sm" onClick={onBack}>
-          <ArrowLeft className="w-4 h-4" />
+          <FaArrowLeft className="w-4 h-4" />
         </Button>
         <div>
           <h2 className="text-xl font-bold">Security Settings</h2>

@@ -289,7 +289,7 @@ export default function AdminDashboard() {
           <div className="grid grid-cols-2 gap-4">
             <Card>
               <CardHeader>
-                <CardTitle>User Distribution</CardTitle>
+                <CardTitle>FaUser Distribution</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
@@ -318,7 +318,7 @@ export default function AdminDashboard() {
 
             <Card>
               <CardHeader>
-                <CardTitle>User Activity</CardTitle>
+                <CardTitle>FaUser Activity</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex justify-between items-center">
