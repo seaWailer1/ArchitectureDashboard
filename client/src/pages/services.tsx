@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useLocation } from "wouter";
-import { Car, ShoppingBag, Zap, Smartphone, CreditCard, Building, Users, MoreHorizontal, Package, Send, QrCode, Phone, Target } from "lucide-react";
+import { Car, ShoppingBag, Zap, Smartphone, CreditCard, Building, Users, MoreHorizontal, Package, Send, QrCode, Phone, Target, Music } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
@@ -66,6 +66,12 @@ export default function Services() {
       ]
     },
     {
+      title: "Entertainment & Lifestyle",
+      services: [
+        { id: "entertainment", name: "Entertainment Hub", icon: Music, color: "bg-purple-100 text-purple-600", description: "Music, movies, games & events" },
+      ]
+    },
+    {
       title: "Financial Services",
       services: [
         { id: "loans", name: "Micro Loans", icon: CreditCard, color: "bg-red-100 text-red-600", description: "Quick personal loans" },
@@ -79,7 +85,7 @@ export default function Services() {
   ];
 
   const handleServiceLaunch = (serviceId: string, serviceName: string) => {
-    const availableServices = ['loans', 'virtual-card', 'crypto', 'investment', 'admin', 'trading', 'bills', 'shopping', 'ride', 'delivery', 'merchant', 'orders', 'ecommerce', 'driver', 'merchant-store'];
+    const availableServices = ['loans', 'virtual-card', 'crypto', 'investment', 'admin', 'trading', 'bills', 'shopping', 'ride', 'delivery', 'merchant', 'orders', 'ecommerce', 'driver', 'merchant-store', 'entertainment'];
     if (availableServices.includes(serviceId)) {
       setSelectedService(serviceId);
     } else {
@@ -122,6 +128,8 @@ export default function Services() {
         return <DriverDashboard />;
       case 'merchant-store':
         return <MerchantStoreManagement />;
+      case 'entertainment':
+        return <EntertainmentHub />;
       default:
         return null;
     }
