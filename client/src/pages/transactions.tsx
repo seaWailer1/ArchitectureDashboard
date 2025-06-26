@@ -10,8 +10,8 @@ import { TransactionData } from "@/types";
 
 export default function Transactions() {
   const [searchTerm, setSearchTerm] = useState("");
-  const [filterType, setFilterType] = useState("all");
-  const [filterStatus, setFilterStatus] = useState("all");
+  const [filterType, setFaFilterType] = useState("all");
+  const [filterStatus, setFaFilterStatus] = useState("all");
 
   const { data: transactions = [] } = useQuery<TransactionData[]>({
     queryKey: ["/api/transactions"],
@@ -85,7 +85,7 @@ export default function Transactions() {
         <div className="py-6">
           <h1 className="text-2xl font-bold text-neutral-900 mb-6">Transaction History</h1>
           
-          {/* Filters */}
+          {/* FaFilters */}
           <div className="space-y-4 mb-6">
             <Input
               placeholder="FaSearch transactions..."
@@ -95,7 +95,7 @@ export default function Transactions() {
             />
             
             <div className="flex space-x-3">
-              <Select value={filterType} onValueChange={setFilterType}>
+              <Select value={filterType} onValueChange={setFaFilterType}>
                 <SelectTrigger className="flex-1">
                   <SelectValue placeholder="Type" />
                 </SelectTrigger>
@@ -107,7 +107,7 @@ export default function Transactions() {
                 </SelectContent>
               </Select>
               
-              <Select value={filterStatus} onValueChange={setFilterStatus}>
+              <Select value={filterStatus} onValueChange={setFaFilterStatus}>
                 <SelectTrigger className="flex-1">
                   <SelectValue placeholder="Status" />
                 </SelectTrigger>

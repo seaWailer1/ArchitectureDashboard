@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Check, Clock, FaUser } from "react-icons/fa";
+import { Check, FaClock, FaUser } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
@@ -98,7 +98,7 @@ export default function KYCStatusCard() {
                   {step.completed ? (
                     <Check className="w-3 h-3 text-white" />
                   ) : step.current ? (
-                    <Clock className="w-3 h-3 text-white" />
+                    <FaClock className="w-3 h-3 text-white" />
                   ) : (
                     <span className="text-neutral-600 text-xs font-medium">{index + 1}</span>
                   )}

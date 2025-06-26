@@ -86,7 +86,7 @@ export default function Onboarding() {
     { title: "Welcome", icon: Globe },
     { title: "Personal Info", icon: FaUser },
     { title: "Contact Details", icon: FaPhone },
-    { title: "Role Selection", icon: CreditCard },
+    { title: "Role Selection", icon: FaCreditCard },
     { title: "Terms & Privacy", icon: Shield },
   ];
 
@@ -171,7 +171,7 @@ export default function Onboarding() {
                   <span>Mobile-first design</span>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <CreditCard className="w-5 h-5 text-purple-600" />
+                  <FaCreditCard className="w-5 h-5 text-purple-600" />
                   <span>Multiple wallets</span>
                 </div>
                 <div className="flex items-center space-x-2">
@@ -337,7 +337,7 @@ export default function Onboarding() {
                 onClick={() => updateFormData('preferredRole', 'merchant')}
               >
                 <div className="flex items-center space-x-3">
-                  <CreditCard className="w-6 h-6 text-green-600" />
+                  <FaCreditCard className="w-6 h-6 text-green-600" />
                   <div>
                     <h3 className="font-semibold">Merchant</h3>
                     <p className="text-sm text-neutral-600">Accept payments for your business</p>

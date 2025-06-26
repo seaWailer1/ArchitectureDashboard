@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { 
-  DollarSign, 
-  TrendingUp, 
+  FaDollarSign, 
+  FaTrendingUp, 
   TrendingDown, 
-  Eye, 
-  EyeOff,
-  Plus,
+  FaEye, 
+  FaEyeSlash,
+  FaPlus,
   ArrowUpDown,
   Wallet,
   PiggyBank,
@@ -163,7 +163,7 @@ export default function EnhancedWalletSummary() {
                   className="text-white hover:bg-white/20 p-1"
                   onClick={() => setShowBalances(!showBalances)}
                 >
-                  {showBalances ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
+                  {showBalances ? <FaEye className="w-4 h-4" /> : <FaEyeSlash className="w-4 h-4" />}
                 </Button>
               </div>
             </div>
@@ -175,7 +175,7 @@ export default function EnhancedWalletSummary() {
 
           <div className="flex space-x-3">
             <Button size="sm" className="bg-white/20 hover:bg-white/30 text-white">
-              <Plus className="w-4 h-4 mr-2" />
+              <FaPlus className="w-4 h-4 mr-2" />
               Add Money
             </Button>
             <Button size="sm" className="bg-white/20 hover:bg-white/30 text-white">

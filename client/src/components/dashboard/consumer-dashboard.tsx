@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { 
   Wallet, 
-  TrendingUp, 
+  FaTrendingUp, 
   FaPaperPlane, 
   FaQrcode, 
   FaShoppingBag, 
@@ -186,7 +186,7 @@ export default function ConsumerDashboard() {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center space-x-2">
-            <TrendingUp className="w-5 h-5" />
+            <FaTrendingUp className="w-5 h-5" />
             <span>Investment Opportunities</span>
           </CardTitle>
         </CardHeader>

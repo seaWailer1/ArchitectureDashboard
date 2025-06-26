@@ -5,12 +5,12 @@ import {
   ArrowRight,
   Shield,
   Smartphone,
-  CreditCard,
+  FaCreditCard,
   Users,
   Lock,
   Mail,
-  Eye,
-  EyeOff,
+  FaEye,
+  FaEyeSlash,
   FaCheckCircle
 } from "react-icons/fa";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -155,7 +155,7 @@ export default function SignIn() {
             <p className="text-sm font-medium">Mobile First</p>
           </div>
           <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 text-center text-white">
-            <CreditCard className="w-6 h-6 mx-auto mb-2" />
+            <FaCreditCard className="w-6 h-6 mx-auto mb-2" />
             <p className="text-sm font-medium">Multi-Wallet</p>
           </div>
           <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 text-center text-white">
@@ -234,7 +234,7 @@ export default function SignIn() {
                     onClick={() => setShowPassword(!showPassword)}
                     className="absolute right-3 top-3 text-neutral-400 hover:text-neutral-600"
                   >
-                    {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                    {showPassword ? <FaEyeSlash className="w-4 h-4" /> : <FaEye className="w-4 h-4" />}
                   </button>
                 </div>
               </div>

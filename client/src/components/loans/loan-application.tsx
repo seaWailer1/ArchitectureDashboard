@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { CreditCard, Calculator, FaFileAlt, Shield } from "react-icons/fa";
+import { FaCreditCard, Calculator, FaFileAlt, Shield } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -89,7 +89,7 @@ export default function LoanApplication() {
       {/* Header */}
       <div className="text-center">
         <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
-          <CreditCard className="w-8 h-8 text-primary" />
+          <FaCreditCard className="w-8 h-8 text-primary" />
         </div>
         <h2 className="text-2xl font-bold text-neutral-900 mb-2">Micro Loan Application</h2>
         <p className="text-neutral-600">Get quick access to affordable credit</p>

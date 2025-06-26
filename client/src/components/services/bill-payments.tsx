@@ -6,10 +6,10 @@ import {
   Wifi, 
   FaCar, 
   Home,
-  CreditCard,
+  FaCreditCard,
   Receipt,
   Calendar,
-  Clock,
+  FaClock,
   Check
 } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
@@ -102,7 +102,7 @@ export default function BillPayments() {
       id: "insurance",
       name: "Insurance",
       category: "financial",
-      icon: CreditCard,
+      icon: FaCreditCard,
       color: "bg-indigo-100 text-indigo-600",
       description: "Insurance premiums",
       fee: 2.0
@@ -183,9 +183,9 @@ export default function BillPayments() {
   const getStatusIcon = (status: string) => {
     switch (status) {
       case 'completed': return <Check className="w-3 h-3" />;
-      case 'pending': return <Clock className="w-3 h-3" />;
+      case 'pending': return <FaClock className="w-3 h-3" />;
       case 'failed': return <FaBolt className="w-3 h-3" />;
-      default: return <Clock className="w-3 h-3" />;
+      default: return <FaClock className="w-3 h-3" />;
     }
   };
 

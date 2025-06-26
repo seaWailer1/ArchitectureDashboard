@@ -2,12 +2,12 @@ import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { 
   Bitcoin, 
-  TrendingUp, 
+  FaTrendingUp, 
   TrendingDown, 
   ArrowUpDown, 
-  DollarSign,
-  Plus,
-  Minus,
+  FaDollarSign,
+  FaPlus,
+  FaMinus,
   BarChart3
 } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
@@ -92,7 +92,7 @@ export default function CryptoTrading() {
 
   const getPriceChangeIcon = (change: string) => {
     const value = parseFloat(change);
-    if (value > 0) return <TrendingUp className="w-3 h-3" />;
+    if (value > 0) return <FaTrendingUp className="w-3 h-3" />;
     if (value < 0) return <TrendingDown className="w-3 h-3" />;
     return null;
   };
@@ -245,7 +245,7 @@ export default function CryptoTrading() {
                       className={orderType === 'buy' ? 'bg-success text-white' : ''}
                       onClick={() => setOrderType('buy')}
                     >
-                      <Plus className="w-4 h-4 mr-2" />
+                      <FaPlus className="w-4 h-4 mr-2" />
                       Buy
                     </Button>
                     <Button
@@ -253,7 +253,7 @@ export default function CryptoTrading() {
                       className={orderType === 'sell' ? 'bg-destructive text-white' : ''}
                       onClick={() => setOrderType('sell')}
                     >
-                      <Minus className="w-4 h-4 mr-2" />
+                      <FaMinus className="w-4 h-4 mr-2" />
                       Sell
                     </Button>
                   </div>

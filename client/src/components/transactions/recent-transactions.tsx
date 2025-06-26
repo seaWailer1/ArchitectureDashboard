@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { ArrowDown, ArrowUp, Plus } from "react-icons/fa";
+import { ArrowDown, ArrowUp, FaPlus } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
 import { t } from "@/lib/i18n";
@@ -17,7 +17,7 @@ export default function RecentTransactions() {
       case 'send':
         return { icon: ArrowUp, color: 'bg-primary/10 text-primary' };
       case 'topup':
-        return { icon: Plus, color: 'bg-accent/10 text-accent' };
+        return { icon: FaPlus, color: 'bg-accent/10 text-accent' };
       default:
         return { icon: ArrowUp, color: 'bg-neutral-100 text-neutral-600' };
     }

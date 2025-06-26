@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { 
-  TrendingUp, 
+  FaTrendingUp, 
   TrendingDown, 
   ArrowRightLeft, 
   Calculator,
@@ -9,7 +9,7 @@ import {
   FaExclamationTriangle,
   RefreshCw,
   BarChart3,
-  DollarSign,
+  FaDollarSign,
   Timer
 } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
@@ -424,7 +424,7 @@ export default function MultiCurrencyTrading() {
                     <div className="text-right">
                       <p className="font-bold">{formatRate(pair.rate)}</p>
                       <div className={`flex items-center space-x-1 text-sm ${pair.change24h >= 0 ? 'text-success' : 'text-destructive'}`}>
-                        {pair.change24h >= 0 ? <TrendingUp className="w-3 h-3" /> : <TrendingDown className="w-3 h-3" />}
+                        {pair.change24h >= 0 ? <FaTrendingUp className="w-3 h-3" /> : <TrendingDown className="w-3 h-3" />}
                         <span>{pair.change24h.toFixed(2)}%</span>
                       </div>
                     </div>

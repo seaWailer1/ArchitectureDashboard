@@ -3,18 +3,17 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { 
   FaShoppingBag, 
   FaSearch, 
-  Filter, 
+  FaFilter, 
   FaStar,
-  Heart,
-  ShoppingCart,
-  Plus,
-  Minus,
+  FaHeart,
+  FaShoppingCart,
+  FaPlus,
+  FaMinus,
   FaMapMarkerAlt,
   FaTruck,
-  CreditCard,
-  FaStar,
-  TrendingUp,
-  Clock
+  FaCreditCard,
+  FaTrendingUp,
+  FaClock
 } from "react-icons/fa";
 import ProductDetail from "./product-detail";
 import { Button } from "@/components/ui/button";
@@ -196,7 +195,7 @@ export default function ShoppingMarketplace() {
       description: "Modern wooden coffee table with storage",
       price: 189.99,
       category: "home",
-      seller: "Home Decor Plus",
+      seller: "Home Decor FaPlus",
       rating: 4.2,
       reviews: 34,
       inStock: false,
@@ -404,7 +403,7 @@ export default function ShoppingMarketplace() {
               <Dialog open={showCart} onOpenChange={setShowCart}>
                 <DialogTrigger asChild>
                   <Button variant="outline" className="relative">
-                    <ShoppingCart className="w-4 h-4 mr-2" />
+                    <FaShoppingCart className="w-4 h-4 mr-2" />
                     Cart
                     {cart.length > 0 && (
                       <Badge className="absolute -top-2 -right-2 w-5 h-5 p-0 text-xs">
@@ -462,7 +461,7 @@ export default function ShoppingMarketplace() {
               <div className="flex space-x-2 overflow-x-auto">
                 {["Wireless Earbuds", "African Prints", "Skincare", "Home Decor"].map(trend => (
                   <Badge key={trend} variant="outline" className="flex-shrink-0 cursor-pointer hover:bg-accent/10">
-                    <TrendingUp className="w-3 h-3 mr-1" />
+                    <FaTrendingUp className="w-3 h-3 mr-1" />
                     {trend}
                   </Badge>
                 ))}
@@ -491,7 +490,7 @@ export default function ShoppingMarketplace() {
                         // Toggle favorite
                       }}
                     >
-                      <Heart className="w-4 h-4" />
+                      <FaHeart className="w-4 h-4" />
                     </Button>
                   </div>
                   
@@ -546,7 +545,7 @@ export default function ShoppingMarketplace() {
                       disabled={!product.inStock}
                       onClick={() => addToCart(product)}
                     >
-                      <ShoppingCart className="w-3 h-3 mr-1" />
+                      <FaShoppingCart className="w-3 h-3 mr-1" />
                       Add to Cart
                     </Button>
                   </div>
@@ -563,7 +562,7 @@ export default function ShoppingMarketplace() {
             <div className="space-y-4">
               {cart.length === 0 ? (
                 <div className="text-center py-6">
-                  <ShoppingCart className="w-12 h-12 text-neutral-400 mx-auto mb-2" />
+                  <FaShoppingCart className="w-12 h-12 text-neutral-400 mx-auto mb-2" />
                   <p className="text-neutral-600">Your cart is empty</p>
                 </div>
               ) : (
@@ -584,7 +583,7 @@ export default function ShoppingMarketplace() {
                             variant="outline"
                             onClick={() => updateCartQuantity(item.productId, item.quantity - 1)}
                           >
-                            <Minus className="w-3 h-3" />
+                            <FaMinus className="w-3 h-3" />
                           </Button>
                           <span className="mx-2 text-sm">{item.quantity}</span>
                           <Button 
@@ -592,7 +591,7 @@ export default function ShoppingMarketplace() {
                             variant="outline"
                             onClick={() => updateCartQuantity(item.productId, item.quantity + 1)}
                           >
-                            <Plus className="w-3 h-3" />
+                            <FaPlus className="w-3 h-3" />
                           </Button>
                         </div>
                       </div>
@@ -670,15 +669,15 @@ export default function ShoppingMarketplace() {
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center space-x-2">
-                <Heart className="w-5 h-5" />
+                <FaHeart className="w-5 h-5" />
                 <span>Favorite Products</span>
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-center py-8">
-                <Heart className="w-12 h-12 text-neutral-400 mx-auto mb-3" />
+                <FaHeart className="w-12 h-12 text-neutral-400 mx-auto mb-3" />
                 <p className="text-neutral-600">No favorites yet</p>
-                <p className="text-sm text-neutral-500">Heart products to save them here</p>
+                <p className="text-sm text-neutral-500">FaHeart products to save them here</p>
               </div>
             </CardContent>
           </Card>

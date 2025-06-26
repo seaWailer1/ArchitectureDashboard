@@ -4,16 +4,16 @@ import {
   Users, 
   UserCheck, 
   UserX, 
-  Clock, 
+  FaClock, 
   FaMapMarkerAlt,
   FaPhone,
   Mail,
   Shield,
-  CreditCard,
+  FaCreditCard,
   FaUser,
   RefreshCw,
   LogIn,
-  Plus,
+  FaPlus,
   FaCheckCircle,
   FaExclamationCircle,
   XCircle
@@ -95,7 +95,7 @@ export default function PresetUsers() {
   const getRoleIcon = (role: string) => {
     switch (role) {
       case 'merchant':
-        return <CreditCard className="w-4 h-4" />;
+        return <FaCreditCard className="w-4 h-4" />;
       case 'agent':
         return <Shield className="w-4 h-4" />;
       default:
@@ -108,13 +108,13 @@ export default function PresetUsers() {
       case 'verified':
         return <FaCheckCircle className="w-4 h-4 text-green-600" />;
       case 'in_progress':
-        return <Clock className="w-4 h-4 text-yellow-600" />;
+        return <FaClock className="w-4 h-4 text-yellow-600" />;
       case 'pending':
         return <FaExclamationCircle className="w-4 h-4 text-orange-600" />;
       case 'rejected':
         return <XCircle className="w-4 h-4 text-red-600" />;
       default:
-        return <Clock className="w-4 h-4 text-gray-400" />;
+        return <FaClock className="w-4 h-4 text-gray-400" />;
     }
   };
 
@@ -178,7 +178,7 @@ export default function PresetUsers() {
               {createUsersMutation.isPending ? (
                 <RefreshCw className="w-4 h-4 animate-spin" />
               ) : (
-                <Plus className="w-4 h-4" />
+                <FaPlus className="w-4 h-4" />
               )}
               <span>Create Users</span>
             </Button>
@@ -221,7 +221,7 @@ export default function PresetUsers() {
             <CardContent className="p-4">
               <div className="flex items-center space-x-3">
                 <div className="p-2 bg-orange-100 rounded-lg">
-                  <Clock className="w-5 h-5 text-orange-600" />
+                  <FaClock className="w-5 h-5 text-orange-600" />
                 </div>
                 <div>
                   <p className="text-sm text-neutral-600">Pending KYC</p>
@@ -329,7 +329,7 @@ export default function PresetUsers() {
                 {createUsersMutation.isPending ? (
                   <RefreshCw className="w-4 h-4 animate-spin" />
                 ) : (
-                  <Plus className="w-4 h-4" />
+                  <FaPlus className="w-4 h-4" />
                 )}
                 <span>Create Preset Users</span>
               </Button>
@@ -355,7 +355,7 @@ export default function PresetUsers() {
                     <span><strong>Consumer:</strong> Personal banking and payments</span>
                   </li>
                   <li className="flex items-center space-x-2">
-                    <CreditCard className="w-4 h-4 text-green-600" />
+                    <FaCreditCard className="w-4 h-4 text-green-600" />
                     <span><strong>Merchant:</strong> Business dashboard and payment processing</span>
                   </li>
                   <li className="flex items-center space-x-2">
@@ -373,7 +373,7 @@ export default function PresetUsers() {
                     <span><strong>Verified:</strong> Full access to all features</span>
                   </li>
                   <li className="flex items-center space-x-2">
-                    <Clock className="w-4 h-4 text-yellow-600" />
+                    <FaClock className="w-4 h-4 text-yellow-600" />
                     <span><strong>In Progress:</strong> Partial verification completed</span>
                   </li>
                   <li className="flex items-center space-x-2">

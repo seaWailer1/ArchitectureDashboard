@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Eye, EyeOff } from "react-icons/fa";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import { t } from "@/lib/i18n";
 import { WalletData } from "@/types";
@@ -46,9 +46,9 @@ export default function WalletSummary() {
               onClick={() => setShowBalance(!showBalance)}
             >
               {showBalance ? (
-                <EyeOff className="w-5 h-5" />
+                <FaEyeSlash className="w-5 h-5" />
               ) : (
-                <Eye className="w-5 h-5" />
+                <FaEye className="w-5 h-5" />
               )}
             </Button>
           </div>

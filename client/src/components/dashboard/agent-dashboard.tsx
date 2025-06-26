@@ -1,12 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import { 
   FaBuilding, 
-  TrendingUp, 
+  FaTrendingUp, 
   Users, 
-  DollarSign, 
+  FaDollarSign, 
   Target,
   Award,
-  Clock,
+  FaClock,
   FaMapMarkerAlt,
   FaPhone,
   Mail,
@@ -81,7 +81,7 @@ export default function AgentDashboard() {
       action: () => toast({ title: "Customer Registration", description: "Customer registration feature coming soon!" }) 
     },
     { 
-      icon: DollarSign, 
+      icon: FaDollarSign, 
       label: "Cash Services", 
       color: "bg-green-100 text-green-600", 
       description: "Cash in/out services",
@@ -139,7 +139,7 @@ export default function AgentDashboard() {
               View Targets
             </Button>
             <Button size="sm" className="bg-white/20 hover:bg-white/30 text-white flex-1">
-              <TrendingUp className="w-4 h-4 mr-2" />
+              <FaTrendingUp className="w-4 h-4 mr-2" />
               Analytics
             </Button>
           </div>
@@ -156,7 +156,7 @@ export default function AgentDashboard() {
                 <p className="text-2xl font-bold">{agentMetrics.conversionRate}%</p>
               </div>
               <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-                <TrendingUp className="w-6 h-6 text-green-600" />
+                <FaTrendingUp className="w-6 h-6 text-green-600" />
               </div>
             </div>
           </CardContent>
@@ -310,7 +310,7 @@ export default function AgentDashboard() {
               <span className="text-sm">Lagos, Victoria Island</span>
             </div>
             <div className="flex items-center space-x-3">
-              <Clock className="w-5 h-5 text-neutral-600" />
+              <FaClock className="w-5 h-5 text-neutral-600" />
               <span className="text-sm">Operating Hours: 8AM - 6PM</span>
             </div>
             <div className="flex items-center space-x-3">

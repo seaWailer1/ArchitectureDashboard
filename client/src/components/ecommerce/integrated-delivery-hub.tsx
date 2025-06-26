@@ -1,28 +1,28 @@
 import { useState, useEffect } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { 
-  ShoppingCart, 
+  FaShoppingCart, 
   Utensils, 
   FaBox, 
   Pill, 
   FaMapMarkerAlt, 
-  Clock, 
+  FaClock, 
   FaStar,
   FaTruck,
   FaBicycle,
   FaCar,
   FaSearch,
-  Filter,
-  Plus,
-  Minus,
-  Heart,
+  FaFilter,
+  FaPlus,
+  FaMinus,
+  FaHeart,
   FaShoppingBag,
   FaLocationArrow,
   FaPhone,
   FaCheckCircle,
   FaExclamationCircle,
   FaUser,
-  DollarSign,
+  FaDollarSign,
   FaCamera,
   FaComment,
   ThumbsUp
@@ -102,7 +102,7 @@ export default function IntegratedDeliveryHub() {
 
   const deliveryCategories = [
     { id: "food", name: "Food & Restaurants", icon: Utensils, color: "bg-orange-500" },
-    { id: "grocery", name: "Groceries & Supermarkets", icon: ShoppingCart, color: "bg-green-500" },
+    { id: "grocery", name: "Groceries & Supermarkets", icon: FaShoppingCart, color: "bg-green-500" },
     { id: "pharmacy", name: "Pharmacy & Health", icon: Pill, color: "bg-blue-500" },
     { id: "retail", name: "Retail & Shopping", icon: FaBox, color: "bg-purple-500" },
   ];
@@ -407,7 +407,7 @@ export default function IntegratedDeliveryHub() {
         <div className="flex justify-between items-start mb-2">
           <h3 className="font-semibold text-lg">{store.name}</h3>
           <Button variant="ghost" size="sm">
-            <Heart className="w-4 h-4" />
+            <FaHeart className="w-4 h-4" />
           </Button>
         </div>
         <p className="text-sm text-neutral-600 mb-3">{store.description}</p>
@@ -418,7 +418,7 @@ export default function IntegratedDeliveryHub() {
             <span>{store.rating} ({store.totalReviews})</span>
           </div>
           <div className="flex items-center">
-            <Clock className="w-4 h-4 mr-1" />
+            <FaClock className="w-4 h-4 mr-1" />
             <span>{store.deliveryTime}</span>
           </div>
         </div>
@@ -470,7 +470,7 @@ export default function IntegratedDeliveryHub() {
               </div>
               {product.preparationTime && (
                 <div className="flex items-center">
-                  <Clock className="w-4 h-4 mr-1" />
+                  <FaClock className="w-4 h-4 mr-1" />
                   <span className="text-sm">{product.preparationTime} min</span>
                 </div>
               )}
@@ -488,7 +488,7 @@ export default function IntegratedDeliveryHub() {
                 disabled={product.stock === 0}
                 size="sm"
               >
-                <Plus className="w-4 h-4 mr-1" />
+                <FaPlus className="w-4 h-4 mr-1" />
                 Add
               </Button>
             </div>
@@ -612,7 +612,7 @@ export default function IntegratedDeliveryHub() {
                         size="sm"
                         onClick={() => updateQuantity(item.product.id, item.quantity - 1)}
                       >
-                        <Minus className="w-3 h-3" />
+                        <FaMinus className="w-3 h-3" />
                       </Button>
                       <span className="w-8 text-center">{item.quantity}</span>
                       <Button
@@ -620,7 +620,7 @@ export default function IntegratedDeliveryHub() {
                         size="sm"
                         onClick={() => updateQuantity(item.product.id, item.quantity + 1)}
                       >
-                        <Plus className="w-3 h-3" />
+                        <FaPlus className="w-3 h-3" />
                       </Button>
                     </div>
                   </div>

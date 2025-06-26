@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Shield, Key, Clock, FaExclamationTriangle, FaCheckCircle, Eye, EyeOff, FaArrowLeft } from "react-icons/fa";
+import { Shield, Key, FaClock, FaExclamationTriangle, FaCheckCircle, FaEye, FaEyeSlash, FaArrowLeft } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
@@ -100,7 +100,7 @@ export default function SecuritySettings({ onBack }: SecuritySettingsProps) {
       case "blocked":
         return <Shield className="w-4 h-4 text-warning" />;
       default:
-        return <Clock className="w-4 h-4 text-neutral-500" />;
+        return <FaClock className="w-4 h-4 text-neutral-500" />;
     }
   };
 
@@ -158,9 +158,9 @@ export default function SecuritySettings({ onBack }: SecuritySettingsProps) {
                     onClick={() => setShowCurrentPassword(!showCurrentPassword)}
                   >
                     {showCurrentPassword ? (
-                      <EyeOff className="w-4 h-4 text-neutral-500" />
+                      <FaEyeSlash className="w-4 h-4 text-neutral-500" />
                     ) : (
-                      <Eye className="w-4 h-4 text-neutral-500" />
+                      <FaEye className="w-4 h-4 text-neutral-500" />
                     )}
                   </button>
                 </div>
@@ -181,9 +181,9 @@ export default function SecuritySettings({ onBack }: SecuritySettingsProps) {
                     onClick={() => setShowNewPassword(!showNewPassword)}
                   >
                     {showNewPassword ? (
-                      <EyeOff className="w-4 h-4 text-neutral-500" />
+                      <FaEyeSlash className="w-4 h-4 text-neutral-500" />
                     ) : (
-                      <Eye className="w-4 h-4 text-neutral-500" />
+                      <FaEye className="w-4 h-4 text-neutral-500" />
                     )}
                   </button>
                 </div>
@@ -239,7 +239,7 @@ export default function SecuritySettings({ onBack }: SecuritySettingsProps) {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center space-x-2">
-            <Clock className="w-5 h-5" />
+            <FaClock className="w-5 h-5" />
             <span>Recent Security Activity</span>
           </CardTitle>
         </CardHeader>

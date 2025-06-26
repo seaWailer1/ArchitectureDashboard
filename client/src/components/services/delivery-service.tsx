@@ -4,7 +4,7 @@ import {
   FaBox, 
   FaMapMarkerAlt, 
   FaClock, 
-  DollarSign,
+  FaDollarSign,
   FaTruck,
   FaUser,
   FaPhone,

@@ -3,9 +3,9 @@ import { useQuery } from "@tanstack/react-query";
 import { 
   FaSearch, 
   Target, 
-  TrendingUp, 
-  Clock, 
-  DollarSign,
+  FaTrendingUp, 
+  FaClock, 
+  FaDollarSign,
   FaExclamationTriangle,
   FaBolt,
   Calculator,
@@ -156,7 +156,7 @@ export default function ArbitrageScanner() {
     switch (type) {
       case 'triangular': return <Target className="w-4 h-4" />;
       case 'cross_exchange': return <BarChart3 className="w-4 h-4" />;
-      case 'temporal': return <Clock className="w-4 h-4" />;
+      case 'temporal': return <FaClock className="w-4 h-4" />;
       default: return <FaSearch className="w-4 h-4" />;
     }
   };
@@ -294,7 +294,7 @@ export default function ArbitrageScanner() {
                   {Math.max(...filteredOpportunities.map(o => o.profitMargin)).toFixed(2)}%
                 </p>
               </div>
-              <TrendingUp className="w-8 h-8 text-success" />
+              <FaTrendingUp className="w-8 h-8 text-success" />
             </div>
           </CardContent>
         </Card>
@@ -308,7 +308,7 @@ export default function ArbitrageScanner() {
                   {Math.round(filteredOpportunities.reduce((sum, o) => sum + o.timeWindow, 0) / filteredOpportunities.length || 0)}s
                 </p>
               </div>
-              <Clock className="w-8 h-8 text-accent" />
+              <FaClock className="w-8 h-8 text-accent" />
             </div>
           </CardContent>
         </Card>
@@ -322,7 +322,7 @@ export default function ArbitrageScanner() {
                   {formatCurrency(filteredOpportunities.reduce((sum, o) => sum + o.estimatedProfit, 0))}
                 </p>
               </div>
-              <DollarSign className="w-8 h-8 text-secondary" />
+              <FaDollarSign className="w-8 h-8 text-secondary" />
             </div>
           </CardContent>
         </Card>

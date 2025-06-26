@@ -1,4 +1,4 @@
-import { FaCar, FaShoppingBag, FaBolt, Grid3X3 } from "react-icons/fa";
+import { FaCar, FaShoppingBag, FaBolt, FaTh } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { t } from "@/lib/i18n";
@@ -31,7 +31,7 @@ export default function MiniAppLauncher() {
     {
       id: "more",
       name: t('more'),
-      icon: Grid3X3,
+      icon: FaTh,
       color: "bg-neutral-100 text-neutral-600",
       description: "More apps",
     },

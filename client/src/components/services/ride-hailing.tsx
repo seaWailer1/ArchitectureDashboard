@@ -4,8 +4,8 @@ import {
   FaCar, 
   FaMapMarkerAlt, 
   FaLocationArrow, 
-  Clock,
-  DollarSign,
+  FaClock,
+  FaDollarSign,
   FaStar,
   FaPhone,
   Shield,
@@ -397,7 +397,7 @@ export default function RideHailing() {
                                   {rideType.capacity}
                                 </span>
                                 <span className="flex items-center">
-                                  <Clock className="w-3 h-3 mr-1" />
+                                  <FaClock className="w-3 h-3 mr-1" />
                                   {rideType.eta}
                                 </span>
                               </div>

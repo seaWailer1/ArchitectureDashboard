@@ -1,15 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
 import { 
   Store, 
-  TrendingUp, 
+  FaTrendingUp, 
   TrendingDown,
   Users, 
-  CreditCard, 
+  FaCreditCard, 
   FaBox, 
   BarChart3,
   FaQrcode,
   Settings,
-  Eye,
+  FaEye,
   FaPlus,
   FaExternalLinkAlt
 } from "react-icons/fa";
@@ -87,7 +87,7 @@ export default function MerchantDashboard() {
               <p className="text-white/80 text-sm">Business Balance</p>
               <h2 className="text-3xl font-bold">{formatCurrency(businessWallet?.balance || 0)}</h2>
               <div className="flex items-center space-x-2 mt-2">
-                <TrendingUp className="w-4 h-4 text-green-200" />
+                <FaTrendingUp className="w-4 h-4 text-green-200" />
                 <span className="text-green-200 text-sm">+{businessMetrics.monthlyGrowth}% this month</span>
               </div>
             </div>
@@ -100,7 +100,7 @@ export default function MerchantDashboard() {
           
           <div className="flex space-x-3">
             <Button size="sm" className="bg-white/20 hover:bg-white/30 text-white flex-1">
-              <Eye className="w-4 h-4 mr-2" />
+              <FaEye className="w-4 h-4 mr-2" />
               View Sales
             </Button>
             <Button size="sm" className="bg-white/20 hover:bg-white/30 text-white flex-1">
@@ -121,7 +121,7 @@ export default function MerchantDashboard() {
                 <p className="text-2xl font-bold">{formatCurrency(businessMetrics.totalSales)}</p>
               </div>
               <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-                <CreditCard className="w-6 h-6 text-green-600" />
+                <FaCreditCard className="w-6 h-6 text-green-600" />
               </div>
             </div>
           </CardContent>
@@ -243,7 +243,7 @@ export default function MerchantDashboard() {
             
             <div className="flex items-center justify-between p-3 border rounded-lg">
               <div className="flex items-center space-x-3">
-                <CreditCard className="w-5 h-5 text-purple-600" />
+                <FaCreditCard className="w-5 h-5 text-purple-600" />
                 <span className="font-medium">Card Payments</span>
               </div>
               <Badge className="bg-green-100 text-green-700">Active</Badge>

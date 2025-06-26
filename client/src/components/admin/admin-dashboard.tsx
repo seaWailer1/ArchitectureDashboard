@@ -3,12 +3,12 @@ import { useQuery } from "@tanstack/react-query";
 import { 
   BarChart3, 
   Users, 
-  DollarSign, 
-  TrendingUp,
+  FaDollarSign, 
+  FaTrendingUp,
   Activity,
   Shield,
   FaExclamationTriangle,
-  Eye,
+  FaEye,
   RefreshCw,
   Settings,
   Database
@@ -196,7 +196,7 @@ export default function AdminDashboard() {
                 <p className="text-2xl font-bold">{formatCurrency(mockStats.totalVolume)}</p>
                 <p className="text-xs text-success">+12.5% vs last month</p>
               </div>
-              <DollarSign className="w-8 h-8 text-success" />
+              <FaDollarSign className="w-8 h-8 text-success" />
             </div>
           </CardContent>
         </Card>
@@ -263,7 +263,7 @@ export default function AdminDashboard() {
 
             <div className="flex items-center justify-between p-3 bg-neutral-50 rounded-lg">
               <div className="flex items-center space-x-2">
-                <DollarSign className="w-5 h-5" />
+                <FaDollarSign className="w-5 h-5" />
                 <span className="font-medium">Payments</span>
               </div>
               <div className="flex items-center space-x-2">

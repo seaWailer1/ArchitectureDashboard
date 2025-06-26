@@ -8,7 +8,7 @@ import {
   ShieldCheck, 
   FaTimes,
   FaArrowLeft,
-  Clock,
+  FaClock,
   FaMapMarkerAlt 
 } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
@@ -195,7 +195,7 @@ export default function DeviceManagement({ onBack }: DeviceManagementProps) {
                               <span>{device.browser}</span>
                             </div>
                             <div className="flex items-center space-x-1">
-                              <Clock className="w-3 h-3" />
+                              <FaClock className="w-3 h-3" />
                               <span>Last used: {new Date(device.lastUsedAt).toLocaleDateString()}</span>
                             </div>
                             <div className="flex items-center space-x-1">

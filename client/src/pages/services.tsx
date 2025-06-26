@@ -46,7 +46,7 @@ export default function Services() {
     {
       title: "Financial Services",
       services: [
-        { id: "loans", name: "Micro Loans", icon: CreditCard, color: "bg-red-100 text-red-600", description: "Quick personal loans" },
+        { id: "loans", name: "Micro Loans", icon: FaCreditCard, color: "bg-red-100 text-red-600", description: "Quick personal loans" },
         { id: "virtual-card", name: "Virtual Cards", icon: Building, color: "bg-emerald-100 text-emerald-600", description: "Secure online payments" },
         { id: "investment", name: "Investments", icon: Users, color: "bg-green-100 text-green-600", description: "Grow your wealth" },
         { id: "crypto", name: "Crypto Trading", icon: FaEllipsisH, color: "bg-orange-100 text-orange-600", description: "Trade cryptocurrencies" },

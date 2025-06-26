@@ -4,9 +4,9 @@ import {
   FaBox, 
   FaTruck,
   FaCheckCircle,
-  Clock,
+  FaClock,
   FaStar,
-  Eye,
+  FaEye,
   FaCommentDots,
   FaArrowLeft,
   FaMapMarkerAlt
@@ -142,7 +142,7 @@ export default function CustomerOrders() {
       case 'delivered': return <FaCheckCircle className="w-4 h-4" />;
       case 'shipped': return <FaTruck className="w-4 h-4" />;
       case 'processing': case 'confirmed': return <FaBox className="w-4 h-4" />;
-      case 'pending': return <Clock className="w-4 h-4" />;
+      case 'pending': return <FaClock className="w-4 h-4" />;
       default: return <FaBox className="w-4 h-4" />;
     }
   };
@@ -386,7 +386,7 @@ export default function CustomerOrders() {
                           setShowOrderDetail(true);
                         }}
                       >
-                        <Eye className="w-4 h-4 mr-2" />
+                        <FaEye className="w-4 h-4 mr-2" />
                         View Details
                       </Button>
                       {order.trackingNumber && (
@@ -446,7 +446,7 @@ export default function CustomerOrders() {
                           setShowOrderDetail(true);
                         }}
                       >
-                        <Eye className="w-4 h-4 mr-2" />
+                        <FaEye className="w-4 h-4 mr-2" />
                         View Details
                       </Button>
                       {order.status === 'delivered' && (

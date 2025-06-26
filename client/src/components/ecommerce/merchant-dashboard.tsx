@@ -2,16 +2,16 @@ import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { 
   FaBox, 
-  DollarSign,
-  ShoppingCart,
-  TrendingUp,
+  FaDollarSign,
+  FaShoppingCart,
+  FaTrendingUp,
   Users,
   FaStar,
-  Plus,
-  Eye,
+  FaPlus,
+  FaEye,
   Edit3,
   Trash2,
-  Filter,
+  FaFilter,
   Calendar,
   Download,
   BarChart3,
@@ -281,7 +281,7 @@ export default function MerchantDashboard() {
                     <p className="text-sm text-neutral-600">Revenue</p>
                     <p className="text-xl font-bold">{formatCurrency(analytics.totalRevenue)}</p>
                   </div>
-                  <DollarSign className="w-8 h-8 text-success" />
+                  <FaDollarSign className="w-8 h-8 text-success" />
                 </div>
               </CardContent>
             </Card>
@@ -293,7 +293,7 @@ export default function MerchantDashboard() {
                     <p className="text-sm text-neutral-600">Orders</p>
                     <p className="text-xl font-bold">{analytics.totalOrders}</p>
                   </div>
-                  <ShoppingCart className="w-8 h-8 text-blue" />
+                  <FaShoppingCart className="w-8 h-8 text-blue" />
                 </div>
               </CardContent>
             </Card>
@@ -317,7 +317,7 @@ export default function MerchantDashboard() {
                     <p className="text-sm text-neutral-600">Avg Order</p>
                     <p className="text-xl font-bold">{formatCurrency(analytics.averageOrderValue)}</p>
                   </div>
-                  <TrendingUp className="w-8 h-8 text-accent" />
+                  <FaTrendingUp className="w-8 h-8 text-accent" />
                 </div>
               </CardContent>
             </Card>
@@ -375,7 +375,7 @@ export default function MerchantDashboard() {
             <Dialog open={showAddProduct} onOpenChange={setShowAddProduct}>
               <DialogTrigger asChild>
                 <Button>
-                  <Plus className="w-4 h-4 mr-2" />
+                  <FaPlus className="w-4 h-4 mr-2" />
                   Add Product
                 </Button>
               </DialogTrigger>
@@ -462,7 +462,7 @@ export default function MerchantDashboard() {
                         <Edit3 className="w-4 h-4" />
                       </Button>
                       <Button variant="outline" size="sm">
-                        <Eye className="w-4 h-4" />
+                        <FaEye className="w-4 h-4" />
                       </Button>
                     </div>
                   </div>
@@ -521,7 +521,7 @@ export default function MerchantDashboard() {
                       </Badge>
                       <div className="flex space-x-2 mt-2">
                         <Button variant="outline" size="sm">
-                          <Eye className="w-4 h-4" />
+                          <FaEye className="w-4 h-4" />
                         </Button>
                         {order.status === 'pending' && (
                           <Button size="sm">

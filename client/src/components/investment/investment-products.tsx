@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { 
-  TrendingUp, 
+  FaTrendingUp, 
   Shield, 
   FaExclamationTriangle, 
-  DollarSign,
+  FaDollarSign,
   Calendar,
   Target,
   PiggyBank
@@ -101,7 +101,7 @@ export default function InvestmentProducts() {
       case 'fixed_deposit':
         return <Calendar className="w-5 h-5" />;
       default:
-        return <TrendingUp className="w-5 h-5" />;
+        return <FaTrendingUp className="w-5 h-5" />;
     }
   };
 
@@ -163,7 +163,7 @@ export default function InvestmentProducts() {
     <div className="space-y-6">
       <div className="text-center">
         <div className="w-16 h-16 bg-gradient-to-br from-success to-accent rounded-2xl flex items-center justify-center mx-auto mb-4">
-          <TrendingUp className="w-8 h-8 text-white" />
+          <FaTrendingUp className="w-8 h-8 text-white" />
         </div>
         <h2 className="text-2xl font-bold text-neutral-900 mb-2">Investment Products</h2>
         <p className="text-neutral-600">Grow your wealth with our investment options</p>
@@ -256,7 +256,7 @@ export default function InvestmentProducts() {
                     className="w-full"
                     onClick={() => setSelectedProduct(product)}
                   >
-                    <DollarSign className="w-4 h-4 mr-2" />
+                    <FaDollarSign className="w-4 h-4 mr-2" />
                     Invest Now
                   </Button>
                 </DialogTrigger>

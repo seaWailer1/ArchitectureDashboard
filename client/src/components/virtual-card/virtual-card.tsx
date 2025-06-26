@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { CreditCard, Eye, EyeOff, Copy, Lock, Unlock, Plus } from "react-icons/fa";
+import { FaCreditCard, FaEye, FaEyeSlash, Copy, Lock, Unlock, FaPlus } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -106,7 +106,7 @@ export default function VirtualCardManager() {
         <Dialog open={showCreateDialog} onOpenChange={setShowCreateDialog}>
           <DialogTrigger asChild>
             <Button className="flex items-center space-x-2">
-              <Plus className="w-4 h-4" />
+              <FaPlus className="w-4 h-4" />
               <span>Create Card</span>
             </Button>
           </DialogTrigger>
@@ -164,7 +164,7 @@ export default function VirtualCardManager() {
         <CardContent className="relative z-10 p-6 text-white">
           <div className="flex justify-between items-start mb-6">
             <div className="flex items-center space-x-2">
-              <CreditCard className="w-6 h-6" />
+              <FaCreditCard className="w-6 h-6" />
               <span className="font-semibold">AfriPay Virtual</span>
             </div>
             <Badge className={`${mockCard.type === 'premium' ? 'bg-accent' : 'bg-white/20'} text-white`}>
@@ -226,7 +226,7 @@ export default function VirtualCardManager() {
           className="flex items-center justify-center space-x-2"
           onClick={() => setShowCardDetails(!showCardDetails)}
         >
-          {showCardDetails ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+          {showCardDetails ? <FaEyeSlash className="w-4 h-4" /> : <FaEye className="w-4 h-4" />}
           <span>{showCardDetails ? "Hide" : "Show"} Details</span>
         </Button>
         

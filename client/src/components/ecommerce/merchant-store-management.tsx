@@ -3,15 +3,15 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { 
   Store, 
   FaBox, 
-  Plus, 
+  FaPlus, 
   Edit3, 
-  Eye, 
+  FaEye, 
   BarChart3,
-  DollarSign,
-  Clock,
+  FaDollarSign,
+  FaClock,
   Users,
-  TrendingUp,
-  ShoppingCart,
+  FaTrendingUp,
+  FaShoppingCart,
   FaStar,
   FaMapMarkerAlt,
   FaPhone,
@@ -327,14 +327,14 @@ export default function MerchantStoreManagement() {
       <div className="grid grid-cols-2 gap-4">
         <Card>
           <CardContent className="p-4 text-center">
-            <DollarSign className="w-8 h-8 mx-auto text-green-500 mb-2" />
+            <FaDollarSign className="w-8 h-8 mx-auto text-green-500 mb-2" />
             <p className="text-2xl font-bold">$2,847</p>
             <p className="text-sm text-neutral-600">This Month</p>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-4 text-center">
-            <ShoppingCart className="w-8 h-8 mx-auto text-blue-500 mb-2" />
+            <FaShoppingCart className="w-8 h-8 mx-auto text-blue-500 mb-2" />
             <p className="text-2xl font-bold">{orders.length}</p>
             <p className="text-sm text-neutral-600">Active Orders</p>
           </CardContent>
@@ -425,7 +425,7 @@ export default function MerchantStoreManagement() {
       <div className="flex justify-between items-center">
         <h2 className="text-lg font-semibold">Products</h2>
         <Button onClick={() => openProductEditor()}>
-          <Plus className="w-4 h-4 mr-2" />
+          <FaPlus className="w-4 h-4 mr-2" />
           Add Product
         </Button>
       </div>

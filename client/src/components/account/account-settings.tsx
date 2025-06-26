@@ -9,8 +9,8 @@ import {
   Smartphone, 
   FaQuestionCircle,
   Lock,
-  Eye,
-  EyeOff,
+  FaEye,
+  FaEyeSlash,
   FaChevronRight 
 } from "react-icons/fa";
 import { Button } from "@/components/ui/button";

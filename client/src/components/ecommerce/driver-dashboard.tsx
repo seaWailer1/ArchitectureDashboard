@@ -3,8 +3,8 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { 
   FaLocationArrow, 
   FaMapMarkerAlt, 
-  Clock, 
-  DollarSign,
+  FaClock, 
+  FaDollarSign,
   FaPhone,
   FaComment,
   FaCamera,
@@ -23,7 +23,7 @@ import {
   BarChart3,
   Calendar,
   Target,
-  TrendingUp
+  FaTrendingUp
 } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -253,7 +253,7 @@ export default function DriverDashboard() {
         <div className="flex items-center justify-between text-sm mb-4">
           <div className="flex items-center space-x-4">
             <div className="flex items-center">
-              <Clock className="w-4 h-4 mr-1" />
+              <FaClock className="w-4 h-4 mr-1" />
               <span>{order.estimatedTime} min</span>
             </div>
             <div className="flex items-center">
@@ -262,7 +262,7 @@ export default function DriverDashboard() {
             </div>
           </div>
           <div className="flex items-center">
-            <DollarSign className="w-4 h-4 mr-1" />
+            <FaDollarSign className="w-4 h-4 mr-1" />
             <span className="font-semibold">${order.deliveryFee}</span>
           </div>
         </div>
