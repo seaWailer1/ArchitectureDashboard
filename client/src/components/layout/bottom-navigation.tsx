@@ -13,7 +13,7 @@ export default function BottomNavigation({ currentPage }: BottomNavigationProps)
   const navItems = [
     { path: "/", icon: Home, label: t('home'), id: "home" },
     { path: "/wallets", icon: Wallet, label: "Wallets", id: "wallets" },
-    { path: "/qr", icon: QrCode, label: t('pay'), id: "qr", special: true },
+    { path: "/transactions", icon: List, label: "History", id: "transactions" },
     { path: "/services", icon: Grid3X3, label: t('services'), id: "services" },
     { path: "/profile", icon: User, label: t('profile'), id: "profile" },
   ];
@@ -47,24 +47,15 @@ export default function BottomNavigation({ currentPage }: BottomNavigationProps)
                   aria-current={active ? "page" : undefined}
                   aria-label={`${item.label} ${active ? "(current page)" : ""}`}
                 >
-                  {item.special ? (
-                    <div 
-                      className="w-10 h-10 bg-primary rounded-full flex items-center justify-center mb-1 shadow-md"
-                      aria-hidden="true"
-                    >
-                      <Icon className="w-5 h-5 text-white" />
-                    </div>
-                  ) : (
-                    <Icon 
-                      className={cn(
-                        "w-6 h-6 mb-1",
-                        active 
-                          ? "text-primary dark:text-primary" 
-                          : "text-neutral-700 dark:text-neutral-300"
-                      )}
-                      aria-hidden="true"
-                    />
-                  )}
+                  <Icon 
+                    className={cn(
+                      "w-6 h-6 mb-1",
+                      active 
+                        ? "text-primary dark:text-primary" 
+                        : "text-neutral-700 dark:text-neutral-300"
+                    )}
+                    aria-hidden="true"
+                  />
                   <span 
                     className={cn(
                       "text-xs font-semibold leading-tight",

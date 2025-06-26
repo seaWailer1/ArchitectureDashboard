@@ -1,12 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
-import { Bell, Coins } from "lucide-react";
+import { Bell, Coins, QrCode } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { AccessibleButton } from "@/components/ui/accessibility";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { t, setLanguage, getCurrentLanguage, getAvailableLanguages, type Language } from "@/lib/i18n";
 import { UserProfile } from "@/types";
+import { useLocation } from "wouter";
 
 export default function AppHeader() {
+  const [, setLocation] = useLocation();
   const { data: user } = useQuery<UserProfile>({
     queryKey: ["/api/auth/user"],
   });
@@ -44,7 +46,18 @@ export default function AppHeader() {
           </div>
           
           {/* Navigation Controls */}
-          <nav className="flex items-center gap-aaa" role="navigation" aria-label="Header navigation">
+          <nav className="flex items-center gap-3" role="navigation" aria-label="Header navigation">
+            {/* QR Code Scanner/Generator */}
+            <AccessibleButton
+              variant="ghost"
+              size="md"
+              className="touch-aaa text-neutral-700 dark:text-neutral-300 hover:text-primary hover:bg-primary/10 focus-aaa"
+              onClick={() => setLocation('/qr')}
+              aria-label="QR Code Scanner and Generator"
+            >
+              <QrCode className="w-5 h-5" aria-hidden="true" />
+            </AccessibleButton>
+            
             {/* Language Switcher */}
             <div className="relative">
               <Select 

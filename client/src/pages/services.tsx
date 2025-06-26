@@ -29,6 +29,7 @@ import Shop from "@/components/services/shop";
 import Transport from "@/components/services/transport";
 import SavingsChallenges from "@/components/savings/savings-challenges";
 import PartnerWithAfriPay from "@/components/partnerships/partner-with-afripay";
+import EntertainmentHub from "@/components/entertainment/entertainment-hub";
 
 export default function Services() {
   const { toast } = useToast();
