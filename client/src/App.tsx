@@ -18,6 +18,7 @@ import Onboarding from "@/pages/onboarding";
 import KYC from "@/pages/kyc";
 import PresetUsers from "@/pages/preset-users";
 import PartnershipsPage from "@/pages/partnerships";
+import AccessibilityDemo from "@/pages/accessibility-demo";
 
 function Router() {
   const { user, isAuthenticated, isLoading } = useAuth();
@@ -88,6 +89,7 @@ function Router() {
           <Route path="/kyc" component={KYC} />
           <Route path="/preset-users" component={PresetUsers} />
           <Route path="/partnerships" component={PartnershipsPage} />
+          <Route path="/accessibility-demo" component={AccessibilityDemo} />
           <Route component={NotFound} />
         </Switch>
       </div>
