@@ -81,62 +81,62 @@ export default function WalletsRefined() {
     <div className="min-h-screen bg-gradient-to-br from-neutral-50 to-neutral-100 dark:from-neutral-900 dark:to-neutral-800">
       <AppHeader />
       
-      <main className="container-content spacing-y-lg pb-24">
-        {/* Total Portfolio Overview */}
-        <Card className="card-refined elevation-2 spacing-lg bg-gradient-to-br from-white to-neutral-50 dark:from-neutral-800 dark:to-neutral-900">
-          <CardHeader className="spacing-y-sm">
+      <main className="container-content py-4 space-y-6 pb-24">
+        {/* Mobile-Optimized Portfolio Overview */}
+        <Card className="card-refined elevation-2 p-4 sm:p-6 bg-gradient-to-br from-white to-neutral-50 dark:from-neutral-800 dark:to-neutral-900">
+          <CardHeader className="p-0 space-y-2 sm:space-y-3">
             <CardTitle className="flex items-center justify-between">
-              <span className="text-heading-2 text-refined-heading">Total Portfolio</span>
+              <span className="text-lg sm:text-xl lg:text-2xl font-bold text-refined-heading">Total Portfolio</span>
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => setShowBalances(!showBalances)}
-                className="touch-aaa rounded-xl hover:bg-neutral-100 dark:hover:bg-neutral-700 focus-aaa"
+                className="w-10 h-10 rounded-xl hover:bg-neutral-100 dark:hover:bg-neutral-700 focus-aaa flex-shrink-0"
               >
                 {showBalances ? 
-                  <EyeOff className="w-5 h-5 text-neutral-600" aria-label="Hide balances" /> : 
-                  <Eye className="w-5 h-5 text-neutral-600" aria-label="Show balances" />
+                  <EyeOff className="w-4 h-4 sm:w-5 sm:h-5 text-neutral-600" aria-label="Hide balances" /> : 
+                  <Eye className="w-4 h-4 sm:w-5 sm:h-5 text-neutral-600" aria-label="Show balances" />
                 }
               </Button>
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-6">
-            <div className="text-center space-y-2">
-              <div className="text-4xl font-bold text-refined-heading tracking-tight">
+          <CardContent className="p-0 pt-4 space-y-4 sm:space-y-6">
+            <div className="text-center space-y-1 sm:space-y-2">
+              <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-refined-heading tracking-tight">
                 {showBalances ? formatCurrency(totalNetWorth) : "••••••"}
               </div>
-              <div className="text-refined-muted">Total Net Worth</div>
+              <div className="text-sm sm:text-base text-refined-muted">Total Net Worth</div>
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
-              <div className="text-center p-4 bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 rounded-xl border border-blue-200/50 dark:border-blue-700/50">
-                <div className="text-xl font-bold text-blue-900 dark:text-blue-100">
+            <div className="grid grid-cols-2 gap-3 sm:gap-4">
+              <div className="text-center p-3 sm:p-4 bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 rounded-lg sm:rounded-xl border border-blue-200/50 dark:border-blue-700/50">
+                <div className="text-lg sm:text-xl font-bold text-blue-900 dark:text-blue-100">
                   {showBalances ? formatCurrency(totalFiatBalance) : "••••"}
                 </div>
-                <div className="text-sm text-blue-700 dark:text-blue-300 font-medium">Cash Balance</div>
+                <div className="text-xs sm:text-sm text-blue-700 dark:text-blue-300 font-medium">Cash Balance</div>
               </div>
-              <div className="text-center p-4 bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-900/20 dark:to-orange-800/20 rounded-xl border border-orange-200/50 dark:border-orange-700/50">
-                <div className="text-xl font-bold text-orange-900 dark:text-orange-100">
+              <div className="text-center p-3 sm:p-4 bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-900/20 dark:to-orange-800/20 rounded-lg sm:rounded-xl border border-orange-200/50 dark:border-orange-700/50">
+                <div className="text-lg sm:text-xl font-bold text-orange-900 dark:text-orange-100">
                   {showBalances ? formatCurrency(totalCryptoValue) : "••••"}
                 </div>
-                <div className="text-sm text-orange-700 dark:text-orange-300 font-medium">Crypto Value</div>
+                <div className="text-xs sm:text-sm text-orange-700 dark:text-orange-300 font-medium">Crypto Value</div>
               </div>
             </div>
           </CardContent>
         </Card>
 
         <Tabs defaultValue="primary" className="w-full">
-          <TabsList className="grid w-full grid-cols-4 p-1 bg-white/50 dark:bg-neutral-800/50 backdrop-blur-sm rounded-xl shadow-soft">
-            <TabsTrigger value="primary" className="rounded-lg font-semibold text-sm data-[state=active]:bg-white data-[state=active]:shadow-soft">
+          <TabsList className="grid w-full grid-cols-4 p-1 bg-white/50 dark:bg-neutral-800/50 backdrop-blur-sm rounded-lg sm:rounded-xl shadow-soft">
+            <TabsTrigger value="primary" className="rounded-md sm:rounded-lg font-semibold text-xs sm:text-sm data-[state=active]:bg-white data-[state=active]:shadow-soft">
               Primary
             </TabsTrigger>
-            <TabsTrigger value="crypto" className="rounded-lg font-semibold text-sm data-[state=active]:bg-white data-[state=active]:shadow-soft">
+            <TabsTrigger value="crypto" className="rounded-md sm:rounded-lg font-semibold text-xs sm:text-sm data-[state=active]:bg-white data-[state=active]:shadow-soft">
               Crypto
             </TabsTrigger>
-            <TabsTrigger value="savings" className="rounded-lg font-semibold text-sm data-[state=active]:bg-white data-[state=active]:shadow-soft">
+            <TabsTrigger value="savings" className="rounded-md sm:rounded-lg font-semibold text-xs sm:text-sm data-[state=active]:bg-white data-[state=active]:shadow-soft">
               Savings
             </TabsTrigger>
-            <TabsTrigger value="investment" className="rounded-lg font-semibold text-sm data-[state=active]:bg-white data-[state=active]:shadow-soft">
+            <TabsTrigger value="investment" className="rounded-md sm:rounded-lg font-semibold text-xs sm:text-sm data-[state=active]:bg-white data-[state=active]:shadow-soft">
               Investment
             </TabsTrigger>
           </TabsList>
@@ -249,9 +249,9 @@ export default function WalletsRefined() {
                         </div>
                         
                         <div className="text-right space-y-2">
-                          <p className="text-2xl font-bold text-refined-heading">
+                          <div className="text-2xl font-bold text-refined-heading">
                             {showBalances ? formatCurrency(wallet.balance, wallet.currency) : "••••••"}
-                          </p>
+                          </div>
                           <div className="flex items-center gap-2 mt-3">
                             <Button
                               size="sm"
@@ -308,16 +308,16 @@ export default function WalletsRefined() {
                           </div>
                           <div className="space-y-1">
                             <h3 className="font-bold text-refined-heading text-lg">Savings Wallet</h3>
-                            <p className="text-refined-muted text-sm">
+                            <div className="text-refined-muted text-sm">
                               {wallet.currency} • Goal-based savings
-                            </p>
+                            </div>
                           </div>
                         </div>
                         
                         <div className="text-right space-y-2">
-                          <p className="text-2xl font-bold text-refined-heading">
+                          <div className="text-2xl font-bold text-refined-heading">
                             {showBalances ? formatCurrency(wallet.balance, wallet.currency) : "••••••"}
-                          </p>
+                          </div>
                           <div className="flex items-center gap-2 mt-3">
                             <Button
                               size="sm"
@@ -374,16 +374,16 @@ export default function WalletsRefined() {
                           </div>
                           <div className="space-y-1">
                             <h3 className="font-bold text-refined-heading text-lg">Investment Wallet</h3>
-                            <p className="text-refined-muted text-sm">
+                            <div className="text-refined-muted text-sm">
                               {wallet.currency} • Portfolio funds
-                            </p>
+                            </div>
                           </div>
                         </div>
                         
                         <div className="text-right space-y-2">
-                          <p className="text-2xl font-bold text-refined-heading">
+                          <div className="text-2xl font-bold text-refined-heading">
                             {showBalances ? formatCurrency(wallet.balance, wallet.currency) : "••••••"}
-                          </p>
+                          </div>
                           <div className="flex items-center gap-2 mt-3">
                             <Button
                               size="sm"
