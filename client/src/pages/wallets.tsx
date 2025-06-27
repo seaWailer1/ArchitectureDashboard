@@ -141,47 +141,48 @@ export default function WalletsRefined() {
             </TabsTrigger>
           </TabsList>
 
-          <TabsContent value="primary" className="space-y-4 mt-6">
+          <TabsContent value="primary" className="space-y-3 sm:space-y-4 mt-4 sm:mt-6">
             <div className="flex items-center justify-between">
-              <h2 className="text-xl font-bold text-refined-heading">Primary Wallets</h2>
+              <h2 className="text-lg sm:text-xl font-bold text-refined-heading">Primary Wallets</h2>
               <Button 
                 size="sm" 
                 onClick={() => handleWalletAction("Create Primary", 0)}
-                className="btn-primary-refined text-sm px-4 py-2"
+                className="btn-primary-refined text-xs sm:text-sm px-3 sm:px-4 py-2"
               >
-                <Plus className="w-4 h-4 mr-2" />
-                Add Wallet
+                <Plus className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
+                <span className="hidden sm:inline">Add Wallet</span>
+                <span className="sm:hidden">Add</span>
               </Button>
             </div>
 
-            <div className="space-y-4">
+            <div className="space-y-3 sm:space-y-4">
               {wallets.filter(w => w.walletType === 'primary').map((wallet) => {
                 const Icon = getWalletIcon(wallet.walletType);
                 
                 return (
                   <Card key={wallet.id} className="card-refined interactive-hover">
-                    <CardContent className="p-6">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-4">
-                          <div className="w-14 h-14 bg-gradient-to-br from-blue-100 to-blue-200 dark:from-blue-900/40 dark:to-blue-800/40 rounded-2xl flex items-center justify-center shadow-soft">
-                            <Icon className="w-7 h-7 text-blue-700 dark:text-blue-300" />
+                    <CardContent className="p-4 sm:p-6">
+                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                        <div className="flex items-center space-x-3 sm:space-x-4">
+                          <div className="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-blue-100 to-blue-200 dark:from-blue-900/40 dark:to-blue-800/40 rounded-xl sm:rounded-2xl flex items-center justify-center shadow-soft flex-shrink-0">
+                            <Icon className="w-6 h-6 sm:w-7 sm:h-7 text-blue-700 dark:text-blue-300" />
                           </div>
-                          <div className="space-y-1">
-                            <h3 className="font-bold text-refined-heading text-lg">
+                          <div className="space-y-1 min-w-0 flex-1">
+                            <h3 className="font-bold text-refined-heading text-base sm:text-lg">
                               {wallet.walletType.charAt(0).toUpperCase() + wallet.walletType.slice(1)} Wallet
                             </h3>
-                            <div className="text-refined-muted text-sm">
+                            <div className="text-refined-muted text-xs sm:text-sm truncate">
                               {wallet.currency} • Created {new Date(wallet.createdAt).toLocaleDateString()}
                             </div>
                           </div>
                         </div>
                         
-                        <div className="text-right space-y-2">
-                          <div className="text-2xl font-bold text-refined-heading">
+                        <div className="flex flex-col sm:text-right space-y-2 sm:space-y-2">
+                          <div className="text-xl sm:text-2xl font-bold text-refined-heading">
                             {showBalances ? formatCurrency(wallet.balance, wallet.currency) : "••••••"}
                           </div>
                           {parseFloat(wallet.pendingBalance) > 0 && (
-                            <div className="text-sm text-muted-foreground">
+                            <div className="text-xs sm:text-sm text-muted-foreground">
                               +{showBalances ? formatCurrency(wallet.pendingBalance, wallet.currency) : "••••"} pending
                             </div>
                           )}
@@ -191,7 +192,7 @@ export default function WalletsRefined() {
                               size="sm"
                               variant="outline"
                               onClick={() => handleWalletAction("Send", wallet.id)}
-                              className="h-8 px-3 text-xs rounded-lg"
+                              className="h-8 px-2 sm:px-3 text-xs rounded-lg flex-1 sm:flex-none"
                             >
                               <Send className="w-3 h-3 mr-1" />
                               Send
@@ -200,7 +201,7 @@ export default function WalletsRefined() {
                               size="sm"
                               variant="outline"
                               onClick={() => handleWalletAction("Receive", wallet.id)}
-                              className="h-8 px-3 text-xs rounded-lg"
+                              className="h-8 px-2 sm:px-3 text-xs rounded-lg flex-1 sm:flex-none"
                             >
                               <ArrowDownToLine className="w-3 h-3 mr-1" />
                               Receive
