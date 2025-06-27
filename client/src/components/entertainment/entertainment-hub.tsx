@@ -460,51 +460,51 @@ export default function EntertainmentHub() {
         <div className="h-24"></div>
       </ScrollArea>
 
-      {/* Brand-Consistent Mini Player */}
+      {/* Mobile-Optimized Mini Player */}
       <Card className="fixed bottom-20 left-0 right-0 card-refined border-t z-50 rounded-none rounded-t-xl shadow-elevated">
         <div className="container-app">
           {/* Progress Bar */}
-          <div className="h-1 bg-muted relative">
+          <div className="h-0.5 sm:h-1 bg-muted relative">
             <div className="h-full w-1/3 gradient-primary rounded-full"></div>
           </div>
           
-          <CardContent className="spacing-md">
-            <div className="flex items-center justify-between">
-              {/* Now Playing Info */}
-              <div className="flex items-center gap-3 flex-1 min-w-0">
-                <div className="w-12 h-12 gradient-secondary rounded-xl flex items-center justify-center shadow-soft">
-                  <span className="text-lg">🎵</span>
+          <CardContent className="p-3 sm:p-4">
+            <div className="flex items-center justify-between gap-2 sm:gap-4">
+              {/* Now Playing Info - Mobile Optimized */}
+              <div className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 gradient-secondary rounded-lg sm:rounded-xl flex items-center justify-center shadow-soft flex-shrink-0">
+                  <span className="text-sm sm:text-lg">🎵</span>
                 </div>
-                <div className="min-w-0">
-                  <h4 className="text-body-small font-semibold text-refined-heading truncate">Afrobeats Hits 2025</h4>
-                  <p className="text-caption text-refined-muted truncate">Burna Boy, Wizkid & More</p>
-                  <div className="flex items-center gap-2 mt-1">
-                    <span className="text-caption text-refined-muted">2:34</span>
+                <div className="min-w-0 flex-1">
+                  <h4 className="text-xs sm:text-sm font-semibold text-refined-heading truncate">Afrobeats Hits 2025</h4>
+                  <p className="text-xs text-refined-muted truncate">Burna Boy & More</p>
+                  <div className="hidden sm:flex items-center gap-2 mt-1">
+                    <span className="text-xs text-refined-muted">2:34</span>
                     <div className="w-1 h-1 bg-muted-foreground rounded-full"></div>
-                    <span className="text-caption text-refined-muted">4:12</span>
+                    <span className="text-xs text-refined-muted">4:12</span>
                   </div>
                 </div>
               </div>
               
-              {/* Playback Controls */}
-              <div className="flex items-center gap-2 mx-6">
-                <Button variant="ghost" size="sm" className="touch-aaa rounded-xl hover:bg-muted">
-                  <SkipBack className="w-4 h-4" />
+              {/* Mobile-First Playback Controls */}
+              <div className="flex items-center gap-1 sm:gap-2">
+                <Button variant="ghost" size="sm" className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl hover:bg-muted flex-shrink-0">
+                  <SkipBack className="w-3 h-3 sm:w-4 sm:h-4" />
                 </Button>
-                <Button size="sm" className="rounded-full touch-aaa gradient-primary text-white hover:opacity-90 shadow-soft">
-                  <Play className="w-5 h-5 fill-current" />
+                <Button size="sm" className="rounded-full w-10 h-10 sm:w-12 sm:h-12 gradient-primary text-white hover:opacity-90 shadow-soft flex-shrink-0">
+                  <Play className="w-4 h-4 sm:w-5 sm:h-5 fill-current" />
                 </Button>
-                <Button variant="ghost" size="sm" className="touch-aaa rounded-xl hover:bg-muted">
-                  <SkipForward className="w-4 h-4" />
+                <Button variant="ghost" size="sm" className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl hover:bg-muted flex-shrink-0">
+                  <SkipForward className="w-3 h-3 sm:w-4 sm:h-4" />
                 </Button>
               </div>
 
-              {/* Secondary Controls */}
-              <div className="flex items-center gap-1">
-                <Button variant="ghost" size="sm" className="touch-aaa rounded-xl hover:bg-muted">
+              {/* Secondary Controls - Hidden on mobile */}
+              <div className="hidden sm:flex items-center gap-1">
+                <Button variant="ghost" size="sm" className="w-10 h-10 rounded-xl hover:bg-muted">
                   <Heart className="w-4 h-4" />
                 </Button>
-                <Button variant="ghost" size="sm" className="touch-aaa rounded-xl hover:bg-muted">
+                <Button variant="ghost" size="sm" className="w-10 h-10 rounded-xl hover:bg-muted">
                   <Volume2 className="w-4 h-4" />
                 </Button>
               </div>
