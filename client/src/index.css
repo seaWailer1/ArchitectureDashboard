@@ -47,6 +47,11 @@
   --focus-ring: hsl(210, 100%, 40%);
   --focus-ring-width: 3px;
   --focus-ring-offset: 2px;
+  
+  /* Content containment and stacking */
+  --content-max-width: 100%;
+  --content-overflow: hidden;
+  --base-z-index: 1;
 }
 
 .dark {
