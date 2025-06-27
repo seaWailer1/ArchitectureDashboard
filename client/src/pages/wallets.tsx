@@ -102,24 +102,24 @@ export default function WalletsRefined() {
           </CardHeader>
           <CardContent className="space-y-6">
             <div className="text-center space-y-2">
-              <p className="text-4xl font-bold text-refined-heading tracking-tight">
+              <div className="text-4xl font-bold text-refined-heading tracking-tight">
                 {showBalances ? formatCurrency(totalNetWorth) : "••••••"}
-              </p>
-              <p className="text-refined-muted">Total Net Worth</p>
+              </div>
+              <div className="text-refined-muted">Total Net Worth</div>
             </div>
 
             <div className="grid grid-cols-2 gap-4">
               <div className="text-center p-4 bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 rounded-xl border border-blue-200/50 dark:border-blue-700/50">
-                <p className="text-xl font-bold text-blue-900 dark:text-blue-100">
+                <div className="text-xl font-bold text-blue-900 dark:text-blue-100">
                   {showBalances ? formatCurrency(totalFiatBalance) : "••••"}
-                </p>
-                <p className="text-sm text-blue-700 dark:text-blue-300 font-medium">Cash Balance</p>
+                </div>
+                <div className="text-sm text-blue-700 dark:text-blue-300 font-medium">Cash Balance</div>
               </div>
               <div className="text-center p-4 bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-900/20 dark:to-orange-800/20 rounded-xl border border-orange-200/50 dark:border-orange-700/50">
-                <p className="text-xl font-bold text-orange-900 dark:text-orange-100">
+                <div className="text-xl font-bold text-orange-900 dark:text-orange-100">
                   {showBalances ? formatCurrency(totalCryptoValue) : "••••"}
-                </p>
-                <p className="text-sm text-orange-700 dark:text-orange-300 font-medium">Crypto Value</p>
+                </div>
+                <div className="text-sm text-orange-700 dark:text-orange-300 font-medium">Crypto Value</div>
               </div>
             </div>
           </CardContent>
@@ -170,20 +170,20 @@ export default function WalletsRefined() {
                             <h3 className="font-bold text-refined-heading text-lg">
                               {wallet.walletType.charAt(0).toUpperCase() + wallet.walletType.slice(1)} Wallet
                             </h3>
-                            <p className="text-refined-muted text-sm">
+                            <div className="text-refined-muted text-sm">
                               {wallet.currency} • Created {new Date(wallet.createdAt).toLocaleDateString()}
-                            </p>
+                            </div>
                           </div>
                         </div>
                         
                         <div className="text-right space-y-2">
-                          <p className="text-2xl font-bold text-refined-heading">
+                          <div className="text-2xl font-bold text-refined-heading">
                             {showBalances ? formatCurrency(wallet.balance, wallet.currency) : "••••••"}
-                          </p>
+                          </div>
                           {parseFloat(wallet.pendingBalance) > 0 && (
-                            <p className="text-sm text-muted-foreground">
+                            <div className="text-sm text-muted-foreground">
                               +{showBalances ? formatCurrency(wallet.pendingBalance, wallet.currency) : "••••"} pending
-                            </p>
+                            </div>
                           )}
                           
                           <div className="flex items-center gap-2 mt-3">
@@ -242,9 +242,9 @@ export default function WalletsRefined() {
                           </div>
                           <div className="space-y-1">
                             <h3 className="font-bold text-refined-heading text-lg">Crypto Wallet</h3>
-                            <p className="text-refined-muted text-sm">
+                            <div className="text-refined-muted text-sm">
                               {wallet.currency} • Digital assets
-                            </p>
+                            </div>
                           </div>
                         </div>
                         
