@@ -367,6 +367,30 @@
   display: none;
 }
 
+/* Content containment and stacking utilities */
+.content-contained {
+  contain: layout style;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.content-stack-base { z-index: 1; }
+.content-stack-low { z-index: 10; }
+.content-stack-mid { z-index: 20; }
+.content-stack-high { z-index: 30; }
+.content-stack-top { z-index: 40; }
+
+.overflow-safe {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.flex-safe {
+  min-width: 0;
+  max-width: 100%;
+}
+
 /* Motion controls for accessibility */
 @media (prefers-reduced-motion: reduce) {
   .transition-all {
