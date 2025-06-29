@@ -160,69 +160,75 @@ export default function AdminDashboard() {
   const successRate = ((mockTransactionMetrics.successfulTransactions / mockTransactionMetrics.totalTransactions) * 100);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6 p-2 sm:p-4 lg:p-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold text-neutral-900">Admin Dashboard</h1>
-          <p className="text-neutral-600">AfriPay System Overview & Analytics</p>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="min-w-0 flex-1">
+          <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-neutral-900 truncate">Admin Dashboard</h1>
+          <p className="text-sm sm:text-base text-neutral-600 mt-1">AfriPay System Overview & Analytics</p>
         </div>
-        <Button onClick={handleRefresh} disabled={refreshing}>
+        <Button 
+          onClick={handleRefresh} 
+          disabled={refreshing}
+          className="w-full sm:w-auto min-h-[44px]"
+          size="sm"
+        >
           <RefreshCw className={`w-4 h-4 mr-2 ${refreshing ? 'animate-spin' : ''}`} />
-          Refresh
+          <span className="hidden sm:inline">Refresh</span>
+          <span className="sm:hidden">Refresh Data</span>
         </Button>
       </div>
 
       {/* Key Metrics */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <Card>
-          <CardContent className="p-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-neutral-600">Total Users</p>
-                <p className="text-2xl font-bold">{formatNumber(mockStats.totalUsers)}</p>
-                <p className="text-xs text-success">+{mockStats.recentSignups} today</p>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+        <Card className="min-h-[120px]">
+          <CardContent className="p-3 sm:p-4">
+            <div className="flex items-center justify-between h-full">
+              <div className="min-w-0 flex-1">
+                <p className="text-xs sm:text-sm text-neutral-600 truncate">Total Users</p>
+                <p className="text-lg sm:text-xl lg:text-2xl font-bold truncate">{formatNumber(mockStats.totalUsers)}</p>
+                <p className="text-xs text-success truncate">+{mockStats.recentSignups} today</p>
               </div>
-              <Users className="w-8 h-8 text-primary" />
+              <Users className="w-6 h-6 sm:w-8 sm:h-8 text-primary flex-shrink-0 ml-2" />
             </div>
           </CardContent>
         </Card>
 
-        <Card>
-          <CardContent className="p-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-neutral-600">Total Volume</p>
-                <p className="text-2xl font-bold">{formatCurrency(mockStats.totalVolume)}</p>
-                <p className="text-xs text-success">+12.5% vs last month</p>
+        <Card className="min-h-[120px]">
+          <CardContent className="p-3 sm:p-4">
+            <div className="flex items-center justify-between h-full">
+              <div className="min-w-0 flex-1">
+                <p className="text-xs sm:text-sm text-neutral-600 truncate">Total Volume</p>
+                <p className="text-lg sm:text-xl lg:text-2xl font-bold truncate">{formatCurrency(mockStats.totalVolume)}</p>
+                <p className="text-xs text-success truncate">+12.5% vs last month</p>
               </div>
-              <DollarSign className="w-8 h-8 text-success" />
+              <DollarSign className="w-6 h-6 sm:w-8 sm:h-8 text-success flex-shrink-0 ml-2" />
             </div>
           </CardContent>
         </Card>
 
-        <Card>
-          <CardContent className="p-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-neutral-600">Transactions</p>
-                <p className="text-2xl font-bold">{formatNumber(mockStats.totalTransactions)}</p>
-                <p className="text-xs text-success">{successRate.toFixed(1)}% success rate</p>
+        <Card className="min-h-[120px]">
+          <CardContent className="p-3 sm:p-4">
+            <div className="flex items-center justify-between h-full">
+              <div className="min-w-0 flex-1">
+                <p className="text-xs sm:text-sm text-neutral-600 truncate">Transactions</p>
+                <p className="text-lg sm:text-xl lg:text-2xl font-bold truncate">{formatNumber(mockStats.totalTransactions)}</p>
+                <p className="text-xs text-success truncate">{successRate.toFixed(1)}% success rate</p>
               </div>
-              <Activity className="w-8 h-8 text-accent" />
+              <Activity className="w-6 h-6 sm:w-8 sm:h-8 text-accent flex-shrink-0 ml-2" />
             </div>
           </CardContent>
         </Card>
 
-        <Card>
-          <CardContent className="p-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-neutral-600">Active Wallets</p>
-                <p className="text-2xl font-bold">{formatNumber(mockStats.activeWallets)}</p>
-                <p className="text-xs text-neutral-600">{mockStats.kycVerified} verified</p>
+        <Card className="min-h-[120px]">
+          <CardContent className="p-3 sm:p-4">
+            <div className="flex items-center justify-between h-full">
+              <div className="min-w-0 flex-1">
+                <p className="text-xs sm:text-sm text-neutral-600 truncate">Active Wallets</p>
+                <p className="text-lg sm:text-xl lg:text-2xl font-bold truncate">{formatNumber(mockStats.activeWallets)}</p>
+                <p className="text-xs text-neutral-600 truncate">{mockStats.kycVerified} verified</p>
               </div>
-              <BarChart3 className="w-8 h-8 text-secondary" />
+              <BarChart3 className="w-6 h-6 sm:w-8 sm:h-8 text-secondary flex-shrink-0 ml-2" />
             </div>
           </CardContent>
         </Card>
@@ -230,45 +236,45 @@ export default function AdminDashboard() {
 
       {/* System Health */}
       <Card>
-        <CardHeader>
-          <CardTitle>System Health</CardTitle>
+        <CardHeader className="pb-3">
+          <CardTitle className="text-base sm:text-lg">System Health</CardTitle>
         </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-3 gap-4">
-            <div className="flex items-center justify-between p-3 bg-neutral-50 rounded-lg">
-              <div className="flex items-center space-x-2">
-                <Database className="w-5 h-5" />
-                <span className="font-medium">Database</span>
+        <CardContent className="p-3 sm:p-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4">
+            <div className="flex items-center justify-between p-2 sm:p-3 bg-neutral-50 rounded-lg min-h-[60px]">
+              <div className="flex items-center space-x-2 min-w-0 flex-1">
+                <Database className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
+                <span className="font-medium text-sm sm:text-base truncate">Database</span>
               </div>
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-2 flex-shrink-0">
                 {getHealthIcon(mockStats.systemHealth.database)}
-                <span className={`text-sm capitalize ${getHealthColor(mockStats.systemHealth.database)}`}>
+                <span className={`text-xs sm:text-sm capitalize ${getHealthColor(mockStats.systemHealth.database)}`}>
                   {mockStats.systemHealth.database}
                 </span>
               </div>
             </div>
 
-            <div className="flex items-center justify-between p-3 bg-neutral-50 rounded-lg">
-              <div className="flex items-center space-x-2">
-                <Activity className="w-5 h-5" />
-                <span className="font-medium">API</span>
+            <div className="flex items-center justify-between p-2 sm:p-3 bg-neutral-50 rounded-lg min-h-[60px]">
+              <div className="flex items-center space-x-2 min-w-0 flex-1">
+                <Activity className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
+                <span className="font-medium text-sm sm:text-base truncate">API</span>
               </div>
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-2 flex-shrink-0">
                 {getHealthIcon(mockStats.systemHealth.api)}
-                <span className={`text-sm capitalize ${getHealthColor(mockStats.systemHealth.api)}`}>
+                <span className={`text-xs sm:text-sm capitalize ${getHealthColor(mockStats.systemHealth.api)}`}>
                   {mockStats.systemHealth.api}
                 </span>
               </div>
             </div>
 
-            <div className="flex items-center justify-between p-3 bg-neutral-50 rounded-lg">
-              <div className="flex items-center space-x-2">
-                <DollarSign className="w-5 h-5" />
-                <span className="font-medium">Payments</span>
+            <div className="flex items-center justify-between p-2 sm:p-3 bg-neutral-50 rounded-lg min-h-[60px]">
+              <div className="flex items-center space-x-2 min-w-0 flex-1">
+                <DollarSign className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
+                <span className="font-medium text-sm sm:text-base truncate">Payments</span>
               </div>
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-2 flex-shrink-0">
                 {getHealthIcon(mockStats.systemHealth.payments)}
-                <span className={`text-sm capitalize ${getHealthColor(mockStats.systemHealth.payments)}`}>
+                <span className={`text-xs sm:text-sm capitalize ${getHealthColor(mockStats.systemHealth.payments)}`}>
                   {mockStats.systemHealth.payments}
                 </span>
               </div>
@@ -278,21 +284,43 @@ export default function AdminDashboard() {
       </Card>
 
       <Tabs defaultValue="users" className="w-full">
-        <TabsList className="grid w-full grid-cols-5">
-          <TabsTrigger value="users">Users</TabsTrigger>
-          <TabsTrigger value="transactions">Transactions</TabsTrigger>
-          <TabsTrigger value="financial">Financial</TabsTrigger>
-          <TabsTrigger value="kyc">KYC</TabsTrigger>
-          <TabsTrigger value="developer">Developer</TabsTrigger>
-        </TabsList>
+        <div className="overflow-x-auto">
+          <TabsList className="grid grid-cols-5 min-w-full sm:w-full h-auto sm:h-auto">
+            <TabsTrigger value="users" className="text-xs sm:text-sm py-2 sm:py-3 min-h-[44px]">
+              <Users className="w-4 h-4 sm:hidden mr-1" />
+              <span className="hidden sm:inline">Users</span>
+              <span className="sm:hidden">Users</span>
+            </TabsTrigger>
+            <TabsTrigger value="transactions" className="text-xs sm:text-sm py-2 sm:py-3 min-h-[44px]">
+              <Activity className="w-4 h-4 sm:hidden mr-1" />
+              <span className="hidden sm:inline">Transactions</span>
+              <span className="sm:hidden">Txns</span>
+            </TabsTrigger>
+            <TabsTrigger value="financial" className="text-xs sm:text-sm py-2 sm:py-3 min-h-[44px]">
+              <DollarSign className="w-4 h-4 sm:hidden mr-1" />
+              <span className="hidden sm:inline">Financial</span>
+              <span className="sm:hidden">Finance</span>
+            </TabsTrigger>
+            <TabsTrigger value="kyc" className="text-xs sm:text-sm py-2 sm:py-3 min-h-[44px]">
+              <Shield className="w-4 h-4 sm:hidden mr-1" />
+              <span className="hidden sm:inline">KYC</span>
+              <span className="sm:hidden">KYC</span>
+            </TabsTrigger>
+            <TabsTrigger value="developer" className="text-xs sm:text-sm py-2 sm:py-3 min-h-[44px]">
+              <Settings className="w-4 h-4 sm:hidden mr-1" />
+              <span className="hidden sm:inline">Developer</span>
+              <span className="sm:hidden">Dev</span>
+            </TabsTrigger>
+          </TabsList>
+        </div>
 
-        <TabsContent value="users" className="space-y-4">
-          <div className="grid grid-cols-2 gap-4">
+        <TabsContent value="users" className="space-y-3 sm:space-y-4 mt-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4">
             <Card>
-              <CardHeader>
-                <CardTitle>User Distribution</CardTitle>
+              <CardHeader className="pb-3">
+                <CardTitle className="text-base sm:text-lg">User Distribution</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="space-y-3 sm:space-y-4 p-3 sm:p-4">
                 <div>
                   <div className="flex justify-between mb-2">
                     <span>Consumers</span>
@@ -318,10 +346,10 @@ export default function AdminDashboard() {
             </Card>
 
             <Card>
-              <CardHeader>
-                <CardTitle>User Activity</CardTitle>
+              <CardHeader className="pb-3">
+                <CardTitle className="text-base sm:text-lg">User Activity</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="space-y-3 sm:space-y-4 p-3 sm:p-4">
                 <div className="flex justify-between items-center">
                   <span>Daily Active Users</span>
                   <Badge className="bg-primary/10 text-primary">
@@ -345,25 +373,25 @@ export default function AdminDashboard() {
           </div>
         </TabsContent>
 
-        <TabsContent value="transactions" className="space-y-4">
-          <div className="grid grid-cols-1 gap-4">
+        <TabsContent value="transactions" className="space-y-3 sm:space-y-4 mt-4">
+          <div className="grid grid-cols-1 gap-3 sm:gap-4">
             <Card>
-              <CardHeader>
-                <CardTitle>Transaction Overview</CardTitle>
+              <CardHeader className="pb-3">
+                <CardTitle className="text-base sm:text-lg">Transaction Overview</CardTitle>
               </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-3 gap-6 mb-6">
-                  <div className="text-center">
-                    <p className="text-2xl font-bold text-success">{formatNumber(mockTransactionMetrics.successfulTransactions)}</p>
-                    <p className="text-sm text-neutral-600">Successful</p>
+              <CardContent className="p-3 sm:p-4">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-4 sm:mb-6">
+                  <div className="text-center p-3 bg-success/5 rounded-lg">
+                    <p className="text-lg sm:text-2xl font-bold text-success">{formatNumber(mockTransactionMetrics.successfulTransactions)}</p>
+                    <p className="text-xs sm:text-sm text-neutral-600">Successful</p>
                   </div>
-                  <div className="text-center">
-                    <p className="text-2xl font-bold text-destructive">{formatNumber(mockTransactionMetrics.failedTransactions)}</p>
-                    <p className="text-sm text-neutral-600">Failed</p>
+                  <div className="text-center p-3 bg-destructive/5 rounded-lg">
+                    <p className="text-lg sm:text-2xl font-bold text-destructive">{formatNumber(mockTransactionMetrics.failedTransactions)}</p>
+                    <p className="text-xs sm:text-sm text-neutral-600">Failed</p>
                   </div>
-                  <div className="text-center">
-                    <p className="text-2xl font-bold text-primary">{formatCurrency(mockTransactionMetrics.averageTransactionValue)}</p>
-                    <p className="text-sm text-neutral-600">Average Value</p>
+                  <div className="text-center p-3 bg-primary/5 rounded-lg">
+                    <p className="text-lg sm:text-2xl font-bold text-primary">{formatCurrency(mockTransactionMetrics.averageTransactionValue)}</p>
+                    <p className="text-xs sm:text-sm text-neutral-600">Average Value</p>
                   </div>
                 </div>
                 <div>
@@ -388,8 +416,8 @@ export default function AdminDashboard() {
           </div>
         </TabsContent>
 
-        <TabsContent value="financial" className="space-y-4">
-          <div className="grid grid-cols-2 gap-4">
+        <TabsContent value="financial" className="space-y-3 sm:space-y-4 mt-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4">
             <Card>
               <CardHeader>
                 <CardTitle>Financial Overview</CardTitle>
@@ -435,26 +463,26 @@ export default function AdminDashboard() {
           </div>
         </TabsContent>
 
-        <TabsContent value="kyc" className="space-y-4">
-          <div className="grid grid-cols-1 gap-4">
+        <TabsContent value="kyc" className="space-y-3 sm:space-y-4 mt-4">
+          <div className="grid grid-cols-1 gap-3 sm:gap-4">
             <Card>
-              <CardHeader>
-                <CardTitle>KYC Status Overview</CardTitle>
+              <CardHeader className="pb-3">
+                <CardTitle className="text-base sm:text-lg">KYC Status Overview</CardTitle>
               </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-2 gap-6">
-                  <div>
-                    <p className="text-lg font-bold text-success">{formatNumber(mockStats.kycVerified)}</p>
-                    <p className="text-sm text-neutral-600">Verified Users</p>
+              <CardContent className="p-3 sm:p-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+                  <div className="p-3 bg-success/5 rounded-lg">
+                    <p className="text-lg sm:text-xl font-bold text-success">{formatNumber(mockStats.kycVerified)}</p>
+                    <p className="text-xs sm:text-sm text-neutral-600">Verified Users</p>
                     <Progress value={(mockStats.kycVerified / mockStats.totalUsers) * 100} className="mt-2" />
                   </div>
-                  <div>
-                    <p className="text-lg font-bold text-accent">{formatNumber(mockStats.kycPending)}</p>
-                    <p className="text-sm text-neutral-600">Pending Review</p>
+                  <div className="p-3 bg-accent/5 rounded-lg">
+                    <p className="text-lg sm:text-xl font-bold text-accent">{formatNumber(mockStats.kycPending)}</p>
+                    <p className="text-xs sm:text-sm text-neutral-600">Pending Review</p>
                     <Progress value={(mockStats.kycPending / mockStats.totalUsers) * 100} className="mt-2" />
                   </div>
                 </div>
-                <div className="mt-6 p-3 bg-accent/10 rounded-lg">
+                <div className="mt-4 sm:mt-6 p-3 bg-accent/10 rounded-lg">
                   <p className="text-sm font-medium text-accent">Action Required</p>
                   <p className="text-xs text-neutral-600">{mockStats.kycPending} users waiting for KYC verification</p>
                 </div>
@@ -467,35 +495,35 @@ export default function AdminDashboard() {
           <DemoDataManager />
         </TabsContent>
 
-        <TabsContent value="developer" className="space-y-6">
-          <div className="grid gap-6 md:grid-cols-2">
+        <TabsContent value="developer" className="space-y-3 sm:space-y-6 mt-4">
+          <div className="grid gap-3 sm:gap-6 lg:grid-cols-2">
             <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Settings className="w-5 h-5" />
+              <CardHeader className="pb-3">
+                <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
+                  <Settings className="w-4 h-4 sm:w-5 sm:h-5" />
                   Component Library
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <p className="text-sm text-neutral-600">
+              <CardContent className="space-y-3 sm:space-y-4 p-3 sm:p-4">
+                <p className="text-xs sm:text-sm text-neutral-600">
                   Access the AfriPay component library with interactive documentation and examples.
                 </p>
-                <div className="space-y-3">
+                <div className="space-y-2 sm:space-y-3">
                   <Button 
                     onClick={() => window.open('/component-library', '_blank')}
-                    className="w-full"
+                    className="w-full min-h-[44px] text-sm"
                   >
-                    📚 Open Component Library
+                    Open Component Library
                   </Button>
                   <Button 
                     variant="outline"
                     onClick={() => window.open('/storybook', '_blank')}
-                    className="w-full"
+                    className="w-full min-h-[44px] text-sm"
                   >
-                    📖 Open Storybook
+                    Open Storybook
                   </Button>
                 </div>
-                <div className="p-3 bg-neutral-50 rounded-lg">
+                <div className="p-2 sm:p-3 bg-neutral-50 rounded-lg">
                   <p className="text-xs text-neutral-600 font-mono">
                     bun codex.component.mts list
                   </p>
