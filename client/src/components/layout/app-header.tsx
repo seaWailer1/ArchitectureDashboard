@@ -2,22 +2,17 @@ import { useQuery } from "@tanstack/react-query";
 import { Bell, Coins, QrCode } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { AccessibleButton } from "@/components/ui/accessibility";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { t, setLanguage, getCurrentLanguage, getAvailableLanguages, type Language } from "@/lib/i18n";
+import { LanguageSelector } from "@/components/ui/language-selector";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { UserProfile } from "@/types";
 import { useLocation } from "wouter";
 
 export default function AppHeader() {
   const [, setLocation] = useLocation();
+  const { tm, formatCurrency } = useLanguage();
   const { data: user } = useQuery<UserProfile>({
     queryKey: ["/api/auth/user"],
   });
-
-  const handleLanguageChange = (language: Language) => {
-    setLanguage(language);
-    // Force re-render by updating a state or triggering a refresh
-    window.location.reload();
-  };
 
   const getInitials = (firstName?: string, lastName?: string) => {
     if (!firstName && !lastName) return "U";
@@ -41,7 +36,7 @@ export default function AppHeader() {
               <Coins className="text-white w-5 h-5" aria-hidden="true" />
             </div>
             <h1 className="text-xl font-bold bg-gradient-to-r from-neutral-900 to-neutral-700 dark:from-white dark:to-neutral-300 bg-clip-text text-transparent">
-              {t('appName')}
+              {tm.appName}
             </h1>
           </div>
           
@@ -59,31 +54,7 @@ export default function AppHeader() {
             </AccessibleButton>
             
             {/* Language Switcher */}
-            <div className="relative">
-              <Select 
-                value={getCurrentLanguage()} 
-                onValueChange={handleLanguageChange}
-              >
-                <SelectTrigger 
-                  className="w-14 h-10 border border-neutral-300 dark:border-neutral-600 bg-neutral-50 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 text-sm font-medium focus-aaa rounded-xl hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors"
-                  aria-label="Select language"
-                >
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent className="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-xl shadow-lg">
-                  {getAvailableLanguages().map((lang) => (
-                    <SelectItem 
-                      key={lang.code} 
-                      value={lang.code}
-                      className="text-sm focus:bg-primary focus:text-primary-foreground rounded-lg"
-                    >
-                      <span className="sr-only">{lang.name}</span>
-                      {lang.code.toUpperCase()}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
+            <LanguageSelector variant="minimal" />
             
             {/* Notifications */}
             <AccessibleButton

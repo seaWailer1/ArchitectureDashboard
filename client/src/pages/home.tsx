@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
+import { useLanguage } from "@/contexts/LanguageContext";
 import AppHeader from "@/components/layout/app-header";
 import BottomNavigation from "@/components/layout/bottom-navigation";
 
@@ -13,6 +14,7 @@ import { UserProfile } from "@/types";
 export default function Home() {
   const { toast } = useToast();
   const { isAuthenticated, isLoading } = useAuth();
+  const { tm, isRTL } = useLanguage();
   
   const { data: user } = useQuery<UserProfile>({
     queryKey: ["/api/auth/user"],

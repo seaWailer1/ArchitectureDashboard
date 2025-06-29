@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { translations, ComponentLibraryTranslations } from '@/lib/i18n-component-library';
+import { mainTranslations, MainTranslations } from '@/lib/i18n-main';
 
 export type SupportedLanguage = 'en' | 'fr' | 'ar' | 'sw';
 
@@ -16,6 +17,7 @@ export interface LanguageContextType {
   language: SupportedLanguage;
   setLanguage: (lang: SupportedLanguage) => void;
   t: ComponentLibraryTranslations;
+  tm: MainTranslations;
   culturalSettings: CulturalSettings;
   isRTL: boolean;
   formatCurrency: (amount: number) => string;
@@ -101,6 +103,7 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) 
   const culturalSettings = defaultCulturalSettings[language];
   const isRTL = culturalSettings.direction === 'rtl';
   const t = translations[language];
+  const tm = mainTranslations[language];
 
   const formatCurrency = (amount: number): string => {
     try {
@@ -139,6 +142,7 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) 
     language,
     setLanguage,
     t,
+    tm,
     culturalSettings,
     isRTL,
     formatCurrency,

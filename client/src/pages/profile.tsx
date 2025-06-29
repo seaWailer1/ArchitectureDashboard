@@ -15,6 +15,8 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useToast } from "@/hooks/use-toast";
 import AppHeader from "@/components/layout/app-header";
 import BottomNavigation from "@/components/layout/bottom-navigation";
+import { LanguageSelector } from "@/components/ui/language-selector";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { UserProfile } from "@/types";
 import { apiRequest } from "@/lib/queryClient";
 
@@ -24,6 +26,7 @@ export default function Profile() {
   const [editForm, setEditForm] = useState({});
   const { toast } = useToast();
   const queryClient = useQueryClient();
+  const { tm, language, isRTL } = useLanguage();
 
   const { data: user } = useQuery<UserProfile>({
     queryKey: ["/api/auth/user"],
@@ -690,6 +693,16 @@ export default function Profile() {
                       <SelectItem value="Africa/Johannesburg">South Africa Time</SelectItem>
                     </SelectContent>
                   </Select>
+                </div>
+
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 border rounded-lg bg-white dark:bg-gray-800">
+                  <div className="flex-1">
+                    <Label className="text-sm sm:text-base font-medium">{tm.language}</Label>
+                    <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-1">
+                      {tm.selectLanguage}
+                    </p>
+                  </div>
+                  <LanguageSelector variant="compact" className="shrink-0" />
                 </div>
 
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 border rounded-lg bg-white dark:bg-gray-800">

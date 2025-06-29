@@ -20,6 +20,7 @@ import KYC from "@/pages/kyc";
 import PresetUsers from "@/pages/preset-users";
 import PartnershipsPage from "@/pages/partnerships";
 import AccessibilityDemo from "@/pages/accessibility-demo";
+import LanguageDemo from "@/pages/language-demo";
 import { ComponentLibrary } from "@/pages/component-library";
 import AdminPage from "@/pages/admin";
 
@@ -93,6 +94,7 @@ function Router() {
           <Route path="/preset-users" component={PresetUsers} />
           <Route path="/partnerships" component={PartnershipsPage} />
           <Route path="/accessibility-demo" component={AccessibilityDemo} />
+          <Route path="/language-demo" component={LanguageDemo} />
           <Route path="/component-library" component={ComponentLibrary} />
           <Route path="/admin" component={AdminPage} />
           <Route component={NotFound} />
