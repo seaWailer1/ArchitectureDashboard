@@ -30,6 +30,7 @@ import Transport from "@/components/services/transport";
 import SavingsChallenges from "@/components/savings/savings-challenges";
 import PartnerWithAfriPay from "@/components/partnerships/partner-with-afripay";
 import EntertainmentHub from "@/components/entertainment/entertainment-hub";
+import { AccessibleHeading } from "@/components/ui/accessible-heading";
 
 export default function Services() {
   const { toast } = useToast();
@@ -138,11 +139,11 @@ export default function Services() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-neutral-50 to-neutral-100 dark:from-neutral-900 dark:to-neutral-800">
       <AppHeader />
-      
+
       <main className="container-content spacing-y-lg pb-24">
         <div className="space-y-8">
           <h1 className="text-heading-1 text-refined-heading">Services & Apps</h1>
-          
+
           {/* Featured Services */}
           <div className="brand-primary rounded-3xl spacing-xl text-white elevation-4">
             <h2 className="text-heading-2 font-bold mb-3">Mini-App Ecosystem</h2>
@@ -203,9 +204,9 @@ export default function Services() {
           </div>
         </div>
       </main>
-      
+
       <BottomNavigation currentPage="services" />
-      
+
       {/* Service Modals */}
       <Dialog open={!!selectedService} onOpenChange={() => setSelectedService(null)}>
         <DialogContent className="max-w-md mx-auto max-h-[90vh] overflow-y-auto">

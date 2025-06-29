@@ -2,6 +2,254 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 24 85% 50%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222.2 84% 4.9%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96%;
+    --accent-foreground: 222.2 84% 4.9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 24 85% 50%;
+    --radius: 0.5rem;
+
+    /* WCAG AAA Compliance Variables */
+    --focus-ring: 24 85% 40%;
+    --success: 142 76% 36%;
+    --warning: 43 96% 56%;
+    --info: 217 91% 60%;
+    --error: 0 84% 60%;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 24 85% 50%;
+    --primary-foreground: 222.2 84% 4.9%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 24 85% 50%;
+
+    /* Dark mode AAA compliance */
+    --focus-ring: 24 85% 60%;
+    --success: 142 76% 50%;
+    --warning: 43 96% 70%;
+    --info: 217 91% 70%;
+    --error: 0 84% 70%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  /* WCAG AAA Typography Classes */
+  .text-aaa-large {
+    font-size: 1.125rem;
+    line-height: 1.5;
+    font-weight: 500;
+  }
+
+  .text-aaa-normal {
+    font-size: 1rem;
+    line-height: 1.6;
+    font-weight: 400;
+  }
+
+  .text-aaa-small {
+    font-size: 0.875rem;
+    line-height: 1.7;
+    font-weight: 600;
+  }
+
+  /* Touch Target Classes */
+  .touch-aaa {
+    min-height: 44px;
+    min-width: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .touch-aaa-large {
+    min-height: 48px;
+    min-width: 48px;
+  }
+
+  /* Focus Enhancement */
+  *:focus-visible {
+    outline: 3px solid hsl(var(--focus-ring));
+    outline-offset: 2px;
+    box-shadow: 0 0 0 2px hsl(var(--background)),
+                0 0 0 5px hsl(var(--focus-ring));
+  }
+
+  /* Screen Reader Only Content */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .sr-only:focus {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: inherit;
+    margin: inherit;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+  }
+
+  /* Mobile-First Container */
+  .container-content {
+    width: 100%;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  @media (min-width: 640px) {
+    .container-content {
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+  }
+
+  /* Safe Area Handling for Mobile */
+  .safe-area-pb {
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+
+  .safe-area-pt {
+    padding-top: max(1rem, env(safe-area-inset-top));
+  }
+}
+
+@layer components {
+  /* Mobile-Responsive Card Component */
+  .card-refined {
+    @apply rounded-xl border bg-card text-card-foreground shadow-sm;
+  }
+
+  .card-refined-mobile {
+    @apply card-refined mx-4 sm:mx-0;
+  }
+
+  /* Enhanced Button Variants */
+  .btn-mobile-primary {
+    @apply touch-aaa-large bg-primary text-primary-foreground hover:bg-primary/90 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 rounded-xl font-semibold transition-colors;
+  }
+
+  /* Responsive Text Utilities */
+  .text-refined-heading {
+    @apply text-lg sm:text-xl lg:text-2xl font-bold text-foreground;
+  }
+
+  .text-refined-subheading {
+    @apply text-base sm:text-lg font-semibold text-foreground;
+  }
+
+  .text-refined-body {
+    @apply text-sm sm:text-base text-foreground leading-relaxed;
+  }
+
+  .text-refined-muted {
+    @apply text-xs sm:text-sm text-muted-foreground;
+  }
+
+  /* Mobile Navigation Enhancements */
+  .nav-mobile-item {
+    @apply touch-aaa flex flex-col items-center justify-center py-3 px-2 rounded-xl transition-colors min-w-[60px];
+  }
+
+  /* Form Enhancements */
+  .form-input-mobile {
+    @apply w-full h-12 px-4 py-3 text-base border border-input bg-background rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2;
+  }
+}
+
+@layer utilities {
+  /* Motion Preferences */
+  @media (prefers-reduced-motion: reduce) {
+    .animate-respectful {
+      animation: none !important;
+      transition: none !important;
+    }
+
+    * {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  /* High Contrast Mode Support */
+  @media (prefers-contrast: high) {
+    .contrast-enhanced {
+      border-width: 2px;
+      border-style: solid;
+    }
+  }
+
+  /* Dark Mode Utilities */
+  .gradient-primary {
+    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--primary) / 0.8) 100%);
+  }
+
+  .shadow-soft {
+    box-shadow: 0 2px 8px -1px rgba(0, 0, 0, 0.1), 0 1px 3px -1px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Mobile Viewport Utilities */
+  .min-h-mobile {
+    min-height: calc(100vh - 5rem);
+  }
+
+  .pb-mobile-nav {
+    padding-bottom: 5rem;
+  }
+}
+
 /* Mobile Device Optimizations */
 @layer base {
   /* iOS Safari specific optimizations */
@@ -11,41 +259,41 @@
     -moz-osx-font-smoothing: grayscale;
     touch-action: manipulation;
   }
-  
+
   body {
     overscroll-behavior: none;
     -webkit-overflow-scrolling: touch;
   }
-  
+
   /* Prevent zoom on input focus for iOS */
   input, select, textarea {
     font-size: 16px;
   }
-  
+
   @media screen and (max-width: 640px) {
     input, select, textarea {
       font-size: 16px; /* Prevents zoom on iOS */
     }
   }
-  
+
   /* Android Chrome optimizations */
   * {
     -webkit-tap-highlight-color: transparent;
   }
-  
+
   /* Better touch targets */
   .touch-target {
     min-height: 44px;
     min-width: 44px;
   }
-  
+
   /* Smooth scrolling for modern devices */
   @supports (scroll-behavior: smooth) {
     html {
       scroll-behavior: smooth;
     }
   }
-  
+
   /* Modern device support for backdrop-filter */
   @supports (backdrop-filter: blur(10px)) {
     .backdrop-blur-sm {
@@ -53,90 +301,90 @@
       -webkit-backdrop-filter: blur(4px);
     }
   }
-  
+
   /* RTL Support for Arabic and other RTL languages */
   .rtl {
     direction: rtl;
   }
-  
+
   /* RTL-specific styles */
   .rtl .text-left {
     text-align: right;
   }
-  
+
   .rtl .text-right {
     text-align: left;
   }
-  
+
   .rtl .ml-auto {
     margin-left: unset;
     margin-right: auto;
   }
-  
+
   .rtl .mr-auto {
     margin-right: unset;
     margin-left: auto;
   }
-  
+
   .rtl .pl-10 {
     padding-left: unset;
     padding-right: 2.5rem;
   }
-  
+
   .rtl .pr-10 {
     padding-right: unset;
     padding-left: 2.5rem;
   }
-  
+
   .rtl .flex-row {
     flex-direction: row-reverse;
   }
-  
+
   .rtl .space-x-2 > :not([hidden]) ~ :not([hidden]) {
     --tw-space-x-reverse: 1;
     margin-right: calc(0.5rem * var(--tw-space-x-reverse));
     margin-left: calc(0.5rem * calc(1 - var(--tw-space-x-reverse)));
   }
-  
+
   .rtl .space-x-3 > :not([hidden]) ~ :not([hidden]) {
     --tw-space-x-reverse: 1;
     margin-right: calc(0.75rem * var(--tw-space-x-reverse));
     margin-left: calc(0.75rem * calc(1 - var(--tw-space-x-reverse)));
   }
-  
+
   .rtl .space-x-4 > :not([hidden]) ~ :not([hidden]) {
     --tw-space-x-reverse: 1;
     margin-right: calc(1rem * var(--tw-space-x-reverse));
     margin-left: calc(1rem * calc(1 - var(--tw-space-x-reverse)));
   }
-  
+
   /* Cultural font optimizations */
   .font-arabic {
     font-family: 'Noto Sans Arabic', 'Arabic UI Text', 'SF Arabic', 'Segoe UI', sans-serif;
   }
-  
+
   .font-swahili {
     font-family: 'Noto Sans', 'SF Pro Text', 'Segoe UI', sans-serif;
   }
-  
+
   .font-french {
     font-family: 'SF Pro Text', 'Segoe UI', 'Roboto', sans-serif;
   }
-  
+
   /* Enhanced accessibility for different languages */
   .rtl input,
   .rtl textarea,
   .rtl select {
     text-align: right;
   }
-  
+
   /* Improved line height for Arabic text */
   .rtl p,
   .rtl span,
   .rtl div {
     line-height: 1.7;
   }
-  
+
   /* Cultural color preferences */
   :root {
     --color-cultural-primary-en: #2563eb;
@@ -144,12 +392,12 @@
     --color-cultural-primary-ar: #059669;
     --color-cultural-primary-sw: #dc2626;
   }
-  
+
   /* Language-specific animations */
   .rtl .animate-slide-in {
     animation: slideInRTL 0.3s ease-out;
   }
-  
+
   @keyframes slideInRTL {
     from {
       transform: translateX(100%);
@@ -190,7 +438,7 @@
   --info-foreground: hsl(0, 0%, 100%);
   --ring: hsl(0, 0%, 10%);
   --radius: 0.5rem;
-  
+
   /* Enhanced neutral palette for AAA compliance */
   --neutral-900: hsl(0, 0%, 10%); /* 9:1 contrast */
   --neutral-800: hsl(0, 0%, 15%); /* 8:1 contrast */
@@ -202,12 +450,12 @@
   --neutral-200: hsl(0, 0%, 90%);
   --neutral-100: hsl(0, 0%, 96%);
   --neutral-50: hsl(0, 0%, 98%);
-  
+
   /* Focus and interaction states */
   --focus-ring: hsl(210, 100%, 40%);
   --focus-ring-width: 3px;
   --focus-ring-offset: 2px;
-  
+
   /* Content containment and stacking */
   --content-max-width: 100%;
   --content-overflow: hidden;
@@ -242,7 +490,7 @@
   --info-foreground: hsl(0, 0%, 5%);
   --ring: hsl(0, 0%, 80%);
   --radius: 0.5rem;
-  
+
   /* Dark mode neutral palette */
   --neutral-900: hsl(0, 0%, 95%); /* High contrast */
   --neutral-800: hsl(0, 0%, 85%);
@@ -254,7 +502,7 @@
   --neutral-200: hsl(0, 0%, 15%);
   --neutral-100: hsl(0, 0%, 12%);
   --neutral-50: hsl(0, 0%, 10%);
-  
+
   /* Enhanced focus for dark mode */
   --focus-ring: hsl(210, 100%, 60%);
 }
@@ -556,11 +804,11 @@
   .transition-all {
     transition: none;
   }
-  
+
   .animate-pulse {
     animation: none;
   }
-  
+
   * {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;

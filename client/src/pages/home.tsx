@@ -15,7 +15,7 @@ export default function Home() {
   const { toast } = useToast();
   const { isAuthenticated, isLoading } = useAuth();
   const { tm, isRTL } = useLanguage();
-  
+
   const { data: user } = useQuery<UserProfile>({
     queryKey: ["/api/auth/user"],
   });
@@ -68,11 +68,11 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-neutral-50 to-neutral-100 dark:from-neutral-900 dark:to-neutral-800">
       <AppHeader />
-      
+
       <main className="container-content spacing-y-md pb-24">
         {renderRoleSpecificContent()}
       </main>
-      
+
       <BottomNavigation currentPage="home" />
     </div>
   );

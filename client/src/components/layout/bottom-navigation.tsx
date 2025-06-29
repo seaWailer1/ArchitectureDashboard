@@ -1,79 +1,51 @@
-import { Link, useLocation } from "wouter";
-import { Home, Wallet, List, QrCode, Grid3X3, User } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { t } from "@/lib/i18n";
+import React from 'react';
+import { Home, CreditCard, BarChart3, User, Grid3X3 } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
 
 interface BottomNavigationProps {
   currentPage?: string;
 }
 
-export default function BottomNavigation({ currentPage }: BottomNavigationProps) {
-  const [location] = useLocation();
-
+export default function BottomNavigation({ currentPage = 'home' }: BottomNavigationProps) {
   const navItems = [
-    { path: "/", icon: Home, label: t('home'), id: "home" },
-    { path: "/wallets", icon: Wallet, label: "Wallets", id: "wallets" },
-    { path: "/transactions", icon: List, label: "History", id: "transactions" },
-    { path: "/services", icon: Grid3X3, label: t('services'), id: "services" },
-    { path: "/profile", icon: User, label: t('profile'), id: "profile" },
+    { id: 'home', icon: Home, label: 'Home', href: '/home' },
+    { id: 'services', icon: Grid3X3, label: 'Services', href: '/services' },
+    { id: 'transactions', icon: BarChart3, label: 'Activity', href: '/transactions' },
+    { id: 'wallets', icon: CreditCard, label: 'Wallets', href: '/wallets' },
+    { id: 'profile', icon: User, label: 'Profile', href: '/profile' }
   ];
-
-  const isActive = (path: string, id: string) => {
-    if (currentPage) return currentPage === id;
-    return location === path;
-  };
 
   return (
     <nav 
-      className="fixed bottom-0 left-0 right-0 bg-white dark:bg-neutral-900 border-t-2 border-neutral-300 dark:border-neutral-700 shadow-lg z-40"
+      className="fixed bottom-0 left-0 right-0 z-40 bg-background/95 backdrop-blur border-t md:hidden safe-area-pb"
       role="navigation"
       aria-label="Main navigation"
     >
-      <div className="container-app">
-        <div className="flex justify-around spacing-y-xs gap-1">
-          {navItems.map((item) => {
-            const Icon = item.icon;
-            const active = isActive(item.path, item.id);
+      <div className="flex justify-around items-center py-1 px-2">
+        {navItems.map((item) => {
+          const Icon = item.icon;
+          const isActive = currentPage === item.id;
 
-            return (
-              <Link key={item.id} href={item.path}>
-                <button 
-                  className={cn(
-                    "flex flex-col items-center py-3 px-3 transition-colors touch-aaa rounded-lg",
-                    "min-h-[44px] min-w-[44px] focus-aaa text-aaa-small",
-                    "hover:bg-neutral-100 dark:hover:bg-neutral-800",
-                    active && "bg-primary/10 dark:bg-primary/20"
-                  )}
-                  aria-current={active ? "page" : undefined}
-                  aria-label={`${item.label} ${active ? "(current page)" : ""}`}
-                >
-                  <Icon 
-                    className={cn(
-                      "w-6 h-6 mb-1",
-                      active 
-                        ? "text-primary dark:text-primary" 
-                        : "text-neutral-700 dark:text-neutral-300"
-                    )}
-                    aria-hidden="true"
-                  />
-                  <span 
-                    className={cn(
-                      "text-xs font-semibold leading-tight",
-                      active 
-                        ? "text-primary dark:text-primary" 
-                        : "text-neutral-700 dark:text-neutral-300"
-                    )}
-                  >
-                    {item.label}
-                  </span>
-                  {active && (
-                    <span className="sr-only">Current page</span>
-                  )}
-                </button>
-              </Link>
-            );
-          })}
-        </div>
+          return (
+            <a
+              key={item.id}
+              href={item.href}
+              className={`flex flex-col items-center justify-center py-3 px-2 rounded-xl transition-colors touch-aaa min-w-[60px] ${
+                isActive 
+                  ? 'text-primary bg-primary/15' 
+                  : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+              }`}
+              aria-current={isActive ? 'page' : undefined}
+              aria-label={`${item.label}${isActive ? ' (current page)' : ''}`}
+            >
+              <Icon className="h-5 w-5 mb-1" />
+              <span className="text-xs font-medium leading-tight">{item.label}</span>
+              {isActive && (
+                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-1 bg-primary rounded-full" />
+              )}
+            </a>
+          );
+        })}
       </div>
     </nav>
   );
