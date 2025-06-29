@@ -35,120 +35,159 @@ const componentCategories = [
     id: 'ui',
     name: 'UI Components',
     icon: <Layers className="w-5 h-5" />,
-    count: 25,
-    description: 'Basic building blocks for interfaces',
+    count: 35,
+    description: 'Essential UI building blocks and interface elements',
     components: [
-      {
-        name: 'Button',
-        description: 'Interactive button component with variants',
-        category: 'ui',
-        props: ['variant', 'size', 'disabled', 'onClick'],
-        examples: ['Primary', 'Secondary', 'Outline', 'Ghost']
-      },
-      {
-        name: 'Card',
-        description: 'Container component for content grouping',
-        category: 'ui',
-        props: ['className', 'children'],
-        examples: ['Basic', 'With Header', 'With Footer', 'Elevated']
-      },
-      {
-        name: 'Input',
-        description: 'Form input component with validation',
-        category: 'ui',
-        props: ['type', 'placeholder', 'value', 'onChange'],
-        examples: ['Text', 'Email', 'Password', 'Number']
-      },
-      {
-        name: 'Badge',
-        description: 'Small status indicators and labels',
-        category: 'ui',
-        props: ['variant', 'children'],
-        examples: ['Default', 'Secondary', 'Success', 'Destructive']
-      },
-      {
-        name: 'Progress',
-        description: 'Progress indicator for loading states',
-        category: 'ui',
-        props: ['value', 'max', 'className'],
-        examples: ['Loading', 'Upload', 'Completion', 'Multi-step']
-      }
+      { name: 'Button', description: 'Interactive button with variants and sizes', category: 'ui', props: ['variant', 'size', 'disabled', 'onClick'], examples: ['Primary', 'Secondary', 'Outline', 'Ghost'] },
+      { name: 'Card', description: 'Container for grouping related content', category: 'ui', props: ['className', 'children'], examples: ['Basic', 'With Header', 'Elevated', 'Interactive'] },
+      { name: 'Input', description: 'Text input field with validation support', category: 'ui', props: ['type', 'placeholder', 'value', 'onChange'], examples: ['Text', 'Email', 'Password', 'Search'] },
+      { name: 'Badge', description: 'Small status indicators and labels', category: 'ui', props: ['variant', 'children'], examples: ['Default', 'Secondary', 'Success', 'Destructive'] },
+      { name: 'Avatar', description: 'User profile picture display', category: 'ui', props: ['src', 'alt', 'fallback'], examples: ['Image', 'Initials', 'Icon', 'Loading'] },
+      { name: 'Alert', description: 'Important message notifications', category: 'ui', props: ['variant', 'title', 'description'], examples: ['Info', 'Warning', 'Error', 'Success'] },
+      { name: 'Tabs', description: 'Organize content in tabbed interface', category: 'ui', props: ['defaultValue', 'orientation'], examples: ['Horizontal', 'Vertical', 'Pills', 'Underline'] },
+      { name: 'Tooltip', description: 'Contextual information on hover', category: 'ui', props: ['content', 'side', 'delay'], examples: ['Top', 'Bottom', 'Left', 'Right'] },
+      { name: 'Switch', description: 'Toggle between two states', category: 'ui', props: ['checked', 'onCheckedChange'], examples: ['Basic', 'With Label', 'Disabled', 'Loading'] },
+      { name: 'Slider', description: 'Select value from a range', category: 'ui', props: ['value', 'min', 'max', 'step'], examples: ['Single', 'Range', 'Vertical', 'Custom'] },
+      { name: 'Progress', description: 'Visual progress indicator', category: 'ui', props: ['value', 'max'], examples: ['Linear', 'Circular', 'Striped', 'Animated'] },
+      { name: 'Skeleton', description: 'Loading placeholder component', category: 'ui', props: ['className'], examples: ['Text', 'Circle', 'Rectangle', 'Card'] },
+      { name: 'Separator', description: 'Visual divider between content', category: 'ui', props: ['orientation'], examples: ['Horizontal', 'Vertical', 'Dashed', 'Thick'] },
+      { name: 'Scroll Area', description: 'Custom scrollable container', category: 'ui', props: ['className'], examples: ['Vertical', 'Horizontal', 'Both', 'Custom'] },
+      { name: 'Popover', description: 'Floating content container', category: 'ui', props: ['open', 'onOpenChange'], examples: ['Click', 'Hover', 'Manual', 'Nested'] }
     ]
   },
   {
     id: 'wallet',
-    name: 'Wallet Components',
+    name: 'Wallet & Financial',
     icon: <Heart className="w-5 h-5" />,
-    count: 15,
+    count: 12,
     description: 'Financial and wallet management components',
     components: [
-      {
-        name: 'WalletCard',
-        description: 'Displays wallet information and balance',
-        category: 'wallet',
-        props: ['wallet', 'onAction', 'variant'],
-        examples: ['Primary', 'Savings', 'Crypto', 'Investment']
-      },
-      {
-        name: 'TransactionItem',
-        description: 'Individual transaction display component',
-        category: 'wallet',
-        props: ['transaction', 'onSelect', 'showDetails'],
-        examples: ['Send', 'Receive', 'Payment', 'Transfer']
-      },
-      {
-        name: 'BalanceDisplay',
-        description: 'Shows formatted balance with currency',
-        category: 'wallet',
-        props: ['amount', 'currency', 'showCents'],
-        examples: ['USD', 'NGN', 'KES', 'GHS']
-      }
+      { name: 'WalletCard', description: 'Wallet information and balance display', category: 'wallet', props: ['wallet', 'onAction', 'variant'], examples: ['Primary', 'Savings', 'Crypto', 'Investment'] },
+      { name: 'BalanceDisplay', description: 'Formatted currency balance', category: 'wallet', props: ['amount', 'currency', 'showCents'], examples: ['USD', 'NGN', 'KES', 'GHS'] },
+      { name: 'WalletSummary', description: 'Overview of all wallet balances', category: 'wallet', props: ['wallets', 'totalBalance'], examples: ['Total View', 'By Type', 'Chart View', 'Minimal'] },
+      { name: 'CurrencyConverter', description: 'Live currency conversion', category: 'wallet', props: ['fromCurrency', 'toCurrency'], examples: ['USD/NGN', 'EUR/KES', 'Live Rates', 'Historical'] },
+      { name: 'WalletActions', description: 'Quick wallet action buttons', category: 'wallet', props: ['actions', 'wallet'], examples: ['Send', 'Receive', 'Top Up', 'Exchange'] },
+      { name: 'AssetHoldings', description: 'Investment and asset portfolio', category: 'wallet', props: ['holdings', 'performance'], examples: ['Stocks', 'Crypto', 'Bonds', 'Commodities'] }
     ]
   },
   {
-    id: 'forms',
-    name: 'Form Components',
-    icon: <Settings className="w-5 h-5" />,
-    count: 12,
-    description: 'Form controls and validation components',
+    id: 'transactions',
+    name: 'Transactions',
+    icon: <ArrowRight className="w-5 h-5" />,
+    count: 8,
+    description: 'Transaction display and management components',
     components: [
-      {
-        name: 'FormField',
-        description: 'Wrapper for form inputs with validation',
-        category: 'forms',
-        props: ['name', 'label', 'error', 'required'],
-        examples: ['Text Field', 'Select Field', 'Checkbox', 'Radio Group']
-      },
-      {
-        name: 'PhoneInput',
-        description: 'International phone number input',
-        category: 'forms',
-        props: ['value', 'onChange', 'country'],
-        examples: ['Nigeria', 'Kenya', 'Ghana', 'International']
-      }
+      { name: 'TransactionItem', description: 'Individual transaction display', category: 'transactions', props: ['transaction', 'onSelect'], examples: ['Send', 'Receive', 'Payment', 'Transfer'] },
+      { name: 'TransactionList', description: 'List of transaction history', category: 'transactions', props: ['transactions', 'filter'], examples: ['Recent', 'Filtered', 'Paginated', 'Grouped'] },
+      { name: 'TransactionDetails', description: 'Detailed transaction view', category: 'transactions', props: ['transaction'], examples: ['Receipt', 'Details', 'Status', 'Actions'] },
+      { name: 'TransactionFilter', description: 'Filter and search transactions', category: 'transactions', props: ['filters', 'onChange'], examples: ['Date Range', 'Type', 'Amount', 'Status'] },
+      { name: 'TransactionChart', description: 'Visual transaction analytics', category: 'transactions', props: ['data', 'period'], examples: ['Line Chart', 'Bar Chart', 'Pie Chart', 'Trends'] }
+    ]
+  },
+  {
+    id: 'crypto',
+    name: 'Crypto & Trading',
+    icon: <Star className="w-5 h-5" />,
+    count: 15,
+    description: 'Cryptocurrency and trading components',
+    components: [
+      { name: 'CryptoPrice', description: 'Live cryptocurrency prices', category: 'crypto', props: ['symbol', 'showChange'], examples: ['BTC', 'ETH', 'List View', 'Card View'] },
+      { name: 'TradingChart', description: 'Advanced trading charts', category: 'crypto', props: ['symbol', 'interval'], examples: ['Candlestick', 'Line', 'Volume', 'Indicators'] },
+      { name: 'OrderBook', description: 'Market depth and orders', category: 'crypto', props: ['pair', 'depth'], examples: ['Buy Orders', 'Sell Orders', 'Combined', 'Simplified'] },
+      { name: 'Portfolio', description: 'Crypto portfolio overview', category: 'crypto', props: ['holdings', 'performance'], examples: ['Holdings', 'Performance', 'Allocation', 'History'] },
+      { name: 'TradingForm', description: 'Buy/sell trading interface', category: 'crypto', props: ['type', 'pair'], examples: ['Market', 'Limit', 'Stop Loss', 'OCO'] },
+      { name: 'WalletConnect', description: 'External wallet connection', category: 'crypto', props: ['onConnect'], examples: ['MetaMask', 'WalletConnect', 'Coinbase', 'Trust'] }
+    ]
+  },
+  {
+    id: 'investment',
+    name: 'Investment',
+    icon: <Settings className="w-5 h-5" />,
+    count: 10,
+    description: 'Investment and wealth management components',
+    components: [
+      { name: 'InvestmentCard', description: 'Investment product display', category: 'investment', props: ['investment', 'performance'], examples: ['Stocks', 'Bonds', 'Mutual Funds', 'ETFs'] },
+      { name: 'PortfolioChart', description: 'Investment portfolio visualization', category: 'investment', props: ['data', 'timeframe'], examples: ['Allocation', 'Performance', 'Growth', 'Comparison'] },
+      { name: 'RiskAssessment', description: 'Investment risk profiling', category: 'investment', props: ['score', 'category'], examples: ['Conservative', 'Moderate', 'Aggressive', 'Custom'] },
+      { name: 'DividendTracker', description: 'Dividend income tracking', category: 'investment', props: ['dividends'], examples: ['Monthly', 'Quarterly', 'Annual', 'Projected'] },
+      { name: 'GoalTracker', description: 'Investment goal progress', category: 'investment', props: ['goal', 'progress'], examples: ['Retirement', 'Education', 'House', 'Emergency'] }
+    ]
+  },
+  {
+    id: 'loans',
+    name: 'Loans & Credit',
+    icon: <Shield className="w-5 h-5" />,
+    count: 8,
+    description: 'Loan and credit management components',
+    components: [
+      { name: 'LoanCard', description: 'Loan information display', category: 'loans', props: ['loan', 'status'], examples: ['Personal', 'Business', 'Mortgage', 'Auto'] },
+      { name: 'CreditScore', description: 'Credit score visualization', category: 'loans', props: ['score', 'range'], examples: ['Gauge', 'Progress', 'History', 'Factors'] },
+      { name: 'LoanCalculator', description: 'Loan payment calculator', category: 'loans', props: ['principal', 'rate', 'term'], examples: ['Monthly', 'Amortization', 'Comparison', 'What-if'] },
+      { name: 'RepaymentSchedule', description: 'Loan repayment timeline', category: 'loans', props: ['schedule'], examples: ['Monthly', 'Bi-weekly', 'Custom', 'Early Payment'] }
+    ]
+  },
+  {
+    id: 'kyc',
+    name: 'KYC & Verification',
+    icon: <Shield className="w-5 h-5" />,
+    count: 6,
+    description: 'Identity verification and compliance components',
+    components: [
+      { name: 'DocumentUpload', description: 'Secure document upload interface', category: 'kyc', props: ['documentType', 'onUpload'], examples: ['ID Card', 'Passport', 'Utility Bill', 'Bank Statement'] },
+      { name: 'BiometricCapture', description: 'Biometric verification interface', category: 'kyc', props: ['type', 'onCapture'], examples: ['Fingerprint', 'Face ID', 'Voice', 'Signature'] },
+      { name: 'VerificationStatus', description: 'KYC verification progress', category: 'kyc', props: ['status', 'steps'], examples: ['Pending', 'In Progress', 'Verified', 'Rejected'] },
+      { name: 'ComplianceCheck', description: 'Regulatory compliance verification', category: 'kyc', props: ['checks'], examples: ['AML', 'Sanctions', 'PEP', 'Risk Level'] }
+    ]
+  },
+  {
+    id: 'qr',
+    name: 'QR & Payments',
+    icon: <Code className="w-5 h-5" />,
+    count: 5,
+    description: 'QR code and payment processing components',
+    components: [
+      { name: 'QRGenerator', description: 'Generate payment QR codes', category: 'qr', props: ['amount', 'recipient'], examples: ['Payment', 'Contact', 'WiFi', 'URL'] },
+      { name: 'QRScanner', description: 'Camera-based QR scanner', category: 'qr', props: ['onScan'], examples: ['Payment', 'Contact', 'General', 'Batch'] },
+      { name: 'PaymentForm', description: 'Quick payment interface', category: 'qr', props: ['recipient', 'amount'], examples: ['Person to Person', 'Merchant', 'Bill Payment', 'Donation'] }
+    ]
+  },
+  {
+    id: 'merchant',
+    name: 'Merchant Tools',
+    icon: <Palette className="w-5 h-5" />,
+    count: 9,
+    description: 'Business and merchant management components',
+    components: [
+      { name: 'MerchantDashboard', description: 'Business overview dashboard', category: 'merchant', props: ['merchantData'], examples: ['Sales', 'Analytics', 'Inventory', 'Customers'] },
+      { name: 'InventoryManager', description: 'Product inventory management', category: 'merchant', props: ['products'], examples: ['Add Product', 'Stock Levels', 'Pricing', 'Categories'] },
+      { name: 'SalesAnalytics', description: 'Sales performance charts', category: 'merchant', props: ['salesData'], examples: ['Daily', 'Weekly', 'Monthly', 'Yearly'] },
+      { name: 'CustomerManagement', description: 'Customer relationship tools', category: 'merchant', props: ['customers'], examples: ['Customer List', 'Purchase History', 'Loyalty', 'Support'] }
+    ]
+  },
+  {
+    id: 'admin',
+    name: 'Admin & Management',
+    icon: <Settings className="w-5 h-5" />,
+    count: 7,
+    description: 'Administrative and system management components',
+    components: [
+      { name: 'UserManagement', description: 'User administration interface', category: 'admin', props: ['users'], examples: ['User List', 'Roles', 'Permissions', 'Activity'] },
+      { name: 'SystemMetrics', description: 'System performance monitoring', category: 'admin', props: ['metrics'], examples: ['CPU', 'Memory', 'Network', 'Database'] },
+      { name: 'AuditLog', description: 'System activity logging', category: 'admin', props: ['logs'], examples: ['User Actions', 'System Events', 'Security', 'Errors'] },
+      { name: 'ConfigurationPanel', description: 'System configuration interface', category: 'admin', props: ['config'], examples: ['General', 'Security', 'Integrations', 'Notifications'] }
     ]
   },
   {
     id: 'layout',
-    name: 'Layout Components',
-    icon: <Palette className="w-5 h-5" />,
+    name: 'Layout & Navigation',
+    icon: <Layers className="w-5 h-5" />,
     count: 8,
-    description: 'Page layout and structure components',
+    description: 'Page layout and navigation components',
     components: [
-      {
-        name: 'Header',
-        description: 'Application header with navigation',
-        category: 'layout',
-        props: ['title', 'showBack', 'actions'],
-        examples: ['Main', 'With Back', 'With Actions', 'Minimal']
-      },
-      {
-        name: 'Sidebar',
-        description: 'Navigation sidebar component',
-        category: 'layout',
-        props: ['items', 'collapsed', 'onToggle'],
-        examples: ['Expanded', 'Collapsed', 'With Icons', 'Role-based']
-      }
+      { name: 'Header', description: 'Application header with navigation', category: 'layout', props: ['title', 'showBack', 'actions'], examples: ['Main', 'With Back', 'Actions', 'Minimal'] },
+      { name: 'Sidebar', description: 'Collapsible navigation sidebar', category: 'layout', props: ['items', 'collapsed'], examples: ['Expanded', 'Collapsed', 'Icons', 'Nested'] },
+      { name: 'Breadcrumb', description: 'Navigation breadcrumb trail', category: 'layout', props: ['items'], examples: ['Simple', 'With Icons', 'Dropdown', 'Mobile'] },
+      { name: 'TabNavigation', description: 'Tab-based navigation', category: 'layout', props: ['tabs', 'activeTab'], examples: ['Top', 'Bottom', 'Side', 'Pills'] }
     ]
   }
 ];
@@ -424,7 +463,7 @@ describe('${component.name}', () => {
             </h1>
           </div>
           <p className="text-sm sm:text-base lg:text-lg text-muted-foreground max-w-3xl mx-auto px-2">
-            Explore our comprehensive collection of 60+ reusable React components built with 
+            Explore our comprehensive collection of 103+ reusable React components built with 
             TypeScript, TailwindCSS, and WCAG AAA accessibility standards. Perfect for building 
             modern fintech applications.
           </p>
@@ -432,11 +471,11 @@ describe('${component.name}', () => {
           {/* Quick Stats */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 max-w-2xl mx-auto">
             <div className="text-center p-3 sm:p-4 bg-white/50 dark:bg-neutral-800/50 rounded-lg backdrop-blur-sm">
-              <div className="text-xl sm:text-2xl font-bold text-primary">60+</div>
+              <div className="text-xl sm:text-2xl font-bold text-primary">103+</div>
               <div className="text-xs sm:text-sm text-muted-foreground">Components</div>
             </div>
             <div className="text-center p-3 sm:p-4 bg-white/50 dark:bg-neutral-800/50 rounded-lg backdrop-blur-sm">
-              <div className="text-xl sm:text-2xl font-bold text-success">20+</div>
+              <div className="text-xl sm:text-2xl font-bold text-success">11</div>
               <div className="text-xs sm:text-sm text-muted-foreground">Categories</div>
             </div>
             <div className="text-center p-3 sm:p-4 bg-white/50 dark:bg-neutral-800/50 rounded-lg backdrop-blur-sm">
@@ -490,7 +529,7 @@ describe('${component.name}', () => {
                 />
               </div>
               <Badge variant="outline" className="text-xs">
-                {filteredCategories.reduce((acc, cat) => acc + cat.components.length, 0)} components
+                {filteredCategories.reduce((acc, cat) => acc + cat.count, 0)} components
               </Badge>
             </div>
           </div>
