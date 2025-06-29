@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { useAuth } from "@/hooks/useAuth";
 import { SkipNav } from "@/components/ui/accessibility";
+import { LanguageProvider } from "@/contexts/LanguageContext";
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/home";
 import Wallets from "@/pages/wallets";
@@ -49,7 +50,7 @@ function Router() {
   }
 
   // Check if user needs onboarding
-  if (!user?.firstName || !user?.lastName) {
+  if (!user || !user.firstName || !user.lastName) {
     return (
       <Switch>
         <Route path="/test-login" component={TestLogin} />
@@ -61,7 +62,7 @@ function Router() {
   }
 
   // Check if user needs KYC
-  if (user?.kycStatus !== 'verified') {
+  if (user && user.kycStatus !== 'verified') {
     return (
       <Switch>
         <Route path="/test-login" component={TestLogin} />
@@ -102,10 +103,12 @@ function Router() {
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Router />
-      </TooltipProvider>
+      <LanguageProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Router />
+        </TooltipProvider>
+      </LanguageProvider>
     </QueryClientProvider>
   );
 }

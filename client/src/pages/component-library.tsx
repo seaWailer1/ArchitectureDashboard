@@ -15,6 +15,8 @@ import {
   Star,
   ArrowRight
 } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { getCategoryTranslation, getComponentDescription } from '@/lib/i18n-component-library';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -28,6 +30,7 @@ import { Switch } from '@/components/ui/switch';
 import { Slider } from '@/components/ui/slider';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
+import { LanguageSelector } from '@/components/ui/language-selector';
 
 // Component categories and their examples
 const componentCategories = [
@@ -199,6 +202,8 @@ export function ComponentLibrary() {
   const [codeView, setCodeView] = useState(false);
   const [copiedCode, setCopiedCode] = useState('');
   const [darkMode, setDarkMode] = useState(false);
+  
+  const { language, t, isRTL, formatNumber } = useLanguage();
 
   const filteredCategories = componentCategories.filter(category => {
     if (selectedCategory !== 'all' && category.id !== selectedCategory) return false;
@@ -450,41 +455,44 @@ describe('${component.name}', () => {
   return (
     <div className={`min-h-screen transition-colors duration-300 ${
       darkMode ? 'dark bg-neutral-900' : 'bg-gradient-to-br from-neutral-50 to-neutral-100'
-    }`}>
+    } ${isRTL ? 'rtl font-arabic' : ''}`}>
       <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-6 lg:py-8 max-w-7xl">
+        {/* Language Selector */}
+        <div className={`flex justify-end mb-4 ${isRTL ? 'justify-start' : 'justify-end'}`}>
+          <LanguageSelector variant="compact" />
+        </div>
+        
         {/* Header */}
-        <div className="text-center space-y-4 sm:space-y-6 mb-8 sm:mb-12">
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
+        <div className={`text-center space-y-4 sm:space-y-6 mb-8 sm:mb-12 ${isRTL ? 'text-right' : 'text-center'}`}>
+          <div className={`flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
             <div className="p-2 sm:p-3 bg-primary/10 rounded-lg">
               <Layers className="w-6 h-6 sm:w-8 sm:h-8 text-primary" />
             </div>
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-primary text-center">
-              AfriPay Component Library
+            <h1 className={`text-2xl sm:text-3xl lg:text-4xl font-bold text-primary ${isRTL ? 'text-center' : 'text-center'}`}>
+              {t.title}
             </h1>
           </div>
-          <p className="text-sm sm:text-base lg:text-lg text-muted-foreground max-w-3xl mx-auto px-2">
-            Explore our comprehensive collection of 103+ reusable React components built with 
-            TypeScript, TailwindCSS, and WCAG AAA accessibility standards. Perfect for building 
-            modern fintech applications.
+          <p className={`text-sm sm:text-base lg:text-lg text-muted-foreground max-w-3xl mx-auto px-2 ${isRTL ? 'leading-loose' : ''}`}>
+            {t.subtitle}
           </p>
           
           {/* Quick Stats */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 max-w-2xl mx-auto">
             <div className="text-center p-3 sm:p-4 bg-white/50 dark:bg-neutral-800/50 rounded-lg backdrop-blur-sm">
               <div className="text-xl sm:text-2xl font-bold text-primary">103+</div>
-              <div className="text-xs sm:text-sm text-muted-foreground">Components</div>
+              <div className="text-xs sm:text-sm text-muted-foreground">{t.components}</div>
             </div>
             <div className="text-center p-3 sm:p-4 bg-white/50 dark:bg-neutral-800/50 rounded-lg backdrop-blur-sm">
               <div className="text-xl sm:text-2xl font-bold text-success">11</div>
-              <div className="text-xs sm:text-sm text-muted-foreground">Categories</div>
+              <div className="text-xs sm:text-sm text-muted-foreground">{t.categories}</div>
             </div>
             <div className="text-center p-3 sm:p-4 bg-white/50 dark:bg-neutral-800/50 rounded-lg backdrop-blur-sm">
               <div className="text-xl sm:text-2xl font-bold text-accent">AAA</div>
-              <div className="text-xs sm:text-sm text-muted-foreground">Accessibility</div>
+              <div className="text-xs sm:text-sm text-muted-foreground">{t.accessibility}</div>
             </div>
             <div className="text-center p-3 sm:p-4 bg-white/50 dark:bg-neutral-800/50 rounded-lg backdrop-blur-sm">
               <div className="text-xl sm:text-2xl font-bold text-info">100%</div>
-              <div className="text-xs sm:text-sm text-muted-foreground">TypeScript</div>
+              <div className="text-xs sm:text-sm text-muted-foreground">{t.typescript}</div>
             </div>
           </div>
         </div>
@@ -493,25 +501,25 @@ describe('${component.name}', () => {
         <div className="mb-8 space-y-4">
           <div className="flex flex-col gap-4">
             {/* Search and Filter Row */}
-            <div className="flex flex-col sm:flex-row gap-3">
+            <div className={`flex flex-col sm:flex-row gap-3 ${isRTL ? 'sm:flex-row-reverse' : ''}`}>
               <div className="relative flex-1">
-                <Search className="absolute left-3 top-3 w-4 h-4 text-muted-foreground" />
+                <Search className={`absolute top-3 w-4 h-4 text-muted-foreground ${isRTL ? 'right-3' : 'left-3'}`} />
                 <Input
-                  placeholder="Search components..."
+                  placeholder={t.searchPlaceholder}
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 w-full h-12 text-base"
+                  className={`w-full h-12 text-base ${isRTL ? 'pr-10 text-right' : 'pl-10'}`}
                 />
               </div>
               <Select value={selectedCategory} onValueChange={setSelectedCategory}>
                 <SelectTrigger className="w-full sm:w-48 h-12 text-base">
-                  <SelectValue placeholder="All Categories" />
+                  <SelectValue placeholder={t.allCategories} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all" className="h-12 text-base">All Categories</SelectItem>
+                  <SelectItem value="all" className="h-12 text-base">{t.allCategories}</SelectItem>
                   {componentCategories.map(category => (
                     <SelectItem key={category.id} value={category.id} className="h-12 text-base">
-                      {category.name}
+                      {getCategoryTranslation(category.id, language)}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -519,9 +527,9 @@ describe('${component.name}', () => {
             </div>
             
             {/* Settings Row */}
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <Label htmlFor="dark-mode" className="text-sm">Dark Mode</Label>
+            <div className={`flex items-center justify-between ${isRTL ? 'flex-row-reverse' : ''}`}>
+              <div className={`flex items-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
+                <Label htmlFor="dark-mode" className="text-sm">{t.darkMode}</Label>
                 <Switch
                   id="dark-mode"
                   checked={darkMode}
@@ -529,7 +537,7 @@ describe('${component.name}', () => {
                 />
               </div>
               <Badge variant="outline" className="text-xs">
-                {filteredCategories.reduce((acc, cat) => acc + cat.count, 0)} components
+                {formatNumber(filteredCategories.reduce((acc, cat) => acc + cat.count, 0))} {t.components}
               </Badge>
             </div>
           </div>
