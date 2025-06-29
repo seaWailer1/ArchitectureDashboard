@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { User, Shield, Settings, HelpCircle, LogOut, ChevronRight, Edit2, Camera, Phone, Mail, MapPin, Calendar, CreditCard, Globe, Bell, Lock, Smartphone, Download, Trash2, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -107,45 +107,144 @@ export default function Profile() {
     updateProfileMutation.mutate(editForm);
   };
 
+  // Keyboard navigation for tabs
+  const handleTabKeyDown = useCallback((event: React.KeyboardEvent, tabValue: string) => {
+    const tabs = ['overview', 'security', 'settings', 'support'];
+    const currentIndex = tabs.indexOf(activeTab);
+    
+    switch (event.key) {
+      case 'ArrowRight':
+        event.preventDefault();
+        const nextIndex = (currentIndex + 1) % tabs.length;
+        setActiveTab(tabs[nextIndex]);
+        break;
+      case 'ArrowLeft':
+        event.preventDefault();
+        const prevIndex = currentIndex === 0 ? tabs.length - 1 : currentIndex - 1;
+        setActiveTab(tabs[prevIndex]);
+        break;
+      case 'Home':
+        event.preventDefault();
+        setActiveTab(tabs[0]);
+        break;
+      case 'End':
+        event.preventDefault();
+        setActiveTab(tabs[tabs.length - 1]);
+        break;
+    }
+  }, [activeTab]);
+
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      {/* Skip links for accessibility */}
+      <div className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 z-50">
+        <a 
+          href="#main-content" 
+          className="bg-primary text-white px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+          Skip to main content
+        </a>
+        <a 
+          href="#profile-tabs" 
+          className="bg-primary text-white px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 ml-2"
+        >
+          Skip to navigation
+        </a>
+      </div>
+      
       <AppHeader />
       
-      <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-6 pb-20 max-w-4xl">
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4 sm:space-y-6">
-          <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 h-auto p-1 bg-white dark:bg-gray-800 border">
+      {/* Live region for screen reader announcements */}
+      <div 
+        role="status" 
+        aria-live="polite" 
+        aria-atomic="true"
+        className="sr-only"
+        id="profile-announcements"
+      >
+        {activeTab === 'overview' && 'Profile overview section loaded'}
+        {activeTab === 'security' && 'Security settings section loaded'}
+        {activeTab === 'settings' && 'App settings section loaded'}
+        {activeTab === 'support' && 'Support section loaded'}
+      </div>
+      
+      <main id="main-content" tabIndex={-1}>
+        <h1 className="sr-only">Profile Management</h1>
+        <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-6 pb-20 max-w-4xl">
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4 sm:space-y-6">
+            <TabsList 
+              id="profile-tabs"
+              className="grid w-full grid-cols-2 sm:grid-cols-4 h-auto p-1 bg-white dark:bg-gray-800 border"
+              role="tablist"
+              aria-label="Profile navigation sections"
+            >
             <TabsTrigger 
               value="overview" 
-              className="text-xs sm:text-sm p-2 sm:p-3 min-h-[44px] data-[state=active]:bg-primary data-[state=active]:text-white"
+              className="text-xs sm:text-sm p-2 sm:p-3 min-h-[44px] data-[state=active]:bg-primary data-[state=active]:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition-all duration-200"
+              role="tab"
+              aria-selected={activeTab === 'overview'}
+              aria-controls="overview-panel"
+              id="overview-tab"
+              tabIndex={activeTab === 'overview' ? 0 : -1}
+              onKeyDown={(e) => handleTabKeyDown(e, 'overview')}
             >
-              <User className="w-4 h-4 sm:mr-2" />
+              <User className="w-4 h-4 sm:mr-2" aria-hidden="true" />
               <span className="hidden sm:inline">Overview</span>
+              <span className="sm:hidden sr-only">Profile Overview - View basic profile information and role management</span>
             </TabsTrigger>
             <TabsTrigger 
               value="security" 
-              className="text-xs sm:text-sm p-2 sm:p-3 min-h-[44px] data-[state=active]:bg-primary data-[state=active]:text-white"
+              className="text-xs sm:text-sm p-2 sm:p-3 min-h-[44px] data-[state=active]:bg-primary data-[state=active]:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition-all duration-200"
+              role="tab"
+              aria-selected={activeTab === 'security'}
+              aria-controls="security-panel"
+              id="security-tab"
+              tabIndex={activeTab === 'security' ? 0 : -1}
+              onKeyDown={(e) => handleTabKeyDown(e, 'security')}
             >
-              <Shield className="w-4 h-4 sm:mr-2" />
+              <Shield className="w-4 h-4 sm:mr-2" aria-hidden="true" />
               <span className="hidden sm:inline">Security</span>
+              <span className="sm:hidden sr-only">Security Settings - Manage two-factor authentication, passwords, and devices</span>
             </TabsTrigger>
             <TabsTrigger 
               value="settings" 
-              className="text-xs sm:text-sm p-2 sm:p-3 min-h-[44px] data-[state=active]:bg-primary data-[state=active]:text-white"
+              className="text-xs sm:text-sm p-2 sm:p-3 min-h-[44px] data-[state=active]:bg-primary data-[state=active]:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition-all duration-200"
+              role="tab"
+              aria-selected={activeTab === 'settings'}
+              aria-controls="settings-panel"
+              id="settings-tab"
+              tabIndex={activeTab === 'settings' ? 0 : -1}
+              onKeyDown={(e) => handleTabKeyDown(e, 'settings')}
             >
-              <Settings className="w-4 h-4 sm:mr-2" />
+              <Settings className="w-4 h-4 sm:mr-2" aria-hidden="true" />
               <span className="hidden sm:inline">Settings</span>
+              <span className="sm:hidden sr-only">App Settings - Configure notifications, language, and preferences</span>
             </TabsTrigger>
             <TabsTrigger 
               value="support" 
-              className="text-xs sm:text-sm p-2 sm:p-3 min-h-[44px] data-[state=active]:bg-primary data-[state=active]:text-white"
+              className="text-xs sm:text-sm p-2 sm:p-3 min-h-[44px] data-[state=active]:bg-primary data-[state=active]:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition-all duration-200"
+              role="tab"
+              aria-selected={activeTab === 'support'}
+              aria-controls="support-panel"
+              id="support-tab"
+              tabIndex={activeTab === 'support' ? 0 : -1}
+              onKeyDown={(e) => handleTabKeyDown(e, 'support')}
             >
-              <HelpCircle className="w-4 h-4 sm:mr-2" />
+              <HelpCircle className="w-4 h-4 sm:mr-2" aria-hidden="true" />
               <span className="hidden sm:inline">Support</span>
+              <span className="sm:hidden sr-only">Help & Support - Access support tickets and help resources</span>
             </TabsTrigger>
           </TabsList>
 
           {/* Overview Tab */}
-          <TabsContent value="overview" className="space-y-4 sm:space-y-6">
+          <TabsContent 
+            value="overview" 
+            className="space-y-4 sm:space-y-6"
+            role="tabpanel"
+            aria-labelledby="overview-tab"
+            id="overview-panel"
+            tabIndex={0}
+          >
             {/* Profile Header */}
             <Card className="border-0 sm:border shadow-sm">
               <CardHeader className="p-4 sm:p-6 pb-3 sm:pb-4">
@@ -235,9 +334,16 @@ export default function Profile() {
                     <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mb-3 leading-relaxed">
                       Switch between different user roles to access role-specific features
                     </p>
-                    <Select value={user?.currentRole} onValueChange={(role) => switchRoleMutation.mutate(role)}>
-                      <SelectTrigger className="h-12 text-sm">
-                        <SelectValue />
+                    <Select 
+                      value={user?.currentRole} 
+                      onValueChange={(role) => switchRoleMutation.mutate(role)}
+                    >
+                      <SelectTrigger 
+                        className="h-12 text-sm"
+                        aria-label="Current user role"
+                        aria-describedby="role-description"
+                      >
+                        <SelectValue placeholder="Select role" />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="consumer" className="py-3">
@@ -260,6 +366,9 @@ export default function Profile() {
                         </SelectItem>
                       </SelectContent>
                     </Select>
+                    <div id="role-description" className="sr-only">
+                      Switch between Consumer for personal banking, Merchant for business features, or Agent for service provider tools
+                    </div>
                   </div>
                 </div>
               </CardContent>
@@ -305,7 +414,14 @@ export default function Profile() {
           </TabsContent>
 
           {/* Security Tab */}
-          <TabsContent value="security" className="space-y-4 sm:space-y-6">
+          <TabsContent 
+            value="security" 
+            className="space-y-4 sm:space-y-6"
+            role="tabpanel"
+            aria-labelledby="security-tab"
+            id="security-panel"
+            tabIndex={0}
+          >
             {/* Security Settings */}
             <Card className="border-0 sm:border shadow-sm">
               <CardHeader className="p-4 sm:p-6">
@@ -323,7 +439,12 @@ export default function Profile() {
                     checked={user?.twoFactorEnabled || false} 
                     className="shrink-0"
                     aria-label="Toggle two-factor authentication"
+                    aria-describedby="2fa-description"
+                    role="switch"
                   />
+                  <div id="2fa-description" className="sr-only">
+                    {user?.twoFactorEnabled ? 'Two-factor authentication is currently enabled' : 'Two-factor authentication is currently disabled'}
+                  </div>
                 </div>
                 
                 <Separator />
@@ -455,7 +576,14 @@ export default function Profile() {
           </TabsContent>
 
           {/* Settings Tab */}
-          <TabsContent value="settings" className="space-y-4 sm:space-y-6">
+          <TabsContent 
+            value="settings" 
+            className="space-y-4 sm:space-y-6"
+            role="tabpanel"
+            aria-labelledby="settings-tab"
+            id="settings-panel"
+            tabIndex={0}
+          >
             {/* Notifications */}
             <Card className="border-0 sm:border shadow-sm">
               <CardHeader className="p-4 sm:p-6">
@@ -473,7 +601,12 @@ export default function Profile() {
                     checked={user?.emailNotifications || false} 
                     className="shrink-0"
                     aria-label="Toggle email notifications"
+                    aria-describedby="email-notif-desc"
+                    role="switch"
                   />
+                  <div id="email-notif-desc" className="sr-only">
+                    Email notifications are {user?.emailNotifications ? 'enabled' : 'disabled'}
+                  </div>
                 </div>
                 
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 border rounded-lg bg-white dark:bg-gray-800">
@@ -618,7 +751,14 @@ export default function Profile() {
           </TabsContent>
 
           {/* Support Tab */}
-          <TabsContent value="support" className="space-y-4 sm:space-y-6">
+          <TabsContent 
+            value="support" 
+            className="space-y-4 sm:space-y-6"
+            role="tabpanel"
+            aria-labelledby="support-tab"
+            id="support-panel"
+            tabIndex={0}
+          >
             {/* Support Tickets */}
             <Card className="border-0 sm:border shadow-sm">
               <CardHeader className="p-4 sm:p-6">
@@ -817,7 +957,8 @@ export default function Profile() {
             </div>
           </DialogContent>
         </Dialog>
-      </div>
+        </div>
+      </main>
 
       <BottomNavigation />
     </div>
