@@ -412,38 +412,40 @@ describe('${component.name}', () => {
     <div className={`min-h-screen transition-colors duration-300 ${
       darkMode ? 'dark bg-neutral-900' : 'bg-gradient-to-br from-neutral-50 to-neutral-100'
     }`}>
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-6 lg:py-8 max-w-7xl">
         {/* Header */}
-        <div className="text-center space-y-6 mb-12">
-          <div className="flex items-center justify-center gap-4">
-            <div className="p-3 bg-primary/10 rounded-lg">
-              <Layers className="w-8 h-8 text-primary" />
+        <div className="text-center space-y-4 sm:space-y-6 mb-8 sm:mb-12">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
+            <div className="p-2 sm:p-3 bg-primary/10 rounded-lg">
+              <Layers className="w-6 h-6 sm:w-8 sm:h-8 text-primary" />
             </div>
-            <h1 className="text-4xl font-bold text-primary">AfriPay Component Library</h1>
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-primary text-center">
+              AfriPay Component Library
+            </h1>
           </div>
-          <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+          <p className="text-sm sm:text-base lg:text-lg text-muted-foreground max-w-3xl mx-auto px-2">
             Explore our comprehensive collection of 60+ reusable React components built with 
             TypeScript, TailwindCSS, and WCAG AAA accessibility standards. Perfect for building 
             modern fintech applications.
           </p>
           
           {/* Quick Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-2xl mx-auto">
-            <div className="text-center">
-              <div className="text-2xl font-bold text-primary">60+</div>
-              <div className="text-sm text-muted-foreground">Components</div>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 max-w-2xl mx-auto">
+            <div className="text-center p-3 sm:p-4 bg-white/50 dark:bg-neutral-800/50 rounded-lg backdrop-blur-sm">
+              <div className="text-xl sm:text-2xl font-bold text-primary">60+</div>
+              <div className="text-xs sm:text-sm text-muted-foreground">Components</div>
             </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-success">20+</div>
-              <div className="text-sm text-muted-foreground">Categories</div>
+            <div className="text-center p-3 sm:p-4 bg-white/50 dark:bg-neutral-800/50 rounded-lg backdrop-blur-sm">
+              <div className="text-xl sm:text-2xl font-bold text-success">20+</div>
+              <div className="text-xs sm:text-sm text-muted-foreground">Categories</div>
             </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-accent">AAA</div>
-              <div className="text-sm text-muted-foreground">Accessibility</div>
+            <div className="text-center p-3 sm:p-4 bg-white/50 dark:bg-neutral-800/50 rounded-lg backdrop-blur-sm">
+              <div className="text-xl sm:text-2xl font-bold text-accent">AAA</div>
+              <div className="text-xs sm:text-sm text-muted-foreground">Accessibility</div>
             </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-info">100%</div>
-              <div className="text-sm text-muted-foreground">TypeScript</div>
+            <div className="text-center p-3 sm:p-4 bg-white/50 dark:bg-neutral-800/50 rounded-lg backdrop-blur-sm">
+              <div className="text-xl sm:text-2xl font-bold text-info">100%</div>
+              <div className="text-xs sm:text-sm text-muted-foreground">TypeScript</div>
             </div>
           </div>
         </div>
@@ -459,17 +461,17 @@ describe('${component.name}', () => {
                   placeholder="Search components..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 w-full"
+                  className="pl-10 w-full h-12 text-base"
                 />
               </div>
               <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-                <SelectTrigger className="w-full sm:w-48">
+                <SelectTrigger className="w-full sm:w-48 h-12 text-base">
                   <SelectValue placeholder="All Categories" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">All Categories</SelectItem>
+                  <SelectItem value="all" className="h-12 text-base">All Categories</SelectItem>
                   {componentCategories.map(category => (
-                    <SelectItem key={category.id} value={category.id}>
+                    <SelectItem key={category.id} value={category.id} className="h-12 text-base">
                       {category.name}
                     </SelectItem>
                   ))}
@@ -513,12 +515,16 @@ describe('${component.name}', () => {
               <CardContent className="p-4 sm:p-6">
                 <div className="grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
                   {category.components.map((component, index) => (
-                    <Card key={index} className="hover:shadow-md transition-shadow cursor-pointer">
-                      <CardHeader className="pb-2 sm:pb-3 p-3 sm:p-6">
-                        <div className="flex items-start justify-between gap-2">
+                    <Card 
+                      key={index} 
+                      className="hover:shadow-md active:scale-[0.98] transition-all duration-150 cursor-pointer touch-manipulation select-none"
+                      onClick={() => setSelectedComponent(component)}
+                    >
+                      <CardHeader className="pb-2 sm:pb-3 p-4 sm:p-6">
+                        <div className="flex items-start justify-between gap-3">
                           <div className="flex-1 min-w-0">
-                            <CardTitle className="text-base sm:text-lg truncate">{component.name}</CardTitle>
-                            <p className="text-xs sm:text-sm text-muted-foreground mt-1 line-clamp-2">
+                            <CardTitle className="text-base sm:text-lg truncate leading-tight">{component.name}</CardTitle>
+                            <p className="text-xs sm:text-sm text-muted-foreground mt-1 line-clamp-2 leading-relaxed">
                               {component.description}
                             </p>
                           </div>
@@ -526,9 +532,10 @@ describe('${component.name}', () => {
                             variant="ghost"
                             size="sm"
                             onClick={() => setSelectedComponent(component)}
-                            className="shrink-0"
+                            className="shrink-0 min-w-[44px] min-h-[44px] p-2"
                           >
                             <Eye className="w-4 h-4" />
+                            <span className="sr-only">View {component.name} details</span>
                           </Button>
                         </div>
                       </CardHeader>
@@ -595,10 +602,10 @@ describe('${component.name}', () => {
                     <Label className="text-xs sm:text-sm font-medium mb-2 sm:mb-3 block">Button Variants</Label>
                     <div className="space-y-2 sm:space-y-3">
                       <div className="flex flex-wrap gap-1 sm:gap-2">
-                        <Button variant="default" size="sm" className="text-xs sm:text-sm">Primary</Button>
-                        <Button variant="secondary" size="sm" className="text-xs sm:text-sm">Secondary</Button>
-                        <Button variant="outline" size="sm" className="text-xs sm:text-sm">Outline</Button>
-                        <Button variant="ghost" size="sm" className="text-xs sm:text-sm">Ghost</Button>
+                        <Button variant="default" size="sm" className="text-xs sm:text-sm min-h-[44px] px-4 active:scale-95 transition-transform">Primary</Button>
+                        <Button variant="secondary" size="sm" className="text-xs sm:text-sm min-h-[44px] px-4 active:scale-95 transition-transform">Secondary</Button>
+                        <Button variant="outline" size="sm" className="text-xs sm:text-sm min-h-[44px] px-4 active:scale-95 transition-transform">Outline</Button>
+                        <Button variant="ghost" size="sm" className="text-xs sm:text-sm min-h-[44px] px-4 active:scale-95 transition-transform">Ghost</Button>
                       </div>
                       <div className="text-xs text-muted-foreground">
                         Try different variants and sizes
@@ -807,8 +814,15 @@ describe('${component.name}', () => {
 
         {/* Component Detail Modal */}
         {selectedComponent && (
-          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-2 sm:p-4">
-            <Card className="w-full max-w-4xl max-h-[95vh] sm:max-h-[90vh] overflow-y-auto">
+          <div 
+            className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-2 sm:p-4"
+            onClick={(e) => {
+              if (e.target === e.currentTarget) {
+                setSelectedComponent(null);
+              }
+            }}
+          >
+            <Card className="w-full max-w-4xl max-h-[95vh] sm:max-h-[90vh] overflow-y-auto transform transition-all duration-200 scale-95 animate-in fade-in slide-in-from-bottom-4">
               <CardHeader className="p-4 sm:p-6">
                 <div className="flex items-center justify-between gap-2">
                   <div className="min-w-0 flex-1">
@@ -819,9 +833,10 @@ describe('${component.name}', () => {
                     variant="ghost"
                     size="sm"
                     onClick={() => setSelectedComponent(null)}
-                    className="shrink-0"
+                    className="shrink-0 min-w-[44px] min-h-[44px] p-3 text-lg"
                   >
                     ×
+                    <span className="sr-only">Close modal</span>
                   </Button>
                 </div>
               </CardHeader>
