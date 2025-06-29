@@ -21,6 +21,7 @@ import PresetUsers from "@/pages/preset-users";
 import PartnershipsPage from "@/pages/partnerships";
 import AccessibilityDemo from "@/pages/accessibility-demo";
 import { ComponentLibrary } from "@/pages/component-library";
+import AdminPage from "@/pages/admin";
 
 function Router() {
   const { user, isAuthenticated, isLoading } = useAuth();
@@ -93,6 +94,7 @@ function Router() {
           <Route path="/partnerships" component={PartnershipsPage} />
           <Route path="/accessibility-demo" component={AccessibilityDemo} />
           <Route path="/component-library" component={ComponentLibrary} />
+          <Route path="/admin" component={AdminPage} />
           <Route component={NotFound} />
         </Switch>
       </div>
