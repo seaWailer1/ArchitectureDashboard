@@ -495,6 +495,35 @@ describe('${component.name}', () => {
               <div className="text-xs sm:text-sm text-muted-foreground">{t.typescript}</div>
             </div>
           </div>
+
+          {/* Storybook Integration Notice */}
+          <div className="mt-6 p-4 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-lg border">
+            <div className={`flex items-center gap-3 ${isRTL ? 'flex-row-reverse' : ''}`}>
+              <div className="p-2 bg-primary/10 rounded-lg">
+                <Zap className="w-5 h-5 text-primary" />
+              </div>
+              <div className="flex-1">
+                <h3 className="font-semibold text-primary">🚀 Storybook Integration Ready</h3>
+                <p className="text-sm text-muted-foreground mt-1">
+                  {language === 'en' && "Complete Storybook documentation with 15+ interactive stories covering UI components, wallet features, QR payments, and admin tools. Run 'npm run storybook' to explore the full interactive component playground."}
+                  {language === 'fr' && "Documentation Storybook complète avec plus de 15 histoires interactives couvrant les composants UI, fonctionnalités de portefeuille, paiements QR et outils d'administration."}
+                  {language === 'ar' && "وثائق Storybook شاملة مع أكثر من 15 قصة تفاعلية تغطي مكونات واجهة المستخدم وميزات المحفظة ومدفوعات QR وأدوات الإدارة."}
+                  {language === 'sw' && "Nyaraka kamili za Storybook na hadithi zaidi ya 15 za maingiliano zinazoshughulikia vipengele vya UI, vipengele vya pochi, malipo ya QR, na zana za utawala."}
+                </p>
+              </div>
+              <Button 
+                size="sm" 
+                className="min-h-[44px]"
+                onClick={() => window.open('/admin', '_blank')}
+              >
+                <Star className="w-4 h-4 mr-2" />
+                {language === 'en' && 'View Stories'}
+                {language === 'fr' && 'Voir Histoires'}
+                {language === 'ar' && 'عرض القصص'}
+                {language === 'sw' && 'Ona Hadithi'}
+              </Button>
+            </div>
+          </div>
         </div>
 
         {/* Controls */}
