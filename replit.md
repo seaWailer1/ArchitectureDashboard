@@ -2,7 +2,7 @@
 
 ## Overview
 
-AfriPay is a comprehensive Pan-African fintech SuperApp designed following TOGAF enterprise architecture principles. The platform features a multi-role wallet system (Consumer/Merchant/Agent), QR code payments, micro-lending, virtual cards, and an extensible mini-app ecosystem. Built to enable lifestyle-based financial inclusion across Africa with support for multiple languages (English, French, Arabic, Swahili) and role evolution capabilities.
+AfriPay is a comprehensive Pan-African fintech SuperApp designed based on TOGAF enterprise architecture principles. The platform features a multi-role wallet system (Consumer/Merchant/Agent), QR code payments, micro-lending, virtual cards, and an extensible mini-app ecosystem. Built to enable lifestyle-based financial inclusion across Africa with support for multiple languages (English, French, Arabic, Swahili) and role evolution capabilities.
 
 Key Features:
 - Multi-role wallet with dynamic role switching
