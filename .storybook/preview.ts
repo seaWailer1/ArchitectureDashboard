@@ -1,13 +1,13 @@
-
 import type { Preview } from '@storybook/react';
 import '../client/src/index.css';
 
 const preview: Preview = {
   parameters: {
+    actions: { argTypesRegex: '^on[A-Z].*' },
     controls: {
       matchers: {
         color: /(background|color)$/i,
-        date: /Date$/i,
+        date: /Date$/,
       },
     },
     backgrounds: {
@@ -19,16 +19,11 @@ const preview: Preview = {
         },
         {
           name: 'dark',
-          value: '#0a0a0a',
-        },
-        {
-          name: 'afriPay',
-          value: '#f8fafc',
+          value: '#0f172a',
         },
       ],
     },
   },
-  tags: ['autodocs'],
 };
 
 export default preview;
