@@ -2,8 +2,10 @@ import { useState } from "react";
 import { useLocation } from "wouter";
 import { Car, ShoppingBag, Zap, Smartphone, CreditCard, Building, Users, MoreHorizontal, Package, Send, QrCode, Phone, Target, Music } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
+import { usePlatform } from "@/lib/platform-detection";
+import { NativeServiceCard } from "@/components/ui/native-service-card";
+import { NativeModal } from "@/components/ui/native-modal";
 import AppHeader from "@/components/layout/app-header";
 import BottomNavigation from "@/components/layout/bottom-navigation";
 import LoanApplication from "@/components/loans/loan-application";
@@ -30,11 +32,12 @@ import Transport from "@/components/services/transport";
 import SavingsChallenges from "@/components/savings/savings-challenges";
 import PartnerWithAfriPay from "@/components/partnerships/partner-with-afripay";
 import EntertainmentHub from "@/components/entertainment/entertainment-hub";
-import { AccessibleHeading } from "@/components/ui/accessible-heading";
+import PlatformIndicator from "@/components/ui/platform-indicator";
 
 export default function Services() {
   const { toast } = useToast();
   const [, setLocation] = useLocation();
+  const platform = usePlatform();
   const [selectedService, setSelectedService] = useState<string | null>(null);
 
   const serviceCategories = [
@@ -166,23 +169,17 @@ export default function Services() {
               <div key={category.title} className="space-y-6">
                 <h3 className="text-heading-3 text-refined-heading">{category.title}</h3>
                 <div className="grid grid-cols-2 gap-4">
-                  {category.services.map((service) => {
-                    const Icon = service.icon;
-                    return (
-                      <Button
-                        key={service.id}
-                        variant="ghost"
-                        className="card-refined interactive-hover flex flex-col items-center spacing-lg bg-white dark:bg-neutral-800 h-auto text-center group elevation-1 hover:elevation-2 touch-aaa focus-aaa"
-                        onClick={() => handleServiceLaunch(service.id, service.name)}
-                      >
-                        <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-4 shadow-soft transition-all duration-200 group-hover:scale-110 ${service.color}`}>
-                          <Icon className="w-7 h-7" />
-                        </div>
-                        <h4 className="text-body-small font-bold text-refined-heading mb-2 leading-tight">{service.name}</h4>
-                        <p className="text-caption text-refined-muted leading-relaxed">{service.description}</p>
-                      </Button>
-                    );
-                  })}
+                  {category.services.map((service) => (
+                    <NativeServiceCard
+                      key={service.id}
+                      id={service.id}
+                      name={service.name}
+                      description={service.description}
+                      icon={service.icon}
+                      color={service.color}
+                      onClick={() => handleServiceLaunch(service.id, service.name)}
+                    />
+                  ))}
                 </div>
               </div>
             ))}
@@ -206,40 +203,42 @@ export default function Services() {
       </main>
 
       <BottomNavigation currentPage="services" />
+      
+      <PlatformIndicator />
 
       {/* Service Modals */}
-      <Dialog open={!!selectedService} onOpenChange={() => setSelectedService(null)}>
-        <DialogContent className="max-w-md mx-auto max-h-[90vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle>
-              {selectedService === 'send-money' ? 'Send Money' :
-               selectedService === 'pay-scan' ? 'Pay & Scan' :
-               selectedService === 'buy-airtime' ? 'Buy Airtime' :
-               selectedService === 'pay-bills' ? 'Pay Bills' :
-               selectedService === 'shop' ? 'Shop' :
-               selectedService === 'transport' ? 'Transport' :
-               selectedService === 'savings-challenges' ? 'Savings Challenges' :
-               selectedService === 'partner-portal' ? 'Partner with AfriPay' :
-               selectedService === 'loans' ? 'Micro Loans' : 
-               selectedService === 'virtual-card' ? 'Virtual Cards' :
-               selectedService === 'crypto' ? 'Crypto Trading' :
-               selectedService === 'investment' ? 'Investment Products' :
-               selectedService === 'trading' ? 'Multi-Currency Trading' :
-               selectedService === 'bills' ? 'Bill Payments' :
-               selectedService === 'shopping' ? 'Shopping Marketplace' :
-               selectedService === 'ride' ? 'Ride Hailing' :
-               selectedService === 'delivery' ? 'Package Delivery' :
-               selectedService === 'merchant' ? 'Merchant Dashboard' :
-               selectedService === 'orders' ? 'My Orders' :
-               selectedService === 'ecommerce' ? 'AfriMart - Shopping & Delivery' :
-               selectedService === 'driver' ? 'Driver Dashboard' :
-               selectedService === 'merchant-store' ? 'Store Management' :
-               selectedService === 'admin' ? 'Admin Dashboard' : ''}
-            </DialogTitle>
-          </DialogHeader>
-          {renderServiceContent()}
-        </DialogContent>
-      </Dialog>
+      <NativeModal
+        isOpen={!!selectedService}
+        onClose={() => setSelectedService(null)}
+        title={
+          selectedService === 'send-money' ? 'Send Money' :
+          selectedService === 'pay-scan' ? 'Pay & Scan' :
+          selectedService === 'buy-airtime' ? 'Buy Airtime' :
+          selectedService === 'pay-bills' ? 'Pay Bills' :
+          selectedService === 'shop' ? 'Shop' :
+          selectedService === 'transport' ? 'Transport' :
+          selectedService === 'savings-challenges' ? 'Savings Challenges' :
+          selectedService === 'partner-portal' ? 'Partner with AfriPay' :
+          selectedService === 'loans' ? 'Micro Loans' : 
+          selectedService === 'virtual-card' ? 'Virtual Cards' :
+          selectedService === 'crypto' ? 'Crypto Trading' :
+          selectedService === 'investment' ? 'Investment Products' :
+          selectedService === 'trading' ? 'Multi-Currency Trading' :
+          selectedService === 'bills' ? 'Bill Payments' :
+          selectedService === 'shopping' ? 'Shopping Marketplace' :
+          selectedService === 'ride' ? 'Ride Hailing' :
+          selectedService === 'delivery' ? 'Package Delivery' :
+          selectedService === 'merchant' ? 'Merchant Dashboard' :
+          selectedService === 'orders' ? 'My Orders' :
+          selectedService === 'ecommerce' ? 'AfriMart - Shopping & Delivery' :
+          selectedService === 'driver' ? 'Driver Dashboard' :
+          selectedService === 'merchant-store' ? 'Store Management' :
+          selectedService === 'admin' ? 'Admin Dashboard' : 'Service'
+        }
+        size={platform.isMobile ? 'large' : 'medium'}
+      >
+        {renderServiceContent()}
+      </NativeModal>
     </div>
   );
 }
