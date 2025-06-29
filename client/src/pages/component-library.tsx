@@ -450,19 +450,20 @@ describe('${component.name}', () => {
 
         {/* Controls */}
         <div className="mb-8 space-y-4">
-          <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
-            <div className="flex items-center gap-4 flex-1">
-              <div className="relative flex-1 max-w-md">
+          <div className="flex flex-col gap-4">
+            {/* Search and Filter Row */}
+            <div className="flex flex-col sm:flex-row gap-3">
+              <div className="relative flex-1">
                 <Search className="absolute left-3 top-3 w-4 h-4 text-muted-foreground" />
                 <Input
                   placeholder="Search components..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10"
+                  className="pl-10 w-full"
                 />
               </div>
               <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-                <SelectTrigger className="w-48">
+                <SelectTrigger className="w-full sm:w-48">
                   <SelectValue placeholder="All Categories" />
                 </SelectTrigger>
                 <SelectContent>
@@ -475,13 +476,20 @@ describe('${component.name}', () => {
                 </SelectContent>
               </Select>
             </div>
-            <div className="flex items-center gap-2">
-              <Label htmlFor="dark-mode" className="text-sm">Dark Mode</Label>
-              <Switch
-                id="dark-mode"
-                checked={darkMode}
-                onCheckedChange={setDarkMode}
-              />
+            
+            {/* Settings Row */}
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Label htmlFor="dark-mode" className="text-sm">Dark Mode</Label>
+                <Switch
+                  id="dark-mode"
+                  checked={darkMode}
+                  onCheckedChange={setDarkMode}
+                />
+              </div>
+              <Badge variant="outline" className="text-xs">
+                {filteredCategories.reduce((acc, cat) => acc + cat.components.length, 0)} components
+              </Badge>
             </div>
           </div>
         </div>
@@ -502,15 +510,15 @@ describe('${component.name}', () => {
                   </Badge>
                 </div>
               </CardHeader>
-              <CardContent className="p-6">
-                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+              <CardContent className="p-4 sm:p-6">
+                <div className="grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
                   {category.components.map((component, index) => (
                     <Card key={index} className="hover:shadow-md transition-shadow cursor-pointer">
-                      <CardHeader className="pb-3">
-                        <div className="flex items-start justify-between">
-                          <div>
-                            <CardTitle className="text-lg">{component.name}</CardTitle>
-                            <p className="text-sm text-muted-foreground mt-1">
+                      <CardHeader className="pb-2 sm:pb-3 p-3 sm:p-6">
+                        <div className="flex items-start justify-between gap-2">
+                          <div className="flex-1 min-w-0">
+                            <CardTitle className="text-base sm:text-lg truncate">{component.name}</CardTitle>
+                            <p className="text-xs sm:text-sm text-muted-foreground mt-1 line-clamp-2">
                               {component.description}
                             </p>
                           </div>
@@ -518,26 +526,27 @@ describe('${component.name}', () => {
                             variant="ghost"
                             size="sm"
                             onClick={() => setSelectedComponent(component)}
+                            className="shrink-0"
                           >
                             <Eye className="w-4 h-4" />
                           </Button>
                         </div>
                       </CardHeader>
-                      <CardContent className="pt-0">
-                        <div className="space-y-3">
+                      <CardContent className="pt-0 p-3 sm:p-6 sm:pt-0">
+                        <div className="space-y-2 sm:space-y-3">
                           <div>
                             <Label className="text-xs font-medium text-muted-foreground">
                               PROPS
                             </Label>
                             <div className="flex flex-wrap gap-1 mt-1">
-                              {component.props?.slice(0, 3).map((prop, i) => (
+                              {component.props?.slice(0, 2).map((prop, i) => (
                                 <Badge key={i} variant="outline" className="text-xs">
                                   {prop}
                                 </Badge>
                               ))}
-                              {component.props?.length > 3 && (
+                              {component.props?.length > 2 && (
                                 <Badge variant="outline" className="text-xs">
-                                  +{component.props.length - 3}
+                                  +{component.props.length - 2}
                                 </Badge>
                               )}
                             </div>
@@ -577,19 +586,19 @@ describe('${component.name}', () => {
               Interactive Playground
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="grid gap-6 lg:grid-cols-2">
+          <CardContent className="p-4 sm:p-6">
+            <div className="grid gap-4 sm:gap-6 lg:grid-cols-2">
               <div>
-                <h3 className="font-semibold mb-4">Try Components Live</h3>
-                <div className="space-y-4">
-                  <div className="p-4 border rounded-lg">
-                    <Label className="text-sm font-medium mb-3 block">Button Variants</Label>
-                    <div className="space-y-3">
-                      <div className="flex flex-wrap gap-2">
-                        <Button variant="default" size="sm">Primary</Button>
-                        <Button variant="secondary" size="sm">Secondary</Button>
-                        <Button variant="outline" size="sm">Outline</Button>
-                        <Button variant="ghost" size="sm">Ghost</Button>
+                <h3 className="font-semibold mb-3 sm:mb-4 text-sm sm:text-base">Try Components Live</h3>
+                <div className="space-y-3 sm:space-y-4">
+                  <div className="p-3 sm:p-4 border rounded-lg">
+                    <Label className="text-xs sm:text-sm font-medium mb-2 sm:mb-3 block">Button Variants</Label>
+                    <div className="space-y-2 sm:space-y-3">
+                      <div className="flex flex-wrap gap-1 sm:gap-2">
+                        <Button variant="default" size="sm" className="text-xs sm:text-sm">Primary</Button>
+                        <Button variant="secondary" size="sm" className="text-xs sm:text-sm">Secondary</Button>
+                        <Button variant="outline" size="sm" className="text-xs sm:text-sm">Outline</Button>
+                        <Button variant="ghost" size="sm" className="text-xs sm:text-sm">Ghost</Button>
                       </div>
                       <div className="text-xs text-muted-foreground">
                         Try different variants and sizes
@@ -597,12 +606,12 @@ describe('${component.name}', () => {
                     </div>
                   </div>
                   
-                  <div className="p-4 border rounded-lg">
-                    <Label className="text-sm font-medium mb-3 block">Form Controls</Label>
-                    <div className="space-y-3 max-w-sm">
-                      <Input placeholder="Interactive input field" />
+                  <div className="p-3 sm:p-4 border rounded-lg">
+                    <Label className="text-xs sm:text-sm font-medium mb-2 sm:mb-3 block">Form Controls</Label>
+                    <div className="space-y-2 sm:space-y-3">
+                      <Input placeholder="Interactive input field" className="text-sm" />
                       <Select>
-                        <SelectTrigger>
+                        <SelectTrigger className="text-sm">
                           <SelectValue placeholder="Select an option" />
                         </SelectTrigger>
                         <SelectContent>
@@ -613,7 +622,7 @@ describe('${component.name}', () => {
                       </Select>
                       <div className="flex items-center space-x-2">
                         <Switch id="demo-switch" />
-                        <Label htmlFor="demo-switch">Enable feature</Label>
+                        <Label htmlFor="demo-switch" className="text-xs sm:text-sm">Enable feature</Label>
                       </div>
                     </div>
                   </div>
@@ -621,42 +630,42 @@ describe('${component.name}', () => {
               </div>
               
               <div>
-                <h3 className="font-semibold mb-4">Component Properties</h3>
-                <div className="space-y-4">
-                  <div className="p-4 border rounded-lg">
-                    <Label className="text-sm font-medium mb-3 block">Progress Indicators</Label>
-                    <div className="space-y-3">
+                <h3 className="font-semibold mb-3 sm:mb-4 text-sm sm:text-base">Component Properties</h3>
+                <div className="space-y-3 sm:space-y-4">
+                  <div className="p-3 sm:p-4 border rounded-lg">
+                    <Label className="text-xs sm:text-sm font-medium mb-2 sm:mb-3 block">Progress Indicators</Label>
+                    <div className="space-y-2 sm:space-y-3">
                       <div>
-                        <div className="flex justify-between text-sm mb-2">
+                        <div className="flex justify-between text-xs sm:text-sm mb-1 sm:mb-2">
                           <span>Loading</span>
                           <span>33%</span>
                         </div>
-                        <Progress value={33} />
+                        <Progress value={33} className="h-2" />
                       </div>
                       <div>
-                        <div className="flex justify-between text-sm mb-2">
+                        <div className="flex justify-between text-xs sm:text-sm mb-1 sm:mb-2">
                           <span>Processing</span>
                           <span>67%</span>
                         </div>
-                        <Progress value={67} />
+                        <Progress value={67} className="h-2" />
                       </div>
                       <div>
-                        <div className="flex justify-between text-sm mb-2">
+                        <div className="flex justify-between text-xs sm:text-sm mb-1 sm:mb-2">
                           <span>Complete</span>
                           <span>100%</span>
                         </div>
-                        <Progress value={100} />
+                        <Progress value={100} className="h-2" />
                       </div>
                     </div>
                   </div>
                   
-                  <div className="p-4 border rounded-lg">
-                    <Label className="text-sm font-medium mb-3 block">Status Badges</Label>
-                    <div className="flex flex-wrap gap-2">
-                      <Badge variant="default">Active</Badge>
-                      <Badge variant="secondary">Pending</Badge>
-                      <Badge variant="outline">Review</Badge>
-                      <Badge variant="destructive">Error</Badge>
+                  <div className="p-3 sm:p-4 border rounded-lg">
+                    <Label className="text-xs sm:text-sm font-medium mb-2 sm:mb-3 block">Status Badges</Label>
+                    <div className="flex flex-wrap gap-1 sm:gap-2">
+                      <Badge variant="default" className="text-xs">Active</Badge>
+                      <Badge variant="secondary" className="text-xs">Pending</Badge>
+                      <Badge variant="outline" className="text-xs">Review</Badge>
+                      <Badge variant="destructive" className="text-xs">Error</Badge>
                     </div>
                   </div>
                 </div>
@@ -673,31 +682,31 @@ describe('${component.name}', () => {
               Component CLI Tool
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="grid gap-6 md:grid-cols-2">
+          <CardContent className="p-4 sm:p-6">
+            <div className="grid gap-4 sm:gap-6 md:grid-cols-2">
               <div>
-                <h3 className="font-semibold mb-3">Quick Commands</h3>
-                <div className="space-y-2 text-sm font-mono bg-neutral-900 text-neutral-100 p-4 rounded-lg">
+                <h3 className="font-semibold mb-3 text-sm sm:text-base">Quick Commands</h3>
+                <div className="space-y-1 sm:space-y-2 text-xs sm:text-sm font-mono bg-neutral-900 text-neutral-100 p-3 sm:p-4 rounded-lg overflow-x-auto">
                   <div className="text-green-400"># Add new component</div>
-                  <div>bun codex.component.mts add Forms/Input input</div>
-                  <div className="text-green-400 mt-3"># Remove component</div>
-                  <div>bun codex.component.mts remove Forms/Input</div>
-                  <div className="text-green-400 mt-3"># List all components</div>
+                  <div className="break-all">bun codex.component.mts add Forms/Input input</div>
+                  <div className="text-green-400 mt-2 sm:mt-3"># Remove component</div>
+                  <div className="break-all">bun codex.component.mts remove Forms/Input</div>
+                  <div className="text-green-400 mt-2 sm:mt-3"># List all components</div>
                   <div>bun codex.component.mts list</div>
                 </div>
               </div>
               <div>
-                <h3 className="font-semibold mb-3">Available Templates</h3>
-                <div className="grid grid-cols-2 gap-2">
+                <h3 className="font-semibold mb-3 text-sm sm:text-base">Available Templates</h3>
+                <div className="grid grid-cols-2 gap-1 sm:gap-2">
                   {['box', 'button', 'input', 'modal'].map(template => (
-                    <Badge key={template} variant="outline" className="justify-center py-2">
+                    <Badge key={template} variant="outline" className="justify-center py-2 text-xs sm:text-sm">
                       {template}
                     </Badge>
                   ))}
                 </div>
-                <div className="mt-4 p-3 bg-info/10 rounded-lg">
-                  <div className="text-sm text-info">
-                    <Shield className="w-4 h-4 inline mr-1" />
+                <div className="mt-3 sm:mt-4 p-2 sm:p-3 bg-info/10 rounded-lg">
+                  <div className="text-xs sm:text-sm text-info">
+                    <Shield className="w-3 h-3 sm:w-4 sm:h-4 inline mr-1" />
                     Auto-generates .tsx, .stories.tsx, .test.tsx, and Demo.tsx files
                   </div>
                 </div>
@@ -714,52 +723,52 @@ describe('${component.name}', () => {
               Accessibility Standards
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="grid gap-6 lg:grid-cols-3">
+          <CardContent className="p-4 sm:p-6">
+            <div className="grid gap-4 sm:gap-6 lg:grid-cols-3">
               <div>
-                <h3 className="font-semibold mb-3">WCAG AAA Compliance</h3>
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between p-3 bg-success/10 rounded-lg">
-                    <span className="text-sm">Color Contrast</span>
-                    <Badge variant="secondary">7:1 Ratio</Badge>
+                <h3 className="font-semibold mb-3 text-sm sm:text-base">WCAG AAA Compliance</h3>
+                <div className="space-y-2 sm:space-y-3">
+                  <div className="flex items-center justify-between p-2 sm:p-3 bg-success/10 rounded-lg">
+                    <span className="text-xs sm:text-sm">Color Contrast</span>
+                    <Badge variant="secondary" className="text-xs">7:1 Ratio</Badge>
                   </div>
-                  <div className="flex items-center justify-between p-3 bg-success/10 rounded-lg">
-                    <span className="text-sm">Touch Targets</span>
-                    <Badge variant="secondary">44px Min</Badge>
+                  <div className="flex items-center justify-between p-2 sm:p-3 bg-success/10 rounded-lg">
+                    <span className="text-xs sm:text-sm">Touch Targets</span>
+                    <Badge variant="secondary" className="text-xs">44px Min</Badge>
                   </div>
-                  <div className="flex items-center justify-between p-3 bg-success/10 rounded-lg">
-                    <span className="text-sm">Keyboard Navigation</span>
-                    <Badge variant="secondary">✓ Full Support</Badge>
+                  <div className="flex items-center justify-between p-2 sm:p-3 bg-success/10 rounded-lg">
+                    <span className="text-xs sm:text-sm">Keyboard Navigation</span>
+                    <Badge variant="secondary" className="text-xs">✓ Full</Badge>
                   </div>
-                  <div className="flex items-center justify-between p-3 bg-success/10 rounded-lg">
-                    <span className="text-sm">Screen Readers</span>
-                    <Badge variant="secondary">✓ Optimized</Badge>
+                  <div className="flex items-center justify-between p-2 sm:p-3 bg-success/10 rounded-lg">
+                    <span className="text-xs sm:text-sm">Screen Readers</span>
+                    <Badge variant="secondary" className="text-xs">✓ Optimized</Badge>
                   </div>
                 </div>
               </div>
               
               <div>
-                <h3 className="font-semibold mb-3">Interactive Testing</h3>
-                <div className="space-y-3">
-                  <div className="p-3 border rounded-lg">
-                    <Label className="text-sm font-medium">Focus Management</Label>
-                    <div className="mt-2 space-y-2">
-                      <Button size="sm" tabIndex={1}>First Tab</Button>
-                      <Input placeholder="Second Tab" tabIndex={2} />
-                      <Button size="sm" variant="outline" tabIndex={3}>Third Tab</Button>
+                <h3 className="font-semibold mb-3 text-sm sm:text-base">Interactive Testing</h3>
+                <div className="space-y-2 sm:space-y-3">
+                  <div className="p-2 sm:p-3 border rounded-lg">
+                    <Label className="text-xs sm:text-sm font-medium">Focus Management</Label>
+                    <div className="mt-2 space-y-1 sm:space-y-2">
+                      <Button size="sm" tabIndex={1} className="w-full sm:w-auto text-xs">First Tab</Button>
+                      <Input placeholder="Second Tab" tabIndex={2} className="text-xs sm:text-sm" />
+                      <Button size="sm" variant="outline" tabIndex={3} className="w-full sm:w-auto text-xs">Third Tab</Button>
                     </div>
-                    <p className="text-xs text-muted-foreground mt-2">
+                    <p className="text-xs text-muted-foreground mt-1 sm:mt-2">
                       Use Tab key to test focus order
                     </p>
                   </div>
-                  <div className="p-3 border rounded-lg">
-                    <Label className="text-sm font-medium">High Contrast</Label>
-                    <div className="mt-2 space-y-2">
-                      <div className="p-2 bg-black text-white rounded text-sm">
-                        High contrast text example
+                  <div className="p-2 sm:p-3 border rounded-lg">
+                    <Label className="text-xs sm:text-sm font-medium">High Contrast</Label>
+                    <div className="mt-2 space-y-1 sm:space-y-2">
+                      <div className="p-2 bg-black text-white rounded text-xs sm:text-sm">
+                        High contrast text
                       </div>
-                      <div className="p-2 border-2 border-black rounded text-sm">
-                        High contrast border example
+                      <div className="p-2 border-2 border-black rounded text-xs sm:text-sm">
+                        High contrast border
                       </div>
                     </div>
                   </div>
@@ -767,27 +776,27 @@ describe('${component.name}', () => {
               </div>
               
               <div>
-                <h3 className="font-semibold mb-3">Design Tokens</h3>
-                <div className="space-y-3">
-                  <div className="p-3 border rounded-lg">
-                    <Label className="text-sm font-medium">Color Palette</Label>
-                    <div className="grid grid-cols-4 gap-2 mt-2">
-                      <div className="w-8 h-8 bg-primary rounded" title="Primary Color"></div>
-                      <div className="w-8 h-8 bg-secondary rounded" title="Secondary Color"></div>
-                      <div className="w-8 h-8 bg-success rounded" title="Success Color"></div>
-                      <div className="w-8 h-8 bg-destructive rounded" title="Error Color"></div>
+                <h3 className="font-semibold mb-3 text-sm sm:text-base">Design Tokens</h3>
+                <div className="space-y-2 sm:space-y-3">
+                  <div className="p-2 sm:p-3 border rounded-lg">
+                    <Label className="text-xs sm:text-sm font-medium">Color Palette</Label>
+                    <div className="grid grid-cols-4 gap-1 sm:gap-2 mt-2">
+                      <div className="w-6 h-6 sm:w-8 sm:h-8 bg-primary rounded" title="Primary Color"></div>
+                      <div className="w-6 h-6 sm:w-8 sm:h-8 bg-secondary rounded" title="Secondary Color"></div>
+                      <div className="w-6 h-6 sm:w-8 sm:h-8 bg-success rounded" title="Success Color"></div>
+                      <div className="w-6 h-6 sm:w-8 sm:h-8 bg-destructive rounded" title="Error Color"></div>
                     </div>
-                    <p className="text-xs text-muted-foreground mt-2">
-                      All colors pass AAA contrast requirements
+                    <p className="text-xs text-muted-foreground mt-1 sm:mt-2">
+                      All colors pass AAA contrast
                     </p>
                   </div>
-                  <div className="p-3 border rounded-lg">
-                    <Label className="text-sm font-medium">Typography Scale</Label>
+                  <div className="p-2 sm:p-3 border rounded-lg">
+                    <Label className="text-xs sm:text-sm font-medium">Typography Scale</Label>
                     <div className="mt-2 space-y-1">
-                      <div className="text-xs">12px - Small text</div>
-                      <div className="text-sm">14px - Body text</div>
+                      <div className="text-xs">12px - Small</div>
+                      <div className="text-sm">14px - Body</div>
                       <div className="text-base">16px - Default</div>
-                      <div className="text-lg">18px - Large text</div>
+                      <div className="text-lg">18px - Large</div>
                     </div>
                   </div>
                 </div>
@@ -798,38 +807,41 @@ describe('${component.name}', () => {
 
         {/* Component Detail Modal */}
         {selectedComponent && (
-          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-            <Card className="max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-              <CardHeader>
-                <div className="flex items-center justify-between">
-                  <CardTitle className="text-xl">{selectedComponent.name}</CardTitle>
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-2 sm:p-4">
+            <Card className="w-full max-w-4xl max-h-[95vh] sm:max-h-[90vh] overflow-y-auto">
+              <CardHeader className="p-4 sm:p-6">
+                <div className="flex items-center justify-between gap-2">
+                  <div className="min-w-0 flex-1">
+                    <CardTitle className="text-lg sm:text-xl truncate">{selectedComponent.name}</CardTitle>
+                    <p className="text-muted-foreground text-sm mt-1">{selectedComponent.description}</p>
+                  </div>
                   <Button
                     variant="ghost"
                     size="sm"
                     onClick={() => setSelectedComponent(null)}
+                    className="shrink-0"
                   >
                     ×
                   </Button>
                 </div>
-                <p className="text-muted-foreground">{selectedComponent.description}</p>
               </CardHeader>
-              <CardContent>
+              <CardContent className="p-4 sm:p-6">
                 <Tabs defaultValue="preview" className="w-full">
                   <TabsList className="grid w-full grid-cols-2">
-                    <TabsTrigger value="preview">Preview</TabsTrigger>
-                    <TabsTrigger value="code">Code</TabsTrigger>
+                    <TabsTrigger value="preview" className="text-sm">Preview</TabsTrigger>
+                    <TabsTrigger value="code" className="text-sm">Code</TabsTrigger>
                   </TabsList>
-                  <TabsContent value="preview" className="space-y-4">
-                    <div className="p-6 border rounded-lg bg-neutral-50 dark:bg-neutral-900">
+                  <TabsContent value="preview" className="space-y-3 sm:space-y-4">
+                    <div className="p-4 sm:p-6 border rounded-lg bg-neutral-50 dark:bg-neutral-900 overflow-x-auto">
                       {renderComponentPreview(selectedComponent)}
                     </div>
                     <div>
                       <Label className="text-sm font-medium">Props</Label>
                       <div className="mt-2 space-y-2">
                         {selectedComponent.props?.map((prop: string, index: number) => (
-                          <div key={index} className="flex items-center justify-between p-2 bg-neutral-50 dark:bg-neutral-800 rounded">
-                            <code className="text-sm">{prop}</code>
-                            <Badge variant="outline" className="text-xs">
+                          <div key={index} className="flex items-center justify-between p-2 bg-neutral-50 dark:bg-neutral-800 rounded gap-2">
+                            <code className="text-xs sm:text-sm truncate flex-1">{prop}</code>
+                            <Badge variant="outline" className="text-xs shrink-0">
                               {prop.includes('on') ? 'function' : 'string'}
                             </Badge>
                           </div>
@@ -837,17 +849,17 @@ describe('${component.name}', () => {
                       </div>
                     </div>
                   </TabsContent>
-                  <TabsContent value="code" className="space-y-4">
+                  <TabsContent value="code" className="space-y-3 sm:space-y-4">
                     <Tabs defaultValue="usage" className="w-full">
                       <TabsList className="grid w-full grid-cols-3">
-                        <TabsTrigger value="usage">Usage</TabsTrigger>
-                        <TabsTrigger value="props">Props</TabsTrigger>
-                        <TabsTrigger value="test">Testing</TabsTrigger>
+                        <TabsTrigger value="usage" className="text-xs sm:text-sm">Usage</TabsTrigger>
+                        <TabsTrigger value="props" className="text-xs sm:text-sm">Props</TabsTrigger>
+                        <TabsTrigger value="test" className="text-xs sm:text-sm">Testing</TabsTrigger>
                       </TabsList>
                       
-                      <TabsContent value="usage" className="space-y-4">
+                      <TabsContent value="usage" className="space-y-3 sm:space-y-4">
                         <div className="relative">
-                          <pre className="bg-neutral-900 text-neutral-100 p-4 rounded-lg text-sm overflow-x-auto">
+                          <pre className="bg-neutral-900 text-neutral-100 p-3 sm:p-4 rounded-lg text-xs sm:text-sm overflow-x-auto max-h-64 sm:max-h-80">
                             <code>{generateComponentCode(selectedComponent)}</code>
                           </pre>
                           <Button
@@ -857,21 +869,21 @@ describe('${component.name}', () => {
                             onClick={() => copyToClipboard(generateComponentCode(selectedComponent))}
                           >
                             {copiedCode === generateComponentCode(selectedComponent) ? (
-                              <Check className="w-4 h-4" />
+                              <Check className="w-3 h-3 sm:w-4 sm:h-4" />
                             ) : (
-                              <Copy className="w-4 h-4" />
+                              <Copy className="w-3 h-3 sm:w-4 sm:h-4" />
                             )}
                           </Button>
                         </div>
                       </TabsContent>
                       
-                      <TabsContent value="props" className="space-y-4">
-                        <div className="space-y-3">
+                      <TabsContent value="props" className="space-y-2 sm:space-y-3">
+                        <div className="space-y-2 sm:space-y-3 max-h-64 sm:max-h-80 overflow-y-auto">
                           {selectedComponent.props?.map((prop: string, index: number) => (
-                            <div key={index} className="p-3 border rounded-lg">
-                              <div className="flex items-center justify-between mb-2">
-                                <code className="text-sm font-mono font-medium">{prop}</code>
-                                <Badge variant="outline" className="text-xs">
+                            <div key={index} className="p-2 sm:p-3 border rounded-lg">
+                              <div className="flex items-center justify-between mb-1 sm:mb-2 gap-2">
+                                <code className="text-xs sm:text-sm font-mono font-medium truncate">{prop}</code>
+                                <Badge variant="outline" className="text-xs shrink-0">
                                   {prop.includes('on') ? 'function' : 
                                    prop.includes('is') || prop.includes('disabled') ? 'boolean' : 'string'}
                                 </Badge>
@@ -890,9 +902,9 @@ describe('${component.name}', () => {
                         </div>
                       </TabsContent>
                       
-                      <TabsContent value="test" className="space-y-4">
+                      <TabsContent value="test" className="space-y-3 sm:space-y-4">
                         <div className="relative">
-                          <pre className="bg-neutral-900 text-neutral-100 p-4 rounded-lg text-sm overflow-x-auto">
+                          <pre className="bg-neutral-900 text-neutral-100 p-3 sm:p-4 rounded-lg text-xs sm:text-sm overflow-x-auto max-h-64 sm:max-h-80">
                             <code>{generateTestCode(selectedComponent)}</code>
                           </pre>
                           <Button
@@ -902,9 +914,9 @@ describe('${component.name}', () => {
                             onClick={() => copyToClipboard(generateTestCode(selectedComponent))}
                           >
                             {copiedCode === generateTestCode(selectedComponent) ? (
-                              <Check className="w-4 h-4" />
+                              <Check className="w-3 h-3 sm:w-4 sm:h-4" />
                             ) : (
-                              <Copy className="w-4 h-4" />
+                              <Copy className="w-3 h-3 sm:w-4 sm:h-4" />
                             )}
                           </Button>
                         </div>
