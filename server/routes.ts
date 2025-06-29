@@ -31,9 +31,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
              req.url.includes('.css');
     }
   });
-  
+
   app.use('/api/', limiter); // Only apply to API routes
-  
+
   // Auth middleware
   await setupAuth(app);
 
@@ -63,35 +63,35 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post('/api/preset-users/switch/:userId', async (req: any, res) => {
     try {
       const { userId } = req.params;
-      
+
       // Validate userId format to prevent injection
       if (!/^[a-zA-Z0-9\-_]+$/.test(userId)) {
         return res.status(400).json({ message: "Invalid user ID format" });
       }
-      
+
       // Restrict to development environment only
       if (process.env.NODE_ENV !== 'development') {
         return res.status(403).json({ message: "User switching not allowed in production" });
       }
-      
+
       // Validate against whitelist of preset users
       const allowedUsers = [
         'consumer-001', 'consumer-002', 'consumer-new', 'consumer-kyc',
         'merchant-001', 'merchant-002', 'agent-001', 'dev-user-123'
       ];
-      
+
       if (!allowedUsers.includes(userId)) {
         return res.status(403).json({ message: "User not in allowed preset list" });
       }
-      
+
       const user = await storage.getUser(userId);
       if (!user) {
         return res.status(404).json({ message: "Preset user not found" });
       }
-      
+
       // Securely update development context without global variables
       req.session.devUserId = userId;
-      
+
       res.json({ success: true, user });
     } catch (error) {
       console.error("Error switching to preset user:", error);
@@ -103,12 +103,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get('/api/auth/user', async (req: any, res) => {
     try {
       let userId: string;
-      
+
       // Development mode: create or use existing dev user
       if (process.env.NODE_ENV === 'development') {
         userId = req.session?.devUserId || "dev-user-123";
         let user = await storage.getUser(userId);
-        
+
         if (!user) {
           // Create development user with complete profile
           user = await storage.upsertUser({
@@ -122,7 +122,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
             documentsVerified: true,
             biometricVerified: true
           });
-          
+
           // Auto-generate demo data for dev user
           try {
             const { createUserSampleData } = await import('./seed-data');
@@ -131,37 +131,37 @@ export async function registerRoutes(app: Express): Promise<Server> {
           } catch (seedError) {
             console.error("Error auto-seeding demo data:", seedError);
           }
-          
+
           // Fetch updated user data
           user = await storage.getUser(userId);
         }
-        
+
         res.json(user);
         return;
       }
-      
+
       // Production mode: require authentication
       if (!req.user) {
         return res.status(401).json({ message: "Unauthorized" });
       }
-      
+
       userId = req.user.claims.sub;
       let user = await storage.getUser(userId);
-      
+
       // Auto-generate demo data for first-time users
       if (user && !user.currentRole) {
         try {
           const { createUserSampleData } = await import('./seed-data');
           await createUserSampleData(userId, 'consumer');
           console.log(`Auto-generated demo data for user: ${userId}`);
-          
+
           // Fetch updated user data
           user = await storage.getUser(userId);
         } catch (seedError) {
           console.error("Error auto-seeding demo data:", seedError);
         }
       }
-      
+
       res.json(user);
     } catch (error) {
       console.error("Error fetching user:", error);
@@ -173,7 +173,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post('/api/onboarding/complete', async (req: any, res) => {
     try {
       let userId: string;
-      
+
       if (process.env.NODE_ENV === 'development') {
         userId = "dev-user-123";
       } else {
@@ -182,7 +182,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         }
         userId = req.user.claims.sub;
       }
-      
+
       const {
         firstName,
         lastName,
@@ -194,7 +194,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         country,
         preferredRole
       } = req.body;
-      
+
       const user = await storage.upsertUser({
         id: userId,
         email: sanitizeString(email),
@@ -208,7 +208,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         currentRole: preferredRole,
         kycStatus: 'pending'
       });
-      
+
       res.json({ success: true, user });
     } catch (error) {
       console.error("Error completing onboarding:", error);
@@ -220,14 +220,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post('/api/kyc/send-otp', async (req: any, res) => {
     try {
       const { phoneNumber } = req.body;
-      
+
       // In a real implementation, you would integrate with an SMS service
       // For now, we'll simulate sending an OTP
       const otp = Math.floor(100000 + Math.random() * 900000).toString();
-      
+
       // Store OTP in session or database (for demo, we'll just log it)
       console.log(`OTP for ${phoneNumber}: ${otp}`);
-      
+
       res.json({ success: true, message: "OTP sent successfully" });
     } catch (error) {
       console.error("Error sending OTP:", error);
@@ -238,7 +238,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post('/api/kyc/verify-otp', async (req: any, res) => {
     try {
       let userId: string;
-      
+
       if (process.env.NODE_ENV === 'development') {
         userId = "dev-user-123";
       } else {
@@ -247,9 +247,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
         }
         userId = req.user.claims.sub;
       }
-      
+
       const { phoneNumber, verificationCode } = req.body;
-      
+
       // In a real implementation, you would verify the OTP against stored value
       // For demo, we'll accept any 6-digit code
       if (verificationCode && verificationCode.length === 6) {
@@ -267,7 +267,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post('/api/kyc/upload-document', async (req: any, res) => {
     try {
       let userId: string;
-      
+
       if (process.env.NODE_ENV === 'development') {
         userId = "dev-user-123";
       } else {
@@ -276,11 +276,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
         }
         userId = req.user.claims.sub;
       }
-      
+
       // In a real implementation, you would handle file uploads
       // For demo, we'll just mark documents as verified
       await storage.updateVerificationStatus(userId, 'documentsVerified', true);
-      
+
       res.json({ success: true, message: "Documents uploaded successfully" });
     } catch (error) {
       console.error("Error uploading documents:", error);
@@ -291,7 +291,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post('/api/kyc/submit-biometric', async (req: any, res) => {
     try {
       let userId: string;
-      
+
       if (process.env.NODE_ENV === 'development') {
         userId = "dev-user-123";
       } else {
@@ -300,12 +300,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
         }
         userId = req.user.claims.sub;
       }
-      
+
       // In a real implementation, you would process biometric data
       // For demo, we'll mark biometric as verified and complete KYC
       await storage.updateVerificationStatus(userId, 'biometricVerified', true);
       await storage.updateKYCStatus(userId, 'verified');
-      
+
       res.json({ success: true, message: "Biometric verification completed" });
     } catch (error) {
       console.error("Error submitting biometric:", error);
@@ -318,7 +318,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const userId = req.user.claims.sub;
       let wallet = await storage.getWalletByUserId(userId);
-      
+
       if (!wallet) {
         // Create wallet and automatically seed demo data for new users
         wallet = await storage.createWallet({
@@ -327,13 +327,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
           pendingBalance: "0.00",
           currency: "USD"
         });
-        
+
         // Auto-generate demo data for new users
         try {
           const { createUserSampleData } = await import('./seed-data');
           await createUserSampleData(userId, 'consumer');
           console.log(`Auto-generated demo data for new user: ${userId}`);
-          
+
           // Fetch updated wallet with demo data
           wallet = await storage.getWalletByUserId(userId);
         } catch (seedError) {
@@ -341,7 +341,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           // Continue without failing the wallet creation
         }
       }
-      
+
       res.json(wallet);
     } catch (error) {
       console.error("Error fetching wallet:", error);
@@ -353,7 +353,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const userId = req.user.claims.sub;
       const { amount } = req.body;
-      
+
       if (!amount || parseFloat(amount) <= 0) {
         return res.status(400).json({ message: "Invalid amount" });
       }
@@ -386,7 +386,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const userId = req.user.claims.sub;
       const wallet = await storage.getWalletByUserId(userId);
-      
+
       if (!wallet) {
         return res.json([]);
       }
@@ -403,7 +403,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const userId = req.user.claims.sub;
       const { toUserId, amount, description } = req.body;
-      
+
       if (!toUserId || !amount || parseFloat(amount) <= 0) {
         return res.status(400).json({ message: "Invalid transaction data" });
       }
@@ -526,7 +526,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get('/api/wallets', async (req: any, res) => {
     try {
       let userId: string;
-      
+
       if (process.env.NODE_ENV === 'development') {
         userId = "dev-user-123";
       } else {
@@ -535,9 +535,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
         }
         userId = req.user.claims.sub;
       }
-      
+
       let wallets = await storage.getUserWallets(userId);
-      
+
       // Only auto-seed if user has absolutely no wallets
       if (wallets.length === 0) {
         try {
@@ -549,7 +549,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           console.error("Error auto-seeding wallet data:", seedError);
         }
       }
-      
+
       res.json(wallets);
     } catch (error) {
       console.error("Error fetching user wallets:", error);
@@ -560,7 +560,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get('/api/wallets/holdings', async (req: any, res) => {
     try {
       let userId: string;
-      
+
       if (process.env.NODE_ENV === 'development') {
         userId = "dev-user-123";
       } else {
@@ -569,7 +569,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         }
         userId = req.user.claims.sub;
       }
-      
+
       const holdings = await storage.getAssetHoldings(userId);
       res.json(holdings);
     } catch (error) {
@@ -581,7 +581,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get('/api/investments', async (req: any, res) => {
     try {
       let userId: string;
-      
+
       if (process.env.NODE_ENV === 'development') {
         userId = "dev-user-123";
       } else {
@@ -590,7 +590,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         }
         userId = req.user.claims.sub;
       }
-      
+
       const investments = await storage.getUserInvestments(userId);
       res.json(investments);
     } catch (error) {
@@ -602,7 +602,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get('/api/credit-facilities', async (req: any, res) => {
     try {
       let userId: string;
-      
+
       if (process.env.NODE_ENV === 'development') {
         userId = "dev-user-123";
       } else {
@@ -611,7 +611,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         }
         userId = req.user.claims.sub;
       }
-      
+
       const facilities = await storage.getCreditFacilities(userId);
       res.json(facilities);
     } catch (error) {
@@ -664,7 +664,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       };
 
       const qrCode = Buffer.from(JSON.stringify(qrData)).toString('base64');
-      
+
       res.json({ qrCode, data: qrData });
     } catch (error) {
       console.error("Error generating QR code:", error);
@@ -677,13 +677,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const userId = req.user.claims.sub;
       const { role, scenario, features } = req.body;
-      
+
       // Import seed functions
       const { createUserSampleData } = await import('./seed-data');
-      
+
       // Create basic demo data
       await createUserSampleData(userId, role || 'consumer');
-      
+
       res.json({ 
         message: "Demo data generated successfully",
         scenario: scenario || 'basic',
@@ -701,14 +701,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post('/api/clear-demo-data', isAuthenticated, async (req: any, res) => {
     try {
       const userId = req.user.claims.sub;
-      
+
       // Get user's wallet to clear demo transactions
       const wallet = await storage.getWalletByUserId(userId);
       if (wallet) {
         // Reset wallet balance to zero
         await storage.updateWalletBalance(wallet.id, "0.00", "0.00");
       }
-      
+
       res.json({ message: "Demo data cleared successfully" });
     } catch (error) {
       console.error("Error clearing demo data:", error);
@@ -776,7 +776,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       const updatedUser = await storage.updateUserCurrentRole(userId, role);
-      
+
       // Update session
       if (req.session?.user) {
         req.session.user.currentRole = role;
@@ -846,7 +846,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       const { subject, description, priority } = req.body;
-      
+
       if (!subject || !description) {
         return res.status(400).json({ message: "Subject and description are required" });
       }
@@ -868,7 +868,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // Register partnership routes
   registerPartnershipRoutes(app);
-  
+
   const httpServer = createServer(app);
   return httpServer;
 }

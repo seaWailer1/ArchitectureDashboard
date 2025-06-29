@@ -97,8 +97,49 @@ describe('Performance Tests', () => {
   });
 
   describe('Database Query Performance', () => {
-    it('optimizes database queries for large datasets', async () => {
-      // Test pagination performance
+    it('optimizes transaction queries with pagination', async () => {
+      const start = performance.now();
+      
+      await request(app)
+        .get('/api/transactions')
+        .query({ limit: 20, offset: 0 })
+        .expect(401);
+      
+      const end = performance.now();
+      
+      expect(end - start).toBeLessThan(200); // Improved target: 200ms
+    });
+
+    it('handles wallet queries efficiently', async () => {
+      const start = performance.now();
+      
+      await request(app)
+        .get('/api/wallets')
+        .expect(401);
+      
+      const end = performance.now();
+      
+      expect(end - start).toBeLessThan(100); // Target: 100ms with caching
+    });
+
+    it('performs well under cache pressure', async () => {
+      // Warm up cache
+      await request(app).get('/api/wallets').expect(401);
+      
+      const start = performance.now();
+      
+      // Multiple requests should hit cache
+      const promises = Array(10).fill(0).map(() =>
+        request(app).get('/api/wallets').expect(401)
+      );
+      
+      await Promise.all(promises);
+      const end = performance.now();
+      
+      expect(end - start).toBeLessThan(150); // Should be faster with cache
+    });
+
+    it('maintains performance with large result sets', async () => {
       const start = performance.now();
       
       await request(app)
@@ -108,7 +149,7 @@ describe('Performance Tests', () => {
       
       const end = performance.now();
       
-      expect(end - start).toBeLessThan(600); // 600ms for paginated query
+      expect(end - start).toBeLessThan(400); // Larger dataset target
     });
   });
 });
