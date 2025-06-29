@@ -41,6 +41,7 @@ export const LanguageSelector: React.FC<LanguageSelectorProps> = ({
   const currentLanguage = languages.find(lang => lang.code === language);
   
   const handleLanguageChange = (newLanguage: SupportedLanguage) => {
+    console.log('Language changing from', language, 'to', newLanguage);
     setLanguage(newLanguage);
     
     // Announce language change for screen readers

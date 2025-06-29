@@ -92,6 +92,7 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) 
   });
 
   const setLanguage = (lang: SupportedLanguage) => {
+    console.log('LanguageContext: Setting language to', lang);
     setLanguageState(lang);
     localStorage.setItem('afriPay-language', lang);
     
