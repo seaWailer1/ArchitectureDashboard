@@ -511,17 +511,20 @@ describe('${component.name}', () => {
                   {language === 'sw' && "Nyaraka kamili za Storybook na hadithi zaidi ya 15 za maingiliano zinazoshughulikia vipengele vya UI, vipengele vya pochi, malipo ya QR, na zana za utawala."}
                 </p>
               </div>
-              <Button 
-                size="sm" 
-                className="min-h-[44px]"
-                onClick={() => window.open('/admin', '_blank')}
-              >
-                <Star className="w-4 h-4 mr-2" />
-                {language === 'en' && 'View Stories'}
-                {language === 'fr' && 'Voir Histoires'}
-                {language === 'ar' && 'عرض القصص'}
-                {language === 'sw' && 'Ona Hadithi'}
-              </Button>
+              <div className="flex flex-col gap-2">
+                <div className="text-xs text-muted-foreground bg-amber-50 px-3 py-2 rounded border border-amber-200">
+                  {language === 'en' && 'Run: npm run storybook'}
+                  {language === 'fr' && 'Exécuter: npm run storybook'}
+                  {language === 'ar' && 'تشغيل: npm run storybook'}
+                  {language === 'sw' && 'Endesha: npm run storybook'}
+                </div>
+                <div className="text-xs text-muted-foreground">
+                  {language === 'en' && 'Then visit: localhost:6006'}
+                  {language === 'fr' && 'Puis visitez: localhost:6006'}
+                  {language === 'ar' && 'ثم قم بزيارة: localhost:6006'}
+                  {language === 'sw' && 'Kisha tembelea: localhost:6006'}
+                </div>
+              </div>
             </div>
           </div>
         </div>

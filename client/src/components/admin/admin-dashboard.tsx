@@ -522,13 +522,12 @@ export default function AdminDashboard() {
                   >
                     Open Component Library
                   </Button>
-                  <Button 
-                    variant="outline"
-                    onClick={() => window.open('/storybook', '_blank')}
-                    className="w-full min-h-[44px] text-sm"
-                  >
-                    Open Storybook
-                  </Button>
+                  <div className="p-3 bg-amber-50 border border-amber-200 rounded-lg">
+                    <p className="text-xs text-amber-800 font-medium mb-1">Storybook Setup Required</p>
+                    <p className="text-xs text-amber-700">
+                      Run <code className="font-mono bg-amber-100 px-1 rounded">npm run storybook</code> to start Storybook on port 6006
+                    </p>
+                  </div>
                 </div>
                 <div className="p-2 sm:p-3 bg-neutral-50 rounded-lg">
                   <p className="text-xs text-neutral-600 font-mono">
