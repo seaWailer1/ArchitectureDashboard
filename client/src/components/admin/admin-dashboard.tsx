@@ -285,7 +285,7 @@ export default function AdminDashboard() {
 
       <Tabs defaultValue="users" className="w-full">
         <div className="overflow-x-auto">
-          <TabsList className="grid grid-cols-5 min-w-full sm:w-full h-auto sm:h-auto">
+          <TabsList className="grid grid-cols-6 min-w-full sm:w-full h-auto sm:h-auto">
             <TabsTrigger value="users" className="text-xs sm:text-sm py-2 sm:py-3 min-h-[44px]">
               <Users className="w-4 h-4 sm:hidden mr-1" />
               <span className="hidden sm:inline">Users</span>
@@ -305,6 +305,11 @@ export default function AdminDashboard() {
               <Shield className="w-4 h-4 sm:hidden mr-1" />
               <span className="hidden sm:inline">KYC</span>
               <span className="sm:hidden">KYC</span>
+            </TabsTrigger>
+            <TabsTrigger value="demo" className="text-xs sm:text-sm py-2 sm:py-3 min-h-[44px]">
+              <Database className="w-4 h-4 sm:hidden mr-1" />
+              <span className="hidden sm:inline">Demo Data</span>
+              <span className="sm:hidden">Demo</span>
             </TabsTrigger>
             <TabsTrigger value="developer" className="text-xs sm:text-sm py-2 sm:py-3 min-h-[44px]">
               <Settings className="w-4 h-4 sm:hidden mr-1" />
@@ -491,8 +496,10 @@ export default function AdminDashboard() {
           </div>
         </TabsContent>
 
-        <TabsContent value="demo" className="space-y-6">
-          <DemoDataManager />
+        <TabsContent value="demo" className="space-y-3 sm:space-y-6 mt-4">
+          <div className="p-2 sm:p-0">
+            <DemoDataManager />
+          </div>
         </TabsContent>
 
         <TabsContent value="developer" className="space-y-3 sm:space-y-6 mt-4">
@@ -532,21 +539,21 @@ export default function AdminDashboard() {
             </Card>
 
             <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Database className="w-5 h-5" />
+              <CardHeader className="pb-3">
+                <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
+                  <Database className="w-4 h-4 sm:w-5 sm:h-5" />
                   CLI Tools
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <p className="text-sm text-neutral-600">
+              <CardContent className="space-y-3 sm:space-y-4 p-3 sm:p-4">
+                <p className="text-xs sm:text-sm text-neutral-600">
                   Command-line tools for component management and development workflow.
                 </p>
-                <div className="space-y-2 text-xs font-mono bg-neutral-900 text-neutral-100 p-3 rounded-lg">
+                <div className="space-y-1 sm:space-y-2 text-xs font-mono bg-neutral-900 text-neutral-100 p-2 sm:p-3 rounded-lg overflow-x-auto">
                   <div># Add new component</div>
-                  <div>bun codex.component.mts add Forms/Input input</div>
+                  <div className="break-all">bun codex.component.mts add Forms/Input input</div>
                   <div className="mt-2"># Remove component</div>
-                  <div>bun codex.component.mts remove Forms/Input</div>
+                  <div className="break-all">bun codex.component.mts remove Forms/Input</div>
                   <div className="mt-2"># List all components</div>
                   <div>bun codex.component.mts list</div>
                 </div>
@@ -557,29 +564,29 @@ export default function AdminDashboard() {
             </Card>
 
             <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <BarChart3 className="w-5 h-5" />
+              <CardHeader className="pb-3">
+                <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
+                  <BarChart3 className="w-4 h-4 sm:w-5 sm:h-5" />
                   Component Statistics
                 </CardTitle>
               </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <p className="text-2xl font-bold text-primary">60+</p>
-                    <p className="text-sm text-neutral-600">Total Components</p>
+              <CardContent className="p-3 sm:p-4">
+                <div className="grid grid-cols-2 gap-3 sm:gap-4">
+                  <div className="text-center p-2 bg-primary/5 rounded-lg">
+                    <p className="text-lg sm:text-2xl font-bold text-primary">103+</p>
+                    <p className="text-xs sm:text-sm text-neutral-600">Components</p>
                   </div>
-                  <div>
-                    <p className="text-2xl font-bold text-success">20+</p>
-                    <p className="text-sm text-neutral-600">Categories</p>
+                  <div className="text-center p-2 bg-success/5 rounded-lg">
+                    <p className="text-lg sm:text-2xl font-bold text-success">15+</p>
+                    <p className="text-xs sm:text-sm text-neutral-600">Stories</p>
                   </div>
-                  <div>
-                    <p className="text-2xl font-bold text-accent">AAA</p>
-                    <p className="text-sm text-neutral-600">Accessibility</p>
+                  <div className="text-center p-2 bg-accent/5 rounded-lg">
+                    <p className="text-lg sm:text-2xl font-bold text-accent">AAA</p>
+                    <p className="text-xs sm:text-sm text-neutral-600">Accessibility</p>
                   </div>
-                  <div>
-                    <p className="text-2xl font-bold text-info">100%</p>
-                    <p className="text-sm text-neutral-600">TypeScript</p>
+                  <div className="text-center p-2 bg-info/5 rounded-lg">
+                    <p className="text-lg sm:text-2xl font-bold text-info">100%</p>
+                    <p className="text-xs sm:text-sm text-neutral-600">TypeScript</p>
                   </div>
                 </div>
               </CardContent>
