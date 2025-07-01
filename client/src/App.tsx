@@ -6,6 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { useAuth } from "@/hooks/useAuth";
 import { SkipNav } from "@/components/ui/accessibility";
 import { LanguageProvider } from "@/contexts/LanguageContext";
+import { MultilingualAccessibilityProvider } from "@/components/ui/multilingual-accessibility-provider";
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/home";
 import Wallets from "@/pages/wallets";
@@ -21,6 +22,7 @@ import PresetUsers from "@/pages/preset-users";
 import PartnershipsPage from "@/pages/partnerships";
 import AccessibilityDemo from "@/pages/accessibility-demo";
 import LanguageDemo from "@/pages/language-demo";
+import CulturalAccessibilityDemo from "@/pages/cultural-accessibility-demo";
 import { ComponentLibrary } from "@/pages/component-library";
 import AdminPage from "@/pages/admin";
 
@@ -95,6 +97,7 @@ function Router() {
           <Route path="/partnerships" component={PartnershipsPage} />
           <Route path="/accessibility-demo" component={AccessibilityDemo} />
           <Route path="/language-demo" component={LanguageDemo} />
+          <Route path="/cultural-accessibility" component={CulturalAccessibilityDemo} />
           <Route path="/component-library" component={ComponentLibrary} />
           <Route path="/admin" component={AdminPage} />
           <Route component={NotFound} />
@@ -108,10 +111,12 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <LanguageProvider>
-        <TooltipProvider>
-          <Toaster />
-          <Router />
-        </TooltipProvider>
+        <MultilingualAccessibilityProvider>
+          <TooltipProvider>
+            <Toaster />
+            <Router />
+          </TooltipProvider>
+        </MultilingualAccessibilityProvider>
       </LanguageProvider>
     </QueryClientProvider>
   );
