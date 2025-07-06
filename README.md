@@ -49,22 +49,6 @@ A comprehensive African fintech super app built with React, TypeScript, and mode
 
 ## 🚀 Quick Start
 
-### Deploy on Replit (Recommended)
-
-1. **Fork the Repository**
-   ```bash
-   git clone https://github.com/yourusername/afripay-superapp.git
-   ```
-
-2. **Import to Replit**
-   - Go to [Replit](https://replit.com/new)
-   - Select "Import from GitHub"
-   - Enter the repository URL
-   - Click "Import and Run"
-
-3. **Environment Setup**
-   The application will automatically configure database and environment variables in Replit.
-
 ### Local Development
 
 ```bash
