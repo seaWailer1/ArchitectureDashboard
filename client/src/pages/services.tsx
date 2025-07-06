@@ -90,7 +90,7 @@ export default function Services() {
 
   const handleServiceLaunch = (serviceId: string, serviceName: string) => {
     // Page-based navigation for Quick Services
-    const pageBasedServices = {
+    const pageBasedServices: Record<string, string> = {
       'send-money': '/send-money',
       'pay-scan': '/pay-scan', 
       'buy-airtime': '/buy-airtime',

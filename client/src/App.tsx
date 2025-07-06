@@ -32,6 +32,19 @@ import SendMoneyAmount from "@/pages/send-money/amount";
 import SendMoneyConfirm from "@/pages/send-money/confirm";
 import SendMoneySuccess from "@/pages/send-money/success";
 
+import BuyAirtimeIndex from "@/pages/buy-airtime/index";
+import BuyAirtimeAmount from "@/pages/buy-airtime/amount";
+import BuyAirtimeConfirm from "@/pages/buy-airtime/confirm";
+import BuyAirtimeSuccess from "@/pages/buy-airtime/success";
+
+import PayScanIndex from "@/pages/pay-scan/index";
+import PayBillsIndex from "@/pages/pay-bills/index";
+import PayBillsProviders from "@/pages/pay-bills/providers";
+import PayBillsAccount from "@/pages/pay-bills/account";
+
+import ShopIndex from "@/pages/shop/index";
+import TransportIndex from "@/pages/transport/index";
+
 function Router() {
   const { user, isAuthenticated, isLoading } = useAuth();
 
@@ -112,6 +125,20 @@ function Router() {
           <Route path="/send-money/amount" component={SendMoneyAmount} />
           <Route path="/send-money/confirm" component={SendMoneyConfirm} />
           <Route path="/send-money/success" component={SendMoneySuccess} />
+          
+          <Route path="/buy-airtime" component={BuyAirtimeIndex} />
+          <Route path="/buy-airtime/amount" component={BuyAirtimeAmount} />
+          <Route path="/buy-airtime/confirm" component={BuyAirtimeConfirm} />
+          <Route path="/buy-airtime/success" component={BuyAirtimeSuccess} />
+          
+          <Route path="/pay-scan" component={PayScanIndex} />
+          
+          <Route path="/pay-bills" component={PayBillsIndex} />
+          <Route path="/pay-bills/providers" component={PayBillsProviders} />
+          <Route path="/pay-bills/account" component={PayBillsAccount} />
+          
+          <Route path="/shop" component={ShopIndex} />
+          <Route path="/transport" component={TransportIndex} />
           
           <Route component={NotFound} />
         </Switch>
