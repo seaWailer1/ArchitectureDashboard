@@ -175,6 +175,39 @@
     @apply card-refined mx-4 sm:mx-0;
   }
 
+  /* Enhanced Mobile-First Utilities */
+  .mobile-grid-1 {
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6;
+  }
+
+  .mobile-grid-2 {
+    @apply grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3 lg:gap-4;
+  }
+
+  .mobile-flex-col {
+    @apply flex flex-col sm:flex-row gap-3 sm:gap-4;
+  }
+
+  .mobile-text-responsive {
+    @apply text-sm sm:text-base lg:text-lg;
+  }
+
+  .mobile-heading-responsive {
+    @apply text-lg sm:text-xl lg:text-2xl font-bold;
+  }
+
+  .mobile-subheading-responsive {
+    @apply text-base sm:text-lg lg:text-xl font-semibold;
+  }
+
+  .mobile-padding-responsive {
+    @apply p-3 sm:p-4 lg:p-6;
+  }
+
+  .mobile-spacing-responsive {
+    @apply space-y-3 sm:space-y-4 lg:space-y-6;
+  }
+
   /* Enhanced Button Variants */
   .btn-mobile-primary {
     @apply touch-aaa-large bg-primary text-primary-foreground hover:bg-primary/90 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 rounded-xl font-semibold transition-colors;

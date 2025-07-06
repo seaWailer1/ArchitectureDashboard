@@ -78,32 +78,32 @@ export default function MerchantDashboard() {
   ];
 
   return (
-    <div className="space-y-6">
+    <div className="mobile-spacing-responsive">
       {/* Business Overview */}
       <Card className="bg-gradient-to-br from-green-600 via-green-500 to-emerald-600 text-white">
-        <CardContent className="p-6">
-          <div className="flex justify-between items-start mb-4">
-            <div>
+        <CardContent className="mobile-padding-responsive">
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start space-y-4 sm:space-y-0 mb-4">
+            <div className="flex-1">
               <p className="text-white/80 text-sm">Business Balance</p>
-              <h2 className="text-3xl font-bold">{formatCurrency(businessWallet?.balance || 0)}</h2>
+              <h2 className="text-2xl sm:text-3xl font-bold break-words">{formatCurrency(businessWallet?.balance || 0)}</h2>
               <div className="flex items-center space-x-2 mt-2">
                 <TrendingUp className="w-4 h-4 text-green-200" />
                 <span className="text-green-200 text-sm">+{businessMetrics.monthlyGrowth}% this month</span>
               </div>
             </div>
-            <div className="text-right">
+            <div className="text-left sm:text-right">
               <p className="text-white/80 text-sm">Today's Sales</p>
-              <p className="text-xl font-semibold">{formatCurrency(todaysTransactions.reduce((sum, t) => sum + parseFloat(t.amount), 0))}</p>
+              <p className="text-lg sm:text-xl font-semibold break-words">{formatCurrency(todaysTransactions.reduce((sum, t) => sum + parseFloat(t.amount), 0))}</p>
               <p className="text-white/60 text-sm">{todaysTransactions.length} transactions</p>
             </div>
           </div>
           
-          <div className="flex space-x-3">
-            <Button size="sm" className="bg-white/20 hover:bg-white/30 text-white flex-1">
+          <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3">
+            <Button size="sm" className="bg-white/20 hover:bg-white/30 text-white flex-1 min-h-[44px] touch-aaa">
               <Eye className="w-4 h-4 mr-2" />
               View Sales
             </Button>
-            <Button size="sm" className="bg-white/20 hover:bg-white/30 text-white flex-1">
+            <Button size="sm" className="bg-white/20 hover:bg-white/30 text-white flex-1 min-h-[44px] touch-aaa">
               <QrCode className="w-4 h-4 mr-2" />
               Payment QR
             </Button>
@@ -112,30 +112,30 @@ export default function MerchantDashboard() {
       </Card>
 
       {/* Key Metrics */}
-      <div className="grid grid-cols-2 gap-4">
+      <div className="mobile-grid-2">
         <Card>
-          <CardContent className="p-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-neutral-600">Total Sales</p>
-                <p className="text-2xl font-bold">{formatCurrency(businessMetrics.totalSales)}</p>
+          <CardContent className="mobile-padding-responsive">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-2 sm:space-y-0">
+              <div className="flex-1 min-w-0">
+                <p className="text-sm text-muted-foreground">Total Sales</p>
+                <p className="text-lg sm:text-2xl font-bold truncate">{formatCurrency(businessMetrics.totalSales)}</p>
               </div>
-              <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-                <CreditCard className="w-6 h-6 text-green-600" />
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                <CreditCard className="w-5 h-5 sm:w-6 sm:h-6 text-green-600" />
               </div>
             </div>
           </CardContent>
         </Card>
         
         <Card>
-          <CardContent className="p-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-neutral-600">Transactions</p>
-                <p className="text-2xl font-bold">{businessMetrics.totalTransactions}</p>
+          <CardContent className="mobile-padding-responsive">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-2 sm:space-y-0">
+              <div className="flex-1 min-w-0">
+                <p className="text-sm text-muted-foreground">Transactions</p>
+                <p className="text-lg sm:text-2xl font-bold">{businessMetrics.totalTransactions}</p>
               </div>
-              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-                <BarChart3 className="w-6 h-6 text-blue-600" />
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                <BarChart3 className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600" />
               </div>
             </div>
           </CardContent>
@@ -145,7 +145,7 @@ export default function MerchantDashboard() {
       {/* Quick Actions */}
       <Card>
         <CardHeader>
-          <CardTitle>Business Tools</CardTitle>
+          <CardTitle className="mobile-subheading-responsive">Business Tools</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-2 gap-4">

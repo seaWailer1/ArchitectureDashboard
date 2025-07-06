@@ -77,26 +77,26 @@ export default function Transactions() {
   });
 
   return (
-    <div className="min-h-screen bg-neutral-100">
+    <div className="min-h-screen bg-gradient-to-br from-neutral-50 to-neutral-100 dark:from-neutral-900 dark:to-neutral-800">
       <AppHeader />
       
-      <main className="max-w-md mx-auto px-4 pb-20">
+      <main className="container-content mobile-padding-responsive pb-24">
         {/* Header */}
-        <div className="py-6">
-          <h1 className="text-2xl font-bold text-neutral-900 mb-6">Transaction History</h1>
+        <div className="py-4 sm:py-6">
+          <h1 className="mobile-heading-responsive text-foreground mb-4 sm:mb-6">Transaction History</h1>
           
           {/* Filters */}
-          <div className="space-y-4 mb-6">
+          <div className="mobile-spacing-responsive mb-4 sm:mb-6">
             <Input
               placeholder="Search transactions..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full"
+              className="w-full min-h-[44px] text-base"
             />
             
-            <div className="flex space-x-3">
+            <div className="flex flex-col sm:flex-row gap-3">
               <Select value={filterType} onValueChange={setFilterType}>
-                <SelectTrigger className="flex-1">
+                <SelectTrigger className="flex-1 min-h-[44px]">
                   <SelectValue placeholder="Type" />
                 </SelectTrigger>
                 <SelectContent>
@@ -108,7 +108,7 @@ export default function Transactions() {
               </Select>
               
               <Select value={filterStatus} onValueChange={setFilterStatus}>
-                <SelectTrigger className="flex-1">
+                <SelectTrigger className="flex-1 min-h-[44px]">
                   <SelectValue placeholder="Status" />
                 </SelectTrigger>
                 <SelectContent>
@@ -123,10 +123,10 @@ export default function Transactions() {
         </div>
 
         {/* Transaction List */}
-        <div className="space-y-3">
+        <div className="space-y-2 sm:space-y-3">
           {filteredTransactions.length === 0 ? (
-            <div className="bg-white rounded-xl p-6 shadow-sm text-center">
-              <p className="text-neutral-600">
+            <div className="bg-white dark:bg-neutral-800 rounded-xl p-4 sm:p-6 shadow-sm text-center">
+              <p className="text-muted-foreground mobile-text-responsive">
                 {transactions.length === 0 ? "No transactions yet" : "No transactions match your filters"}
               </p>
             </div>
@@ -135,26 +135,26 @@ export default function Transactions() {
               const { icon: Icon, color } = getTransactionIcon(transaction.type);
               
               return (
-                <div key={transaction.id} className="bg-white rounded-xl p-4 shadow-sm">
+                <div key={transaction.id} className="bg-white dark:bg-neutral-800 rounded-xl p-3 sm:p-4 shadow-sm min-h-[72px] touch-aaa">
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-3">
-                      <div className={`w-10 h-10 rounded-full flex items-center justify-center ${color}`}>
-                        <Icon className="w-4 h-4" />
+                    <div className="flex items-center space-x-2 sm:space-x-3 flex-1 min-w-0">
+                      <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center ${color} flex-shrink-0`}>
+                        <Icon className="w-4 h-4 sm:w-5 sm:h-5" />
                       </div>
-                      <div>
-                        <p className="font-medium text-neutral-900">
+                      <div className="min-w-0 flex-1">
+                        <p className="font-medium text-foreground mobile-text-responsive truncate">
                           {getTransactionDescription(transaction)}
                         </p>
-                        <p className="text-sm text-neutral-600">
+                        <p className="text-xs sm:text-sm text-muted-foreground truncate">
                           {formatDate(transaction.createdAt)}
                         </p>
                       </div>
                     </div>
-                    <div className="text-right">
-                      <p className={`font-semibold ${getAmountColor(transaction.type)}`}>
+                    <div className="text-right flex-shrink-0 ml-2">
+                      <p className={`font-semibold text-sm sm:text-base ${getAmountColor(transaction.type)}`}>
                         {formatAmount(transaction.amount, transaction.type)}
                       </p>
-                      <p className="text-xs text-neutral-600 capitalize">
+                      <p className="text-xs text-muted-foreground capitalize">
                         {transaction.status}
                       </p>
                     </div>

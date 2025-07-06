@@ -146,21 +146,21 @@ export default function SendMoney({ onBack }: SendMoneyProps) {
         <div className="space-y-4">
           <Card>
             <CardHeader>
-              <CardTitle>Choose Recipient</CardTitle>
+              <CardTitle className="text-lg sm:text-xl">Choose Recipient</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <Tabs value={sendMethod} onValueChange={setSendMethod}>
-                <TabsList className="grid w-full grid-cols-2">
-                  <TabsTrigger value="phone">Phone Number</TabsTrigger>
-                  <TabsTrigger value="contacts">Recent Contacts</TabsTrigger>
+                <TabsList className="grid w-full grid-cols-2 h-auto">
+                  <TabsTrigger value="phone" className="min-h-[44px] text-sm sm:text-base">Phone Number</TabsTrigger>
+                  <TabsTrigger value="contacts" className="min-h-[44px] text-sm sm:text-base">Recent Contacts</TabsTrigger>
                 </TabsList>
 
                 <TabsContent value="phone" className="space-y-4">
                   <div>
-                    <Label>Phone Number</Label>
-                    <div className="flex space-x-2 mt-2">
+                    <Label className="text-sm sm:text-base">Phone Number</Label>
+                    <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2 mt-2">
                       <Select defaultValue="+234">
-                        <SelectTrigger className="w-24">
+                        <SelectTrigger className="w-full sm:w-24 min-h-[44px]">
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
@@ -175,7 +175,9 @@ export default function SendMoney({ onBack }: SendMoneyProps) {
                         placeholder="901 234 5678"
                         value={recipient}
                         onChange={(e) => setRecipient(e.target.value)}
-                        className="flex-1"
+                        className="flex-1 min-h-[44px] text-base"
+                        type="tel"
+                        inputMode="tel"
                       />
                     </div>
                   </div>
@@ -183,12 +185,12 @@ export default function SendMoney({ onBack }: SendMoneyProps) {
 
                 <TabsContent value="contacts" className="space-y-4">
                   <div className="relative">
-                    <Search className="absolute left-3 top-3 w-4 h-4 text-gray-400" />
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                     <Input
                       placeholder="Search contacts..."
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      className="pl-10"
+                      className="pl-10 min-h-[44px] text-base"
                     />
                   </div>
                   
@@ -196,7 +198,7 @@ export default function SendMoney({ onBack }: SendMoneyProps) {
                     {filteredContacts.map((contact) => (
                       <div
                         key={contact.id}
-                        className={`p-3 border rounded-lg cursor-pointer transition-colors ${
+                        className={`p-3 border rounded-lg cursor-pointer transition-colors min-h-[72px] touch-aaa ${
                           selectedContact?.id === contact.id
                             ? 'border-primary bg-primary/5'
                             : 'border-gray-200 hover:border-primary/50'
@@ -204,14 +206,14 @@ export default function SendMoney({ onBack }: SendMoneyProps) {
                         onClick={() => setSelectedContact(contact)}
                       >
                         <div className="flex items-center space-x-3">
-                          <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-primary font-semibold">
+                          <div className="w-10 h-10 sm:w-12 sm:h-12 bg-primary/10 rounded-full flex items-center justify-center text-primary font-semibold flex-shrink-0">
                             {contact.avatar}
                           </div>
-                          <div className="flex-1">
-                            <p className="font-medium">{contact.name}</p>
-                            <p className="text-sm text-gray-600">{contact.phone}</p>
+                          <div className="flex-1 min-w-0">
+                            <p className="font-medium text-sm sm:text-base truncate">{contact.name}</p>
+                            <p className="text-xs sm:text-sm text-gray-600 truncate">{contact.phone}</p>
                           </div>
-                          <div className="text-right">
+                          <div className="text-right flex-shrink-0">
                             <p className="text-xs text-gray-500">Last sent</p>
                             <p className="text-xs text-gray-600">{contact.lastSent}</p>
                           </div>

@@ -144,19 +144,19 @@ export default function Services() {
       <AppHeader />
 
       <main className="container-content spacing-y-lg pb-24">
-        <div className="space-y-8">
-          <h1 className="text-heading-1 text-refined-heading">Services & Apps</h1>
+        <div className="space-y-6 sm:space-y-8">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground">Services & Apps</h1>
 
           {/* Featured Services */}
-          <div className="brand-primary rounded-3xl spacing-xl text-white elevation-4">
-            <h2 className="text-heading-2 font-bold mb-3">Mini-App Ecosystem</h2>
-            <p className="text-body opacity-90 mb-6 leading-relaxed">
+          <div className="brand-primary rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-8 text-white elevation-4">
+            <h2 className="text-lg sm:text-xl lg:text-2xl font-bold mb-2 sm:mb-3">Mini-App Ecosystem</h2>
+            <p className="text-sm sm:text-base opacity-90 mb-4 sm:mb-6 leading-relaxed">
               Discover integrated services and third-party apps in the AfriPay ecosystem
             </p>
             <Button 
               variant="secondary" 
               size="sm"
-              className="bg-white/20 text-white hover:bg-white/30 border-white/20 backdrop-blur-sm font-semibold touch-aaa focus-aaa"
+              className="bg-white/20 text-white hover:bg-white/30 border-white/20 backdrop-blur-sm font-semibold min-h-[44px] touch-aaa focus-aaa w-full sm:w-auto"
               onClick={() => toast({ title: "Coming Soon", description: "Developer portal coming soon" })}
             >
               Developer Portal
@@ -164,11 +164,11 @@ export default function Services() {
           </div>
 
           {/* Service Categories */}
-          <div className="space-y-8">
+          <div className="space-y-6 sm:space-y-8">
             {serviceCategories.map((category) => (
-              <div key={category.title} className="space-y-6">
-                <h3 className="text-heading-3 text-refined-heading">{category.title}</h3>
-                <div className="grid grid-cols-2 gap-4">
+              <div key={category.title} className="space-y-4 sm:space-y-6">
+                <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-foreground">{category.title}</h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
                   {category.services.map((service) => (
                     <NativeServiceCard
                       key={service.id}
@@ -186,14 +186,14 @@ export default function Services() {
           </div>
 
           {/* Partner Integration */}
-          <div className="card-refined bg-white dark:bg-neutral-800 p-8 shadow-elevated">
-            <h3 className="text-xl font-bold text-refined-heading mb-4">Partner with AfriPay</h3>
-            <p className="text-sm text-refined-muted mb-6 leading-relaxed">
+          <div className="card-refined bg-white dark:bg-neutral-800 p-4 sm:p-6 lg:p-8 shadow-elevated">
+            <h3 className="text-lg sm:text-xl font-bold text-foreground mb-3 sm:mb-4">Partner with AfriPay</h3>
+            <p className="text-sm sm:text-base text-muted-foreground mb-4 sm:mb-6 leading-relaxed">
               Integrate your service into our ecosystem and reach millions of African users across the continent
             </p>
             <Button 
               variant="outline" 
-              className="w-full btn-secondary-refined font-semibold py-3"
+              className="w-full btn-secondary-refined font-semibold min-h-[44px] py-3 touch-aaa"
               onClick={() => setLocation('/partnerships')}
             >
               Learn More About Partnerships
