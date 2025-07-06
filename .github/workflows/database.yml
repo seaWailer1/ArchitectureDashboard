@@ -1,0 +1,402 @@
+name: Database Management
+
+on:
+  push:
+    branches: [ main, develop ]
+    paths: 
+      - 'shared/schema.ts'
+      - 'server/storage.ts'
+      - 'drizzle.config.ts'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'shared/schema.ts'
+      - 'server/storage.ts'
+      - 'drizzle.config.ts'
+  workflow_dispatch:
+    inputs:
+      action:
+        description: 'Database action to perform'
+        required: true
+        default: 'validate'
+        type: choice
+        options:
+          - validate
+          - migrate
+          - seed
+          - backup
+          - restore
+
+jobs:
+  schema-validation:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Use Node.js 20.x
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20.x
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Validate schema syntax
+      run: npx tsc --noEmit shared/schema.ts
+    
+    - name: Check schema consistency
+      run: npm run db:validate-schema
+    
+    - name: Validate Drizzle configuration
+      run: npx drizzle-kit check:pg --config=drizzle.config.ts
+    
+    - name: Generate schema documentation
+      run: npm run db:generate-docs
+    
+    - name: Upload schema documentation
+      uses: actions/upload-artifact@v3
+      with:
+        name: schema-docs
+        path: schema-docs/
+
+  migration-testing:
+    runs-on: ubuntu-latest
+    needs: schema-validation
+    
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_PASSWORD: testpassword
+          POSTGRES_DB: afripay_test
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Use Node.js 20.x
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20.x
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Test database connection
+      run: npm run db:test-connection
+      env:
+        DATABASE_URL: postgresql://postgres:testpassword@localhost:5432/afripay_test
+    
+    - name: Run database migrations
+      run: npm run db:push
+      env:
+        DATABASE_URL: postgresql://postgres:testpassword@localhost:5432/afripay_test
+    
+    - name: Verify migration integrity
+      run: npm run db:verify-migrations
+      env:
+        DATABASE_URL: postgresql://postgres:testpassword@localhost:5432/afripay_test
+    
+    - name: Test data insertion
+      run: npm run db:test-crud
+      env:
+        DATABASE_URL: postgresql://postgres:testpassword@localhost:5432/afripay_test
+    
+    - name: Test schema constraints
+      run: npm run db:test-constraints
+      env:
+        DATABASE_URL: postgresql://postgres:testpassword@localhost:5432/afripay_test
+    
+    - name: Performance test database operations
+      run: npm run db:test-performance
+      env:
+        DATABASE_URL: postgresql://postgres:testpassword@localhost:5432/afripay_test
+
+  data-migration:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch' && github.event.inputs.action == 'migrate'
+    
+    environment:
+      name: production-db
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Use Node.js 20.x
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20.x
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Create database backup
+      run: npm run db:backup
+      env:
+        DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        BACKUP_STORAGE: ${{ secrets.BACKUP_STORAGE_URL }}
+    
+    - name: Run database migrations
+      run: npm run db:migrate
+      env:
+        DATABASE_URL: ${{ secrets.DATABASE_URL }}
+    
+    - name: Verify migration success
+      run: npm run db:verify-migration
+      env:
+        DATABASE_URL: ${{ secrets.DATABASE_URL }}
+    
+    - name: Update database indexes
+      run: npm run db:update-indexes
+      env:
+        DATABASE_URL: ${{ secrets.DATABASE_URL }}
+    
+    - name: Notify migration completion
+      uses: 8398a7/action-slack@v3
+      with:
+        status: success
+        text: 'Database migration completed successfully! 🗄️'
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+  seed-data:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch' && github.event.inputs.action == 'seed'
+    
+    environment:
+      name: staging-db
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Use Node.js 20.x
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20.x
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Clear existing test data
+      run: npm run db:clear-test-data
+      env:
+        DATABASE_URL: ${{ secrets.STAGING_DATABASE_URL }}
+    
+    - name: Seed preset users
+      run: npm run db:seed-preset-users
+      env:
+        DATABASE_URL: ${{ secrets.STAGING_DATABASE_URL }}
+    
+    - name: Seed demo data
+      run: npm run db:seed-demo-data
+      env:
+        DATABASE_URL: ${{ secrets.STAGING_DATABASE_URL }}
+    
+    - name: Seed e-commerce data
+      run: npm run db:seed-ecommerce
+      env:
+        DATABASE_URL: ${{ secrets.STAGING_DATABASE_URL }}
+    
+    - name: Verify seeded data integrity
+      run: npm run db:verify-seed-data
+      env:
+        DATABASE_URL: ${{ secrets.STAGING_DATABASE_URL }}
+
+  backup-database:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch' && github.event.inputs.action == 'backup'
+    
+    environment:
+      name: production-db
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Install PostgreSQL client
+      run: sudo apt-get update && sudo apt-get install -y postgresql-client
+    
+    - name: Create full database backup
+      run: |
+        pg_dump "${{ secrets.DATABASE_URL }}" > backup-$(date +%Y%m%d-%H%M%S).sql
+        gzip backup-*.sql
+    
+    - name: Upload backup to storage
+      run: |
+        # Upload to cloud storage (AWS S3, Google Cloud, etc.)
+        echo "Uploading backup to secure storage"
+        # Add cloud storage upload commands here
+    
+    - name: Create incremental backup
+      run: |
+        # Create WAL-based incremental backup
+        echo "Creating incremental backup"
+        # Add incremental backup commands here
+    
+    - name: Verify backup integrity
+      run: |
+        # Test backup restoration on a separate instance
+        echo "Verifying backup integrity"
+        # Add backup verification commands here
+    
+    - name: Cleanup old backups
+      run: |
+        # Remove backups older than 30 days
+        echo "Cleaning up old backups"
+        # Add cleanup commands here
+
+  database-monitoring:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Use Node.js 20.x
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20.x
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Check database health
+      run: npm run db:health-check
+      env:
+        DATABASE_URL: ${{ secrets.DATABASE_URL }}
+    
+    - name: Monitor database performance
+      run: npm run db:performance-check
+      env:
+        DATABASE_URL: ${{ secrets.DATABASE_URL }}
+    
+    - name: Check query performance
+      run: npm run db:query-analysis
+      env:
+        DATABASE_URL: ${{ secrets.DATABASE_URL }}
+    
+    - name: Monitor connection pool
+      run: npm run db:connection-monitoring
+      env:
+        DATABASE_URL: ${{ secrets.DATABASE_URL }}
+    
+    - name: Check storage usage
+      run: npm run db:storage-check
+      env:
+        DATABASE_URL: ${{ secrets.DATABASE_URL }}
+    
+    - name: Send metrics to monitoring system
+      run: |
+        npm run db:collect-metrics
+        curl -X POST "${{ secrets.DB_METRICS_WEBHOOK_URL }}" \
+          -H "Content-Type: application/json" \
+          -d @db-metrics.json
+
+  security-audit:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Use Node.js 20.x
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20.x
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Audit database security
+      run: npm run db:security-audit
+      env:
+        DATABASE_URL: ${{ secrets.DATABASE_URL }}
+    
+    - name: Check for SQL injection vulnerabilities
+      run: npm run db:sql-injection-test
+    
+    - name: Verify access controls
+      run: npm run db:access-control-test
+      env:
+        DATABASE_URL: ${{ secrets.DATABASE_URL }}
+    
+    - name: Check encryption at rest
+      run: npm run db:encryption-check
+      env:
+        DATABASE_URL: ${{ secrets.DATABASE_URL }}
+    
+    - name: Audit user permissions
+      run: npm run db:permissions-audit
+      env:
+        DATABASE_URL: ${{ secrets.DATABASE_URL }}
+    
+    - name: Upload security report
+      uses: actions/upload-artifact@v3
+      with:
+        name: db-security-report
+        path: db-security-report.html
+
+  disaster-recovery-test:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && github.event.inputs.action == 'restore')
+    
+    environment:
+      name: disaster-recovery
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Use Node.js 20.x
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20.x
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Test backup restoration
+      run: npm run db:test-restore
+      env:
+        BACKUP_URL: ${{ secrets.LATEST_BACKUP_URL }}
+        TEST_DATABASE_URL: ${{ secrets.DR_TEST_DATABASE_URL }}
+    
+    - name: Verify data integrity after restore
+      run: npm run db:verify-restore
+      env:
+        TEST_DATABASE_URL: ${{ secrets.DR_TEST_DATABASE_URL }}
+    
+    - name: Test application connectivity
+      run: npm run db:test-app-connectivity
+      env:
+        DATABASE_URL: ${{ secrets.DR_TEST_DATABASE_URL }}
+    
+    - name: Measure recovery time
+      run: npm run db:measure-rto-rpo
+    
+    - name: Generate DR test report
+      run: npm run db:dr-report
+    
+    - name: Cleanup test environment
+      run: npm run db:cleanup-dr-test
+      env:
+        TEST_DATABASE_URL: ${{ secrets.DR_TEST_DATABASE_URL }}

@@ -1,0 +1,293 @@
+name: Internationalization Testing
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    # Run weekly on Sundays at 3 AM UTC
+    - cron: '0 3 * * 0'
+
+jobs:
+  translation-validation:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Use Node.js 20.x
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20.x
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Validate translation keys
+      run: npm run test:i18n:keys
+    
+    - name: Check translation completeness
+      run: npm run test:i18n:completeness
+    
+    - name: Validate translation file syntax
+      run: npm run test:i18n:syntax
+    
+    - name: Check for missing translations
+      run: npm run test:i18n:missing
+    
+    - name: Generate translation report
+      run: npm run i18n:report
+    
+    - name: Upload translation report
+      uses: actions/upload-artifact@v3
+      with:
+        name: translation-report
+        path: i18n-report.html
+
+  rtl-testing:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Use Node.js 20.x
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20.x
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Build application
+      run: npm run build
+    
+    - name: Start application
+      run: npm run dev &
+      env:
+        NODE_ENV: test
+    
+    - name: Wait for application to start
+      run: sleep 10
+    
+    - name: Install Playwright browsers
+      run: npx playwright install --with-deps
+    
+    - name: Test RTL layout for Arabic
+      run: npm run test:rtl -- --lang=ar
+    
+    - name: Test text alignment in RTL mode
+      run: npm run test:rtl:alignment
+    
+    - name: Test navigation in RTL mode
+      run: npm run test:rtl:navigation
+    
+    - name: Test form inputs in RTL mode
+      run: npm run test:rtl:forms
+    
+    - name: Screenshot RTL layout
+      run: npm run test:rtl:screenshots
+    
+    - name: Upload RTL test results
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: rtl-test-results
+        path: |
+          test-results/rtl/
+          screenshots/rtl/
+
+  multilingual-e2e:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        language: [en, fr, ar, sw]
+        browser: [chromium, firefox, webkit]
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Use Node.js 20.x
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20.x
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Build application
+      run: npm run build
+    
+    - name: Start application
+      run: npm run dev &
+      env:
+        NODE_ENV: test
+    
+    - name: Wait for application to start
+      run: sleep 10
+    
+    - name: Install Playwright browsers
+      run: npx playwright install --with-deps ${{ matrix.browser }}
+    
+    - name: Run E2E tests in ${{ matrix.language }}
+      run: npm run test:e2e:lang -- --lang=${{ matrix.language }} --browser=${{ matrix.browser }}
+    
+    - name: Test user journey in ${{ matrix.language }}
+      run: npm run test:journey:lang -- --lang=${{ matrix.language }} --browser=${{ matrix.browser }}
+    
+    - name: Upload test results
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: e2e-results-${{ matrix.language }}-${{ matrix.browser }}
+        path: test-results/
+
+  cultural-localization:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Use Node.js 20.x
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20.x
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Build application
+      run: npm run build
+    
+    - name: Start application
+      run: npm run dev &
+      env:
+        NODE_ENV: test
+    
+    - name: Wait for application to start
+      run: sleep 10
+    
+    - name: Test currency formatting
+      run: npm run test:cultural:currency
+    
+    - name: Test date formatting
+      run: npm run test:cultural:dates
+    
+    - name: Test number formatting
+      run: npm run test:cultural:numbers
+    
+    - name: Test cultural color meanings
+      run: npm run test:cultural:colors
+    
+    - name: Test cultural navigation patterns
+      run: npm run test:cultural:navigation
+    
+    - name: Test cultural accessibility features
+      run: npm run test:cultural:accessibility
+    
+    - name: Upload cultural test results
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: cultural-localization-results
+        path: test-results/cultural/
+
+  platform-specific-testing:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        platform: [ios, android, web, harmonyos]
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Use Node.js 20.x
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20.x
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Build application
+      run: npm run build
+    
+    - name: Start application
+      run: npm run dev &
+      env:
+        NODE_ENV: test
+        PLATFORM_OVERRIDE: ${{ matrix.platform }}
+    
+    - name: Wait for application to start
+      run: sleep 10
+    
+    - name: Test platform-specific UI adaptation
+      run: npm run test:platform -- --platform=${{ matrix.platform }}
+    
+    - name: Test platform-specific animations
+      run: npm run test:platform:animations -- --platform=${{ matrix.platform }}
+    
+    - name: Test platform-specific gestures
+      run: npm run test:platform:gestures -- --platform=${{ matrix.platform }}
+    
+    - name: Test haptic feedback simulation
+      run: npm run test:platform:haptics -- --platform=${{ matrix.platform }}
+    
+    - name: Upload platform test results
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: platform-results-${{ matrix.platform }}
+        path: test-results/platform/${{ matrix.platform }}/
+
+  translation-sync:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Use Node.js 20.x
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20.x
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Extract translation keys
+      run: npm run i18n:extract
+    
+    - name: Upload to translation service
+      run: npm run i18n:upload
+      env:
+        TRANSLATION_API_KEY: ${{ secrets.TRANSLATION_API_KEY }}
+    
+    - name: Create translation PR if changes detected
+      uses: peter-evans/create-pull-request@v5
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        commit-message: 'feat(i18n): update translation keys'
+        title: 'Update translation keys'
+        body: |
+          Automated update of translation keys detected.
+          
+          This PR includes:
+          - New translation keys extracted from source code
+          - Updated existing translations
+          - Synchronization with translation service
+        branch: feature/translation-sync

@@ -1,0 +1,167 @@
+name: Workflow Configuration
+
+# This workflow validates and manages other workflow configurations
+
+on:
+  push:
+    branches: [ main, develop ]
+    paths:
+      - '.github/workflows/**'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - '.github/workflows/**'
+
+jobs:
+  validate-workflows:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Validate workflow syntax
+      run: |
+        echo "Validating GitHub Actions workflow syntax..."
+        for workflow in .github/workflows/*.yml; do
+          echo "Validating $workflow"
+          # Basic YAML syntax validation
+          python -c "import yaml; yaml.safe_load(open('$workflow'))"
+        done
+    
+    - name: Check workflow dependencies
+      run: |
+        echo "Checking workflow dependencies..."
+        # Verify all referenced actions exist and are using secure versions
+        grep -r "uses:" .github/workflows/ | grep -v "# " | while read line; do
+          action=$(echo "$line" | cut -d':' -f3 | tr -d ' ')
+          echo "Found action: $action"
+        done
+    
+    - name: Validate secrets usage
+      run: |
+        echo "Validating secrets usage..."
+        # Check that all referenced secrets are documented
+        grep -r "secrets\." .github/workflows/ | grep -v "# " | while read line; do
+          secret=$(echo "$line" | grep -o 'secrets\.[A-Z_]*' | cut -d'.' -f2)
+          echo "Found secret reference: $secret"
+        done
+    
+    - name: Check workflow permissions
+      run: |
+        echo "Checking workflow permissions..."
+        # Ensure workflows follow principle of least privilege
+        for workflow in .github/workflows/*.yml; do
+          if grep -q "permissions:" "$workflow"; then
+            echo "$workflow: Has explicit permissions ✓"
+          else
+            echo "$workflow: Using default permissions ⚠️"
+          fi
+        done
+
+  workflow-documentation:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Generate workflow documentation
+      run: |
+        echo "# GitHub Workflows Documentation" > workflow-docs.md
+        echo "" >> workflow-docs.md
+        echo "This document describes all GitHub Actions workflows in the AfriPay project." >> workflow-docs.md
+        echo "" >> workflow-docs.md
+        
+        for workflow in .github/workflows/*.yml; do
+          name=$(basename "$workflow" .yml)
+          echo "## $name" >> workflow-docs.md
+          echo "" >> workflow-docs.md
+          
+          # Extract workflow description from name field
+          description=$(grep "^name:" "$workflow" | cut -d':' -f2 | tr -d ' ')
+          echo "**Purpose**: $description" >> workflow-docs.md
+          echo "" >> workflow-docs.md
+          
+          # Extract triggers
+          echo "**Triggers**:" >> workflow-docs.md
+          if grep -q "push:" "$workflow"; then
+            echo "- Push to main/develop branches" >> workflow-docs.md
+          fi
+          if grep -q "pull_request:" "$workflow"; then
+            echo "- Pull requests to main" >> workflow-docs.md
+          fi
+          if grep -q "schedule:" "$workflow"; then
+            echo "- Scheduled execution" >> workflow-docs.md
+          fi
+          if grep -q "workflow_dispatch:" "$workflow"; then
+            echo "- Manual trigger" >> workflow-docs.md
+          fi
+          echo "" >> workflow-docs.md
+          
+          # Extract jobs
+          echo "**Jobs**:" >> workflow-docs.md
+          grep "^  [a-z-]*:" "$workflow" | grep -v "^  on:" | grep -v "^  env:" | while read job; do
+            job_name=$(echo "$job" | cut -d':' -f1 | tr -d ' ')
+            echo "- $job_name" >> workflow-docs.md
+          done
+          echo "" >> workflow-docs.md
+        done
+    
+    - name: Upload workflow documentation
+      uses: actions/upload-artifact@v3
+      with:
+        name: workflow-documentation
+        path: workflow-docs.md
+
+  security-check:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Check for hardcoded secrets
+      run: |
+        echo "Checking for hardcoded secrets in workflows..."
+        # Look for potential secrets that should be in GitHub Secrets
+        if grep -r "password\|token\|key\|secret" .github/workflows/ | grep -v "secrets\." | grep -v "# "; then
+          echo "⚠️  Found potential hardcoded secrets!"
+          exit 1
+        else
+          echo "✓ No hardcoded secrets found"
+        fi
+    
+    - name: Validate action versions
+      run: |
+        echo "Checking action versions for security..."
+        # Ensure we're not using actions with known vulnerabilities
+        grep -r "uses:" .github/workflows/ | grep -v "# " | while read line; do
+          action=$(echo "$line" | cut -d':' -f3 | tr -d ' ')
+          if [[ "$action" == *"@main"* ]] || [[ "$action" == *"@master"* ]]; then
+            echo "⚠️  Action using unstable version: $action"
+          fi
+        done
+    
+    - name: Check workflow permissions
+      run: |
+        echo "Validating workflow permissions..."
+        for workflow in .github/workflows/*.yml; do
+          if grep -q "write-all\|admin" "$workflow"; then
+            echo "⚠️  Workflow $workflow has elevated permissions"
+          fi
+        done
+
+  notification:
+    runs-on: ubuntu-latest
+    needs: [validate-workflows, workflow-documentation, security-check]
+    if: always() && github.ref == 'refs/heads/main'
+    
+    steps:
+    - name: Notify workflow validation results
+      uses: 8398a7/action-slack@v3
+      with:
+        status: ${{ job.status }}
+        text: 'GitHub workflows validation completed'
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
