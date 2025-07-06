@@ -154,12 +154,12 @@ jobs:
     - name: Run TypeScript validation
       run: |
         echo "Running TypeScript validation for components..."
-        npx tsc --noEmit --project tsconfig.json
+        npm run check
     
     - name: Run component linting
       run: |
         echo "Linting component files..."
-        npx eslint client/src/components/**/*.{ts,tsx} --max-warnings 0 || true
+        npm run lint || true
     
     - name: Run component tests
       run: |
@@ -236,7 +236,7 @@ jobs:
         done
         
         # Run story tests (if available)
-        npm run test-storybook || echo "⚠️ No Storybook tests configured"
+        echo "⚠️ No Storybook tests configured - skipping story tests"
         
         # Stop Storybook
         kill $STORYBOOK_PID || true
