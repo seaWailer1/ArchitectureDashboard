@@ -1,13 +1,15 @@
-#!/usr/bin/env bun
+#!/usr/bin/env tsx
 /**
  * AfriPay Component Management CLI
+ * Enhanced with automation and Git workflow integration
  * 
  * Usage:
- *   bun codex.component.mts add Forms/Input input
- *   bun codex.component.mts remove Forms/Input
- *   bun codex.component.mts rename Forms/Input Forms/TextField
- *   bun codex.component.mts list
- *   bun codex.component.mts storybook
+ *   tsx codex.component.mts add PaymentButton --template button --git-flow
+ *   tsx codex.component.mts remove Forms/Input
+ *   tsx codex.component.mts rename Forms/Input Forms/TextField
+ *   tsx codex.component.mts list
+ *   tsx codex.component.mts interactive
+ *   tsx codex.component.mts validate
  */
 
 import { promises as fs } from 'fs';
@@ -738,14 +740,129 @@ Templates available: ${Object.keys(TEMPLATES).join(', ')}
 `);
 }
 
+// Enhanced automation functions
+async function interactiveCreate() {
+  console.log('🧙 Interactive Component Creation Wizard');
+  console.log('Delegating to enhanced automation system...');
+  
+  // Use the enhanced automation script
+  const { spawn } = await import('child_process');
+  const child = spawn('./scripts/component-automation.sh', ['interactive'], {
+    stdio: 'inherit',
+    shell: true
+  });
+  
+  return new Promise((resolve, reject) => {
+    child.on('close', (code) => {
+      if (code === 0) {
+        resolve(void 0);
+      } else {
+        reject(new Error(`Interactive creation failed with code ${code}`));
+      }
+    });
+  });
+}
+
+async function validateComponents() {
+  console.log('🔍 Validating component library...');
+  
+  // Use the pipeline validation system
+  const { spawn } = await import('child_process');
+  const child = spawn('./scripts/component-library-pipeline.sh', ['validate'], {
+    stdio: 'inherit',
+    shell: true
+  });
+  
+  return new Promise((resolve, reject) => {
+    child.on('close', (code) => {
+      if (code === 0) {
+        resolve(void 0);
+      } else {
+        reject(new Error(`Validation failed with code ${code}`));
+      }
+    });
+  });
+}
+
+async function createWithAutomation(componentName: string, options: any = {}) {
+  console.log(`🚀 Creating component with automation: ${componentName}`);
+  
+  const args = ['create', '--name', componentName];
+  
+  if (options.category) args.push('--category', options.category);
+  if (options.template) args.push('--template', options.template);
+  if (options.description) args.push('--description', options.description);
+  if (options.withDemo) args.push('--with-demo');
+  if (options.withTests) args.push('--with-tests');
+  if (options.withDocs) args.push('--with-docs');
+  if (options.accessibility) args.push('--accessibility');
+  if (options.mobileFirst) args.push('--mobile-first');
+  if (options.i18n) args.push('--i18n');
+  if (options.gitFlow) args.push('--git-flow');
+  if (options.autoPush) args.push('--auto-push');
+  
+  const { spawn } = await import('child_process');
+  const child = spawn('./scripts/component-automation.sh', args, {
+    stdio: 'inherit',
+    shell: true
+  });
+  
+  return new Promise((resolve, reject) => {
+    child.on('close', (code) => {
+      if (code === 0) {
+        resolve(void 0);
+      } else {
+        reject(new Error(`Component creation failed with code ${code}`));
+      }
+    });
+  });
+}
+
+// Parse command line arguments
+function parseArgs(args: string[]) {
+  const parsed: any = { _: [] };
+  
+  for (let i = 0; i < args.length; i++) {
+    const arg = args[i];
+    
+    if (arg.startsWith('--')) {
+      const key = arg.slice(2);
+      const nextArg = args[i + 1];
+      
+      if (nextArg && !nextArg.startsWith('--')) {
+        parsed[key] = nextArg;
+        i++; // Skip next arg since we consumed it
+      } else {
+        parsed[key] = true;
+      }
+    } else if (arg.startsWith('-')) {
+      const key = arg.slice(1);
+      const nextArg = args[i + 1];
+      
+      if (nextArg && !nextArg.startsWith('-')) {
+        parsed[key] = nextArg;
+        i++; // Skip next arg since we consumed it
+      } else {
+        parsed[key] = true;
+      }
+    } else {
+      parsed._.push(arg);
+    }
+  }
+  
+  return parsed;
+}
+
 // Main CLI logic
 async function main() {
-  const [,, command, ...args] = process.argv;
+  const args = parseArgs(process.argv.slice(2));
+  const command = args._[0];
+  const componentPath = args._[1];
   
   switch (command) {
     case 'add':
-      if (args.length < 1) {
-        console.error('❌ Usage: bun codex.component.mts add <path> [template]');
+      if (!componentPath) {
+        console.error('❌ Usage: tsx codex.component.mts add <name> [options]');
         process.exit(1);
       }
       await addComponent(args[0], args[1] || 'box');
