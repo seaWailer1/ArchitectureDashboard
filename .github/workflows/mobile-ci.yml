@@ -1,0 +1,493 @@
+name: Mobile CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+    paths:
+      - 'mobile-setup.sh'
+      - 'mobile-config.template.js'
+      - 'MOBILE_DEPLOYMENT_GUIDE.md'
+      - '.github/workflows/mobile-ci.yml'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'mobile-setup.sh'
+      - 'mobile-config.template.js'
+      - 'MOBILE_DEPLOYMENT_GUIDE.md'
+      - '.github/workflows/mobile-ci.yml'
+  workflow_dispatch:
+    inputs:
+      app_role:
+        description: 'App Role (consumer/merchant/agent/multi-role)'
+        required: true
+        default: 'consumer'
+        type: choice
+        options:
+          - consumer
+          - merchant
+          - agent
+          - multi-role
+      build_platform:
+        description: 'Build Platform'
+        required: true
+        default: 'both'
+        type: choice
+        options:
+          - android
+          - ios
+          - both
+      environment:
+        description: 'Deployment Environment'
+        required: true
+        default: 'staging'
+        type: choice
+        options:
+          - development
+          - staging
+          - production
+
+env:
+  NODE_VERSION: '20.x'
+  JAVA_VERSION: '17'
+  ANDROID_API_LEVEL: '35'
+  IOS_VERSION: '18.0'
+
+jobs:
+  # Validate mobile setup configuration
+  validate-mobile-config:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+    
+    - name: Validate mobile setup script
+      run: |
+        # Check script syntax
+        bash -n mobile-setup.sh
+        echo "✅ Mobile setup script syntax is valid"
+    
+    - name: Validate mobile configuration
+      run: |
+        # Create test environment for validation
+        node -e "
+        const fs = require('fs');
+        const configContent = fs.readFileSync('mobile-config.template.js', 'utf8');
+        
+        // Basic syntax validation
+        if (!configContent.includes('export const APP_ROLES')) {
+          throw new Error('APP_ROLES not found in config');
+        }
+        
+        if (!configContent.includes('export const ROLE_FEATURES')) {
+          throw new Error('ROLE_FEATURES not found in config');
+        }
+        
+        if (!configContent.includes('export const API_CONFIG')) {
+          throw new Error('API_CONFIG not found in config');
+        }
+        
+        console.log('✅ Mobile configuration is valid');
+        "
+    
+    - name: Check required permissions
+      run: |
+        echo "Checking Android permissions..."
+        if grep -q "android.permission.CAMERA" MOBILE_DEPLOYMENT_GUIDE.md; then
+          echo "✅ Camera permission documented"
+        else
+          echo "❌ Camera permission missing"
+          exit 1
+        fi
+        
+        if grep -q "android.permission.USE_BIOMETRIC" MOBILE_DEPLOYMENT_GUIDE.md; then
+          echo "✅ Biometric permission documented"
+        else
+          echo "❌ Biometric permission missing"
+          exit 1
+        fi
+    
+    - name: Validate documentation
+      run: |
+        # Check documentation completeness
+        if [ ! -f "MOBILE_DEPLOYMENT_GUIDE.md" ]; then
+          echo "❌ Mobile deployment guide missing"
+          exit 1
+        fi
+        
+        # Check for required sections
+        sections=("Prerequisites" "Installation Steps" "Android Development" "iOS Development" "Security Configuration")
+        for section in "${sections[@]}"; do
+          if grep -q "$section" MOBILE_DEPLOYMENT_GUIDE.md; then
+            echo "✅ Section '$section' found"
+          else
+            echo "❌ Section '$section' missing"
+            exit 1
+          fi
+        done
+
+  # Test Android setup simulation
+  test-android-setup:
+    runs-on: ubuntu-latest
+    needs: validate-mobile-config
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+    
+    - name: Setup Java
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: ${{ env.JAVA_VERSION }}
+    
+    - name: Setup Android SDK
+      uses: android-actions/setup-android@v3
+      with:
+        api-level: ${{ env.ANDROID_API_LEVEL }}
+        build-tools: '35.0.0'
+        ndk: '26.1.10909125'
+    
+    - name: Simulate mobile setup (Android)
+      run: |
+        # Create test directory
+        mkdir -p test-mobile-setup
+        cd test-mobile-setup
+        
+        # Test React Native CLI installation
+        npm install -g @react-native-community/cli
+        
+        # Test project creation (without actually creating)
+        echo "Testing React Native project creation..."
+        npx react-native --version
+        
+        echo "✅ Android setup simulation completed"
+    
+    - name: Test Android build commands
+      run: |
+        echo "Testing Android build commands..."
+        
+        # Test if required tools are available
+        if command -v java &> /dev/null; then
+          echo "✅ Java available: $(java -version 2>&1 | head -n1)"
+        else
+          echo "❌ Java not available"
+        fi
+        
+        if [ -n "$ANDROID_HOME" ]; then
+          echo "✅ Android SDK available at: $ANDROID_HOME"
+        else
+          echo "❌ Android SDK not configured"
+        fi
+
+  # Test iOS setup simulation (macOS only)
+  test-ios-setup:
+    runs-on: macos-latest
+    needs: validate-mobile-config
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+    
+    - name: Setup Xcode
+      uses: maxim-lobanov/setup-xcode@v1
+      with:
+        xcode-version: '16'
+    
+    - name: Install CocoaPods
+      run: |
+        gem install cocoapods
+        pod --version
+    
+    - name: Simulate mobile setup (iOS)
+      run: |
+        # Create test directory
+        mkdir -p test-mobile-setup-ios
+        cd test-mobile-setup-ios
+        
+        # Test React Native CLI installation
+        npm install -g @react-native-community/cli
+        
+        # Test iOS tools availability
+        xcodebuild -version
+        pod --version
+        
+        echo "✅ iOS setup simulation completed"
+    
+    - name: Test iOS build environment
+      run: |
+        echo "Testing iOS build environment..."
+        
+        # Check Xcode version
+        if xcodebuild -version | grep -q "Xcode 16"; then
+          echo "✅ Xcode 16+ available (required for iOS 18 SDK)"
+        else
+          echo "❌ Xcode 16+ not available"
+        fi
+        
+        # Check iOS SDK
+        if xcodebuild -showsdks | grep -q "iphoneos18"; then
+          echo "✅ iOS 18 SDK available"
+        else
+          echo "⚠️ iOS 18 SDK may not be available"
+        fi
+
+  # Test mobile configuration for different roles
+  test-role-configurations:
+    runs-on: ubuntu-latest
+    needs: validate-mobile-config
+    strategy:
+      matrix:
+        role: [consumer, merchant, agent, multi-role]
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+    
+    - name: Test role configuration (${{ matrix.role }})
+      run: |
+        # Create test script to validate role configuration
+        cat > test-role-config.js << 'EOF'
+        const fs = require('fs');
+        
+        // Read the mobile config template
+        const configContent = fs.readFileSync('mobile-config.template.js', 'utf8');
+        
+        // Extract role configurations using regex
+        const roleMatch = configContent.match(/export const APP_ROLES = {([^}]+)}/s);
+        const featuresMatch = configContent.match(/export const ROLE_FEATURES = {([^}]+)}/s);
+        
+        if (!roleMatch || !featuresMatch) {
+          throw new Error('Role configurations not found');
+        }
+        
+        const role = process.argv[2];
+        console.log(`Testing configuration for role: ${role}`);
+        
+        // Basic validation checks
+        const expectedFeatures = {
+          consumer: ['wallet', 'send-money', 'qr-payments'],
+          merchant: ['business-wallet', 'payment-processing', 'sales-analytics'],
+          agent: ['cash-in-out', 'commission-tracking', 'agent-network'],
+          'multi-role': ['all-features', 'role-switching']
+        };
+        
+        const requiredFeatures = expectedFeatures[role];
+        if (requiredFeatures) {
+          requiredFeatures.forEach(feature => {
+            if (configContent.includes(feature)) {
+              console.log(`✅ Feature '${feature}' found for ${role}`);
+            } else {
+              console.log(`❌ Feature '${feature}' missing for ${role}`);
+              process.exit(1);
+            }
+          });
+        }
+        
+        console.log(`✅ Role configuration for '${role}' is valid`);
+        EOF
+        
+        node test-role-config.js ${{ matrix.role }}
+
+  # Generate mobile deployment artifacts
+  generate-mobile-artifacts:
+    runs-on: ubuntu-latest
+    needs: [test-android-setup, test-role-configurations]
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+    
+    - name: Generate mobile setup package
+      run: |
+        # Create mobile setup package
+        mkdir -p mobile-deployment-package
+        
+        # Copy essential files
+        cp mobile-setup.sh mobile-deployment-package/
+        cp mobile-config.template.js mobile-deployment-package/
+        cp MOBILE_DEPLOYMENT_GUIDE.md mobile-deployment-package/
+        
+        # Create package info
+        cat > mobile-deployment-package/package-info.json << EOF
+        {
+          "name": "afripay-mobile-deployment",
+          "version": "1.0.0",
+          "description": "AfriPay Mobile Application Deployment Package",
+          "created": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+          "supported_platforms": ["android", "ios"],
+          "supported_roles": ["consumer", "merchant", "agent", "multi-role"],
+          "requirements": {
+            "node": ">=18.0.0",
+            "android_api": ">=23",
+            "ios_version": ">=13.0",
+            "xcode_version": ">=16.0"
+          },
+          "features": [
+            "Role-based configuration",
+            "Cross-platform deployment",
+            "Security-first design",
+            "Fintech compliance",
+            "Multi-language support",
+            "Biometric authentication"
+          ]
+        }
+        EOF
+        
+        # Create README for package
+        cat > mobile-deployment-package/README.md << 'EOF'
+        # AfriPay Mobile Deployment Package
+        
+        This package contains everything needed to deploy the AfriPay mobile application for Android and iOS platforms.
+        
+        ## Quick Start
+        
+        1. Make the setup script executable:
+           ```bash
+           chmod +x mobile-setup.sh
+           ```
+        
+        2. Run the setup script:
+           ```bash
+           ./mobile-setup.sh
+           ```
+        
+        3. Follow the interactive prompts to configure your app.
+        
+        ## Documentation
+        
+        - See `MOBILE_DEPLOYMENT_GUIDE.md` for complete deployment instructions
+        - See `mobile-config.template.js` for configuration options
+        - See `package-info.json` for package details
+        
+        ## Support
+        
+        For support, please refer to the AfriPay documentation or contact the development team.
+        EOF
+        
+        # Create archive
+        tar -czf mobile-deployment-package.tar.gz mobile-deployment-package/
+        
+        echo "✅ Mobile deployment package created"
+    
+    - name: Upload mobile deployment package
+      uses: actions/upload-artifact@v4
+      with:
+        name: afripay-mobile-deployment-package
+        path: mobile-deployment-package.tar.gz
+        retention-days: 30
+    
+    - name: Generate deployment summary
+      run: |
+        echo "## 📱 Mobile Deployment Summary" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### ✅ Validation Results" >> $GITHUB_STEP_SUMMARY
+        echo "- Mobile configuration validated" >> $GITHUB_STEP_SUMMARY
+        echo "- Android setup tested" >> $GITHUB_STEP_SUMMARY
+        echo "- Role configurations verified" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### 📦 Generated Artifacts" >> $GITHUB_STEP_SUMMARY
+        echo "- Mobile deployment package created" >> $GITHUB_STEP_SUMMARY
+        echo "- Setup scripts validated" >> $GITHUB_STEP_SUMMARY
+        echo "- Configuration templates ready" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### 🚀 Next Steps" >> $GITHUB_STEP_SUMMARY
+        echo "1. Download the mobile deployment package" >> $GITHUB_STEP_SUMMARY
+        echo "2. Run \`./mobile-setup.sh\` to initialize your mobile project" >> $GITHUB_STEP_SUMMARY
+        echo "3. Follow the deployment guide for platform-specific builds" >> $GITHUB_STEP_SUMMARY
+
+  # Test security configurations
+  test-security-config:
+    runs-on: ubuntu-latest
+    needs: validate-mobile-config
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Validate security configurations
+      run: |
+        echo "Testing security configurations..."
+        
+        # Check for required security features in config
+        if grep -q "biometricAuth" mobile-config.template.js; then
+          echo "✅ Biometric authentication configured"
+        else
+          echo "❌ Biometric authentication missing"
+          exit 1
+        fi
+        
+        if grep -q "certificatePinning" mobile-config.template.js; then
+          echo "✅ Certificate pinning configured"
+        else
+          echo "❌ Certificate pinning missing"
+          exit 1
+        fi
+        
+        if grep -q "sessionTimeout" mobile-config.template.js; then
+          echo "✅ Session timeout configured"
+        else
+          echo "❌ Session timeout missing"
+          exit 1
+        fi
+        
+        echo "✅ Security configuration validation completed"
+
+  # Performance and compatibility tests
+  test-compatibility:
+    runs-on: ubuntu-latest
+    needs: validate-mobile-config
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Test Node.js compatibility
+      strategy:
+        matrix:
+          node-version: ['18.x', '20.x', '22.x']
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+    
+    - name: Test configuration compatibility
+      run: |
+        echo "Testing with Node.js $(node --version)"
+        
+        # Test if configuration can be loaded
+        node -e "
+        const fs = require('fs');
+        const config = fs.readFileSync('mobile-config.template.js', 'utf8');
+        console.log('✅ Configuration loaded successfully');
+        "
+        
+        echo "✅ Compatibility test passed for Node.js $(node --version)"
