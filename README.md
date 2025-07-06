@@ -1,15 +1,7 @@
 
 # AfriPay SuperApp
 
-[![Deploy to Replit](https://github.com/yourusername/afripay-superapp/workflows/Deploy%20to%20Replit/badge.svg)](https://github.com/yourusername/afripay-superapp/actions)
-[![Storybook](https://img.shields.io/badge/Storybook-Live-ff69b4)](https://yourusername.github.io/afripay-superapp/storybook)
-
 A comprehensive African fintech super app built with React, TypeScript, and modern web technologies. AfriPay provides a unified platform for digital payments, wallet management, e-commerce, and financial services across Africa.
-
-## 🚀 Live Demo
-
-- **Application**: [https://afripay-superapp.replit.app](https://afripay-superapp.replit.app)
-- **Storybook**: [Component Library](https://yourusername.github.io/afripay-superapp/storybook)
 
 ## ✨ Features
 
