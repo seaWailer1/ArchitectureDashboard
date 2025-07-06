@@ -1,0 +1,406 @@
+name: Performance Testing
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    # Run twice daily at 6 AM and 6 PM UTC
+    - cron: '0 6,18 * * *'
+
+jobs:
+  lighthouse-audit:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        page: ['/home', '/wallets', '/services', '/transactions', '/profile']
+        device: ['desktop', 'mobile']
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Use Node.js 20.x
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20.x
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Build application
+      run: npm run build
+    
+    - name: Start application
+      run: npm run dev &
+      env:
+        NODE_ENV: production
+    
+    - name: Wait for application to start
+      run: sleep 15
+    
+    - name: Install Lighthouse CI
+      run: npm install -g @lhci/cli
+    
+    - name: Run Lighthouse audit for ${{ matrix.page }} on ${{ matrix.device }}
+      run: |
+        lhci autorun \
+          --upload.target=filesystem \
+          --upload.outputDir=./lighthouse-reports \
+          --collect.url="http://localhost:5000${{ matrix.page }}" \
+          --collect.settings.chromeFlags="--no-sandbox" \
+          --collect.settings.preset="${{ matrix.device }}"
+    
+    - name: Upload Lighthouse reports
+      uses: actions/upload-artifact@v4
+      with:
+        name: lighthouse-report-${{ matrix.page }}-${{ matrix.device }}
+        path: lighthouse-reports/
+
+  load-testing:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Use Node.js 20.x
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20.x
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Build application
+      run: npm run build
+    
+    - name: Start application
+      run: npm run dev &
+      env:
+        NODE_ENV: production
+        DATABASE_URL: ${{ secrets.TEST_DATABASE_URL }}
+    
+    - name: Wait for application to start
+      run: sleep 15
+    
+    - name: Run Artillery load tests
+      run: npm run test:load
+    
+    - name: Run stress testing
+      run: npm run test:stress
+    
+    - name: Run spike testing
+      run: npm run test:spike
+    
+    - name: Upload load test results
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: load-test-results
+        path: |
+          test-results/load/
+          artillery-reports/
+
+  api-performance:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Use Node.js 20.x
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20.x
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Build application
+      run: npm run build
+    
+    - name: Start application
+      run: npm run dev &
+      env:
+        NODE_ENV: production
+        DATABASE_URL: ${{ secrets.TEST_DATABASE_URL }}
+    
+    - name: Wait for application to start
+      run: sleep 15
+    
+    - name: Test API response times
+      run: npm run test:api:performance
+    
+    - name: Test database query performance
+      run: npm run test:db:performance
+    
+    - name: Test authentication performance
+      run: npm run test:auth:performance
+    
+    - name: Test transaction processing performance
+      run: npm run test:transactions:performance
+    
+    - name: Test wallet operations performance
+      run: npm run test:wallet:performance
+    
+    - name: Upload API performance results
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: api-performance-results
+        path: test-results/api-performance/
+
+  frontend-performance:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        browser: [chromium, firefox, webkit]
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Use Node.js 20.x
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20.x
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Build application
+      run: npm run build
+    
+    - name: Start application
+      run: npm run dev &
+      env:
+        NODE_ENV: production
+    
+    - name: Wait for application to start
+      run: sleep 15
+    
+    - name: Install Playwright browsers
+      run: npx playwright install --with-deps ${{ matrix.browser }}
+    
+    - name: Run frontend performance tests
+      run: npm run test:frontend:performance -- --browser=${{ matrix.browser }}
+    
+    - name: Test bundle size
+      run: npm run test:bundle:size
+    
+    - name: Test Core Web Vitals
+      run: npm run test:web-vitals -- --browser=${{ matrix.browser }}
+    
+    - name: Test memory usage
+      run: npm run test:memory -- --browser=${{ matrix.browser }}
+    
+    - name: Test CPU usage
+      run: npm run test:cpu -- --browser=${{ matrix.browser }}
+    
+    - name: Upload frontend performance results
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: frontend-performance-${{ matrix.browser }}
+        path: test-results/frontend-performance/${{ matrix.browser }}/
+
+  mobile-performance:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Use Node.js 20.x
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20.x
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Build application
+      run: npm run build
+    
+    - name: Start application
+      run: npm run dev &
+      env:
+        NODE_ENV: production
+    
+    - name: Wait for application to start
+      run: sleep 15
+    
+    - name: Install Playwright browsers
+      run: npx playwright install --with-deps
+    
+    - name: Test mobile performance
+      run: npm run test:mobile:performance
+    
+    - name: Test touch responsiveness
+      run: npm run test:touch:responsiveness
+    
+    - name: Test mobile network conditions
+      run: npm run test:mobile:network
+    
+    - name: Test battery usage simulation
+      run: npm run test:mobile:battery
+    
+    - name: Upload mobile performance results
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: mobile-performance-results
+        path: test-results/mobile-performance/
+
+  blockchain-performance:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Use Node.js 20.x
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20.x
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Build application
+      run: npm run build
+    
+    - name: Start application
+      run: npm run dev &
+      env:
+        NODE_ENV: production
+        DATABASE_URL: ${{ secrets.TEST_DATABASE_URL }}
+    
+    - name: Wait for application to start
+      run: sleep 15
+    
+    - name: Test wallet creation performance
+      run: npm run test:blockchain:wallet-creation
+    
+    - name: Test transaction processing speed
+      run: npm run test:blockchain:transaction-speed
+    
+    - name: Test cryptocurrency price fetching
+      run: npm run test:blockchain:price-fetching
+    
+    - name: Test smart contract interaction
+      run: npm run test:blockchain:smart-contracts
+    
+    - name: Test blockchain synchronization
+      run: npm run test:blockchain:sync
+    
+    - name: Upload blockchain performance results
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: blockchain-performance-results
+        path: test-results/blockchain-performance/
+
+  performance-regression:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Use Node.js 20.x
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20.x
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Build application
+      run: npm run build
+    
+    - name: Start application
+      run: npm run dev &
+      env:
+        NODE_ENV: production
+    
+    - name: Wait for application to start
+      run: sleep 15
+    
+    - name: Run performance regression tests
+      run: npm run test:performance:regression
+    
+    - name: Compare with baseline
+      run: npm run test:performance:compare
+    
+    - name: Generate performance report
+      run: npm run test:performance:report
+    
+    - name: Comment performance results on PR
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const fs = require('fs');
+          const report = fs.readFileSync('performance-report.md', 'utf8');
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: report
+          });
+
+  performance-monitoring:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Use Node.js 20.x
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20.x
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Build application
+      run: npm run build
+    
+    - name: Start application
+      run: npm run dev &
+      env:
+        NODE_ENV: production
+    
+    - name: Wait for application to start
+      run: sleep 15
+    
+    - name: Send performance metrics to monitoring
+      run: |
+        npm run performance:collect-metrics
+        curl -X POST "${{ secrets.PERFORMANCE_WEBHOOK_URL }}" \
+          -H "Content-Type: application/json" \
+          -d @performance-metrics.json
+    
+    - name: Post performance alerts to Slack
+      if: failure()
+      uses: 8398a7/action-slack@v3
+      with:
+        status: failure
+        text: 'Performance regression detected! Check the performance reports.'
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}

@@ -57,7 +57,7 @@ jobs:
       run: npm run db:generate-docs
     
     - name: Upload schema documentation
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: schema-docs
         path: schema-docs/
