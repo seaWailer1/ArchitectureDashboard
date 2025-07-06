@@ -152,6 +152,8 @@ npm install react-redux
 <uses-permission android:name="android.permission.USE_FINGERPRINT" />
 <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 <uses-permission android:name="android.permission.VIBRATE" />
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 ```
 
 ##### iOS Configuration (ios/AfriPayMobile/Info.plist)
