@@ -89,8 +89,22 @@ export default function Services() {
   ];
 
   const handleServiceLaunch = (serviceId: string, serviceName: string) => {
-    const availableServices = ['loans', 'virtual-card', 'crypto', 'investment', 'admin', 'trading', 'bills', 'shopping', 'ride', 'delivery', 'merchant', 'orders', 'ecommerce', 'driver', 'merchant-store', 'entertainment'];
-    if (availableServices.includes(serviceId)) {
+    // Page-based navigation for Quick Services
+    const pageBasedServices = {
+      'send-money': '/send-money',
+      'pay-scan': '/pay-scan', 
+      'buy-airtime': '/buy-airtime',
+      'pay-bills': '/pay-bills',
+      'shop': '/shop',
+      'transport': '/transport',
+    };
+
+    // Modal-based services (legacy)
+    const modalServices = ['loans', 'virtual-card', 'crypto', 'investment', 'admin', 'trading', 'bills', 'shopping', 'ride', 'delivery', 'merchant', 'orders', 'ecommerce', 'driver', 'merchant-store', 'entertainment'];
+    
+    if (pageBasedServices[serviceId]) {
+      setLocation(pageBasedServices[serviceId]);
+    } else if (modalServices.includes(serviceId)) {
       setSelectedService(serviceId);
     } else {
       toast({

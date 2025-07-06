@@ -9,7 +9,7 @@ import BottomNavigation from "@/components/layout/bottom-navigation";
 import ConsumerDashboard from "@/components/dashboard/consumer-dashboard";
 import MerchantDashboard from "@/components/dashboard/merchant-dashboard";
 import AgentDashboard from "@/components/dashboard/agent-dashboard";
-import { DialogTest } from "@/components/test/dialog-test";
+
 import { UserProfile } from "@/types";
 
 export default function Home() {
@@ -72,12 +72,6 @@ export default function Home() {
 
       <main className="container-content spacing-y-md pb-24">
         {renderRoleSpecificContent()}
-        
-        {/* Temporary Dialog Test - Remove after verification */}
-        <div className="mt-8 p-4 border border-dashed border-gray-300 rounded-lg bg-yellow-50 dark:bg-yellow-900/20">
-          <h3 className="text-sm font-medium text-yellow-800 dark:text-yellow-200 mb-2">Dialog Functionality Test</h3>
-          <DialogTest />
-        </div>
       </main>
 
       <BottomNavigation currentPage="home" />

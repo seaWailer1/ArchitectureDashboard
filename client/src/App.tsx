@@ -26,6 +26,12 @@ import CulturalAccessibilityDemo from "@/pages/cultural-accessibility-demo";
 import { ComponentLibrary } from "@/pages/component-library";
 import AdminPage from "@/pages/admin";
 
+// Service Journey Pages
+import SendMoneyIndex from "@/pages/send-money/index";
+import SendMoneyAmount from "@/pages/send-money/amount";
+import SendMoneyConfirm from "@/pages/send-money/confirm";
+import SendMoneySuccess from "@/pages/send-money/success";
+
 function Router() {
   const { user, isAuthenticated, isLoading } = useAuth();
 
@@ -100,6 +106,13 @@ function Router() {
           <Route path="/cultural-accessibility" component={CulturalAccessibilityDemo} />
           <Route path="/component-library" component={ComponentLibrary} />
           <Route path="/admin" component={AdminPage} />
+          
+          {/* Service Journey Routes */}
+          <Route path="/send-money" component={SendMoneyIndex} />
+          <Route path="/send-money/amount" component={SendMoneyAmount} />
+          <Route path="/send-money/confirm" component={SendMoneyConfirm} />
+          <Route path="/send-money/success" component={SendMoneySuccess} />
+          
           <Route component={NotFound} />
         </Switch>
       </div>
