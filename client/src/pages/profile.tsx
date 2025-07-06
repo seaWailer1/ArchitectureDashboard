@@ -334,9 +334,9 @@ export default function Profile() {
                 <div className="space-y-4">
                   <div>
                     <Label className="text-sm font-medium">Current Role</Label>
-                    <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mb-3 leading-relaxed">
+                    <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mb-3 leading-relaxed">
                       Switch between different user roles to access role-specific features
-                    </p>
+                    </div>
                     <Select 
                       value={user?.currentRole} 
                       onValueChange={(role) => switchRoleMutation.mutate(role)}

@@ -10,6 +10,18 @@ export interface UserProfile {
   phoneVerified: boolean;
   documentsVerified: boolean;
   biometricVerified: boolean;
+  phone?: string;
+  phoneNumber?: string;
+  address?: string;
+  dateOfBirth?: string;
+  currency?: string;
+  timezone?: string;
+  twoFactorEnabled?: boolean;
+  passwordChangedAt?: string;
+  emailNotifications?: boolean;
+  smsNotifications?: boolean;
+  pushNotifications?: boolean;
+  darkMode?: boolean;
 }
 
 export interface WalletData {
