@@ -1,0 +1,97 @@
+{
+  "typescript.preferences.importModuleSpecifier": "relative",
+  "typescript.suggest.autoImports": true,
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "explicit"
+  },
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
+  "emmet.includeLanguages": {
+    "javascript": "javascriptreact",
+    "typescript": "typescriptreact"
+  },
+  "tailwindCSS.includeLanguages": {
+    "typescript": "typescript",
+    "typescriptreact": "typescriptreact"
+  },
+  "tailwindCSS.experimental.classRegex": [
+    "class[nN]ame\\s*=\\s*[\"']([^\"']*)[\"']",
+    "className\\s*=\\s*[\"']([^\"']*)[\"']",
+    "class\\s*=\\s*[\"']([^\"']*)[\"']"
+  ],
+  "css.validate": false,
+  "less.validate": false,
+  "scss.validate": false,
+  "terminal.integrated.env.osx": {
+    "NODE_ENV": "development"
+  },
+  "terminal.integrated.env.linux": {
+    "NODE_ENV": "development"
+  },
+  "terminal.integrated.env.windows": {
+    "NODE_ENV": "development"
+  },
+  "files.exclude": {
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/.git": true,
+    "**/coverage": true,
+    "**/.next": true,
+    "**/storybook-static": true
+  },
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/coverage": true,
+    "**/storybook-static": true
+  },
+  "eslint.workingDirectories": [
+    {
+      "mode": "auto"
+    }
+  ],
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
+  "prettier.requireConfig": true,
+  "prettier.useEditorConfig": false,
+  "jest.jestCommandLine": "npm test --",
+  "jest.autoRun": {
+    "watch": false,
+    "onSave": "test-src-file"
+  },
+  "playwright.reuseBrowser": true,
+  "playwright.showTrace": true,
+  "npm.enableScriptExplorer": true,
+  "npm.scriptExplorerAction": "run",
+  "git.autofetch": true,
+  "git.confirmSync": false,
+  "git.enableSmartCommit": true,
+  "git.postCommitCommand": "none",
+  "extensions.ignoreRecommendations": false,
+  "workbench.colorTheme": "Default Dark+",
+  "editor.minimap.enabled": true,
+  "editor.wordWrap": "on",
+  "editor.rulers": [80, 120],
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.detectIndentation": false,
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "files.trimFinalNewlines": true,
+  "explorer.confirmDelete": false,
+  "explorer.confirmDragAndDrop": false,
+  "debug.console.acceptSuggestionOnEnter": "on",
+  "debug.inlineValues": "on",
+  "workbench.editor.enablePreview": false,
+  "workbench.startupEditor": "none",
+  "problems.showCurrentInStatus": true
+}

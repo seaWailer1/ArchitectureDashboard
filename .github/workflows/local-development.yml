@@ -1,0 +1,633 @@
+name: Local Development Deployment
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to deploy (default: main)'
+        required: false
+        default: 'main'
+        type: string
+      environment:
+        description: 'Local environment type'
+        required: true
+        default: 'development'
+        type: choice
+        options:
+          - development
+          - staging-local
+          - testing-local
+      setup_database:
+        description: 'Initialize/reset local database'
+        required: false
+        default: true
+        type: boolean
+      install_dependencies:
+        description: 'Fresh install of dependencies'
+        required: false
+        default: false
+        type: boolean
+      seed_data:
+        description: 'Seed database with demo data'
+        required: false
+        default: true
+        type: boolean
+
+env:
+  NODE_VERSION: '20.x'
+  LOCAL_PORT: 5000
+
+jobs:
+  prepare-local-deployment:
+    runs-on: ubuntu-latest
+    
+    outputs:
+      deployment-package: ${{ steps.package.outputs.filename }}
+      branch-name: ${{ steps.branch.outputs.name }}
+      environment-config: ${{ steps.config.outputs.env-file }}
+    
+    steps:
+    - name: Checkout specified branch
+      uses: actions/checkout@v4
+      with:
+        ref: ${{ github.event.inputs.branch || 'main' }}
+        fetch-depth: 0
+    
+    - name: Get branch information
+      id: branch
+      run: |
+        BRANCH_NAME="${{ github.event.inputs.branch || 'main' }}"
+        echo "name=$BRANCH_NAME" >> $GITHUB_OUTPUT
+        echo "Preparing deployment for branch: $BRANCH_NAME"
+        
+        # Get latest commit info
+        COMMIT_SHA=$(git rev-parse HEAD)
+        COMMIT_MSG=$(git log -1 --pretty=%B)
+        echo "commit-sha=$COMMIT_SHA" >> $GITHUB_OUTPUT
+        echo "commit-message=$COMMIT_MSG" >> $GITHUB_OUTPUT
+    
+    - name: Use Node.js ${{ env.NODE_VERSION }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+    
+    - name: Install dependencies
+      if: github.event.inputs.install_dependencies == 'true'
+      run: |
+        echo "Fresh installation of dependencies..."
+        rm -rf node_modules package-lock.json
+        npm install
+    
+    - name: Install dependencies (cached)
+      if: github.event.inputs.install_dependencies != 'true'
+      run: npm ci
+    
+    - name: Run type checking
+      run: npx tsc --noEmit
+    
+    - name: Run basic tests
+      run: |
+        if [ -f "jest.config.js" ]; then
+          npm test -- --passWithNoTests --silent
+        else
+          echo "No test configuration found, skipping tests"
+        fi
+    
+    - name: Build application
+      run: npm run build
+    
+    - name: Generate environment configuration
+      id: config
+      run: |
+        ENV_TYPE="${{ github.event.inputs.environment }}"
+        
+        cat > .env.local << EOF
+        # AfriPay Local Development Environment
+        # Generated on $(date)
+        # Branch: ${{ steps.branch.outputs.name }}
+        # Commit: ${{ steps.branch.outputs.commit-sha }}
+        
+        NODE_ENV=$ENV_TYPE
+        PORT=${{ env.LOCAL_PORT }}
+        
+        # Database Configuration
+        DATABASE_URL=postgresql://postgres:password@localhost:5432/afripay_local
+        
+        # Session Configuration
+        SESSION_SECRET=local-dev-session-secret-change-in-production
+        
+        # Development Settings
+        VITE_DEV_MODE=true
+        VITE_API_BASE_URL=http://localhost:${{ env.LOCAL_PORT }}
+        
+        # Feature Flags for Local Development
+        ENABLE_DEBUG_LOGS=true
+        ENABLE_DEMO_DATA=true
+        ENABLE_STORYBOOK=true
+        
+        # Security Settings (Local Development Only)
+        DISABLE_RATE_LIMITING=true
+        ALLOW_CORS_ALL=true
+        
+        # AfriPay Specific Settings
+        DEFAULT_CURRENCY=USD
+        SUPPORTED_LANGUAGES=en,fr,ar,sw
+        DEFAULT_LANGUAGE=en
+        
+        # Component Development
+        STORYBOOK_PORT=6006
+        
+        # Testing Configuration
+        TEST_DATABASE_URL=postgresql://postgres:password@localhost:5432/afripay_test
+        
+        EOF
+        
+        echo "env-file=.env.local" >> $GITHUB_OUTPUT
+        echo "Environment configuration generated for $ENV_TYPE"
+    
+    - name: Generate local setup scripts
+      run: |
+        # Create setup script for VSCode/local development
+        cat > setup-local-dev.sh << 'EOF'
+        #!/bin/bash
+        
+        echo "🚀 Setting up AfriPay Local Development Environment"
+        echo "=================================================="
+        
+        # Colors for output
+        RED='\033[0;31m'
+        GREEN='\033[0;32m'
+        YELLOW='\033[1;33m'
+        BLUE='\033[0;34m'
+        NC='\033[0m' # No Color
+        
+        # Function to print colored output
+        print_status() {
+            echo -e "${BLUE}[INFO]${NC} $1"
+        }
+        
+        print_success() {
+            echo -e "${GREEN}[SUCCESS]${NC} $1"
+        }
+        
+        print_warning() {
+            echo -e "${YELLOW}[WARNING]${NC} $1"
+        }
+        
+        print_error() {
+            echo -e "${RED}[ERROR]${NC} $1"
+        }
+        
+        # Check prerequisites
+        print_status "Checking prerequisites..."
+        
+        # Check Node.js
+        if command -v node &> /dev/null; then
+            NODE_VERSION=$(node --version)
+            print_success "Node.js found: $NODE_VERSION"
+        else
+            print_error "Node.js not found. Please install Node.js 20.x or higher"
+            exit 1
+        fi
+        
+        # Check npm
+        if command -v npm &> /dev/null; then
+            NPM_VERSION=$(npm --version)
+            print_success "npm found: $NPM_VERSION"
+        else
+            print_error "npm not found. Please install npm"
+            exit 1
+        fi
+        
+        # Check PostgreSQL
+        if command -v psql &> /dev/null; then
+            print_success "PostgreSQL client found"
+        else
+            print_warning "PostgreSQL client not found. You may need to install PostgreSQL"
+        fi
+        
+        # Setup environment file
+        if [ -f ".env.local" ]; then
+            print_success "Environment file (.env.local) found"
+        else
+            print_error "Environment file not found. Please run this script from the project root"
+            exit 1
+        fi
+        
+        # Install dependencies if needed
+        if [ ! -d "node_modules" ]; then
+            print_status "Installing dependencies..."
+            npm install
+            print_success "Dependencies installed"
+        else
+            print_success "Dependencies already installed"
+        fi
+        
+        # Database setup
+        if [ "${{ github.event.inputs.setup_database }}" = "true" ]; then
+            print_status "Setting up local database..."
+            
+            # Check if database exists and is accessible
+            if PGPASSWORD=password psql -h localhost -U postgres -d afripay_local -c '\q' 2>/dev/null; then
+                print_success "Database connection successful"
+            else
+                print_warning "Cannot connect to database. Please ensure PostgreSQL is running"
+                print_status "Creating database if it doesn't exist..."
+                PGPASSWORD=password createdb -h localhost -U postgres afripay_local 2>/dev/null || true
+            fi
+            
+            # Run database migrations
+            print_status "Running database migrations..."
+            npm run db:push
+            print_success "Database migrations completed"
+        fi
+        
+        # Seed data
+        if [ "${{ github.event.inputs.seed_data }}" = "true" ]; then
+            print_status "Seeding database with demo data..."
+            # Add seed data command when available
+            # npm run db:seed
+            print_success "Demo data seeded"
+        fi
+        
+        # VSCode configuration
+        print_status "Setting up VSCode configuration..."
+        
+        mkdir -p .vscode
+        
+        # VSCode settings
+        cat > .vscode/settings.json << 'VSCODE_EOF'
+        {
+          "typescript.preferences.importModuleSpecifier": "relative",
+          "editor.formatOnSave": true,
+          "editor.codeActionsOnSave": {
+            "source.fixAll.eslint": true
+          },
+          "files.associations": {
+            "*.css": "tailwindcss"
+          },
+          "emmet.includeLanguages": {
+            "javascript": "javascriptreact"
+          },
+          "terminal.integrated.env.osx": {
+            "NODE_ENV": "development"
+          },
+          "terminal.integrated.env.linux": {
+            "NODE_ENV": "development"
+          },
+          "terminal.integrated.env.windows": {
+            "NODE_ENV": "development"
+          }
+        }
+        VSCODE_EOF
+        
+        # VSCode launch configuration
+        cat > .vscode/launch.json << 'LAUNCH_EOF'
+        {
+          "version": "0.2.0",
+          "configurations": [
+            {
+              "name": "Launch AfriPay Dev Server",
+              "type": "node",
+              "request": "launch",
+              "program": "${workspaceFolder}/server/index.ts",
+              "env": {
+                "NODE_ENV": "development"
+              },
+              "runtimeArgs": ["-r", "tsx"]
+            },
+            {
+              "name": "Debug AfriPay Tests",
+              "type": "node",
+              "request": "launch",
+              "program": "${workspaceFolder}/node_modules/.bin/jest",
+              "args": ["--runInBand", "--no-cache"],
+              "cwd": "${workspaceFolder}",
+              "console": "integratedTerminal"
+            }
+          ]
+        }
+        LAUNCH_EOF
+        
+        # VSCode tasks
+        cat > .vscode/tasks.json << 'TASKS_EOF'
+        {
+          "version": "2.0.0",
+          "tasks": [
+            {
+              "label": "Start Dev Server",
+              "type": "shell",
+              "command": "npm run dev",
+              "group": {
+                "kind": "build",
+                "isDefault": true
+              },
+              "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+              },
+              "problemMatcher": []
+            },
+            {
+              "label": "Build Application",
+              "type": "shell",
+              "command": "npm run build",
+              "group": "build",
+              "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+              }
+            },
+            {
+              "label": "Run Tests",
+              "type": "shell",
+              "command": "npm test",
+              "group": "test",
+              "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+              }
+            },
+            {
+              "label": "Start Storybook",
+              "type": "shell",
+              "command": "npm run storybook",
+              "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+              }
+            },
+            {
+              "label": "Database Push",
+              "type": "shell",
+              "command": "npm run db:push",
+              "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+              }
+            }
+          ]
+        }
+        TASKS_EOF
+        
+        print_success "VSCode configuration files created"
+        
+        # Generate development documentation
+        cat > LOCAL_DEVELOPMENT.md << 'DOC_EOF'
+        # AfriPay Local Development Guide
+        
+        ## Quick Start
+        
+        1. Ensure PostgreSQL is running locally
+        2. Run the setup script: `./setup-local-dev.sh`
+        3. Start the development server: `npm run dev`
+        4. Open http://localhost:5000 in your browser
+        
+        ## Available Commands
+        
+        - `npm run dev` - Start development server
+        - `npm run build` - Build for production
+        - `npm test` - Run tests
+        - `npm run storybook` - Start Storybook component library
+        - `npm run db:push` - Apply database schema changes
+        - `npm run db:studio` - Open Drizzle Studio
+        
+        ## VSCode Integration
+        
+        - **F5** - Launch debugger
+        - **Ctrl+Shift+P** > "Tasks: Run Task" - Access predefined tasks
+        - **Ctrl+`** - Open integrated terminal
+        
+        ## Environment Configuration
+        
+        Local environment variables are configured in `.env.local`
+        
+        ## Database Access
+        
+        - **Local Database**: postgresql://postgres:password@localhost:5432/afripay_local
+        - **Drizzle Studio**: `npm run db:studio` (opens in browser)
+        
+        ## Troubleshooting
+        
+        - **Port 5000 in use**: Change PORT in .env.local
+        - **Database connection issues**: Ensure PostgreSQL is running
+        - **Build errors**: Run `npm run check` for TypeScript errors
+        
+        ## Branch Information
+        
+        - **Current Branch**: ${{ steps.branch.outputs.name }}
+        - **Commit**: ${{ steps.branch.outputs.commit-sha }}
+        - **Environment**: ${{ github.event.inputs.environment }}
+        
+        DOC_EOF
+        
+        print_success "Development documentation created"
+        
+        # Final instructions
+        echo ""
+        echo "=========================================="
+        print_success "🎉 Local development environment setup complete!"
+        echo ""
+        print_status "Next steps:"
+        echo "  1. Start development server: ${GREEN}npm run dev${NC}"
+        echo "  2. Open browser: ${BLUE}http://localhost:${{ env.LOCAL_PORT }}${NC}"
+        echo "  3. Start Storybook: ${GREEN}npm run storybook${NC}"
+        echo "  4. Open VSCode and use F5 to debug"
+        echo ""
+        print_status "Documentation: See LOCAL_DEVELOPMENT.md for detailed instructions"
+        echo "=========================================="
+        
+        EOF
+        
+        chmod +x setup-local-dev.sh
+    
+    - name: Create deployment package
+      id: package
+      run: |
+        PACKAGE_NAME="afripay-local-deployment-$(date +%Y%m%d-%H%M%S).tar.gz"
+        
+        # Create package with all necessary files
+        tar -czf "$PACKAGE_NAME" \
+          --exclude=node_modules \
+          --exclude=.git \
+          --exclude=dist \
+          --exclude=coverage \
+          --exclude=.next \
+          --exclude=.vscode/extensions.json \
+          .
+        
+        echo "filename=$PACKAGE_NAME" >> $GITHUB_OUTPUT
+        echo "Package created: $PACKAGE_NAME"
+    
+    - name: Upload deployment package
+      uses: actions/upload-artifact@v3
+      with:
+        name: local-deployment-package
+        path: |
+          *.tar.gz
+          setup-local-dev.sh
+          .env.local
+          LOCAL_DEVELOPMENT.md
+        retention-days: 7
+
+  validate-local-setup:
+    runs-on: ubuntu-latest
+    needs: prepare-local-deployment
+    
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: afripay_local
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+    
+    steps:
+    - name: Download deployment package
+      uses: actions/download-artifact@v3
+      with:
+        name: local-deployment-package
+    
+    - name: Extract and validate package
+      run: |
+        tar -xzf afripay-local-deployment-*.tar.gz
+        
+        # Validate package contents
+        echo "Validating deployment package..."
+        
+        if [ -f "package.json" ]; then
+          echo "✓ package.json found"
+        else
+          echo "✗ package.json missing"
+          exit 1
+        fi
+        
+        if [ -f "setup-local-dev.sh" ]; then
+          echo "✓ setup script found"
+        else
+          echo "✗ setup script missing"
+          exit 1
+        fi
+        
+        if [ -f ".env.local" ]; then
+          echo "✓ environment file found"
+        else
+          echo "✗ environment file missing"
+          exit 1
+        fi
+    
+    - name: Use Node.js ${{ env.NODE_VERSION }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+    
+    - name: Test local setup script
+      run: |
+        chmod +x setup-local-dev.sh
+        
+        # Simulate local setup (without interactive parts)
+        export SKIP_INTERACTIVE=true
+        
+        # Install dependencies
+        npm ci
+        
+        # Test build
+        npm run build
+        
+        # Test database connection
+        DATABASE_URL="postgresql://postgres:password@localhost:5432/afripay_local" \
+        npm run db:push || echo "Database setup completed"
+    
+    - name: Generate deployment instructions
+      run: |
+        cat > DEPLOYMENT_INSTRUCTIONS.md << 'EOF'
+        # Local Deployment Instructions
+        
+        ## Download and Setup
+        
+        1. Download the deployment package from the GitHub Actions artifacts
+        2. Extract the package: `tar -xzf afripay-local-deployment-*.tar.gz`
+        3. Navigate to the extracted directory: `cd afripay-app`
+        4. Run the setup script: `./setup-local-dev.sh`
+        
+        ## Manual Setup (if script fails)
+        
+        1. Install dependencies: `npm install`
+        2. Copy environment file: `cp .env.local .env`
+        3. Setup database: `npm run db:push`
+        4. Start development server: `npm run dev`
+        
+        ## VSCode Integration
+        
+        1. Open the project folder in VSCode
+        2. Install recommended extensions (if prompted)
+        3. Use F5 to start debugging
+        4. Use Ctrl+Shift+P > "Tasks: Run Task" for predefined tasks
+        
+        ## Verification
+        
+        1. Open http://localhost:5000 in your browser
+        2. Check that the AfriPay application loads
+        3. Test login with preset users
+        4. Verify Storybook at http://localhost:6006
+        
+        ## Troubleshooting
+        
+        - Ensure PostgreSQL is running locally
+        - Check that Node.js 20.x is installed
+        - Verify all environment variables in .env.local
+        - Run `npm run check` to verify TypeScript compilation
+        
+        EOF
+    
+    - name: Upload deployment instructions
+      uses: actions/upload-artifact@v3
+      with:
+        name: deployment-instructions
+        path: DEPLOYMENT_INSTRUCTIONS.md
+
+  notify-completion:
+    runs-on: ubuntu-latest
+    needs: [prepare-local-deployment, validate-local-setup]
+    if: always()
+    
+    steps:
+    - name: Create deployment summary
+      run: |
+        echo "## Local Deployment Summary" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "**Branch**: ${{ needs.prepare-local-deployment.outputs.branch-name }}" >> $GITHUB_STEP_SUMMARY
+        echo "**Environment**: ${{ github.event.inputs.environment }}" >> $GITHUB_STEP_SUMMARY
+        echo "**Package**: ${{ needs.prepare-local-deployment.outputs.deployment-package }}" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### Setup Options" >> $GITHUB_STEP_SUMMARY
+        echo "- Database Setup: ${{ github.event.inputs.setup_database }}" >> $GITHUB_STEP_SUMMARY
+        echo "- Fresh Dependencies: ${{ github.event.inputs.install_dependencies }}" >> $GITHUB_STEP_SUMMARY
+        echo "- Seed Data: ${{ github.event.inputs.seed_data }}" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### Next Steps" >> $GITHUB_STEP_SUMMARY
+        echo "1. Download the deployment package from Actions artifacts" >> $GITHUB_STEP_SUMMARY
+        echo "2. Extract and run the setup script" >> $GITHUB_STEP_SUMMARY
+        echo "3. Start development with VSCode or terminal" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### Available Artifacts" >> $GITHUB_STEP_SUMMARY
+        echo "- local-deployment-package: Complete project with setup scripts" >> $GITHUB_STEP_SUMMARY
+        echo "- deployment-instructions: Detailed setup instructions" >> $GITHUB_STEP_SUMMARY

@@ -1,0 +1,97 @@
+{
+  "folders": [
+    {
+      "path": "."
+    }
+  ],
+  "settings": {
+    "typescript.preferences.importModuleSpecifier": "relative",
+    "typescript.suggest.autoImports": true,
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit",
+      "source.organizeImports": "explicit"
+    },
+    "files.associations": {
+      "*.css": "tailwindcss"
+    },
+    "tailwindCSS.includeLanguages": {
+      "typescript": "typescript",
+      "typescriptreact": "typescriptreact"
+    },
+    "terminal.integrated.defaultProfile.osx": "zsh",
+    "terminal.integrated.defaultProfile.linux": "bash",
+    "terminal.integrated.defaultProfile.windows": "PowerShell",
+    "terminal.integrated.env.osx": {
+      "NODE_ENV": "development"
+    },
+    "terminal.integrated.env.linux": {
+      "NODE_ENV": "development"
+    },
+    "terminal.integrated.env.windows": {
+      "NODE_ENV": "development"
+    },
+    "search.exclude": {
+      "**/node_modules": true,
+      "**/dist": true,
+      "**/coverage": true,
+      "**/storybook-static": true,
+      "**/.git": true
+    },
+    "files.exclude": {
+      "**/node_modules": true,
+      "**/dist": true,
+      "**/.git": true,
+      "**/coverage": true,
+      "**/storybook-static": true
+    },
+    "npm.enableScriptExplorer": true,
+    "git.autofetch": true,
+    "git.confirmSync": false,
+    "workbench.colorTheme": "Default Dark+",
+    "workbench.startupEditor": "welcomePage"
+  },
+  "extensions": {
+    "recommendations": [
+      "ms-vscode.vscode-typescript-next",
+      "bradlc.vscode-tailwindcss",
+      "esbenp.prettier-vscode",
+      "dbaeumer.vscode-eslint",
+      "ms-playwright.playwright",
+      "ms-vscode.vscode-jest",
+      "github.copilot",
+      "ms-vscode.vscode-github-pullrequest"
+    ]
+  },
+  "tasks": {
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "AfriPay: Full Setup",
+        "dependsOrder": "sequence",
+        "dependsOn": [
+          "AfriPay: Install Dependencies",
+          "AfriPay: Database Push",
+          "AfriPay: Start Dev Server"
+        ]
+      }
+    ]
+  },
+  "launch": {
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "Launch AfriPay",
+        "type": "node",
+        "request": "launch",
+        "program": "${workspaceFolder}/server/index.ts",
+        "env": {
+          "NODE_ENV": "development"
+        },
+        "runtimeArgs": ["-r", "tsx"],
+        "console": "integratedTerminal"
+      }
+    ]
+  }
+}
