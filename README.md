@@ -11,20 +11,20 @@ A comprehensive African fintech super app built with React, TypeScript, and mode
 - **Agent**: Cash-in/out services, commission tracking
 
 ### Core Capabilities
-- 💰 Multi-currency wallet system
-- 📱 QR code payments and generation
-- 🏪 E-commerce marketplace
-- 🚗 Transportation and delivery services
-- 💳 Virtual card management
-- 📊 Investment and savings products
-- 🎮 Entertainment and mini-apps
+- Multi-currency wallet system
+- QR code payments and generation
+- E-commerce marketplace
+- Transportation and delivery services
+- Virtual card management
+- Investment and savings products
+- Entertainment and mini-apps
 
 ### Technical Excellence
-- ♿ WCAG AAA accessibility compliance
-- 🌍 Multi-language support (50+ languages)
-- 📱 Mobile-first responsive design
-- 🧪 Comprehensive testing suite
-- 📚 Interactive Storybook documentation
+- WCAG AAA accessibility compliance
+- Multi-language support (50+ languages)
+- Mobile-first responsive design
+- Comprehensive testing suite
+- Interactive Storybook documentation
 
 ## 🛠️ Tech Stack
 
@@ -151,30 +151,18 @@ We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.
 ## 📊 Project Statistics
 
 - **Components**: 103+ reusable components
-- **Languages**: 50+ supported languages
+- **Languages**: 4 supported languages
 - **Test Coverage**: 90%+ coverage target
 - **Accessibility**: WCAG AAA compliant
-- **Performance**: <100ms API response times
-
-## 🌍 Supported Regions
-
-- 🇳🇬 Nigeria
-- 🇰🇪 Kenya
-- 🇬🇭 Ghana
-- 🇿🇦 South Africa
-- 🇪🇬 Egypt
-- And more across Africa
+- **Performance**: <100ms API response
 
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🆘 Support
+## 🆘
 
-- 📖 [Documentation](./docs)
-- 🐛 [Report Issues](https://github.com/yourusername/afripay-superapp/issues)
-- 💬 [Discussions](https://github.com/yourusername/afripay-superapp/discussions)
-- 📧 Contact: support@afripay.com
+- 📧 Contact: seputulemahoda@gmail.com
 
 ## 🙏 Acknowledgments
 
@@ -182,7 +170,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Powered by [Replit](https://replit.com)
 - UI components by [Radix UI](https://radix-ui.com)
 - Icons by [Lucide](https://lucide.dev)
-
----
-
-**Made with 🌍 for Africa's digital future**
