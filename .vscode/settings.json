@@ -80,7 +80,10 @@
   "workbench.colorTheme": "Default Dark+",
   "editor.minimap.enabled": true,
   "editor.wordWrap": "on",
-  "editor.rulers": [80, 120],
+  "editor.rulers": [
+    80,
+    120
+  ],
   "editor.tabSize": 2,
   "editor.insertSpaces": true,
   "editor.detectIndentation": false,
@@ -93,5 +96,7 @@
   "debug.inlineValues": "on",
   "workbench.editor.enablePreview": false,
   "workbench.startupEditor": "none",
-  "problems.showCurrentInStatus": true
+  "problems.showCurrentInStatus": true,
+  "IDX.aI.enableInlineCompletion": true,
+  "IDX.aI.enableCodebaseIndexing": true
 }

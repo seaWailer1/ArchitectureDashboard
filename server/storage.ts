@@ -52,6 +52,7 @@ export interface IStorage {
   getTransactionsByWalletId(walletId: number, limit?: number): Promise<Transaction[]>;
   getTransactionById(id: number): Promise<Transaction | undefined>;
   updateTransactionStatus(id: number, status: string): Promise<Transaction>;
+  getAllTransactionsByUserId(userId: string): Promise<Transaction[]>;
   
   // User role operations
   createUserRole(userRole: InsertUserRole): Promise<UserRole>;
@@ -214,6 +215,23 @@ export class DatabaseStorage implements IStorage {
       .where(eq(transactions.id, id))
       .returning();
     return transaction;
+  }
+
+  async getAllTransactionsByUserId(userId: string): Promise<Transaction[]> {
+    const userWallets = await this.db
+      .select({ id: wallets.id })
+      .from(wallets)
+      .where(eq(wallets.userId, userId));
+
+    const walletIds = userWallets.map(wallet => wallet.id);
+
+    if (walletIds.length === 0) {
+      return [];
+    }
+
+    return await this.db.select().from(transactions)
+      .where(or(transactions.fromWalletId.in(walletIds), transactions.toWalletId.in(walletIds)))
+      .orderBy(desc(transactions.createdAt));
   }
 
   // User role operations
