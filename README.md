@@ -3,7 +3,7 @@
 
 A comprehensive African fintech super app built with React, TypeScript, and modern web technologies. AfriPay provides a unified platform for digital payments, wallet management, e-commerce, and financial services across Africa.
 
-## ✨ Features
+## Features
 
 ### Multi-Role Support
 - **Consumer**: Personal wallet, bill payments, money transfers
@@ -26,7 +26,7 @@ A comprehensive African fintech super app built with React, TypeScript, and mode
 - Comprehensive testing suite
 - Interactive Storybook documentation
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 ### Frontend
 - **React 19** with TypeScript
@@ -38,7 +38,7 @@ A comprehensive African fintech super app built with React, TypeScript, and mode
 ### Backend
 - **Node.js** with Express
 - **PostgreSQL** with Drizzle ORM
-- **Replit Auth** for authentication
+- **Keycloak** for authentication
 - **WebSocket** for real-time features
 
 ### Testing & Quality
@@ -47,7 +47,7 @@ A comprehensive African fintech super app built with React, TypeScript, and mode
 - **Artillery** for performance testing
 - **Jest-axe** for accessibility testing
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Local Development
 
@@ -70,7 +70,7 @@ npm run dev
 npm run storybook
 ```
 
-## 📱 Component Library
+## Component Library
 
 Access our comprehensive component library:
 
@@ -98,7 +98,7 @@ bun codex.component.mts list
 bun codex.component.mts remove Forms/PaymentInput
 ```
 
-## 🧪 Testing
+## Testing
 
 ```bash
 # Run all tests
@@ -113,10 +113,10 @@ npm run test:coverage
 npx playwright test
 ```
 
-## 🚀 Deployment
+## Deployment
 
 ### Automatic Deployment
-- **Main branch**: Auto-deploys to production on Replit
+- **Main branch**: Auto-deploys to production on Neon
 - **Develop branch**: Auto-deploys to staging environment
 - **Pull requests**: Triggers automated testing
 
@@ -129,7 +129,7 @@ npm run build
 npm run deploy:storybook
 ```
 
-## 🤝 Contributing
+## Contributing
 
 We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md).
 
@@ -148,7 +148,7 @@ We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.
 - Comprehensive test coverage
 - Storybook stories for all components
 
-## 📊 Project Statistics
+## Project Statistics
 
 - **Components**: 103+ reusable components
 - **Languages**: 4 supported languages
@@ -156,17 +156,16 @@ We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.
 - **Accessibility**: WCAG AAA compliant
 - **Performance**: <100ms API response
 
-## 📄 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🆘
+##
 
 - 📧 Contact: seputulemahoda@gmail.com
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - Built with ❤️ for Africa
-- Powered by [Replit](https://replit.com)
 - UI components by [Radix UI](https://radix-ui.com)
 - Icons by [Lucide](https://lucide.dev)
