@@ -48,7 +48,7 @@ Key Features:
 ### Backend Architecture
 - **Runtime**: Node.js with Express.js server
 - **Language**: TypeScript with ES modules
-- **Authentication**: Replit Auth with OpenID Connect integration
+- **Authentication**: OpenID Connect integration
 - **Session Management**: Express-session with PostgreSQL store
 - **API Design**: RESTful endpoints with JSON responses
 
@@ -61,10 +61,10 @@ Key Features:
 ## Key Components
 
 ### Authentication System
-- Replit Auth integration for secure user authentication
+- Keycloak integration for secure user authentication
 - Session-based authentication with PostgreSQL session store
 - User profile management with role-based access
-- Mandatory session and user tables for Replit Auth compatibility
+- Mandatory session and user tables for Keycloak compatibility
 
 ### Multi-Role Wallet System
 - Three distinct user roles: Consumer, Merchant, Agent
@@ -93,9 +93,9 @@ Key Features:
 
 ### User Authentication Flow
 1. User accesses application
-2. Replit Auth middleware checks authentication status
-3. If unauthenticated, redirects to Replit login
-4. Upon successful auth, creates/updates user record
+2. Keycloak middleware checks authentication status
+3. If unauthenticated, redirects to login
+4. Upon successful Keycloak, creates/updates user record
 5. Session established and stored in PostgreSQL
 
 ### Transaction Flow
@@ -137,7 +137,7 @@ Key Features:
 ## Deployment Strategy
 
 ### Development Environment
-- Replit hosting with integrated PostgreSQL
+- Neon hosting with integrated PostgreSQL
 - Hot reload with Vite development server
 - Environment variables for database and session configuration
 - Port 5000 for development server
@@ -151,7 +151,7 @@ Key Features:
 ### Database Management
 - Drizzle migrations for schema evolution
 - Connection string via DATABASE_URL environment variable
-- Session table required for Replit Auth functionality
+- Session table required for Keycloak functionality
 - Automatic wallet creation for new users
 
 ## Changelog
